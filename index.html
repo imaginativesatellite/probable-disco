@@ -400,7 +400,7 @@
     /* 8. Text Highlight (link) */
     .link-text-highlight {
       text-decoration: none;
-      color: var(--text);
+      color: #fff;
       font-size: 18px;
       font-weight: 500;
       cursor: default;
@@ -419,7 +419,31 @@
       position: relative;
     }
 
-    /* 9 & 10. Button Roll Up / Button Stagger Roll Up */
+    /* 9. Text Color Swipe */
+    .link-color-swipe {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 18px;
+      font-weight: 500;
+      cursor: default;
+      display: inline-block;
+      position: relative;
+      overflow: hidden;
+    }
+    .link-color-swipe .cs-overlay {
+      position: absolute;
+      inset: 0;
+      background: var(--accent);
+      transform: translateX(-100%);
+      z-index: -1;
+      pointer-events: none;
+    }
+    .link-color-swipe .cs-text {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* 10 & 11. Button Roll Up / Button Stagger Roll Up */
     .btn-text-roll-up,
     .btn-stagger-roll-up {
       background: var(--surface2);
@@ -596,7 +620,7 @@
     <!-- 4. Letter Spread -->
     <div class="card" data-anim="letter-spread">
       <div class="card-stage">
-        <a class="link-letter-spread" id="letter-spread">Explore</a>
+        <a class="link-letter-spread" id="letter-spread">EXPLORE</a>
       </div>
       <div class="card-meta">
         <span class="card-name">Letter Spread</span>
@@ -651,6 +675,20 @@
       <div class="card-meta">
         <span class="card-name">Text Highlight</span>
         <button class="play-btn" data-target="text-highlight">Play</button>
+      </div>
+    </div>
+
+    <!-- 9. Text Color Swipe -->
+    <div class="card" data-anim="color-swipe">
+      <div class="card-stage">
+        <a class="link-color-swipe" id="color-swipe">
+          <span class="cs-overlay"></span>
+          <span class="cs-text">Get Started</span>
+        </a>
+      </div>
+      <div class="card-meta">
+        <span class="card-name">Color Swipe</span>
+        <button class="play-btn" data-target="color-swipe">Play</button>
       </div>
     </div>
 
@@ -1081,7 +1119,7 @@ reg('fill-rise',
     gsap.killTweensOf(layer);
     gsap.set(layer, { y: '0%', scaleY: 1 });
     gsap.to(layer, { scaleY: 0, transformOrigin: 'bottom center', duration: 0.35, ease: 'power2.in' });
-    gsap.to(el, { color: 'var(--accent)', duration: 0.5, ease: 'power2.out' });
+    gsap.to(el, { color: 'var(--accent)', duration: 0.4, ease: 'power2.out' });
   }
 );
 
@@ -1098,7 +1136,7 @@ reg('fill-surge',
     const layer = document.getElementById('fill-surge-layer');
     gsap.killTweensOf(layer);
     gsap.to(layer, { y: '-100%', duration: 0.35, ease: 'power2.in' });
-    gsap.to(el, { color: 'var(--accent)', duration: 0.5, ease: 'power2.out' });
+    gsap.to(el, { color: 'var(--accent)', duration: 0.4, ease: 'power2.out' });
   }
 );
 
@@ -1177,7 +1215,22 @@ reg('text-highlight',
       { scaleX: 1, transformOrigin: 'right center' },
       { scaleX: 0, duration: 0.3, ease: 'power2.in' }
     );
-    gsap.to(el, { color: 'var(--text)', duration: 0.3 });
+  }
+);
+
+// 9. Text Color Swipe — color swipes in from left to right
+reg('color-swipe',
+  (el) => {
+    const overlay = el.querySelector('.cs-overlay');
+    const text = el.querySelector('.cs-text');
+    gsap.to(overlay, { x: '100%', duration: 0.4, ease: 'power2.out' });
+    gsap.to(text, { color: '#fff', duration: 0.4, ease: 'power2.out' });
+  },
+  (el) => {
+    const overlay = el.querySelector('.cs-overlay');
+    const text = el.querySelector('.cs-text');
+    gsap.to(overlay, { x: '-100%', duration: 0.4, ease: 'power2.out' });
+    gsap.to(text, { color: 'var(--text)', duration: 0.4, ease: 'power2.out' });
   }
 );
 
