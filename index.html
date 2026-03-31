@@ -414,9 +414,11 @@
       border-radius: 3px;
       transform: scaleX(0);
       transform-origin: left center;
+      z-index: 0;
     }
     .link-text-highlight .th-text {
       position: relative;
+      z-index: 1;
     }
 
     /* 9. Text Color Swipe */
@@ -428,19 +430,18 @@
       cursor: default;
       display: inline-block;
       position: relative;
-      overflow: hidden;
+      background: linear-gradient(90deg, var(--accent) 0%, var(--accent) 0%, var(--text) 0%, var(--text) 100%);
+      background-size: 200% 100%;
+      background-position: 100% 0;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
     .link-color-swipe .cs-overlay {
-      position: absolute;
-      inset: 0;
-      background: var(--accent);
-      transform: translateX(-100%);
-      z-index: -1;
-      pointer-events: none;
+      display: none;
     }
     .link-color-swipe .cs-text {
       position: relative;
-      z-index: 1;
     }
 
     /* 10 & 11. Button Roll Up / Button Stagger Roll Up */
@@ -1119,7 +1120,7 @@ reg('fill-rise',
     gsap.killTweensOf(layer);
     gsap.set(layer, { y: '0%', scaleY: 1 });
     gsap.to(layer, { scaleY: 0, transformOrigin: 'bottom center', duration: 0.35, ease: 'power2.in' });
-    gsap.to(el, { color: 'var(--accent)', duration: 0.4, ease: 'power2.out' });
+    gsap.to(el, { color: '#6c63ff', duration: 0.4, ease: 'power2.inOut' });
   }
 );
 
@@ -1136,7 +1137,7 @@ reg('fill-surge',
     const layer = document.getElementById('fill-surge-layer');
     gsap.killTweensOf(layer);
     gsap.to(layer, { y: '-100%', duration: 0.35, ease: 'power2.in' });
-    gsap.to(el, { color: 'var(--accent)', duration: 0.4, ease: 'power2.out' });
+    gsap.to(el, { color: '#6c63ff', duration: 0.4, ease: 'power2.inOut' });
   }
 );
 
@@ -1207,7 +1208,6 @@ reg('text-highlight',
       { scaleX: 0, transformOrigin: 'left center' },
       { scaleX: 1, duration: 0.35, ease: 'power2.out' }
     );
-    gsap.to(el, { color: '#fff', duration: 0.35 });
   },
   (el) => {
     const bg = el.querySelector('.th-bg');
@@ -1221,16 +1221,10 @@ reg('text-highlight',
 // 9. Text Color Swipe — color swipes in from left to right
 reg('color-swipe',
   (el) => {
-    const overlay = el.querySelector('.cs-overlay');
-    const text = el.querySelector('.cs-text');
-    gsap.to(overlay, { x: '100%', duration: 0.4, ease: 'power2.out' });
-    gsap.to(text, { color: '#fff', duration: 0.4, ease: 'power2.out' });
+    gsap.to(el, { backgroundPosition: '0 0', duration: 0.4, ease: 'power2.out' });
   },
   (el) => {
-    const overlay = el.querySelector('.cs-overlay');
-    const text = el.querySelector('.cs-text');
-    gsap.to(overlay, { x: '-100%', duration: 0.4, ease: 'power2.out' });
-    gsap.to(text, { color: 'var(--text)', duration: 0.4, ease: 'power2.out' });
+    gsap.to(el, { backgroundPosition: '100% 0', duration: 0.4, ease: 'power2.out' });
   }
 );
 
