@@ -467,7 +467,7 @@
         <a class="link-skew-glide" id="skew-glide">Learn More</a>
       </div>
       <div class="card-meta">
-        <span class="card-name">Skew Glide</span>
+        <span class="card-name">Underline Wipe</span>
         <button class="play-btn" data-target="skew-glide">Play</button>
       </div>
     </div>
@@ -706,10 +706,25 @@ reg('letter-spread',
   (el) => { gsap.to(el, { letterSpacing: '0.02em', duration: 0.35, ease: 'power2.inOut' }); }
 );
 
-// 5. Skew Glide
+// 5. Underline Wipe
+// Enter: underline grows left → right (same as Underline Slide)
+// Exit:  underline wipes away left → right (does NOT reverse)
 reg('skew-glide',
-  (el) => { gsap.to(el, { skewX: -8, x: 4, duration: 0.35, ease: 'power2.out' }); },
-  (el) => { gsap.to(el, { skewX: 0, x: 0, duration: 0.4, ease: 'elastic.out(1, 0.6)' }); }
+  (el) => {
+    const line = createUnderline(el, 'sg-line');
+    gsap.set(line, { width: '100%' });
+    gsap.fromTo(line,
+      { scaleX: 0, transformOrigin: 'left center' },
+      { scaleX: 1, duration: 0.4, ease: 'power2.out' }
+    );
+  },
+  (el) => {
+    const line = createUnderline(el, 'sg-line');
+    gsap.fromTo(line,
+      { scaleX: 1, transformOrigin: 'right center' },
+      { scaleX: 0, duration: 0.35, ease: 'power2.in' }
+    );
+  }
 );
 
 // ---- WORD BUTTONS ----
