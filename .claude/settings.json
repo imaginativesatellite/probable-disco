@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "FILE=$(jq -r '.tool_input.file_path'); if [[ \"$FILE\" != */probable-disco/index.html ]]; then exit 0; fi; TIMESTAMP=$(TZ=America/Chicago date \"+%B %-d, %Y · %-I:%M %p CST\"); sed -i \"/font-size:11px.*text-muted/ s|>[^<]*</p>|>Last modified ${TIMESTAMP}</p>|\" \"$FILE\" 2>/dev/null || true"
+          }
+        ]
+      }
+    ]
+  }
+}
