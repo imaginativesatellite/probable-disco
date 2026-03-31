@@ -356,14 +356,16 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
+      position: relative;
     }
     .btn-arrow-append .arrow-icon {
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      margin-top: -8px;
       display: inline-flex;
       align-items: center;
-      flex-shrink: 0;
-      width: 0;
-      overflow: hidden;
-      margin-left: 0;
+      opacity: 0;
     }
 
     /* 5. Scale Pulse */
@@ -1042,16 +1044,19 @@ reg('border-draw',
 );
 
 // 4. Arrow Append
-// Arrow is in the flex flow at width:0 — flex justify-content:center
-// auto-balances the group as the arrow expands; no manual text shift needed
+// Arrow is absolutely positioned on the right; button width never changes
 reg('arrow-append',
   (el) => {
     const arrow = document.getElementById('arrow-icon');
-    gsap.to(arrow, { width: 16, marginLeft: 8, duration: 0.35, ease: 'power2.out' });
+    const text = document.getElementById('arrow-btn-text');
+    gsap.fromTo(arrow, { opacity: 0, x: 8 }, { opacity: 1, x: 0, duration: 0.35, ease: 'power2.out' });
+    gsap.to(text, { x: -10, duration: 0.35, ease: 'power2.out' });
   },
   (el) => {
     const arrow = document.getElementById('arrow-icon');
-    gsap.to(arrow, { width: 0, marginLeft: 0, duration: 0.25, ease: 'power2.in' });
+    const text = document.getElementById('arrow-btn-text');
+    gsap.to(arrow, { opacity: 0, x: 8, duration: 0.25, ease: 'power2.in' });
+    gsap.to(text, { x: 0, duration: 0.25, ease: 'power2.in' });
   }
 );
 
@@ -1075,7 +1080,7 @@ reg('fill-rise',
     gsap.killTweensOf(layer);
     gsap.set(layer, { y: '0%', scaleY: 1 });
     gsap.to(layer, { scaleY: 0, transformOrigin: 'bottom center', duration: 0.35, ease: 'power2.in' });
-    gsap.to(el, { color: 'var(--accent)', duration: 0.35, ease: 'power2.in' });
+    gsap.to(el, { color: 'var(--accent)', duration: 0.5, ease: 'power2.out' });
   }
 );
 
@@ -1092,7 +1097,7 @@ reg('fill-surge',
     const layer = document.getElementById('fill-surge-layer');
     gsap.killTweensOf(layer);
     gsap.to(layer, { y: '-100%', duration: 0.35, ease: 'power2.in' });
-    gsap.to(el, { color: 'var(--accent)', duration: 0.35, ease: 'power2.in' });
+    gsap.to(el, { color: 'var(--accent)', duration: 0.5, ease: 'power2.out' });
   }
 );
 
