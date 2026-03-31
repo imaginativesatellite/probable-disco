@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GSAP Animation Reference</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <style>
+    :root {
+      --bg: #0e0e0e;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --text: #f0f0f0;
+      --text-muted: #888;
+      --accent: #6c63ff;
+      --accent2: #ff6b6b;
+      --accent3: #43e97b;
+      --radius: 12px;
+      --card-radius: 16px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      padding: 48px 24px 80px;
+    }
+
+    .header {
+      max-width: 960px;
+      margin: 0 auto 56px;
+    }
+
+    .header h1 {
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      color: var(--text-muted);
+      font-size: 15px;
+      max-width: 560px;
+      line-height: 1.6;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-bottom: 14px;
+    }
+
+    .section {
+      max-width: 960px;
+      margin: 0 auto 64px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .section-header h2 {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 13px;
+      margin-bottom: 28px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    /* --- CARD --- */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--card-radius);
+      padding: 32px 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .card-stage {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 80px;
+    }
+
+    .card-meta {
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .card-name {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .play-btn {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .play-btn:hover {
+      background: #252525;
+      border-color: #3a3a3a;
+    }
+
+    .play-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    /* ============================================================
+       TEXT LINK ANIMATIONS
+    ============================================================ */
+
+    /* 1. Underline Slide */
+    .link-underline-slide {
+      position: relative;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 18px;
+      font-weight: 500;
+      padding-bottom: 3px;
+      cursor: default;
+    }
+    .link-underline-slide::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 2px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    /* 2. Underline Center */
+    .link-underline-center {
+      position: relative;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 18px;
+      font-weight: 500;
+      padding-bottom: 3px;
+      cursor: default;
+    }
+    .link-underline-center::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%; right: 50%;
+      height: 2px;
+      background: var(--accent2);
+      border-radius: 2px;
+    }
+
+    /* 3. Color Shift */
+    .link-color-shift {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 18px;
+      font-weight: 500;
+      cursor: default;
+    }
+
+    /* 4. Letter Spread */
+    .link-letter-spread {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      cursor: default;
+    }
+
+    /* 5. Skew Glide */
+    .link-skew-glide {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 18px;
+      font-weight: 500;
+      display: inline-block;
+      cursor: default;
+    }
+
+    /* ============================================================
+       WORD BUTTON ANIMATIONS
+    ============================================================ */
+
+    .btn-base {
+      font-size: 15px;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 8px;
+      cursor: default;
+      letter-spacing: 0.01em;
+      border: none;
+      outline: none;
+    }
+
+    /* 1. Fill Slide */
+    .btn-fill-slide {
+      position: relative;
+      overflow: hidden;
+      background: transparent;
+      border: 2px solid var(--accent) !important;
+      color: var(--accent);
+    }
+    .btn-fill-slide .fill-layer {
+      position: absolute;
+      inset: 0;
+      background: var(--accent);
+      transform: translateX(-100%);
+      z-index: 0;
+    }
+    .btn-fill-slide .btn-label {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* 2. Lift Shadow */
+    .btn-lift-shadow {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(108,99,255,0.2);
+    }
+
+    /* 3. Border Draw */
+    .btn-border-draw {
+      background: transparent;
+      color: var(--text);
+      position: relative;
+    }
+    .btn-border-draw svg.border-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+    }
+    .btn-border-draw svg.border-svg rect {
+      fill: none;
+      stroke: var(--accent3);
+      stroke-width: 2;
+      stroke-dasharray: 0;
+      stroke-dashoffset: 0;
+    }
+
+    /* 4. Arrow Append */
+    .btn-arrow-append {
+      background: var(--surface2);
+      color: var(--text);
+      border: 1px solid var(--border) !important;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow: hidden;
+    }
+    .btn-arrow-append .arrow-icon {
+      display: inline-flex;
+      transform: translateX(-20px);
+      opacity: 0;
+    }
+
+    /* 5. Scale Pulse */
+    .btn-scale-pulse {
+      background: linear-gradient(135deg, #6c63ff, #ff6b6b);
+      color: #fff;
+    }
+
+    /* ============================================================
+       ICON BUTTON ANIMATIONS
+    ============================================================ */
+
+    .icon-btn-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      cursor: default;
+      position: relative;
+    }
+
+    .icon-btn-wrap svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    /* 1. Spin */
+    .icon-spin svg { color: var(--accent); }
+
+    /* 2. Scale Bounce */
+    .icon-scale-bounce svg { color: var(--accent2); }
+
+    /* 3. Wobble */
+    .icon-wobble svg { color: var(--accent3); }
+
+    /* 4. Fill Ring */
+    .icon-fill-ring {
+      border-radius: 50%;
+    }
+    .icon-fill-ring svg { color: var(--accent); }
+    .ring-svg {
+      position: absolute;
+      inset: -4px;
+      width: calc(100% + 8px);
+      height: calc(100% + 8px);
+      pointer-events: none;
+    }
+    .ring-svg circle {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 2;
+      stroke-linecap: round;
+    }
+
+    /* 5. Flip */
+    .icon-flip svg { color: var(--text); }
+
+    /* ============================================================
+       SECTION DIVIDER
+    ============================================================ */
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 5px 12px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+    }
+    .section-tag span {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .footnote {
+      max-width: 960px;
+      margin: 0 auto;
+      color: var(--text-muted);
+      font-size: 12px;
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+      line-height: 1.8;
+    }
+    .footnote strong { color: var(--text); }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="badge">GSAP Reference</div>
+  <h1>Animation Reference</h1>
+  <p>Standard naming for designers and developers. Hover over any element to preview the animation. On mobile, use the <strong>Play</strong> button to trigger and toggle each animation.</p>
+</div>
+
+<!-- ============================================================
+     SECTION 1: TEXT LINKS
+============================================================ -->
+<section class="section">
+  <div class="section-tag"><span></span>Text Links</div>
+  <div class="section-header"><h2>Text Link Hover Animations</h2></div>
+  <p class="section-desc">Applied to anchor tags and inline text links. Pair with <code>cursor: pointer</code> in Webflow.</p>
+
+  <div class="grid">
+
+    <!-- 1. Underline Slide -->
+    <div class="card" data-anim="underline-slide">
+      <div class="card-stage">
+        <a class="link-underline-slide" id="ul-slide">View Project</a>
+      </div>
+      <div class="card-meta">
+        <span class="card-name">Underline Slide</span>
+        <button class="play-btn" data-target="underline-slide">Play</button>
+      </div>
+    </div>
+
+    <!-- 2. Underline Center -->
+    <div class="card" data-anim="underline-center">
+      <div class="card-stage">
+        <a class="link-underline-center" id="ul-center">Our Services</a>
+      </div>
+      <div class="card-meta">
+        <span class="card-name">Underline Center</span>
+        <button class="play-btn" data-target="underline-center">Play</button>
+      </div>
+    </div>
+
+    <!-- 3. Color Shift -->
+    <div class="card" data-anim="color-shift">
+      <div class="card-stage">
+        <a class="link-color-shift" id="color-shift">Read More</a>
+      </div>
+      <div class="card-meta">
+        <span class="card-name">Color Shift</span>
+        <button class="play-btn" data-target="color-shift">Play</button>
+      </div>
+    </div>
+
+    <!-- 4. Letter Spread -->
+    <div class="card" data-anim="letter-spread">
+      <div class="card-stage">
+        <a class="link-letter-spread" id="letter-spread">Explore</a>
+      </div>
+      <div class="card-meta">
+        <span class="card-name">Letter Spread</span>
+        <button class="play-btn" data-target="letter-spread">Play</button>
+      </div>
+    </div>
+
+    <!-- 5. Skew Glide -->
+    <div class="card" data-anim="skew-glide">
+      <div class="card-stage">
+        <a class="link-skew-glide" id="skew-glide">Learn More</a>
+      </div>
+      <div class="card-meta">
+        <span class="card-name">Skew Glide</span>
+        <button class="play-btn" data-target="skew-glide">Play</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 2: WORD BUTTONS
+============================================================ -->
+<section class="section">
+  <div class="section-tag"><span style="background:var(--accent2)"></span>Word Buttons</div>
+  <div class="section-header"><h2>Button Hover Animations</h2></div>
+  <p class="section-desc">Applied to CTA and nav buttons. All use GSAP tweens — no CSS transitions.</p>
+
+  <div class="grid">
+
+    <!-- 1. Fill Slide -->
+    <div class="card" data-anim="fill-slide">
+      <div class="card-stage">
+        <button class="btn-base btn-fill-slide" id="btn-fill-slide">
+          <span class="fill-layer" id="fill-layer"></span>
+          <span class="btn-label">Get Started</span>
+        </button>
+      </div>
+      <div class="card-meta">
+        <span class="card-name">Fill Slide</span>
+        <button class="play-btn" data-target="fill-slide">Play</button>
+      </div>
+    </div>
+
+    <!-- 2. Lift Shadow -->
+    <div class="card" data-anim="lift-shadow">
+      <div class="card-stage">
+        <button class="btn-base btn-lift-shadow" id="btn-lift-shadow">Book a Call</button>
+      </div>
+      <div class="card-meta">
+        <span class="card-name">Lift Shadow</span>
+        <button class="play-btn" data-target="lift-shadow">Play</button>
+      </div>
+    </div>
+
+    <!-- 3. Border Draw -->
+    <div class="card" data-anim="border-draw">
+      <div class="card-stage">
+        <button class="btn-base btn-border-draw" id="btn-border-draw">
+          Contact Us
+          <svg class="border-svg" id="border-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <rect id="border-rect" x="1" y="1" width="98" height="98" rx="7" ry="7" />
+          </svg>
+        </button>
+      </div>
+      <div class="card-meta">
+        <span class="card-name">Border Draw</span>
+        <button class="play-btn" data-target="border-draw">Play</button>
+      </div>
+    </div>
+
+    <!-- 4. Arrow Append -->
+    <div class="card" data-anim="arrow-append">
+      <div class="card-stage">
+        <button class="btn-base btn-arrow-append" id="btn-arrow-append">
+          View Work
+          <span class="arrow-icon" id="arrow-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </button>
+      </div>
+      <div class="card-meta">
+        <span class="card-name">Arrow Append</span>
+        <button class="play-btn" data-target="arrow-append">Play</button>
+      </div>
+    </div>
+
+    <!-- 5. Scale Pulse -->
+    <div class="card" data-anim="scale-pulse">
+      <div class="card-stage">
+        <button class="btn-base btn-scale-pulse" id="btn-scale-pulse">Download Now</button>
+      </div>
+      <div class="card-meta">
+        <span class="card-name">Scale Pulse</span>
+        <button class="play-btn" data-target="scale-pulse">Play</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 3: ICON BUTTONS
+============================================================ -->
+<section class="section">
+  <div class="section-tag"><span style="background:var(--accent3)"></span>Icon Buttons</div>
+  <div class="section-header"><h2>Icon-Only Button Animations</h2></div>
+  <p class="section-desc">Applied to icon-only CTAs, social links, and utility buttons.</p>
+
+  <div class="grid">
+
+    <!-- 1. Icon Spin -->
+    <div class="card" data-anim="icon-spin">
+      <div class="card-stage">
+        <div class="icon-btn-wrap icon-spin" id="icon-spin">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+          </svg>
+        </div>
+      </div>
+      <div class="card-meta">
+        <span class="card-name">Icon Spin</span>
+        <button class="play-btn" data-target="icon-spin">Play</button>
+      </div>
+    </div>
+
+    <!-- 2. Scale Bounce -->
+    <div class="card" data-anim="icon-scale-bounce">
+      <div class="card-stage">
+        <div class="icon-btn-wrap icon-scale-bounce" id="icon-scale-bounce">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </div>
+      </div>
+      <div class="card-meta">
+        <span class="card-name">Scale Bounce</span>
+        <button class="play-btn" data-target="icon-scale-bounce">Play</button>
+      </div>
+    </div>
+
+    <!-- 3. Wobble -->
+    <div class="card" data-anim="icon-wobble">
+      <div class="card-stage">
+        <div class="icon-btn-wrap icon-wobble" id="icon-wobble">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+            <line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
+          </svg>
+        </div>
+      </div>
+      <div class="card-meta">
+        <span class="card-name">Wobble</span>
+        <button class="play-btn" data-target="icon-wobble">Play</button>
+      </div>
+    </div>
+
+    <!-- 4. Fill Ring -->
+    <div class="card" data-anim="icon-fill-ring">
+      <div class="card-stage">
+        <div class="icon-btn-wrap icon-fill-ring" id="icon-fill-ring">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>
+          </svg>
+          <svg class="ring-svg" id="ring-svg" viewBox="0 0 64 64">
+            <circle id="ring-circle" cx="32" cy="32" r="30" />
+          </svg>
+        </div>
+      </div>
+      <div class="card-meta">
+        <span class="card-name">Ring Draw</span>
+        <button class="play-btn" data-target="icon-fill-ring">Play</button>
+      </div>
+    </div>
+
+    <!-- 5. Flip -->
+    <div class="card" data-anim="icon-flip">
+      <div class="card-stage">
+        <div class="icon-btn-wrap icon-flip" id="icon-flip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="5 3 19 12 5 21 5 3"/>
+          </svg>
+        </div>
+      </div>
+      <div class="card-meta">
+        <span class="card-name">Flip Y</span>
+        <button class="play-btn" data-target="icon-flip">Play</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="footnote">
+  <strong>Naming Convention</strong> — Names follow the Webflow component-property pattern: <em>ElementType-AnimationName</em>.<br>
+  Designers specify the animation name; developers implement using GSAP <code>gsap.to()</code> / <code>gsap.fromTo()</code> on <code>mouseenter</code> / <code>mouseleave</code> events.<br>
+  All durations default to <strong>0.35s</strong> with <code>ease: "power2.out"</code> unless noted. Bounce variants use <code>ease: "back.out(1.7)"</code>.
+</div>
+
+<script>
+// ============================================================
+// ANIMATION REGISTRY
+// Each entry: { in: fn(el), out: fn(el), isActive: bool }
+// ============================================================
+
+const registry = {};
+
+function reg(name, inFn, outFn) {
+  registry[name] = { in: inFn, out: outFn, active: false };
+}
+
+// ---- TEXT LINKS ----
+
+// 1. Underline Slide
+reg('underline-slide',
+  (el) => {
+    const line = el.querySelector ? el : document.querySelector('#ul-slide');
+    gsap.to(line, { duration: 0 }); // ensure pseudo handled via real el
+    gsap.to(createUnderline(line, 'ul-slide-line'), { width: '100%', duration: 0.4, ease: 'power2.out' });
+  },
+  (el) => {
+    gsap.to(createUnderline(el, 'ul-slide-line'), { width: '0%', duration: 0.3, ease: 'power2.in' });
+  }
+);
+
+// 2. Underline Center
+reg('underline-center',
+  (el) => {
+    const line = createUnderline(el, 'ul-center-line', '#ff6b6b');
+    gsap.fromTo(line, { left: '50%', right: '50%', width: 0 }, { left: '0%', right: '0%', width: '100%', duration: 0.4, ease: 'power2.out' });
+  },
+  (el) => {
+    const line = createUnderline(el, 'ul-center-line', '#ff6b6b');
+    gsap.to(line, { left: '50%', right: '50%', width: 0, duration: 0.3, ease: 'power2.in' });
+  }
+);
+
+// 3. Color Shift
+reg('color-shift',
+  (el) => { gsap.to(el, { color: '#6c63ff', duration: 0.35, ease: 'power1.out' }); },
+  (el) => { gsap.to(el, { color: '#888', duration: 0.3, ease: 'power1.in' }); }
+);
+
+// 4. Letter Spread
+reg('letter-spread',
+  (el) => { gsap.to(el, { letterSpacing: '0.18em', duration: 0.4, ease: 'power2.out' }); },
+  (el) => { gsap.to(el, { letterSpacing: '0.02em', duration: 0.35, ease: 'power2.inOut' }); }
+);
+
+// 5. Skew Glide
+reg('skew-glide',
+  (el) => { gsap.to(el, { skewX: -8, x: 4, duration: 0.35, ease: 'power2.out' }); },
+  (el) => { gsap.to(el, { skewX: 0, x: 0, duration: 0.4, ease: 'elastic.out(1, 0.6)' }); }
+);
+
+// ---- WORD BUTTONS ----
+
+// 1. Fill Slide
+reg('fill-slide',
+  (el) => {
+    const layer = document.getElementById('fill-layer');
+    gsap.to(layer, { x: '0%', duration: 0.4, ease: 'power2.out' });
+    gsap.to(el, { color: '#fff', duration: 0.4, ease: 'power2.out' });
+  },
+  (el) => {
+    const layer = document.getElementById('fill-layer');
+    gsap.to(layer, { x: '-100%', duration: 0.35, ease: 'power2.in' });
+    gsap.to(el, { color: '#6c63ff', duration: 0.35, ease: 'power2.in' });
+  }
+);
+
+// 2. Lift Shadow
+reg('lift-shadow',
+  (el) => { gsap.to(el, { y: -4, boxShadow: '0 12px 32px rgba(108,99,255,0.45)', duration: 0.35, ease: 'power2.out' }); },
+  (el) => { gsap.to(el, { y: 0, boxShadow: '0 2px 8px rgba(108,99,255,0.2)', duration: 0.4, ease: 'back.out(2)' }); }
+);
+
+// 3. Border Draw
+reg('border-draw',
+  (el) => {
+    const rect = document.getElementById('border-rect');
+    const perimeter = 2 * (98 + 98); // approx perimeter of rect in SVG units
+    gsap.fromTo(rect,
+      { strokeDasharray: perimeter, strokeDashoffset: perimeter },
+      { strokeDashoffset: 0, duration: 0.6, ease: 'power2.out' }
+    );
+  },
+  (el) => {
+    const rect = document.getElementById('border-rect');
+    const perimeter = 2 * (98 + 98);
+    gsap.to(rect, { strokeDashoffset: perimeter, duration: 0.4, ease: 'power2.in' });
+  }
+);
+
+// 4. Arrow Append
+reg('arrow-append',
+  (el) => {
+    const arrow = document.getElementById('arrow-icon');
+    gsap.to(arrow, { x: 0, opacity: 1, duration: 0.35, ease: 'power2.out' });
+  },
+  (el) => {
+    const arrow = document.getElementById('arrow-icon');
+    gsap.to(arrow, { x: -20, opacity: 0, duration: 0.3, ease: 'power2.in' });
+  }
+);
+
+// 5. Scale Pulse
+reg('scale-pulse',
+  (el) => { gsap.to(el, { scale: 1.06, duration: 0.3, ease: 'back.out(2)' }); },
+  (el) => { gsap.to(el, { scale: 1, duration: 0.4, ease: 'elastic.out(1, 0.5)' }); }
+);
+
+// ---- ICON BUTTONS ----
+
+// 1. Icon Spin
+reg('icon-spin',
+  (el) => { gsap.to(el.querySelector('svg'), { rotation: 360, duration: 0.6, ease: 'power2.out' }); },
+  (el) => { gsap.set(el.querySelector('svg'), { rotation: 0 }); }
+);
+
+// 2. Scale Bounce
+reg('icon-scale-bounce',
+  (el) => { gsap.to(el, { scale: 1.2, duration: 0.35, ease: 'back.out(2.5)' }); },
+  (el) => { gsap.to(el, { scale: 1, duration: 0.4, ease: 'elastic.out(1, 0.5)' }); }
+);
+
+// 3. Wobble
+reg('icon-wobble',
+  (el) => {
+    gsap.to(el.querySelector('svg'), {
+      keyframes: [
+        { rotation: -15, duration: 0.1 },
+        { rotation: 15, duration: 0.1 },
+        { rotation: -10, duration: 0.1 },
+        { rotation: 10, duration: 0.1 },
+        { rotation: -5, duration: 0.1 },
+        { rotation: 0, duration: 0.1 }
+      ],
+      ease: 'none'
+    });
+  },
+  () => {}
+);
+
+// 4. Ring Draw
+reg('icon-fill-ring',
+  (el) => {
+    const circle = document.getElementById('ring-circle');
+    const r = 30;
+    const circ = 2 * Math.PI * r;
+    gsap.fromTo(circle,
+      { strokeDasharray: circ, strokeDashoffset: circ },
+      { strokeDashoffset: 0, duration: 0.5, ease: 'power2.out' }
+    );
+    gsap.to(el, { scale: 1.05, duration: 0.3, ease: 'power2.out' });
+  },
+  (el) => {
+    const circle = document.getElementById('ring-circle');
+    const circ = 2 * Math.PI * 30;
+    gsap.to(circle, { strokeDashoffset: circ, duration: 0.35, ease: 'power2.in' });
+    gsap.to(el, { scale: 1, duration: 0.3, ease: 'power2.inOut' });
+  }
+);
+
+// 5. Flip Y
+reg('icon-flip',
+  (el) => { gsap.to(el.querySelector('svg'), { rotationY: 180, duration: 0.5, ease: 'power2.out' }); },
+  (el) => { gsap.to(el.querySelector('svg'), { rotationY: 0, duration: 0.5, ease: 'back.out(1.5)' }); }
+);
+
+// ============================================================
+// ELEMENT MAP  name -> DOM element
+// ============================================================
+const elMap = {
+  'underline-slide':   document.getElementById('ul-slide'),
+  'underline-center':  document.getElementById('ul-center'),
+  'color-shift':       document.getElementById('color-shift'),
+  'letter-spread':     document.getElementById('letter-spread'),
+  'skew-glide':        document.getElementById('skew-glide'),
+  'fill-slide':        document.getElementById('btn-fill-slide'),
+  'lift-shadow':       document.getElementById('btn-lift-shadow'),
+  'border-draw':       document.getElementById('btn-border-draw'),
+  'arrow-append':      document.getElementById('btn-arrow-append'),
+  'scale-pulse':       document.getElementById('btn-scale-pulse'),
+  'icon-spin':         document.getElementById('icon-spin'),
+  'icon-scale-bounce': document.getElementById('icon-scale-bounce'),
+  'icon-wobble':       document.getElementById('icon-wobble'),
+  'icon-fill-ring':    document.getElementById('icon-fill-ring'),
+  'icon-flip':         document.getElementById('icon-flip'),
+};
+
+// ============================================================
+// UNDERLINE HELPER (real DOM line, avoids CSS pseudo)
+// ============================================================
+function createUnderline(el, id, color = '#6c63ff') {
+  let line = document.getElementById(id);
+  if (!line) {
+    line = document.createElement('span');
+    line.id = id;
+    Object.assign(line.style, {
+      position: 'absolute',
+      bottom: '0', left: '0',
+      height: '2px',
+      width: '0',
+      background: color,
+      borderRadius: '2px',
+      pointerEvents: 'none'
+    });
+    el.style.position = 'relative';
+    el.appendChild(line);
+  }
+  return line;
+}
+
+// Pre-create underlines so they're ready
+createUnderline(elMap['underline-slide'], 'ul-slide-line');
+createUnderline(elMap['underline-center'], 'ul-center-line', '#ff6b6b');
+
+// ============================================================
+// HOVER WIRING (desktop)
+// ============================================================
+Object.entries(elMap).forEach(([name, el]) => {
+  if (!el) return;
+  const anim = registry[name];
+  el.addEventListener('mouseenter', () => anim.in(el));
+  el.addEventListener('mouseleave', () => anim.out(el));
+});
+
+// ============================================================
+// PLAY BUTTON WIRING (mobile / toggle)
+// ============================================================
+document.querySelectorAll('.play-btn').forEach(btn => {
+  const name = btn.dataset.target;
+  const el = elMap[name];
+  const anim = registry[name];
+  if (!el || !anim) return;
+
+  btn.addEventListener('click', () => {
+    anim.active = !anim.active;
+    if (anim.active) {
+      btn.textContent = 'Stop';
+      btn.classList.add('active');
+      anim.in(el);
+      // For looping wobble, re-trigger
+      if (name === 'icon-wobble') {
+        anim._interval = setInterval(() => anim.in(el), 800);
+      }
+    } else {
+      btn.textContent = 'Play';
+      btn.classList.remove('active');
+      anim.out(el);
+      if (anim._interval) { clearInterval(anim._interval); anim._interval = null; }
+    }
+  });
+});
+
+// ============================================================
+// Init ring-circle stroke
+// ============================================================
+(function initRing() {
+  const c = document.getElementById('ring-circle');
+  if (!c) return;
+  const circ = 2 * Math.PI * 30;
+  c.style.strokeDasharray = circ;
+  c.style.strokeDashoffset = circ;
+})();
+</script>
+</body>
+</html>
