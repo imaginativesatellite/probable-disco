@@ -551,7 +551,7 @@
     }
     .icon-arrow-slide .ias-slide {
       color: var(--accent);
-      transform: translate(-50%, -50%) translateX(-100%);
+      transform: translate(-50%, -50%) translateX(-300%);
     }
 
     /* ============================================================
@@ -596,7 +596,7 @@
   <div class="badge">GSAP Reference</div>
   <h1>Luna Animation Reference</h1>
   <p>Standard naming for designers and developers. Hover over any element to preview the animation. On mobile, use the <strong>Play</strong> button to trigger and toggle each animation.</p>
-  <p style="font-size:11px; color:var(--text-muted); margin-top:8px;">Modified April 1, 2026 · 10:35 PM CST</p>
+  <p style="font-size:11px; color:var(--text-muted); margin-top:8px;">Modified April 1, 2026 · 10:42 PM CST</p>
 </div>
 
 <!-- ============================================================
@@ -1321,8 +1321,9 @@ reg('icon-arrow-slide',
   (el) => {
     const main = el.querySelector('.ias-main');
     const slide = el.querySelector('.ias-slide');
-    gsap.to(main, { x: '200%', duration: 0.4, ease: 'power2.out' });
     gsap.to(slide, { x: '100%', duration: 0.4, ease: 'power2.out' });
+    gsap.set(main, { x: '-300%' });
+    gsap.to(main, { x: '0%', duration: 0.4, ease: 'power2.out' });
   }
 );
 
