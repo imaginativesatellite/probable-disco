@@ -430,18 +430,26 @@
       cursor: pointer;
       display: inline-block;
       position: relative;
-      background: linear-gradient(90deg, var(--accent) 0%, var(--accent) 49.9%, var(--text) 50.1%, var(--text) 100%);
-      background-size: 200% 100%;
-      background-position: 100% 0;
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
+      overflow: hidden;
     }
     .link-color-swipe .cs-overlay {
-      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 500;
+      pointer-events: none;
+      clip-path: inset(0 100% 0 0);
     }
     .link-color-swipe .cs-text {
       position: relative;
+      z-index: 2;
     }
 
     /* 10 & 11. Button Roll Up / Button Stagger Roll Up */
@@ -572,7 +580,7 @@
   <div class="badge">GSAP Reference</div>
   <h1>Luna Animation Reference</h1>
   <p>Standard naming for designers and developers. Hover over any element to preview the animation. On mobile, use the <strong>Play</strong> button to trigger and toggle each animation.</p>
-  <p style="font-size:11px; color:var(--text-muted); margin-top:8px;">Modified April 1, 2026 · 2:00 PM CST</p>
+  <p style="font-size:11px; color:var(--text-muted); margin-top:8px;">Modified April 1, 2026 · 3:15 PM CST</p>
 </div>
 
 <!-- ============================================================
@@ -683,7 +691,7 @@
     <div class="card" data-anim="color-swipe">
       <div class="card-stage">
         <a class="link-color-swipe" id="color-swipe">
-          <span class="cs-overlay"></span>
+          <span class="cs-overlay">Get Started</span>
           <span class="cs-text">Get Started</span>
         </a>
       </div>
@@ -1221,10 +1229,12 @@ reg('text-highlight',
 // 9. Text Color Swipe — color swipes in from left to right
 reg('color-swipe',
   (el) => {
-    gsap.to(el, { backgroundPosition: '0 0', duration: 0.4, ease: 'power2.out' });
+    const overlay = el.querySelector('.cs-overlay');
+    gsap.to(overlay, { clipPath: 'inset(0 0 0 0)', duration: 0.4, ease: 'power2.out' });
   },
   (el) => {
-    gsap.to(el, { backgroundPosition: '100% 0', duration: 0.4, ease: 'power2.out' });
+    const overlay = el.querySelector('.cs-overlay');
+    gsap.to(overlay, { clipPath: 'inset(0 100% 0 0)', duration: 0.4, ease: 'power2.out' });
   }
 );
 
