@@ -551,7 +551,6 @@
     }
     .icon-arrow-slide .ias-slide {
       color: var(--accent);
-      transform: translate(-50%, -50%) translateX(-300%);
     }
 
     /* ============================================================
@@ -596,7 +595,7 @@
   <div class="badge">GSAP Reference</div>
   <h1>Luna Animation Reference</h1>
   <p>Standard naming for designers and developers. Hover over any element to preview the animation. On mobile, use the <strong>Play</strong> button to trigger and toggle each animation.</p>
-  <p style="font-size:11px; color:var(--text-muted); margin-top:8px;">Modified April 1, 2026 · 10:42 PM CST</p>
+  <p style="font-size:11px; color:var(--text-muted); margin-top:8px;">Modified April 2, 2026 · 3:05 AM CST</p>
 </div>
 
 <!-- ============================================================
@@ -1315,15 +1314,21 @@ reg('icon-arrow-slide',
   (el) => {
     const main = el.querySelector('.ias-main');
     const slide = el.querySelector('.ias-slide');
-    gsap.to(main, { x: '100%', duration: 0.4, ease: 'power2.out' });
-    gsap.to(slide, { x: '0%', duration: 0.4, ease: 'power2.out' });
+    // Initialize purple arrow off-screen left on first hover if not already set
+    if (!slide._initialized) {
+      gsap.set(slide, { x: -56 });
+      slide._initialized = true;
+    }
+    // On hover: white slides right and out, purple comes in from left to center
+    gsap.to(main, { x: 56, duration: 0.4, ease: 'power2.out' });
+    gsap.to(slide, { x: 0, duration: 0.4, ease: 'power2.out' });
   },
   (el) => {
     const main = el.querySelector('.ias-main');
     const slide = el.querySelector('.ias-slide');
-    gsap.to(slide, { x: '100%', duration: 0.4, ease: 'power2.out' });
-    gsap.set(main, { x: '-300%' });
-    gsap.to(main, { x: '0%', duration: 0.4, ease: 'power2.out' });
+    // On unhover: purple slides right out, white resets to off-screen left and comes back in
+    gsap.to(slide, { x: 56, duration: 0.4, ease: 'power2.out' });
+    gsap.to(main, { x: -56, duration: 0.4, ease: 'power2.out' });
   }
 );
 
