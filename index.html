@@ -436,20 +436,17 @@
       position: absolute;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
       color: var(--accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
       font-size: 18px;
       font-weight: 500;
       pointer-events: none;
       transform: translateX(-100%);
+      white-space: nowrap;
+      z-index: 2;
     }
     .link-color-swipe .cs-text {
       position: relative;
-      z-index: 2;
+      z-index: 1;
     }
 
     /* 10 & 11. Button Roll Up / Button Stagger Roll Up */
@@ -542,22 +539,19 @@
     .icon-arrow-slide {
       position: relative;
       overflow: hidden;
-      width: 1em;
-      height: 1em;
     }
     .icon-arrow-slide svg {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
     .icon-arrow-slide .ias-main {
       color: var(--text);
     }
     .icon-arrow-slide .ias-slide {
       color: var(--accent);
-      transform: translateX(-100%);
+      transform: translate(-50%, -50%) translateX(-100%);
     }
 
     /* ============================================================
@@ -602,7 +596,7 @@
   <div class="badge">GSAP Reference</div>
   <h1>Luna Animation Reference</h1>
   <p>Standard naming for designers and developers. Hover over any element to preview the animation. On mobile, use the <strong>Play</strong> button to trigger and toggle each animation.</p>
-  <p style="font-size:11px; color:var(--text-muted); margin-top:8px;">Modified April 1, 2026 · 10:16 PM CST</p>
+  <p style="font-size:11px; color:var(--text-muted); margin-top:8px;">Modified April 1, 2026 · 10:35 PM CST</p>
 </div>
 
 <!-- ============================================================
@@ -1327,8 +1321,8 @@ reg('icon-arrow-slide',
   (el) => {
     const main = el.querySelector('.ias-main');
     const slide = el.querySelector('.ias-slide');
-    gsap.to(main, { x: '0%', duration: 0.4, ease: 'power2.out' });
-    gsap.to(slide, { x: '-100%', duration: 0.4, ease: 'power2.out' });
+    gsap.to(main, { x: '200%', duration: 0.4, ease: 'power2.out' });
+    gsap.to(slide, { x: '100%', duration: 0.4, ease: 'power2.out' });
   }
 );
 
