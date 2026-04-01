@@ -27,12 +27,14 @@
       color: var(--text);
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       min-height: 100vh;
-      padding: 80px 24px 80px;
+      padding: 24px;
     }
 
     .header {
       max-width: 960px;
       margin: 0 auto 56px;
+      position: relative;
+      padding-top: 24px;
     }
 
     .header h1 {
@@ -561,14 +563,14 @@
        LOGO
     ============================================================ */
     .logo {
-      position: fixed;
-      top: 24px;
-      left: 24px;
-      z-index: 999;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 10;
       font-size: 14px;
       font-weight: 700;
       letter-spacing: 2px;
-      color: var(--accent);
+      color: var(--text);
       text-decoration: none;
       height: 48px;
       display: flex;
@@ -579,9 +581,9 @@
        HAMBURGER MENU
     ============================================================ */
     .hamburger-btn {
-      position: fixed;
-      top: 24px;
-      right: 24px;
+      position: absolute;
+      top: 0;
+      right: 0;
       width: 48px;
       height: 48px;
       background: none;
@@ -592,7 +594,7 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      z-index: 999;
+      z-index: 10;
       transition: all 0.3s ease;
       padding: 0;
     }
@@ -612,7 +614,7 @@
     }
 
     .hamburger-btn.active span:nth-child(1) {
-      transform: rotate(45deg) translateY(8px);
+      transform: rotate(45deg) translateY(7px);
     }
 
     .hamburger-btn.active span:nth-child(2) {
@@ -620,7 +622,7 @@
     }
 
     .hamburger-btn.active span:nth-child(3) {
-      transform: rotate(-45deg) translateY(-8px);
+      transform: rotate(-45deg) translateY(-7px);
     }
 
     .menu-overlay {
@@ -727,7 +729,7 @@
   <h1>Hover Animations</h1>
   <div class="badge">GSAP Reference</div>
   <p>Standard naming for designers and developers. Hover over any element to preview the animation. On mobile, use the <strong>Play</strong> button to trigger and toggle each animation.</p>
-  <p style="font-size:11px; color:var(--text-muted); margin-top:8px;">Modified April 2, 2026 · 3:51 AM CST</p>
+  <p style="font-size:11px; color:var(--text-muted); margin-top:8px;">Modified April 2, 2026 · 4:02 AM CST</p>
 </div>
 
 <!-- ============================================================
