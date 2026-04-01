@@ -558,6 +558,29 @@
     }
 
     /* ============================================================
+       LOGO
+    ============================================================ */
+    .logo {
+      position: fixed;
+      top: 24px;
+      left: 24px;
+      z-index: 999;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .logo span {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* ============================================================
        HAMBURGER MENU
     ============================================================ */
     .hamburger-btn {
@@ -594,7 +617,7 @@
     }
 
     .hamburger-btn.active span:nth-child(1) {
-      transform: rotate(45deg) translateY(10px);
+      transform: rotate(45deg) translateY(9px);
     }
 
     .hamburger-btn.active span:nth-child(2) {
@@ -602,7 +625,7 @@
     }
 
     .hamburger-btn.active span:nth-child(3) {
-      transform: rotate(-45deg) translateY(-10px);
+      transform: rotate(-45deg) translateY(-9px);
     }
 
     .menu-overlay {
@@ -687,6 +710,11 @@
 </head>
 <body>
 
+<!-- Logo -->
+<a href="index.html" class="logo">
+  LUNA<span>MATIONS</span>
+</a>
+
 <!-- Hamburger Menu Button -->
 <button class="hamburger-btn" id="hamburger-btn">
   <span></span>
@@ -703,10 +731,10 @@
 </div>
 
 <div class="header">
-  <h1>Lunamations</h1>
+  <h1>Hover Animations</h1>
   <div class="badge">GSAP Reference</div>
   <p>Standard naming for designers and developers. Hover over any element to preview the animation. On mobile, use the <strong>Play</strong> button to trigger and toggle each animation.</p>
-  <p style="font-size:11px; color:var(--text-muted); margin-top:8px;">Modified April 2, 2026 · 3:35 AM CST</p>
+  <p style="font-size:11px; color:var(--text-muted); margin-top:8px;">Modified April 2, 2026 · 3:42 AM CST</p>
 </div>
 
 <!-- ============================================================
