@@ -566,9 +566,8 @@
       right: 24px;
       width: 48px;
       height: 48px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
+      background: none;
+      border: none;
       cursor: pointer;
       display: flex;
       flex-direction: column;
@@ -577,24 +576,25 @@
       gap: 6px;
       z-index: 999;
       transition: all 0.3s ease;
+      padding: 0;
     }
 
     .hamburger-btn:hover {
-      background: var(--surface);
-      border-color: var(--accent);
+      opacity: 0.8;
     }
 
     .hamburger-btn span {
-      width: 20px;
+      width: 24px;
       height: 2px;
       background: var(--text);
       border-radius: 1px;
       transition: all 0.3s ease;
       display: block;
+      transform-origin: center;
     }
 
     .hamburger-btn.active span:nth-child(1) {
-      transform: rotate(45deg) translate(8px, 8px);
+      transform: rotate(45deg) translateY(10px);
     }
 
     .hamburger-btn.active span:nth-child(2) {
@@ -602,7 +602,7 @@
     }
 
     .hamburger-btn.active span:nth-child(3) {
-      transform: rotate(-45deg) translate(7px, -7px);
+      transform: rotate(-45deg) translateY(-10px);
     }
 
     .menu-overlay {
@@ -697,14 +697,14 @@
 <!-- Full-Screen Menu Overlay -->
 <div class="menu-overlay" id="menu-overlay">
   <ul>
-    <li><a href="index.html">HOVER ANIMATIONS</a></li>
-    <li><a href="load-in-animations.html">LOAD IN ANIMATIONS</a></li>
+    <li><a href="index.html">Hover Animations</a></li>
+    <li><a href="load-in-animations.html">Load In Animations</a></li>
   </ul>
 </div>
 
 <div class="header">
-  <div class="badge">GSAP Reference</div>
   <h1>Lunamations</h1>
+  <div class="badge">GSAP Reference</div>
   <p>Standard naming for designers and developers. Hover over any element to preview the animation. On mobile, use the <strong>Play</strong> button to trigger and toggle each animation.</p>
   <p style="font-size:11px; color:var(--text-muted); margin-top:8px;">Modified April 2, 2026 · 3:35 AM CST</p>
 </div>
