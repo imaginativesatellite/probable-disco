@@ -558,6 +558,98 @@
     }
 
     /* ============================================================
+       HAMBURGER MENU
+    ============================================================ */
+    .hamburger-btn {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      width: 48px;
+      height: 48px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      z-index: 999;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger-btn:hover {
+      background: var(--surface);
+      border-color: var(--accent);
+    }
+
+    .hamburger-btn span {
+      width: 20px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 1px;
+      transition: all 0.3s ease;
+      display: block;
+    }
+
+    .hamburger-btn.active span:nth-child(1) {
+      transform: rotate(45deg) translate(8px, 8px);
+    }
+
+    .hamburger-btn.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger-btn.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -7px);
+    }
+
+    .menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(14, 14, 14, 0.98);
+      backdrop-filter: blur(10px);
+      z-index: 998;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .menu-overlay.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .menu-overlay ul {
+      list-style: none;
+      text-align: center;
+    }
+
+    .menu-overlay li {
+      margin: 24px 0;
+    }
+
+    .menu-overlay a {
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.3s ease;
+      letter-spacing: -0.5px;
+    }
+
+    .menu-overlay a:hover {
+      color: var(--accent);
+    }
+
+    /* ============================================================
        SECTION DIVIDER
     ============================================================ */
     .section-tag {
@@ -595,11 +687,26 @@
 </head>
 <body>
 
+<!-- Hamburger Menu Button -->
+<button class="hamburger-btn" id="hamburger-btn">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+
+<!-- Full-Screen Menu Overlay -->
+<div class="menu-overlay" id="menu-overlay">
+  <ul>
+    <li><a href="index.html">HOVER ANIMATIONS</a></li>
+    <li><a href="load-in-animations.html">LOAD IN ANIMATIONS</a></li>
+  </ul>
+</div>
+
 <div class="header">
   <div class="badge">GSAP Reference</div>
-  <h1>Luna Animation Reference</h1>
+  <h1>Lunamations</h1>
   <p>Standard naming for designers and developers. Hover over any element to preview the animation. On mobile, use the <strong>Play</strong> button to trigger and toggle each animation.</p>
-  <p style="font-size:11px; color:var(--text-muted); margin-top:8px;">Modified April 2, 2026 · 3:24 AM CST</p>
+  <p style="font-size:11px; color:var(--text-muted); margin-top:8px;">Modified April 2, 2026 · 3:35 AM CST</p>
 </div>
 
 <!-- ============================================================
@@ -1458,6 +1565,33 @@ document.querySelectorAll('.play-btn').forEach(btn => {
   rect.style.strokeDasharray  = len;
   rect.style.strokeDashoffset = len;
 })();
+
+// ============================================================
+// HAMBURGER MENU
+// ============================================================
+const hamburgerBtn = document.getElementById('hamburger-btn');
+const menuOverlay = document.getElementById('menu-overlay');
+
+hamburgerBtn.addEventListener('click', () => {
+  hamburgerBtn.classList.toggle('active');
+  menuOverlay.classList.toggle('active');
+});
+
+// Close menu when a link is clicked
+menuOverlay.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburgerBtn.classList.remove('active');
+    menuOverlay.classList.remove('active');
+  });
+});
+
+// Close menu when clicking outside (on the overlay itself)
+menuOverlay.addEventListener('click', (e) => {
+  if (e.target === menuOverlay) {
+    hamburgerBtn.classList.remove('active');
+    menuOverlay.classList.remove('active');
+  }
+});
 </script>
 </body>
 </html>
