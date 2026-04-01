@@ -440,8 +440,9 @@
       font-size: 18px;
       font-weight: 500;
       pointer-events: none;
-      transform: translateX(-100%);
       white-space: nowrap;
+      width: 0;
+      overflow: hidden;
       z-index: 2;
     }
     .link-color-swipe .cs-text {
@@ -595,7 +596,7 @@
   <div class="badge">GSAP Reference</div>
   <h1>Luna Animation Reference</h1>
   <p>Standard naming for designers and developers. Hover over any element to preview the animation. On mobile, use the <strong>Play</strong> button to trigger and toggle each animation.</p>
-  <p style="font-size:11px; color:var(--text-muted); margin-top:8px;">Modified April 2, 2026 · 3:05 AM CST</p>
+  <p style="font-size:11px; color:var(--text-muted); margin-top:8px;">Modified April 2, 2026 · 3:12 AM CST</p>
 </div>
 
 <!-- ============================================================
@@ -1263,11 +1264,11 @@ reg('text-highlight',
 reg('color-swipe',
   (el) => {
     const overlay = el.querySelector('.cs-overlay');
-    gsap.to(overlay, { x: '0%', duration: 0.4, ease: 'power2.out' });
+    gsap.to(overlay, { width: '100%', duration: 0.4, ease: 'power2.out' });
   },
   (el) => {
     const overlay = el.querySelector('.cs-overlay');
-    gsap.to(overlay, { x: '-100%', duration: 0.4, ease: 'power2.out' });
+    gsap.to(overlay, { width: '0%', duration: 0.4, ease: 'power2.out' });
   }
 );
 
@@ -1314,11 +1315,6 @@ reg('icon-arrow-slide',
   (el) => {
     const main = el.querySelector('.ias-main');
     const slide = el.querySelector('.ias-slide');
-    // Initialize purple arrow off-screen left on first hover if not already set
-    if (!slide._initialized) {
-      gsap.set(slide, { x: -56 });
-      slide._initialized = true;
-    }
     // On hover: white slides right and out, purple comes in from left to center
     gsap.to(main, { x: 56, duration: 0.4, ease: 'power2.out' });
     gsap.to(slide, { x: 0, duration: 0.4, ease: 'power2.out' });
@@ -1331,6 +1327,17 @@ reg('icon-arrow-slide',
     gsap.to(main, { x: -56, duration: 0.4, ease: 'power2.out' });
   }
 );
+
+// Initialize arrow slide positions (white centered, purple off-screen left)
+(() => {
+  const arrowEl = document.getElementById('icon-arrow-slide');
+  if (arrowEl) {
+    const main = arrowEl.querySelector('.ias-main');
+    const slide = arrowEl.querySelector('.ias-slide');
+    gsap.set([main, slide], { x: 0 });  // Start both at center
+    gsap.set(slide, { x: -56 });  // Then move purple off-screen left
+  }
+})();
 
 // ============================================================
 // ELEMENT MAP  name -> DOM element
