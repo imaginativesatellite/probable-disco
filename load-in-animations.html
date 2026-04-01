@@ -31,7 +31,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 24px;
+      padding: 80px 24px 24px;
     }
 
     .hamburger-btn {
@@ -68,7 +68,7 @@
     }
 
     .hamburger-btn.active span:nth-child(1) {
-      transform: rotate(45deg) translateY(9px);
+      transform: rotate(45deg) translateY(8px);
     }
 
     .hamburger-btn.active span:nth-child(2) {
@@ -76,7 +76,7 @@
     }
 
     .hamburger-btn.active span:nth-child(3) {
-      transform: rotate(-45deg) translateY(-9px);
+      transform: rotate(-45deg) translateY(-8px);
     }
 
     .menu-overlay {
@@ -128,19 +128,14 @@
       top: 24px;
       left: 24px;
       z-index: 999;
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 700;
       letter-spacing: 2px;
       color: var(--accent);
       text-decoration: none;
-    }
-
-    .logo span {
-      display: block;
-      font-size: 11px;
-      letter-spacing: 0.5px;
-      color: var(--text-muted);
-      margin-top: 2px;
+      height: 48px;
+      display: flex;
+      align-items: center;
     }
 
     .coming-soon {
@@ -187,9 +182,7 @@
 <body>
 
 <!-- Logo -->
-<a href="index.html" class="logo">
-  LUNA<span>MATIONS</span>
-</a>
+<a href="index.html" class="logo">LUNAMATIONS</a>
 
 <!-- Hamburger Menu Button -->
 <button class="hamburger-btn" id="hamburger-btn">
