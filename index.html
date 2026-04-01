@@ -599,7 +599,7 @@
   <div class="badge">GSAP Reference</div>
   <h1>Luna Animation Reference</h1>
   <p>Standard naming for designers and developers. Hover over any element to preview the animation. On mobile, use the <strong>Play</strong> button to trigger and toggle each animation.</p>
-  <p style="font-size:11px; color:var(--text-muted); margin-top:8px;">Modified April 2, 2026 · 3:18 AM CST</p>
+  <p style="font-size:11px; color:var(--text-muted); margin-top:8px;">Modified April 2, 2026 · 3:24 AM CST</p>
 </div>
 
 <!-- ============================================================
@@ -1325,9 +1325,9 @@ reg('icon-arrow-slide',
   (el) => {
     const main = el.querySelector('.ias-main');
     const slide = el.querySelector('.ias-slide');
-    // On unhover: purple slides right out, white resets to off-screen left and comes back in
-    gsap.to(slide, { x: 56, duration: 0.4, ease: 'power2.out' });
-    gsap.to(main, { x: -56, duration: 0.4, ease: 'power2.out' });
+    // On unhover: reverse back to original state
+    gsap.to(main, { x: 0, duration: 0.4, ease: 'power2.out' });
+    gsap.to(slide, { x: -56, duration: 0.4, ease: 'power2.out' });
   }
 );
 
