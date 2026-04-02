@@ -1150,10 +1150,10 @@
       <div class="card-stage">
         <div class="icon-btn-wrap icon-arrow-diagonal" id="icon-arrow-diagonal">
           <svg class="iad-main" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt" stroke-linejoin="round">
-            <path d="M6 18l14.4-14.4M8.4 3.6L20.4 3.6L20.4 15.6"/>
+            <path d="M6 18l16-16M6 2L22 2L22 18"/>
           </svg>
           <svg class="iad-slide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt" stroke-linejoin="round">
-            <path d="M6 18l14.4-14.4M8.4 3.6L20.4 3.6L20.4 15.6"/>
+            <path d="M6 18l16-16M6 2L22 2L22 18"/>
           </svg>
         </div>
       </div>
@@ -1564,7 +1564,7 @@ reg('icon-arrow-diagonal',
     const main = el.querySelector('.iad-main');
     const slide = el.querySelector('.iad-slide');
     // On hover: white moves up-right and out, purple comes in from down-left to center
-    gsap.to(main, { x: 40, y: -40, duration: 0.4, ease: 'power2.out' });
+    gsap.to(main, { x: 54, y: -54, duration: 0.4, ease: 'power2.out' });
     gsap.to(slide, { x: 0, y: 0, duration: 0.4, ease: 'power2.out' });
   },
   (el) => {
@@ -1572,7 +1572,7 @@ reg('icon-arrow-diagonal',
     const slide = el.querySelector('.iad-slide');
     // On unhover: reverse back to original state
     gsap.to(main, { x: 0, y: 0, duration: 0.4, ease: 'power2.out' });
-    gsap.to(slide, { x: -40, y: 40, duration: 0.4, ease: 'power2.out' });
+    gsap.to(slide, { x: -54, y: 54, duration: 0.4, ease: 'power2.out' });
   }
 );
 
@@ -1594,7 +1594,7 @@ reg('icon-arrow-diagonal',
     const main = arrowEl.querySelector('.iad-main');
     const slide = arrowEl.querySelector('.iad-slide');
     gsap.set([main, slide], { x: 0, y: 0 });  // Start both at center
-    gsap.set(slide, { x: -40, y: 40 });  // Then move purple off-screen down-left
+    gsap.set(slide, { x: -54, y: 54 });  // Then move purple off-screen down-left
   }
 })();
 
