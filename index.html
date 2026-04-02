@@ -456,7 +456,7 @@
     .link-color-swipe .cs-text {
       position: absolute;
       top: 0;
-      right: 0;
+      left: 0;
       width: 100%;
       white-space: nowrap;
       overflow: hidden;
@@ -464,11 +464,6 @@
     }
     .link-color-swipe .cs-text-inner {
       position: absolute;
-      top: 0;
-      right: 0;
-      width: 100%;
-      white-space: nowrap;
-      overflow: hidden;
     }
 
     /* 10 & 11. Button Roll Up / Button Stagger Roll Up */
@@ -1417,15 +1412,15 @@ reg('text-highlight',
 reg('color-swipe',
   (el) => {
     const overlay = el.querySelector('.cs-overlay');
-    const textInner = el.querySelector('.cs-text-inner');
+    const text = el.querySelector('.cs-text');
     gsap.to(overlay, { width: '100%', duration: 0.4, ease: 'power2.out' });
-    gsap.to(textInner, { width: '0%', duration: 0.4, ease: 'power2.out' });
+    gsap.to(text, { width: '0%', duration: 0.4, ease: 'power2.out' });
   },
   (el) => {
     const overlay = el.querySelector('.cs-overlay');
-    const textInner = el.querySelector('.cs-text-inner');
+    const text = el.querySelector('.cs-text');
     gsap.to(overlay, { width: '0%', duration: 0.4, ease: 'power2.out' });
-    gsap.to(textInner, { width: '100%', duration: 0.4, ease: 'power2.out' });
+    gsap.to(text, { width: '100%', duration: 0.4, ease: 'power2.out' });
   }
 );
 
