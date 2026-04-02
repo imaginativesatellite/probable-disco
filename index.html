@@ -288,6 +288,17 @@
       width: 0.32em;
     }
 
+    /* 8. Text Scale */
+    .link-text-scale {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 18px;
+      font-weight: 500;
+      cursor: default;
+      display: inline-block;
+      transform-origin: center;
+    }
+
     /* ============================================================
        WORD BUTTON ANIMATIONS
     ============================================================ */
@@ -572,6 +583,27 @@
       color: var(--text);
     }
     .icon-arrow-slide .ias-slide {
+      color: var(--accent);
+    }
+
+    /* 6. Arrow Diagonal */
+    .icon-arrow-diagonal {
+      position: relative;
+      overflow: hidden;
+    }
+    .icon-arrow-diagonal svg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -12px;
+      margin-left: -12px;
+      width: 24px;
+      height: 24px;
+    }
+    .icon-arrow-diagonal .iad-main {
+      color: var(--text);
+    }
+    .icon-arrow-diagonal .iad-slide {
       color: var(--accent);
     }
 
@@ -867,6 +899,17 @@
       </div>
     </div>
 
+    <!-- 10. Text Scale -->
+    <div class="card" data-anim="text-scale">
+      <div class="card-stage">
+        <a class="link-text-scale" id="text-scale">Explore More</a>
+      </div>
+      <div class="card-meta">
+        <span class="card-name">Text Scale</span>
+        <button class="play-btn" data-target="text-scale">Play</button>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -1094,6 +1137,24 @@
       <div class="card-meta">
         <span class="card-name">Arrow Slide</span>
         <button class="play-btn" data-target="icon-arrow-slide">Play</button>
+      </div>
+    </div>
+
+    <!-- 6. Arrow Diagonal -->
+    <div class="card" data-anim="icon-arrow-diagonal">
+      <div class="card-stage">
+        <div class="icon-btn-wrap icon-arrow-diagonal" id="icon-arrow-diagonal">
+          <svg class="iad-main" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 18l12-12M18 6l-4 4M18 6l4-4"/>
+          </svg>
+          <svg class="iad-slide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 18l12-12M18 6l-4 4M18 6l4-4"/>
+          </svg>
+        </div>
+      </div>
+      <div class="card-meta">
+        <span class="card-name">Arrow Diagonal</span>
+        <button class="play-btn" data-target="icon-arrow-diagonal">Play</button>
       </div>
     </div>
 
@@ -1426,6 +1487,16 @@ reg('color-swipe',
   }
 );
 
+// 10. Text Scale
+reg('text-scale',
+  (el) => {
+    gsap.to(el, { scale: 1.2, duration: 0.4, ease: 'power2.out' });
+  },
+  (el) => {
+    gsap.to(el, { scale: 1, duration: 0.4, ease: 'power2.out' });
+  }
+);
+
 // ---- ICON BUTTONS ----
 
 // 1. Icon Spin
@@ -1482,6 +1553,24 @@ reg('icon-arrow-slide',
   }
 );
 
+// 6. Arrow Diagonal
+reg('icon-arrow-diagonal',
+  (el) => {
+    const main = el.querySelector('.iad-main');
+    const slide = el.querySelector('.iad-slide');
+    // On hover: white moves up-right and out, purple comes in from down-left to center
+    gsap.to(main, { x: 40, y: -40, duration: 0.4, ease: 'power2.out' });
+    gsap.to(slide, { x: 0, y: 0, duration: 0.4, ease: 'power2.out' });
+  },
+  (el) => {
+    const main = el.querySelector('.iad-main');
+    const slide = el.querySelector('.iad-slide');
+    // On unhover: reverse back to original state
+    gsap.to(main, { x: 0, y: 0, duration: 0.4, ease: 'power2.out' });
+    gsap.to(slide, { x: -40, y: 40, duration: 0.4, ease: 'power2.out' });
+  }
+);
+
 // Initialize arrow slide positions (white centered, purple off-screen left)
 (() => {
   const arrowEl = document.getElementById('icon-arrow-slide');
@@ -1490,6 +1579,17 @@ reg('icon-arrow-slide',
     const slide = arrowEl.querySelector('.ias-slide');
     gsap.set([main, slide], { x: 0 });  // Start both at center
     gsap.set(slide, { x: -56 });  // Then move purple off-screen left
+  }
+})();
+
+// Initialize arrow diagonal positions (white centered, purple off-screen down-left)
+(() => {
+  const arrowEl = document.getElementById('icon-arrow-diagonal');
+  if (arrowEl) {
+    const main = arrowEl.querySelector('.iad-main');
+    const slide = arrowEl.querySelector('.iad-slide');
+    gsap.set([main, slide], { x: 0, y: 0 });  // Start both at center
+    gsap.set(slide, { x: -40, y: 40 });  // Then move purple off-screen down-left
   }
 })();
 
@@ -1520,6 +1620,8 @@ const elMap = {
   'icon-wobble':       document.getElementById('icon-wobble'),
   'icon-flip':         document.getElementById('icon-flip'),
   'icon-arrow-slide':  document.getElementById('icon-arrow-slide'),
+  'text-scale':        document.getElementById('text-scale'),
+  'icon-arrow-diagonal': document.getElementById('icon-arrow-diagonal'),
 };
 
 // ============================================================
