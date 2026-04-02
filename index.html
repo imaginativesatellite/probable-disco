@@ -462,6 +462,14 @@
       overflow: hidden;
       z-index: 1;
     }
+    .link-color-swipe .cs-text-inner {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+    }
 
     /* 10 & 11. Button Roll Up / Button Stagger Roll Up */
     .btn-text-roll-up,
@@ -853,7 +861,7 @@
         <a class="link-color-swipe" id="color-swipe">
           <span class="cs-sizing">Get Started</span>
           <span class="cs-overlay">Get Started</span>
-          <span class="cs-text">Get Started</span>
+          <span class="cs-text"><span class="cs-text-inner">Get Started</span></span>
         </a>
       </div>
       <div class="card-meta">
@@ -1409,15 +1417,15 @@ reg('text-highlight',
 reg('color-swipe',
   (el) => {
     const overlay = el.querySelector('.cs-overlay');
-    const text = el.querySelector('.cs-text');
+    const textInner = el.querySelector('.cs-text-inner');
     gsap.to(overlay, { width: '100%', duration: 0.4, ease: 'power2.out' });
-    gsap.to(text, { width: '0%', duration: 0.4, ease: 'power2.out' });
+    gsap.to(textInner, { width: '0%', duration: 0.4, ease: 'power2.out' });
   },
   (el) => {
     const overlay = el.querySelector('.cs-overlay');
-    const text = el.querySelector('.cs-text');
+    const textInner = el.querySelector('.cs-text-inner');
     gsap.to(overlay, { width: '0%', duration: 0.4, ease: 'power2.out' });
-    gsap.to(text, { width: '100%', duration: 0.4, ease: 'power2.out' });
+    gsap.to(textInner, { width: '100%', duration: 0.4, ease: 'power2.out' });
   }
 );
 
