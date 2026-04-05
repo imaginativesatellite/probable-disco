@@ -234,6 +234,16 @@
       font-size: 14px;
       z-index: 100;
     }
+
+    .version {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--text-muted);
+      font-size: 11px;
+      z-index: 100;
+    }
   </style>
 </head>
 <body>
@@ -280,6 +290,7 @@
 </div>
 
 <span class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">8</span></span>
+<span class="version">v1</span>
 </div>
 
 <script>
@@ -358,6 +369,9 @@ const nextBtn = document.getElementById('next-btn');
 
 // Animate content staggered from top to bottom with different effects per slide
 function animateContent() {
+  // Kill any existing animations on these elements
+  gsap.killTweensOf([headlineEl, subheadlineEl, descriptionEl, '.slide-btn']);
+
   const tl = gsap.timeline();
   let headlineStart = { opacity: 0, y: -10 };
   let subheadlineStart = { opacity: 0, y: -10 };
