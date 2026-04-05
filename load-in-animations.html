@@ -446,7 +446,10 @@ function animateContent() {
     }
 
     // Animate headline line by line
+    // First, restore the original text if it's wrapped in spans
     const headlineText = headlineEl.textContent;
+    headlineEl.textContent = headlineText; // This resets innerHTML to plain text
+
     const headlineWords = headlineText.split(' ');
     let headlineHTML = headlineWords.map(word => `<span class="word">${word}</span>`).join('');
     headlineEl.innerHTML = headlineHTML;
@@ -468,7 +471,10 @@ function animateContent() {
     );
 
     // Animate description line by line
+    // First, restore the original text if it's wrapped in spans
     const descriptionText = descriptionEl.textContent;
+    descriptionEl.textContent = descriptionText; // This resets innerHTML to plain text
+
     const descriptionWords = descriptionText.split(' ');
     let descriptionHTML = descriptionWords.map(word => `<span class="word">${word}</span>`).join('');
     descriptionEl.innerHTML = descriptionHTML;
