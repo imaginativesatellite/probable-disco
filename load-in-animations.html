@@ -180,6 +180,11 @@
       opacity: 0;
     }
 
+    .word {
+      display: inline-block;
+      margin-right: 0.3em;
+    }
+
     .button-group {
       display: flex;
       gap: 12px;
@@ -257,8 +262,8 @@
 
 <!-- Slideshow Content -->
 <div class="slideshow-container">
-  <h1 id="headline">Load In</h1>
-  <h2 id="subheadline">Fade In</h2>
+  <h1 id="headline">Load In Animations make everything look beautiful</h1>
+  <h2 id="subheadline">Fade In From Left</h2>
   <p id="description">Elements smoothly fade in from transparent to fully opaque. This is the most basic and commonly used load-in animation, perfect for introducing content without distraction.</p>
 
   <div class="button-group">
@@ -278,7 +283,7 @@
   </div>
 </div>
 
-<span class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">4</span></span>
+<span class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">8</span></span>
 </div>
 
 <script>
@@ -324,6 +329,22 @@ const animations = [
   {
     name: 'Fade Down',
     description: 'Content fades in while moving downward from above. Elegant entrance that feels natural and controlled.'
+  },
+  {
+    name: 'Line From Left',
+    description: 'Headline and description animate line by line sliding in from the left. Each line enters sequentially for dramatic effect.'
+  },
+  {
+    name: 'Line Up',
+    description: 'Text animates line by line moving upward from below. Build momentum as each line enters the viewport.'
+  },
+  {
+    name: 'Line From Right',
+    description: 'Headline and description slide in from the right one line at a time. Creates compelling visual rhythm.'
+  },
+  {
+    name: 'Line Down',
+    description: 'Text enters line by line moving downward. Graceful sequential reveal that feels controlled and intentional.'
   }
 ];
 
@@ -346,55 +367,132 @@ function animateContent() {
   let subheadlineStart = { opacity: 0, y: -10 };
   let descriptionStart = { opacity: 0, y: -10 };
   let buttonStart = { opacity: 0, y: -10 };
+  let xOffset = 0, yOffset = 0;
 
   // Define animation based on current slide
-  switch(currentIndex) {
-    case 0: // Fade in from left
-      headlineStart = { opacity: 0, x: -20 };
-      subheadlineStart = { opacity: 0, x: -20 };
-      descriptionStart = { opacity: 0, x: -20 };
-      buttonStart = { opacity: 0, x: -20 };
-      break;
-    case 1: // Fade up
-      headlineStart = { opacity: 0, y: 20 };
-      subheadlineStart = { opacity: 0, y: 20 };
-      descriptionStart = { opacity: 0, y: 20 };
-      buttonStart = { opacity: 0, y: 20 };
-      break;
-    case 2: // Fade in from right
-      headlineStart = { opacity: 0, x: 20 };
-      subheadlineStart = { opacity: 0, x: 20 };
-      descriptionStart = { opacity: 0, x: 20 };
-      buttonStart = { opacity: 0, x: 20 };
-      break;
-    case 3: // Fade down
-      headlineStart = { opacity: 0, y: -20 };
-      subheadlineStart = { opacity: 0, y: -20 };
-      descriptionStart = { opacity: 0, y: -20 };
-      buttonStart = { opacity: 0, y: -20 };
-      break;
-  }
+  if (currentIndex < 4) {
+    // Slides 0-3: Standard animations with individual button stagger
+    switch(currentIndex) {
+      case 0: // Fade in from left
+        headlineStart = { opacity: 0, x: -20 };
+        subheadlineStart = { opacity: 0, x: -20 };
+        descriptionStart = { opacity: 0, x: -20 };
+        buttonStart = { opacity: 0, x: -20 };
+        break;
+      case 1: // Fade up
+        headlineStart = { opacity: 0, y: 20 };
+        subheadlineStart = { opacity: 0, y: 20 };
+        descriptionStart = { opacity: 0, y: 20 };
+        buttonStart = { opacity: 0, y: 20 };
+        break;
+      case 2: // Fade in from right
+        headlineStart = { opacity: 0, x: 20 };
+        subheadlineStart = { opacity: 0, x: 20 };
+        descriptionStart = { opacity: 0, x: 20 };
+        buttonStart = { opacity: 0, x: 20 };
+        break;
+      case 3: // Fade down
+        headlineStart = { opacity: 0, y: -20 };
+        subheadlineStart = { opacity: 0, y: -20 };
+        descriptionStart = { opacity: 0, y: -20 };
+        buttonStart = { opacity: 0, y: -20 };
+        break;
+    }
 
-  tl.fromTo(headlineEl,
-    headlineStart,
-    { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'power2.out' },
-    0
-  )
-  .fromTo(subheadlineEl,
-    subheadlineStart,
-    { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'power2.out' },
-    0.15
-  )
-  .fromTo(descriptionEl,
-    descriptionStart,
-    { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'power2.out' },
-    0.3
-  )
-  .fromTo(document.querySelector('.button-group'),
-    buttonStart,
-    { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'power2.out' },
-    0.45
-  );
+    tl.fromTo(headlineEl,
+      headlineStart,
+      { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'power2.out' },
+      0
+    )
+    .fromTo(subheadlineEl,
+      subheadlineStart,
+      { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'power2.out' },
+      0.15
+    )
+    .fromTo(descriptionEl,
+      descriptionStart,
+      { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'power2.out' },
+      0.3
+    );
+
+    // Animate each button individually
+    const buttons = document.querySelectorAll('.slide-btn');
+    buttons.forEach((btn, index) => {
+      tl.fromTo(btn,
+        buttonStart,
+        { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'power2.out' },
+        0.45 + (index * 0.1)
+      );
+    });
+
+  } else {
+    // Slides 4-7: Line-by-line animations
+    const slideIndex = currentIndex - 4;
+
+    // Determine direction based on slide index
+    switch(slideIndex) {
+      case 0: // Line from left
+        xOffset = -20;
+        break;
+      case 1: // Line up
+        yOffset = 20;
+        break;
+      case 2: // Line from right
+        xOffset = 20;
+        break;
+      case 3: // Line down
+        yOffset = -20;
+        break;
+    }
+
+    // Animate headline line by line
+    const headlineText = headlineEl.textContent;
+    const headlineWords = headlineText.split(' ');
+    let headlineHTML = headlineWords.map(word => `<span class="word">${word}</span>`).join(' ');
+    headlineEl.innerHTML = headlineHTML;
+
+    const headlineSpans = headlineEl.querySelectorAll('.word');
+    headlineSpans.forEach((span, index) => {
+      tl.fromTo(span,
+        { opacity: 0, x: xOffset, y: yOffset },
+        { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'power2.out' },
+        index * 0.1
+      );
+    });
+
+    // Animate subheadline
+    tl.fromTo(subheadlineEl,
+      { opacity: 0, x: xOffset, y: yOffset },
+      { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'power2.out' },
+      headlineSpans.length * 0.1 + 0.1
+    );
+
+    // Animate description line by line
+    const descriptionText = descriptionEl.textContent;
+    const descriptionWords = descriptionText.split(' ');
+    let descriptionHTML = descriptionWords.map(word => `<span class="word">${word}</span>`).join(' ');
+    descriptionEl.innerHTML = descriptionHTML;
+
+    const descriptionSpans = descriptionEl.querySelectorAll('.word');
+    descriptionSpans.forEach((span, index) => {
+      tl.fromTo(span,
+        { opacity: 0, x: xOffset, y: yOffset },
+        { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'power2.out' },
+        headlineSpans.length * 0.1 + 0.2 + (index * 0.08)
+      );
+    });
+
+    // Animate buttons
+    const buttons = document.querySelectorAll('.slide-btn');
+    const buttonsStartTime = headlineSpans.length * 0.1 + 0.2 + (descriptionSpans.length * 0.08) + 0.2;
+    buttons.forEach((btn, index) => {
+      tl.fromTo(btn,
+        { opacity: 0, x: xOffset, y: yOffset },
+        { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'power2.out' },
+        buttonsStartTime + (index * 0.1)
+      );
+    });
+  }
 }
 
 // Update slideshow display
