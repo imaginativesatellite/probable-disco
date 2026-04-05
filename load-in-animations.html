@@ -402,16 +402,14 @@ function animateContent() {
     gsap.set(descriptionEl, descriptionStart);
 
     // Animate to final values
-    tl.to(headlineEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0)
-      .to(subheadlineEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0.15)
-      .to(descriptionEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0.3);
+    tl.fromTo(headlineEl, headlineStart, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0)
+      .fromTo(subheadlineEl, subheadlineStart, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0.15)
+      .fromTo(descriptionEl, descriptionStart, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0.3);
 
     // Animate each button individually
     const buttons = document.querySelectorAll('.slide-btn');
-    gsap.set(buttons, buttonStart);
-
     buttons.forEach((btn, index) => {
-      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0.45 + (index * 0.1));
+      tl.fromTo(btn, buttonStart, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0.45 + (index * 0.1));
     });
 
   } else {
@@ -444,15 +442,12 @@ function animateContent() {
     headlineEl.innerHTML = headlineHTML;
 
     const headlineSpans = headlineEl.querySelectorAll('.word');
-    gsap.set(headlineSpans, { opacity: 0, x: xOffset, y: yOffset });
-
     headlineSpans.forEach((span, index) => {
-      tl.to(span, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, index * 0.1);
+      tl.fromTo(span, { opacity: 0, x: xOffset, y: yOffset }, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, index * 0.1);
     });
 
     // Animate subheadline
-    gsap.set(subheadlineEl, { opacity: 0, x: xOffset, y: yOffset });
-    tl.to(subheadlineEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, headlineSpans.length * 0.1 + 0.1);
+    tl.fromTo(subheadlineEl, { opacity: 0, x: xOffset, y: yOffset }, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, headlineSpans.length * 0.1 + 0.1);
 
     // Animate description line by line
     // First, restore the original text if it's wrapped in spans
@@ -464,19 +459,15 @@ function animateContent() {
     descriptionEl.innerHTML = descriptionHTML;
 
     const descriptionSpans = descriptionEl.querySelectorAll('.word');
-    gsap.set(descriptionSpans, { opacity: 0, x: xOffset, y: yOffset });
-
     descriptionSpans.forEach((span, index) => {
-      tl.to(span, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, headlineSpans.length * 0.1 + 0.2 + (index * 0.08));
+      tl.fromTo(span, { opacity: 0, x: xOffset, y: yOffset }, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, headlineSpans.length * 0.1 + 0.2 + (index * 0.08));
     });
 
     // Animate buttons
     const buttons = document.querySelectorAll('.slide-btn');
-    gsap.set(buttons, { opacity: 0, x: xOffset, y: yOffset });
-
     const buttonsStartTime = headlineSpans.length * 0.1 + 0.2 + (descriptionSpans.length * 0.08) + 0.2;
     buttons.forEach((btn, index) => {
-      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, buttonsStartTime + (index * 0.1));
+      tl.fromTo(btn, { opacity: 0, x: xOffset, y: yOffset }, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, buttonsStartTime + (index * 0.1));
     });
   }
 }
