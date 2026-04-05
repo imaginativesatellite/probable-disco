@@ -182,6 +182,10 @@
       margin-right: 0.3em;
     }
 
+    .line {
+      display: block;
+    }
+
     .button-group {
       display: flex;
       gap: 12px;
@@ -450,48 +454,68 @@ function animateContent() {
         break;
     }
 
+    // Helper: split element text into visual line spans by detecting word positions
+    function wrapTextIntoLines(el) {
+      const text = el.textContent.trim();
+      const words = text.split(/\s+/).filter(Boolean);
+      // Temporarily render words as spans for line position detection
+      el.innerHTML = '';
+      words.forEach(word => {
+        const span = document.createElement('span');
+        span.className = 'word';
+        span.textContent = word + ' ';
+        el.appendChild(span);
+      });
+      // Group words by visual line (offsetTop)
+      const wordSpans = Array.from(el.querySelectorAll('.word'));
+      const lineGroups = [];
+      let currentTop = null;
+      let currentGroup = [];
+      wordSpans.forEach(span => {
+        const top = span.offsetTop;
+        if (currentTop === null) currentTop = top;
+        if (top !== currentTop) {
+          lineGroups.push(currentGroup);
+          currentGroup = [];
+          currentTop = top;
+        }
+        currentGroup.push(span.textContent.trim());
+      });
+      if (currentGroup.length) lineGroups.push(currentGroup);
+      // Replace with one span per visual line using safe DOM methods
+      el.innerHTML = '';
+      return lineGroups.map(group => {
+        const span = document.createElement('span');
+        span.className = 'line';
+        span.textContent = group.join(' ');
+        el.appendChild(span);
+        return span;
+      });
+    }
+
     // Animate headline line by line
-    // First, restore the original text if it's wrapped in spans
-    const headlineText = headlineEl.textContent;
-    headlineEl.textContent = headlineText; // This resets innerHTML to plain text
-
-    const headlineWords = headlineText.split(' ');
-    let headlineHTML = headlineWords.map(word => `<span class="word">${word}</span>`).join('');
-    headlineEl.innerHTML = headlineHTML;
-
-    // Reset headline and set initial state
-    const headlineSpans = headlineEl.querySelectorAll('.word');
-    gsap.set(headlineSpans, { opacity: 0, x: xOffset, y: yOffset });
-
-    headlineSpans.forEach((span, index) => {
+    const headlineLines = wrapTextIntoLines(headlineEl);
+    gsap.set(headlineLines, { opacity: 0, x: xOffset, y: yOffset });
+    headlineLines.forEach((span, index) => {
       tl.to(span, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, index * 0.1);
     });
 
     // Animate subheadline
     gsap.set(subheadlineEl, { opacity: 0, x: xOffset, y: yOffset });
-    tl.to(subheadlineEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, headlineSpans.length * 0.1 + 0.1);
+    tl.to(subheadlineEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, headlineLines.length * 0.1 + 0.1);
 
     // Animate description line by line
-    // First, restore the original text if it's wrapped in spans
-    const descriptionText = descriptionEl.textContent;
-    descriptionEl.textContent = descriptionText; // This resets innerHTML to plain text
-
-    const descriptionWords = descriptionText.split(' ');
-    let descriptionHTML = descriptionWords.map(word => `<span class="word">${word}</span>`).join('');
-    descriptionEl.innerHTML = descriptionHTML;
-
-    const descriptionSpans = descriptionEl.querySelectorAll('.word');
-    gsap.set(descriptionSpans, { opacity: 0, x: xOffset, y: yOffset });
-
-    descriptionSpans.forEach((span, index) => {
-      tl.to(span, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, headlineSpans.length * 0.1 + 0.2 + (index * 0.08));
+    const descriptionLines = wrapTextIntoLines(descriptionEl);
+    gsap.set(descriptionLines, { opacity: 0, x: xOffset, y: yOffset });
+    descriptionLines.forEach((span, index) => {
+      tl.to(span, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, headlineLines.length * 0.1 + 0.2 + (index * 0.1));
     });
 
     // Animate buttons
     const buttons = document.querySelectorAll('.slide-btn');
     gsap.set(buttons, { opacity: 0, x: xOffset, y: yOffset });
 
-    const buttonsStartTime = headlineSpans.length * 0.1 + 0.2 + (descriptionSpans.length * 0.08) + 0.2;
+    const buttonsStartTime = headlineLines.length * 0.1 + 0.2 + (descriptionLines.length * 0.1) + 0.2;
     buttons.forEach((btn, index) => {
       tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, buttonsStartTime + (index * 0.1));
     });
