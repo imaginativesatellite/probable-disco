@@ -290,7 +290,7 @@
 </div>
 
 <span class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">8</span></span>
-<span class="version">v3</span>
+<span class="version">v4</span>
 </div>
 
 <script>
@@ -415,10 +415,10 @@ function animateContent() {
     gsap.set([headlineEl, subheadlineEl, descriptionEl], headlineStart);
     gsap.set(document.querySelectorAll('.slide-btn'), buttonStart);
 
-    // Add animations to timeline with immediate execution
-    tl.to(headlineEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in', immediateRender: true }, 0);
-    tl.to(subheadlineEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0.15);
-    tl.to(descriptionEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0.3);
+    // Add animations to timeline
+    tl.to(headlineEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0)
+      .to(subheadlineEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0.15)
+      .to(descriptionEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0.3);
 
     // Animate each button individually
     const buttons = document.querySelectorAll('.slide-btn');
