@@ -183,25 +183,27 @@
     }
 
     .slide-btn {
-      padding: 12px 24px;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 8px;
       background: var(--surface2);
       border: 1px solid var(--border);
-      border-radius: 8px;
       color: var(--text);
-      font-size: 18px;
-      font-weight: 500;
       cursor: pointer;
       transition: all 0.3s ease;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
+      letter-spacing: 0.01em;
     }
 
     #reload-btn {
       width: 48px;
       height: 48px;
       padding: 0;
+      flex-shrink: 0;
     }
 
     .slide-btn:hover {
@@ -252,8 +254,18 @@
 
   <div class="button-group">
     <button class="slide-btn" id="reload-btn">↻</button>
-    <button class="slide-btn" id="prev-btn">‹ Previous</button>
-    <button class="slide-btn" id="next-btn">Next ›</button>
+    <button class="slide-btn" id="prev-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+      Previous
+    </button>
+    <button class="slide-btn" id="next-btn">
+      Next
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </button>
   </div>
 </div>
 
