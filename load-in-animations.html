@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Load In Animations | Lunamations</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/SplitText.min.js"></script>
   <style>
     :root {
       --bg: #0e0e0e;
@@ -180,9 +181,8 @@
       opacity: 0;
     }
 
-    .word {
-      display: inline-block;
-      margin-right: 0.3em;
+    .line {
+      display: block;
     }
 
     .button-group {
@@ -360,6 +360,9 @@ const reloadBtn = document.getElementById('reload-btn');
 const prevBtn = document.getElementById('prev-btn');
 const nextBtn = document.getElementById('next-btn');
 
+// Register SplitText plugin
+gsap.registerPlugin(SplitText);
+
 // Animate content staggered from top to bottom with different effects per slide
 function animateContent() {
   const tl = gsap.timeline();
@@ -445,18 +448,16 @@ function animateContent() {
         break;
     }
 
-    // Animate headline line by line
-    const headlineText = headlineEl.textContent;
-    const headlineWords = headlineText.split(' ');
-    let headlineHTML = headlineWords.map(word => `<span class="word">${word}</span>`).join(' ');
-    headlineEl.innerHTML = headlineHTML;
+    // Use GSAP SplitText to split headline by lines
+    const headlineSplit = new SplitText(headlineEl, { type: 'lines' });
+    const headlineLines = headlineSplit.lines;
 
-    const headlineSpans = headlineEl.querySelectorAll('.word');
-    headlineSpans.forEach((span, index) => {
-      tl.fromTo(span,
-        { opacity: 0, x: xOffset, y: yOffset },
+    gsap.set(headlineLines, { opacity: 0, x: xOffset, y: yOffset });
+
+    headlineLines.forEach((line, index) => {
+      tl.to(line,
         { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'power2.out' },
-        index * 0.1
+        index * 0.12
       );
     });
 
@@ -464,27 +465,25 @@ function animateContent() {
     tl.fromTo(subheadlineEl,
       { opacity: 0, x: xOffset, y: yOffset },
       { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'power2.out' },
-      headlineSpans.length * 0.1 + 0.1
+      headlineLines.length * 0.12 + 0.1
     );
 
-    // Animate description line by line
-    const descriptionText = descriptionEl.textContent;
-    const descriptionWords = descriptionText.split(' ');
-    let descriptionHTML = descriptionWords.map(word => `<span class="word">${word}</span>`).join(' ');
-    descriptionEl.innerHTML = descriptionHTML;
+    // Use GSAP SplitText to split description by lines
+    const descriptionSplit = new SplitText(descriptionEl, { type: 'lines' });
+    const descriptionLines = descriptionSplit.lines;
 
-    const descriptionSpans = descriptionEl.querySelectorAll('.word');
-    descriptionSpans.forEach((span, index) => {
-      tl.fromTo(span,
-        { opacity: 0, x: xOffset, y: yOffset },
+    gsap.set(descriptionLines, { opacity: 0, x: xOffset, y: yOffset });
+
+    descriptionLines.forEach((line, index) => {
+      tl.to(line,
         { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'power2.out' },
-        headlineSpans.length * 0.1 + 0.2 + (index * 0.08)
+        headlineLines.length * 0.12 + 0.2 + (index * 0.12)
       );
     });
 
     // Animate buttons
     const buttons = document.querySelectorAll('.slide-btn');
-    const buttonsStartTime = headlineSpans.length * 0.1 + 0.2 + (descriptionSpans.length * 0.08) + 0.2;
+    const buttonsStartTime = headlineLines.length * 0.12 + 0.2 + (descriptionLines.length * 0.12) + 0.2;
     buttons.forEach((btn, index) => {
       tl.fromTo(btn,
         { opacity: 0, x: xOffset, y: yOffset },
