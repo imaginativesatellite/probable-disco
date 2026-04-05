@@ -401,17 +401,17 @@ function animateContent() {
 
     tl.fromTo(headlineEl,
       headlineStart,
-      { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'power2.out' },
+      { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' },
       0
     )
     .fromTo(subheadlineEl,
       subheadlineStart,
-      { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'power2.out' },
+      { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' },
       0.15
     )
     .fromTo(descriptionEl,
       descriptionStart,
-      { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'power2.out' },
+      { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' },
       0.3
     );
 
@@ -420,7 +420,7 @@ function animateContent() {
     buttons.forEach((btn, index) => {
       tl.fromTo(btn,
         buttonStart,
-        { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'power2.out' },
+        { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' },
         0.45 + (index * 0.1)
       );
     });
@@ -455,7 +455,7 @@ function animateContent() {
     headlineSpans.forEach((span, index) => {
       tl.fromTo(span,
         { opacity: 0, x: xOffset, y: yOffset },
-        { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'power2.out' },
+        { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' },
         index * 0.1
       );
     });
@@ -463,7 +463,7 @@ function animateContent() {
     // Animate subheadline
     tl.fromTo(subheadlineEl,
       { opacity: 0, x: xOffset, y: yOffset },
-      { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'power2.out' },
+      { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' },
       headlineSpans.length * 0.1 + 0.1
     );
 
@@ -477,7 +477,7 @@ function animateContent() {
     descriptionSpans.forEach((span, index) => {
       tl.fromTo(span,
         { opacity: 0, x: xOffset, y: yOffset },
-        { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'power2.out' },
+        { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' },
         headlineSpans.length * 0.1 + 0.2 + (index * 0.08)
       );
     });
@@ -488,7 +488,7 @@ function animateContent() {
     buttons.forEach((btn, index) => {
       tl.fromTo(btn,
         { opacity: 0, x: xOffset, y: yOffset },
-        { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'power2.out' },
+        { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' },
         buttonsStartTime + (index * 0.1)
       );
     });
