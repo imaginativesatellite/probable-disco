@@ -278,7 +278,7 @@
   </div>
 </div>
 
-<span class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">3</span></span>
+<span class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">4</span></span>
 </div>
 
 <script>
@@ -310,16 +310,20 @@ menuOverlay.addEventListener('click', (e) => {
 // Slideshow Functionality
 const animations = [
   {
-    name: 'Fade In',
-    description: 'Elements smoothly fade in from transparent to fully opaque. This is the most basic and commonly used load-in animation, perfect for introducing content without distraction.'
+    name: 'Fade In From Left',
+    description: 'Elements smoothly fade in while sliding from the left side of the screen. This creates a directional entrance that guides the viewer\'s attention.'
   },
   {
-    name: 'Slide In Left',
-    description: 'Content slides in from the left side of the screen, creating a sense of movement and direction. Great for guiding the viewer\'s eye across the page.'
+    name: 'Fade Up',
+    description: 'Content fades in while moving upward from below. Perfect for building anticipation as elements emerge from the bottom of the viewport.'
   },
   {
-    name: 'Scale Up',
-    description: 'Elements start small and grow to their full size. This creates a sense of importance and draws attention to key content on the page.'
+    name: 'Fade In From Right',
+    description: 'Elements fade in while sliding in from the right side. Creates a sense of movement and dynamism in your interface.'
+  },
+  {
+    name: 'Fade Down',
+    description: 'Content fades in while moving downward from above. Elegant entrance that feels natural and controlled.'
   }
 ];
 
@@ -335,28 +339,60 @@ const reloadBtn = document.getElementById('reload-btn');
 const prevBtn = document.getElementById('prev-btn');
 const nextBtn = document.getElementById('next-btn');
 
-// Animate content staggered from top to bottom
+// Animate content staggered from top to bottom with different effects per slide
 function animateContent() {
   const tl = gsap.timeline();
+  let headlineStart = { opacity: 0, y: -10 };
+  let subheadlineStart = { opacity: 0, y: -10 };
+  let descriptionStart = { opacity: 0, y: -10 };
+  let buttonStart = { opacity: 0, y: -10 };
+
+  // Define animation based on current slide
+  switch(currentIndex) {
+    case 0: // Fade in from left
+      headlineStart = { opacity: 0, x: -20 };
+      subheadlineStart = { opacity: 0, x: -20 };
+      descriptionStart = { opacity: 0, x: -20 };
+      buttonStart = { opacity: 0, x: -20 };
+      break;
+    case 1: // Fade up
+      headlineStart = { opacity: 0, y: 20 };
+      subheadlineStart = { opacity: 0, y: 20 };
+      descriptionStart = { opacity: 0, y: 20 };
+      buttonStart = { opacity: 0, y: 20 };
+      break;
+    case 2: // Fade in from right
+      headlineStart = { opacity: 0, x: 20 };
+      subheadlineStart = { opacity: 0, x: 20 };
+      descriptionStart = { opacity: 0, x: 20 };
+      buttonStart = { opacity: 0, x: 20 };
+      break;
+    case 3: // Fade down
+      headlineStart = { opacity: 0, y: -20 };
+      subheadlineStart = { opacity: 0, y: -20 };
+      descriptionStart = { opacity: 0, y: -20 };
+      buttonStart = { opacity: 0, y: -20 };
+      break;
+  }
 
   tl.fromTo(headlineEl,
-    { opacity: 0, y: -10 },
-    { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' },
+    headlineStart,
+    { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'power2.out' },
     0
   )
   .fromTo(subheadlineEl,
-    { opacity: 0, y: -10 },
-    { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' },
+    subheadlineStart,
+    { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'power2.out' },
     0.15
   )
   .fromTo(descriptionEl,
-    { opacity: 0, y: -10 },
-    { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' },
+    descriptionStart,
+    { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'power2.out' },
     0.3
   )
   .fromTo(document.querySelector('.button-group'),
-    { opacity: 0, y: -10 },
-    { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' },
+    buttonStart,
+    { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'power2.out' },
     0.45
   );
 }
