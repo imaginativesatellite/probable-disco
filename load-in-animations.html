@@ -159,6 +159,7 @@
       letter-spacing: -0.03em;
       margin-bottom: 12px;
       line-height: 1.2;
+      opacity: 0;
     }
 
     .slideshow-container h2 {
@@ -167,6 +168,7 @@
       color: var(--headline-color);
       margin-bottom: 24px;
       letter-spacing: -0.02em;
+      opacity: 0;
     }
 
     .slideshow-container p {
@@ -175,12 +177,14 @@
       margin-bottom: 24px;
       line-height: 1.6;
       max-width: 600px;
+      opacity: 0;
     }
 
     .button-group {
       display: flex;
       gap: 12px;
       align-items: center;
+      opacity: 0;
     }
 
     .slide-btn {
@@ -253,7 +257,7 @@
 
 <!-- Slideshow Content -->
 <div class="slideshow-container">
-  <h1 id="headline">GSAP animations make everything look beautiful.</h1>
+  <h1 id="headline">Load In</h1>
   <h2 id="subheadline">Fade In</h2>
   <p id="description">Elements smoothly fade in from transparent to fully opaque. This is the most basic and commonly used load-in animation, perfect for introducing content without distraction.</p>
 
@@ -331,6 +335,32 @@ const reloadBtn = document.getElementById('reload-btn');
 const prevBtn = document.getElementById('prev-btn');
 const nextBtn = document.getElementById('next-btn');
 
+// Animate content staggered from top to bottom
+function animateContent() {
+  const tl = gsap.timeline();
+
+  tl.fromTo(headlineEl,
+    { opacity: 0, y: -10 },
+    { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' },
+    0
+  )
+  .fromTo(subheadlineEl,
+    { opacity: 0, y: -10 },
+    { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' },
+    0.15
+  )
+  .fromTo(descriptionEl,
+    { opacity: 0, y: -10 },
+    { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' },
+    0.3
+  )
+  .fromTo(document.querySelector('.button-group'),
+    { opacity: 0, y: -10 },
+    { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' },
+    0.45
+  );
+}
+
 // Update slideshow display
 function updateSlideshow() {
   const animation = animations[currentIndex];
@@ -338,6 +368,7 @@ function updateSlideshow() {
   descriptionEl.textContent = animation.description;
   currentSlideEl.textContent = currentIndex + 1;
   totalSlidesEl.textContent = animations.length;
+  animateContent();
 }
 
 // Button event listeners
