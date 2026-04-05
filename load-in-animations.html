@@ -367,7 +367,7 @@ function animateContent() {
 
   // Define animation based on current slide
   if (currentIndex < 4) {
-    // Slides 0-3: Standard animations with individual button stagger
+    // Slides 1-4: Standard animations with individual button stagger
     switch(currentIndex) {
       case 0: // Fade in from left
         headlineStart = { opacity: 0, x: -20 };
@@ -395,20 +395,19 @@ function animateContent() {
         break;
     }
 
-    // Set initial values
-    gsap.set(headlineEl, headlineStart);
-    gsap.set(subheadlineEl, subheadlineStart);
-    gsap.set(descriptionEl, descriptionStart);
+    // Reset elements and set initial state
+    gsap.set([headlineEl, subheadlineEl, descriptionEl], headlineStart);
+    gsap.set(document.querySelectorAll('.slide-btn'), buttonStart);
 
-    // Animate to final values
-    tl.fromTo(headlineEl, headlineStart, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0)
-      .fromTo(subheadlineEl, subheadlineStart, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0.15)
-      .fromTo(descriptionEl, descriptionStart, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0.3);
+    // Add animations to timeline
+    tl.to(headlineEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0);
+    tl.to(subheadlineEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0.15);
+    tl.to(descriptionEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0.3);
 
     // Animate each button individually
     const buttons = document.querySelectorAll('.slide-btn');
     buttons.forEach((btn, index) => {
-      tl.fromTo(btn, buttonStart, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0.45 + (index * 0.1));
+      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0.45 + (index * 0.1));
     });
 
   } else {
@@ -440,13 +439,17 @@ function animateContent() {
     let headlineHTML = headlineWords.map(word => `<span class="word">${word}</span>`).join('');
     headlineEl.innerHTML = headlineHTML;
 
+    // Reset headline and set initial state
     const headlineSpans = headlineEl.querySelectorAll('.word');
+    gsap.set(headlineSpans, { opacity: 0, x: xOffset, y: yOffset });
+
     headlineSpans.forEach((span, index) => {
-      tl.fromTo(span, { opacity: 0, x: xOffset, y: yOffset }, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, index * 0.1);
+      tl.to(span, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, index * 0.1);
     });
 
     // Animate subheadline
-    tl.fromTo(subheadlineEl, { opacity: 0, x: xOffset, y: yOffset }, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, headlineSpans.length * 0.1 + 0.1);
+    gsap.set(subheadlineEl, { opacity: 0, x: xOffset, y: yOffset });
+    tl.to(subheadlineEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, headlineSpans.length * 0.1 + 0.1);
 
     // Animate description line by line
     // First, restore the original text if it's wrapped in spans
@@ -458,15 +461,19 @@ function animateContent() {
     descriptionEl.innerHTML = descriptionHTML;
 
     const descriptionSpans = descriptionEl.querySelectorAll('.word');
+    gsap.set(descriptionSpans, { opacity: 0, x: xOffset, y: yOffset });
+
     descriptionSpans.forEach((span, index) => {
-      tl.fromTo(span, { opacity: 0, x: xOffset, y: yOffset }, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, headlineSpans.length * 0.1 + 0.2 + (index * 0.08));
+      tl.to(span, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, headlineSpans.length * 0.1 + 0.2 + (index * 0.08));
     });
 
     // Animate buttons
     const buttons = document.querySelectorAll('.slide-btn');
+    gsap.set(buttons, { opacity: 0, x: xOffset, y: yOffset });
+
     const buttonsStartTime = headlineSpans.length * 0.1 + 0.2 + (descriptionSpans.length * 0.08) + 0.2;
     buttons.forEach((btn, index) => {
-      tl.fromTo(btn, { opacity: 0, x: xOffset, y: yOffset }, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, buttonsStartTime + (index * 0.1));
+      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, buttonsStartTime + (index * 0.1));
     });
   }
 }
