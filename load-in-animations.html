@@ -448,7 +448,7 @@ function animateContent() {
     // Animate headline line by line
     const headlineText = headlineEl.textContent;
     const headlineWords = headlineText.split(' ');
-    let headlineHTML = headlineWords.map(word => `<span class="word">${word}</span>`).join(' ');
+    let headlineHTML = headlineWords.map(word => `<span class="word">${word}</span>`).join('');
     headlineEl.innerHTML = headlineHTML;
 
     const headlineSpans = headlineEl.querySelectorAll('.word');
@@ -470,7 +470,7 @@ function animateContent() {
     // Animate description line by line
     const descriptionText = descriptionEl.textContent;
     const descriptionWords = descriptionText.split(' ');
-    let descriptionHTML = descriptionWords.map(word => `<span class="word">${word}</span>`).join(' ');
+    let descriptionHTML = descriptionWords.map(word => `<span class="word">${word}</span>`).join('');
     descriptionEl.innerHTML = descriptionHTML;
 
     const descriptionSpans = descriptionEl.querySelectorAll('.word');
