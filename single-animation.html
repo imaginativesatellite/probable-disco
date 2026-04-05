@@ -158,13 +158,13 @@ function runAnimation() {
   // Kill any existing animations
   gsap.killTweensOf([headline, description]);
 
-  // Set initial state
-  gsap.set([headline, description], { opacity: 0, y: 20 });
+  // Set initial state - use larger offset for visibility
+  gsap.set([headline, description], { opacity: 0, y: 50 });
 
   // Create timeline and animate
   const tl = gsap.timeline();
-  tl.to(headline, { opacity: 1, y: 0, duration: 0.6, ease: 'sine.out' }, 0)
-    .to(description, { opacity: 1, y: 0, duration: 0.6, ease: 'sine.out' }, 0.2);
+  tl.to(headline, { opacity: 1, y: 0, duration: 1, ease: 'power2.out' }, 0)
+    .to(description, { opacity: 1, y: 0, duration: 1, ease: 'power2.out' }, 0.3);
 }
 
 // Run animation on page load
