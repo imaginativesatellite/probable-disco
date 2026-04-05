@@ -16,6 +16,8 @@
       --accent: #6c63ff;
       --accent2: #ff6b6b;
       --accent3: #43e97b;
+      --headline-color: #ffcb05;
+      --hover-color: #f26522;
       --radius: 12px;
       --card-radius: 16px;
     }
@@ -161,7 +163,7 @@
     .slideshow-container h2 {
       font-size: 20px;
       font-weight: 500;
-      color: var(--accent);
+      color: var(--headline-color);
       margin-bottom: 24px;
       letter-spacing: -0.02em;
     }
@@ -197,8 +199,8 @@
 
     .slide-btn:hover {
       background: var(--surface);
-      border-color: var(--accent);
-      color: var(--accent);
+      border-color: var(--hover-color);
+      color: var(--hover-color);
     }
 
     .slide-btn:active {
@@ -234,12 +236,12 @@
 
 <!-- Slideshow Content -->
 <div class="slideshow-container">
-  <h1 id="headline">Fade In</h1>
-  <h2 id="subheadline">Classic entrance effect</h2>
+  <h1 id="headline">GSAP animations make everything look beautiful.</h1>
+  <h2 id="subheadline">Fade In</h2>
   <p id="description">Elements smoothly fade in from transparent to fully opaque. This is the most basic and commonly used load-in animation, perfect for introducing content without distraction.</p>
 
   <div class="button-group">
-    <button class="slide-btn" id="reload-btn">↻ Reload</button>
+    <button class="slide-btn" id="reload-btn">↻</button>
     <button class="slide-btn" id="prev-btn">← Previous</button>
     <button class="slide-btn" id="next-btn">Next →</button>
     <span class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">3</span></span>
@@ -275,18 +277,15 @@ menuOverlay.addEventListener('click', (e) => {
 // Slideshow Functionality
 const animations = [
   {
-    headline: 'Fade In',
-    subheadline: 'Classic entrance effect',
+    name: 'Fade In',
     description: 'Elements smoothly fade in from transparent to fully opaque. This is the most basic and commonly used load-in animation, perfect for introducing content without distraction.'
   },
   {
-    headline: 'Slide In Left',
-    subheadline: 'Dynamic directional entry',
+    name: 'Slide In Left',
     description: 'Content slides in from the left side of the screen, creating a sense of movement and direction. Great for guiding the viewer\'s eye across the page.'
   },
   {
-    headline: 'Scale Up',
-    subheadline: 'Growing emphasis',
+    name: 'Scale Up',
     description: 'Elements start small and grow to their full size. This creates a sense of importance and draws attention to key content on the page.'
   }
 ];
@@ -306,8 +305,7 @@ const nextBtn = document.getElementById('next-btn');
 // Update slideshow display
 function updateSlideshow() {
   const animation = animations[currentIndex];
-  headlineEl.textContent = animation.headline;
-  subheadlineEl.textContent = animation.subheadline;
+  subheadlineEl.textContent = animation.name;
   descriptionEl.textContent = animation.description;
   currentSlideEl.textContent = currentIndex + 1;
   totalSlidesEl.textContent = animations.length;
