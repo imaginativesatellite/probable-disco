@@ -403,15 +403,15 @@ function animateContent() {
 
     // Animate to final values
     tl.to(headlineEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0)
-      .to(subheadlineEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0.15, '<')
-      .to(descriptionEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0.3, '<');
+      .to(subheadlineEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0.15)
+      .to(descriptionEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0.3);
 
     // Animate each button individually
     const buttons = document.querySelectorAll('.slide-btn');
     gsap.set(buttons, buttonStart);
 
     buttons.forEach((btn, index) => {
-      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0.45 + (index * 0.1), '<');
+      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0.45 + (index * 0.1));
     });
 
   } else {
@@ -452,7 +452,7 @@ function animateContent() {
 
     // Animate subheadline
     gsap.set(subheadlineEl, { opacity: 0, x: xOffset, y: yOffset });
-    tl.to(subheadlineEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, headlineSpans.length * 0.1 + 0.1, '<');
+    tl.to(subheadlineEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, headlineSpans.length * 0.1 + 0.1);
 
     // Animate description line by line
     // First, restore the original text if it's wrapped in spans
@@ -467,7 +467,7 @@ function animateContent() {
     gsap.set(descriptionSpans, { opacity: 0, x: xOffset, y: yOffset });
 
     descriptionSpans.forEach((span, index) => {
-      tl.to(span, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, headlineSpans.length * 0.1 + 0.2 + (index * 0.08), '<');
+      tl.to(span, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, headlineSpans.length * 0.1 + 0.2 + (index * 0.08));
     });
 
     // Animate buttons
@@ -476,7 +476,7 @@ function animateContent() {
 
     const buttonsStartTime = headlineSpans.length * 0.1 + 0.2 + (descriptionSpans.length * 0.08) + 0.2;
     buttons.forEach((btn, index) => {
-      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, buttonsStartTime + (index * 0.1), '<');
+      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, buttonsStartTime + (index * 0.1));
     });
   }
 }
