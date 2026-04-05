@@ -290,7 +290,7 @@
 </div>
 
 <span class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">8</span></span>
-<span class="version">v6</span>
+<span class="version">v7</span>
 </div>
 
 <script>
@@ -369,6 +369,9 @@ const nextBtn = document.getElementById('next-btn');
 
 // Animate content staggered from top to bottom with different effects per slide
 function animateContent() {
+  // Create timeline for all animations
+  const tl = gsap.timeline();
+
   // Kill any existing animations on these elements
   gsap.killTweensOf([headlineEl, subheadlineEl, descriptionEl]);
   gsap.killTweensOf(document.querySelectorAll('.slide-btn'));
@@ -378,7 +381,6 @@ function animateContent() {
   let descriptionStart = { opacity: 0, y: -10 };
   let buttonStart = { opacity: 0, y: -10 };
   let xOffset = 0, yOffset = 0;
-  let delay = 0;
 
   // Define animation based on current slide
   if (currentIndex < 4) {
@@ -416,25 +418,20 @@ function animateContent() {
     gsap.set(descriptionEl, descriptionStart);
     gsap.set(document.querySelectorAll('.slide-btn'), buttonStart);
 
-    // Animate directly without timeline
-    delay = 0;
-    gsap.to(headlineEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in', delay: delay });
-    delay += 0.15;
-    gsap.to(subheadlineEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in', delay: delay });
-    delay += 0.15;
-    gsap.to(descriptionEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in', delay: delay });
-    delay += 0.15;
+    // Animate using timeline
+    tl.to(headlineEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0)
+      .to(subheadlineEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0.15)
+      .to(descriptionEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0.3);
 
     // Animate each button individually
     const buttons = document.querySelectorAll('.slide-btn');
     buttons.forEach((btn, index) => {
-      gsap.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in', delay: delay + (index * 0.1) });
+      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0.45 + (index * 0.1));
     });
 
   } else {
     // Slides 4-7: Line-by-line animations
     const slideIndex = currentIndex - 4;
-    const tl = gsap.timeline(); // Create timeline for word-by-word animations
 
     // Determine direction based on slide index
     switch(slideIndex) {
