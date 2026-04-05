@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Single Animation Test | Lunamations</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.14.2/gsap.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0e0e0e;
+      color: #f0f0f0;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .container {
+      text-align: center;
+      max-width: 600px;
+    }
+
+    h1 {
+      font-size: 48px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+      line-height: 1.2;
+    }
+
+    p {
+      font-size: 18px;
+      color: #888;
+      margin-bottom: 48px;
+      line-height: 1.6;
+    }
+
+    button {
+      font-size: 16px;
+      font-weight: 600;
+      padding: 12px 24px;
+      border-radius: 8px;
+      background: #1e1e1e;
+      border: 1px solid #2a2a2a;
+      color: #f0f0f0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: #161616;
+      border-color: #f26522;
+      color: #f26522;
+    }
+
+    .status {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #888;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1 id="headline">Simple Fade Up Animation</h1>
+  <p id="description">This page tests a basic GSAP animation. Watch the headline fade up from below.</p>
+  <button id="animate-btn">Animate Again</button>
+</div>
+
+<div class="status">
+  GSAP v3.14.2 - Simple Test
+</div>
+
+<script>
+const headline = document.getElementById('headline');
+const description = document.getElementById('description');
+const button = document.getElementById('animate-btn');
+
+function runAnimation() {
+  // Kill any existing animations
+  gsap.killTweensOf([headline, description]);
+
+  // Set initial state
+  gsap.set([headline, description], { opacity: 0, y: 20 });
+
+  // Create timeline and animate
+  const tl = gsap.timeline();
+  tl.to(headline, { opacity: 1, y: 0, duration: 0.6, ease: 'sine.out' }, 0)
+    .to(description, { opacity: 1, y: 0, duration: 0.6, ease: 'sine.out' }, 0.2);
+}
+
+// Run animation on page load
+runAnimation();
+
+// Run animation on button click
+button.addEventListener('click', runAnimation);
+
+// Log to console for debugging
+console.log('GSAP loaded:', typeof gsap !== 'undefined');
+console.log('GSAP version:', gsap.version);
+</script>
+
+</body>
+</html>
