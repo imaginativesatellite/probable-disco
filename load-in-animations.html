@@ -296,7 +296,7 @@
 </div>
 
 <span class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">8</span></span>
-<span class="version">v18</span>
+<span class="version">v19</span>
 </div>
 
 <script>
@@ -456,6 +456,70 @@ const animations = [
   {
     name: 'Char Reveal Down',
     description: 'Characters drop into view from above individually. Maximally precise — every single letter gets its own moment to shine.'
+  },
+  {
+    name: 'Mask Slide From Left',
+    description: 'Elements slide in from the left into a fixed clip window. Text appears to emerge from behind a hidden edge — crisp, theatrical, and immediate.'
+  },
+  {
+    name: 'Mask Slide Up',
+    description: 'Content rises into its fixed clip position from below. A refined upward entrance where the mask stays still and the text does the work.'
+  },
+  {
+    name: 'Mask Slide From Right',
+    description: 'Elements enter from the right into a fixed clip window. Directional energy that pulls the eye across the layout with precision.'
+  },
+  {
+    name: 'Mask Slide Down',
+    description: 'Text descends into its visible clip area from above. A gravity-driven entrance with a composed, deliberate quality.'
+  },
+  {
+    name: 'Line Mask From Left',
+    description: 'Each line slides in from the left through its own clip window. Sequential line-by-line entrance with sharp mechanical precision.'
+  },
+  {
+    name: 'Line Mask Up',
+    description: 'Lines rise into their masked positions one by one. The upward stagger builds momentum with each line that appears.'
+  },
+  {
+    name: 'Line Mask From Right',
+    description: 'Lines enter from the right through individual clip windows. Counter-directional flow that creates a compelling visual rhythm.'
+  },
+  {
+    name: 'Line Mask Down',
+    description: 'Each line drops into its visible area in sequence. A descending stagger that feels authoritative and controlled.'
+  },
+  {
+    name: 'Word Mask From Left',
+    description: 'Words slide in from the left through individual clip windows. Rapid, dense left-to-right reveal that rewards close attention.'
+  },
+  {
+    name: 'Word Mask Up',
+    description: 'Each word rises up into its clip window in quick succession. Fast vertical stagger that pulses with kinetic energy.'
+  },
+  {
+    name: 'Word Mask From Right',
+    description: 'Words enter from the right through their own clip windows. Unexpected directionality that makes every word feel like an arrival.'
+  },
+  {
+    name: 'Word Mask Down',
+    description: 'Words descend into position word by word. Deliberate downward cascade that commands the reader\'s attention throughout.'
+  },
+  {
+    name: 'Char Mask From Left',
+    description: 'Every character slides in from the left through its own clip window. Maximum granularity — the most precise entrance in the entire set.'
+  },
+  {
+    name: 'Char Mask Up',
+    description: 'Characters rise into their clip windows in tight succession. Ultra-dense upward cascade that transforms text into kinetic sculpture.'
+  },
+  {
+    name: 'Char Mask From Right',
+    description: 'Each character enters from the right through an individual clip. Intricate reverse sweep with a mechanical, watch-movement quality.'
+  },
+  {
+    name: 'Char Mask Down',
+    description: 'Characters descend into their visible areas one by one. Maximally detailed downward reveal — every letterform makes its own entrance.'
   }
 ];
 
@@ -472,6 +536,26 @@ const prevBtn = document.getElementById('prev-btn');
 const nextBtn = document.getElementById('next-btn');
 
 let activeSplits = [];
+let activeWrappers = [];
+
+// Helper: wrap an element in an overflow:hidden block div (for whole-element mask slides)
+function maskWrap(el) {
+  const wrapper = document.createElement('div');
+  wrapper.style.cssText = 'overflow:hidden;display:block;';
+  el.parentNode.insertBefore(wrapper, el);
+  wrapper.appendChild(el);
+  activeWrappers.push({ wrapper, el });
+}
+
+// Helper: wrap SplitText units in inline overflow:hidden divs (auto-cleaned by SplitText.revert)
+function maskWrapUnits(units) {
+  units.forEach(unit => {
+    const wrapper = document.createElement('div');
+    wrapper.style.cssText = 'overflow:hidden;display:inline-block;vertical-align:bottom;';
+    unit.parentNode.insertBefore(wrapper, unit);
+    wrapper.appendChild(unit);
+  });
+}
 
 // Animate content staggered from top to bottom with different effects per slide
 function animateContent() {
@@ -482,8 +566,8 @@ function animateContent() {
   gsap.killTweensOf([headlineEl, subheadlineEl, descriptionEl]);
   gsap.killTweensOf(document.querySelectorAll('.slide-btn'));
 
-  // Clear any leftover clipPath from reveal slides before setting new initial state
-  gsap.set([headlineEl, subheadlineEl, descriptionEl, ...document.querySelectorAll('.slide-btn')], { clipPath: 'none' });
+  // Reset all properties that may be left over from any previous slide type
+  gsap.set([headlineEl, subheadlineEl, descriptionEl, ...document.querySelectorAll('.slide-btn')], { clipPath: 'none', x: 0, y: 0, opacity: 1 });
 
   let headlineStart = { opacity: 0, y: -10 };
   let subheadlineStart = { opacity: 0, y: -10 };
@@ -802,7 +886,7 @@ function animateContent() {
       tl.to(btn, { clipPath: clipTo, duration: 0.65, ease: 'power2.out' }, buttonsStart + (index * 0.15));
     });
 
-  } else {
+  } else if (currentIndex < 32) {
     // Slides 29-32: Char-by-char clip reveal
     const slideIndex = currentIndex - 28;
     let clipFrom;
@@ -841,6 +925,158 @@ function animateContent() {
     buttons.forEach((btn, index) => {
       tl.to(btn, { clipPath: clipTo, duration: 0.65, ease: 'power2.out' }, buttonsStart + (index * 0.15));
     });
+
+  } else if (currentIndex < 36) {
+    // Slides 33-36: Whole-element mask slide
+    const slideIndex = currentIndex - 32;
+    let xStart = 0, yStart = 0;
+    switch(slideIndex) {
+      case 0: xStart = '-110%'; break; // from left
+      case 1: yStart =  '110%'; break; // up (start below)
+      case 2: xStart =  '110%'; break; // from right
+      case 3: yStart = '-110%'; break; // down (start above)
+    }
+
+    const allEls = [headlineEl, subheadlineEl, descriptionEl, ...document.querySelectorAll('.slide-btn')];
+    allEls.forEach(el => maskWrap(el));
+    gsap.set(allEls, { x: xStart, y: yStart });
+
+    tl.to(headlineEl,    { x: 0, y: 0, duration: 1.0, ease: 'power2.out' }, 0)
+      .to(subheadlineEl, { x: 0, y: 0, duration: 1.0, ease: 'power2.out' }, 0.25)
+      .to(descriptionEl, { x: 0, y: 0, duration: 1.0, ease: 'power2.out' }, 0.5);
+
+    const buttons = document.querySelectorAll('.slide-btn');
+    buttons.forEach((btn, index) => {
+      tl.to(btn, { x: 0, y: 0, duration: 0.8, ease: 'power2.out' }, 0.75 + (index * 0.15));
+    });
+
+  } else if (currentIndex < 40) {
+    // Slides 37-40: Line-by-line mask slide
+    const slideIndex = currentIndex - 36;
+    let xStart = 0, yStart = 0;
+    switch(slideIndex) {
+      case 0: xStart = '-110%'; break;
+      case 1: yStart =  '110%'; break;
+      case 2: xStart =  '110%'; break;
+      case 3: yStart = '-110%'; break;
+    }
+
+    const splitHeadline = new SplitText(headlineEl, { type: 'lines' });
+    const splitDescription = new SplitText(descriptionEl, { type: 'lines' });
+    activeSplits.push(splitHeadline, splitDescription);
+
+    const headlineLines = splitHeadline.lines;
+    const descriptionLines = splitDescription.lines;
+
+    maskWrapUnits(headlineLines);
+    gsap.set(headlineLines, { x: xStart, y: yStart });
+    headlineLines.forEach((line, index) => {
+      tl.to(line, { x: 0, y: 0, duration: 0.8, ease: 'power2.out' }, index * 0.18);
+    });
+
+    maskWrap(subheadlineEl);
+    gsap.set(subheadlineEl, { x: xStart, y: yStart });
+    tl.to(subheadlineEl, { x: 0, y: 0, duration: 0.8, ease: 'power2.out' }, headlineLines.length * 0.18 + 0.15);
+
+    maskWrapUnits(descriptionLines);
+    gsap.set(descriptionLines, { x: xStart, y: yStart });
+    descriptionLines.forEach((line, index) => {
+      tl.to(line, { x: 0, y: 0, duration: 0.8, ease: 'power2.out' }, headlineLines.length * 0.18 + 0.35 + (index * 0.18));
+    });
+
+    const buttons = document.querySelectorAll('.slide-btn');
+    const buttonsStart = headlineLines.length * 0.18 + 0.35 + (descriptionLines.length * 0.18) + 0.25;
+    buttons.forEach(btn => maskWrap(btn));
+    gsap.set(buttons, { x: xStart, y: yStart });
+    buttons.forEach((btn, index) => {
+      tl.to(btn, { x: 0, y: 0, duration: 0.8, ease: 'power2.out' }, buttonsStart + (index * 0.15));
+    });
+
+  } else if (currentIndex < 44) {
+    // Slides 41-44: Word-by-word mask slide
+    const slideIndex = currentIndex - 40;
+    let xStart = 0, yStart = 0;
+    switch(slideIndex) {
+      case 0: xStart = '-110%'; break;
+      case 1: yStart =  '110%'; break;
+      case 2: xStart =  '110%'; break;
+      case 3: yStart = '-110%'; break;
+    }
+
+    const splitHeadline = new SplitText(headlineEl, { type: 'words' });
+    const splitDescription = new SplitText(descriptionEl, { type: 'words' });
+    activeSplits.push(splitHeadline, splitDescription);
+
+    const headlineWords = splitHeadline.words;
+    const descriptionWords = splitDescription.words;
+
+    maskWrapUnits(headlineWords);
+    gsap.set(headlineWords, { x: xStart, y: yStart });
+    headlineWords.forEach((word, index) => {
+      tl.to(word, { x: 0, y: 0, duration: 0.6, ease: 'power2.out' }, index * 0.09);
+    });
+
+    const headlineDone = headlineWords.length * 0.09;
+    maskWrap(subheadlineEl);
+    gsap.set(subheadlineEl, { x: xStart, y: yStart });
+    tl.to(subheadlineEl, { x: 0, y: 0, duration: 0.65, ease: 'power2.out' }, headlineDone + 0.15);
+
+    maskWrapUnits(descriptionWords);
+    gsap.set(descriptionWords, { x: xStart, y: yStart });
+    descriptionWords.forEach((word, index) => {
+      tl.to(word, { x: 0, y: 0, duration: 0.5, ease: 'power2.out' }, headlineDone + 0.3 + (index * 0.055));
+    });
+
+    const buttons = document.querySelectorAll('.slide-btn');
+    const buttonsStart = headlineDone + 0.3 + (descriptionWords.length * 0.055) + 0.25;
+    buttons.forEach(btn => maskWrap(btn));
+    gsap.set(buttons, { x: xStart, y: yStart });
+    buttons.forEach((btn, index) => {
+      tl.to(btn, { x: 0, y: 0, duration: 0.65, ease: 'power2.out' }, buttonsStart + (index * 0.15));
+    });
+
+  } else {
+    // Slides 45-48: Char-by-char mask slide
+    const slideIndex = currentIndex - 44;
+    let xStart = 0, yStart = 0;
+    switch(slideIndex) {
+      case 0: xStart = '-110%'; break;
+      case 1: yStart =  '110%'; break;
+      case 2: xStart =  '110%'; break;
+      case 3: yStart = '-110%'; break;
+    }
+
+    const splitHeadline = new SplitText(headlineEl, { type: 'words,chars' });
+    const splitDescription = new SplitText(descriptionEl, { type: 'words,chars' });
+    activeSplits.push(splitHeadline, splitDescription);
+
+    const headlineChars = splitHeadline.chars;
+    const descriptionChars = splitDescription.chars;
+
+    maskWrapUnits(headlineChars);
+    gsap.set(headlineChars, { x: xStart, y: yStart });
+    headlineChars.forEach((char, index) => {
+      tl.to(char, { x: 0, y: 0, duration: 0.4, ease: 'power2.out' }, index * 0.035);
+    });
+
+    const headlineDone = headlineChars.length * 0.035;
+    maskWrap(subheadlineEl);
+    gsap.set(subheadlineEl, { x: xStart, y: yStart });
+    tl.to(subheadlineEl, { x: 0, y: 0, duration: 0.65, ease: 'power2.out' }, headlineDone + 0.15);
+
+    maskWrapUnits(descriptionChars);
+    gsap.set(descriptionChars, { x: xStart, y: yStart });
+    descriptionChars.forEach((char, index) => {
+      tl.to(char, { x: 0, y: 0, duration: 0.35, ease: 'power2.out' }, headlineDone + 0.3 + (index * 0.018));
+    });
+
+    const buttons = document.querySelectorAll('.slide-btn');
+    const buttonsStart = headlineDone + 0.3 + (descriptionChars.length * 0.018) + 0.25;
+    buttons.forEach(btn => maskWrap(btn));
+    gsap.set(buttons, { x: xStart, y: yStart });
+    buttons.forEach((btn, index) => {
+      tl.to(btn, { x: 0, y: 0, duration: 0.65, ease: 'power2.out' }, buttonsStart + (index * 0.15));
+    });
   }
 }
 
@@ -849,6 +1085,15 @@ function updateSlideshow() {
   // Revert any active SplitText before changing text content
   activeSplits.forEach(s => s.revert());
   activeSplits = [];
+
+  // Remove any overflow:hidden mask wrappers added by mask-slide slides
+  activeWrappers.forEach(({ wrapper, el }) => {
+    if (wrapper.parentNode) {
+      wrapper.parentNode.insertBefore(el, wrapper);
+      wrapper.parentNode.removeChild(wrapper);
+    }
+  });
+  activeWrappers = [];
 
   const animation = animations[currentIndex];
   subheadlineEl.textContent = animation.name;
