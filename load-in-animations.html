@@ -274,8 +274,8 @@
 
     .filter-toggle:hover,
     .filter-toggle.active {
-      background: var(--accent);
-      border-color: var(--accent);
+      background: var(--hover-color);
+      border-color: var(--hover-color);
       color: #fff;
     }
 
@@ -332,13 +332,13 @@
     }
 
     .filter-tag:hover {
-      border-color: var(--accent);
-      color: var(--accent);
+      border-color: var(--headline-color);
+      color: var(--headline-color);
     }
 
     .filter-tag.active {
-      background: var(--accent);
-      border-color: var(--accent);
+      background: var(--hover-color);
+      border-color: var(--hover-color);
       color: #fff;
     }
 
@@ -392,7 +392,7 @@
   <ul>
     <li><a href="index.html">Hover Animations</a></li>
     <li><a href="load-in-animations.html">Load In Animations</a></li>
-    <li><a href="single-animation.html">Single Animation Test</a></li>
+
   </ul>
 </div>
 
@@ -464,7 +464,7 @@
 </div>
 
 <span class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">8</span></span>
-<span class="version">v20</span>
+<span class="version">v21</span>
 </div>
 
 <script>
@@ -824,21 +824,28 @@ function animateContent() {
       tl.to(line, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, index * 0.1);
     });
 
-    // Animate subheadline
-    gsap.set(subheadlineEl, { opacity: 0, x: xOffset, y: yOffset });
-    tl.to(subheadlineEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, headlineLines.length * 0.1 + 0.1);
+    // Animate subheadline line by line
+    const splitSubheadline = new SplitText(subheadlineEl, { type: 'lines' });
+    activeSplits.push(splitSubheadline);
+    const subheadlineLines = splitSubheadline.lines;
+    const subStart = headlineLines.length * 0.1 + 0.1;
+    gsap.set(subheadlineLines, { opacity: 0, x: xOffset, y: yOffset });
+    subheadlineLines.forEach((line, index) => {
+      tl.to(line, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, subStart + index * 0.1);
+    });
 
     // Animate description line by line
+    const descStart = subStart + subheadlineLines.length * 0.1 + 0.1;
     gsap.set(descriptionLines, { opacity: 0, x: xOffset, y: yOffset });
     descriptionLines.forEach((line, index) => {
-      tl.to(line, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, headlineLines.length * 0.1 + 0.2 + (index * 0.1));
+      tl.to(line, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, descStart + (index * 0.1));
     });
 
     // Animate buttons
     const buttons = document.querySelectorAll('.slide-btn');
     gsap.set(buttons, { opacity: 0, x: xOffset, y: yOffset });
 
-    const buttonsStartTime = headlineLines.length * 0.1 + 0.2 + (descriptionLines.length * 0.1) + 0.2;
+    const buttonsStartTime = descStart + (descriptionLines.length * 0.1) + 0.2;
     buttons.forEach((btn, index) => {
       tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, buttonsStartTime + (index * 0.1));
     });
@@ -876,22 +883,29 @@ function animateContent() {
       tl.to(word, { opacity: 1, x: 0, y: 0, duration: 0.3, ease: 'sine.in' }, index * 0.05);
     });
 
-    // Animate subheadline
+    // Animate subheadline word by word
     const headlineDone = headlineWords.length * 0.05;
-    gsap.set(subheadlineEl, { opacity: 0, x: xOffset, y: yOffset });
-    tl.to(subheadlineEl, { opacity: 1, x: 0, y: 0, duration: 0.3, ease: 'sine.in' }, headlineDone + 0.1);
+    const splitSubheadline = new SplitText(subheadlineEl, { type: 'words' });
+    activeSplits.push(splitSubheadline);
+    const subheadlineWords = splitSubheadline.words;
+    const subStart = headlineDone + 0.1;
+    gsap.set(subheadlineWords, { opacity: 0, x: xOffset, y: yOffset });
+    subheadlineWords.forEach((word, index) => {
+      tl.to(word, { opacity: 1, x: 0, y: 0, duration: 0.3, ease: 'sine.in' }, subStart + index * 0.05);
+    });
 
     // Animate description word by word
+    const descStart = subStart + subheadlineWords.length * 0.05 + 0.1;
     gsap.set(descriptionWords, { opacity: 0, x: xOffset, y: yOffset });
     descriptionWords.forEach((word, index) => {
-      tl.to(word, { opacity: 1, x: 0, y: 0, duration: 0.25, ease: 'sine.in' }, headlineDone + 0.2 + (index * 0.03));
+      tl.to(word, { opacity: 1, x: 0, y: 0, duration: 0.25, ease: 'sine.in' }, descStart + (index * 0.03));
     });
 
     // Animate buttons
     const buttons = document.querySelectorAll('.slide-btn');
     gsap.set(buttons, { opacity: 0, x: xOffset, y: yOffset });
 
-    const buttonsStartTime = headlineDone + 0.2 + (descriptionWords.length * 0.03) + 0.2;
+    const buttonsStartTime = descStart + (descriptionWords.length * 0.03) + 0.2;
     buttons.forEach((btn, index) => {
       tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.3, ease: 'sine.in' }, buttonsStartTime + (index * 0.1));
     });
@@ -931,22 +945,29 @@ function animateContent() {
       tl.to(char, { opacity: 1, x: 0, y: 0, duration: 0.2, ease: 'sine.in' }, index * 0.02);
     });
 
-    // Animate subheadline
+    // Animate subheadline char by char
     const headlineDone = headlineChars.length * 0.02;
-    gsap.set(subheadlineEl, { opacity: 0, x: xOffset, y: yOffset });
-    tl.to(subheadlineEl, { opacity: 1, x: 0, y: 0, duration: 0.3, ease: 'sine.in' }, headlineDone + 0.1);
+    const splitSubheadline = new SplitText(subheadlineEl, { type: 'words,chars' });
+    activeSplits.push(splitSubheadline);
+    const subheadlineChars = splitSubheadline.chars;
+    const subStart = headlineDone + 0.1;
+    gsap.set(subheadlineChars, { opacity: 0, x: xOffset, y: yOffset });
+    subheadlineChars.forEach((char, index) => {
+      tl.to(char, { opacity: 1, x: 0, y: 0, duration: 0.2, ease: 'sine.in' }, subStart + index * 0.02);
+    });
 
     // Animate description char by char
+    const descStart = subStart + subheadlineChars.length * 0.02 + 0.1;
     gsap.set(descriptionChars, { opacity: 0, x: xOffset, y: yOffset });
     descriptionChars.forEach((char, index) => {
-      tl.to(char, { opacity: 1, x: 0, y: 0, duration: 0.15, ease: 'sine.in' }, headlineDone + 0.2 + (index * 0.01));
+      tl.to(char, { opacity: 1, x: 0, y: 0, duration: 0.15, ease: 'sine.in' }, descStart + (index * 0.01));
     });
 
     // Animate buttons
     const buttons = document.querySelectorAll('.slide-btn');
     gsap.set(buttons, { opacity: 0, x: xOffset, y: yOffset });
 
-    const buttonsStartTime = headlineDone + 0.2 + (descriptionChars.length * 0.01) + 0.2;
+    const buttonsStartTime = descStart + (descriptionChars.length * 0.01) + 0.2;
     buttons.forEach((btn, index) => {
       tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.3, ease: 'sine.in' }, buttonsStartTime + (index * 0.1));
     });
@@ -999,16 +1020,23 @@ function animateContent() {
       tl.to(line, { clipPath: clipTo, duration: 0.8, ease: 'power2.out' }, index * 0.18);
     });
 
-    gsap.set(subheadlineEl, { clipPath: clipFrom });
-    tl.to(subheadlineEl, { clipPath: clipTo, duration: 0.8, ease: 'power2.out' }, headlineLines.length * 0.18 + 0.15);
+    const splitSubheadline = new SplitText(subheadlineEl, { type: 'lines' });
+    activeSplits.push(splitSubheadline);
+    const subheadlineLines = splitSubheadline.lines;
+    const subStart = headlineLines.length * 0.18 + 0.15;
+    gsap.set(subheadlineLines, { clipPath: clipFrom });
+    subheadlineLines.forEach((line, index) => {
+      tl.to(line, { clipPath: clipTo, duration: 0.8, ease: 'power2.out' }, subStart + index * 0.18);
+    });
 
+    const descStart = subStart + subheadlineLines.length * 0.18 + 0.2;
     gsap.set(descriptionLines, { clipPath: clipFrom });
     descriptionLines.forEach((line, index) => {
-      tl.to(line, { clipPath: clipTo, duration: 0.8, ease: 'power2.out' }, headlineLines.length * 0.18 + 0.35 + (index * 0.18));
+      tl.to(line, { clipPath: clipTo, duration: 0.8, ease: 'power2.out' }, descStart + (index * 0.18));
     });
 
     const buttons = document.querySelectorAll('.slide-btn');
-    const buttonsStart = headlineLines.length * 0.18 + 0.35 + (descriptionLines.length * 0.18) + 0.25;
+    const buttonsStart = descStart + (descriptionLines.length * 0.18) + 0.25;
     gsap.set(buttons, { clipPath: clipFrom });
     buttons.forEach((btn, index) => {
       tl.to(btn, { clipPath: clipTo, duration: 0.8, ease: 'power2.out' }, buttonsStart + (index * 0.15));
@@ -1039,16 +1067,23 @@ function animateContent() {
     });
 
     const headlineDone = headlineWords.length * 0.09;
-    gsap.set(subheadlineEl, { clipPath: clipFrom });
-    tl.to(subheadlineEl, { clipPath: clipTo, duration: 0.65, ease: 'power2.out' }, headlineDone + 0.15);
+    const splitSubheadline = new SplitText(subheadlineEl, { type: 'words' });
+    activeSplits.push(splitSubheadline);
+    const subheadlineWords = splitSubheadline.words;
+    const subStart = headlineDone + 0.15;
+    gsap.set(subheadlineWords, { clipPath: clipFrom });
+    subheadlineWords.forEach((word, index) => {
+      tl.to(word, { clipPath: clipTo, duration: 0.6, ease: 'power2.out' }, subStart + index * 0.09);
+    });
 
+    const descStart = subStart + subheadlineWords.length * 0.09 + 0.15;
     gsap.set(descriptionWords, { clipPath: clipFrom });
     descriptionWords.forEach((word, index) => {
-      tl.to(word, { clipPath: clipTo, duration: 0.5, ease: 'power2.out' }, headlineDone + 0.3 + (index * 0.055));
+      tl.to(word, { clipPath: clipTo, duration: 0.5, ease: 'power2.out' }, descStart + (index * 0.055));
     });
 
     const buttons = document.querySelectorAll('.slide-btn');
-    const buttonsStart = headlineDone + 0.3 + (descriptionWords.length * 0.055) + 0.25;
+    const buttonsStart = descStart + (descriptionWords.length * 0.055) + 0.25;
     gsap.set(buttons, { clipPath: clipFrom });
     buttons.forEach((btn, index) => {
       tl.to(btn, { clipPath: clipTo, duration: 0.65, ease: 'power2.out' }, buttonsStart + (index * 0.15));
@@ -1079,16 +1114,23 @@ function animateContent() {
     });
 
     const headlineDone = headlineChars.length * 0.035;
-    gsap.set(subheadlineEl, { clipPath: clipFrom });
-    tl.to(subheadlineEl, { clipPath: clipTo, duration: 0.65, ease: 'power2.out' }, headlineDone + 0.15);
+    const splitSubheadline = new SplitText(subheadlineEl, { type: 'words,chars' });
+    activeSplits.push(splitSubheadline);
+    const subheadlineChars = splitSubheadline.chars;
+    const subStart = headlineDone + 0.15;
+    gsap.set(subheadlineChars, { clipPath: clipFrom });
+    subheadlineChars.forEach((char, index) => {
+      tl.to(char, { clipPath: clipTo, duration: 0.4, ease: 'power2.out' }, subStart + index * 0.035);
+    });
 
+    const descStart = subStart + subheadlineChars.length * 0.035 + 0.15;
     gsap.set(descriptionChars, { clipPath: clipFrom });
     descriptionChars.forEach((char, index) => {
-      tl.to(char, { clipPath: clipTo, duration: 0.35, ease: 'power2.out' }, headlineDone + 0.3 + (index * 0.018));
+      tl.to(char, { clipPath: clipTo, duration: 0.35, ease: 'power2.out' }, descStart + (index * 0.018));
     });
 
     const buttons = document.querySelectorAll('.slide-btn');
-    const buttonsStart = headlineDone + 0.3 + (descriptionChars.length * 0.018) + 0.25;
+    const buttonsStart = descStart + (descriptionChars.length * 0.018) + 0.25;
     gsap.set(buttons, { clipPath: clipFrom });
     buttons.forEach((btn, index) => {
       tl.to(btn, { clipPath: clipTo, duration: 0.65, ease: 'power2.out' }, buttonsStart + (index * 0.15));
@@ -1142,18 +1184,25 @@ function animateContent() {
       tl.to(line, { x: 0, y: 0, duration: 0.8, ease: 'power2.out' }, index * 0.18);
     });
 
-    maskWrap(subheadlineEl);
-    gsap.set(subheadlineEl, { x: xStart, y: yStart });
-    tl.to(subheadlineEl, { x: 0, y: 0, duration: 0.8, ease: 'power2.out' }, headlineLines.length * 0.18 + 0.15);
+    const splitSubheadline = new SplitText(subheadlineEl, { type: 'lines' });
+    activeSplits.push(splitSubheadline);
+    const subheadlineLines = splitSubheadline.lines;
+    const subStart = headlineLines.length * 0.18 + 0.15;
+    maskWrapUnits(subheadlineLines);
+    gsap.set(subheadlineLines, { x: xStart, y: yStart });
+    subheadlineLines.forEach((line, index) => {
+      tl.to(line, { x: 0, y: 0, duration: 0.8, ease: 'power2.out' }, subStart + index * 0.18);
+    });
 
+    const descStart = subStart + subheadlineLines.length * 0.18 + 0.2;
     maskWrapUnits(descriptionLines);
     gsap.set(descriptionLines, { x: xStart, y: yStart });
     descriptionLines.forEach((line, index) => {
-      tl.to(line, { x: 0, y: 0, duration: 0.8, ease: 'power2.out' }, headlineLines.length * 0.18 + 0.35 + (index * 0.18));
+      tl.to(line, { x: 0, y: 0, duration: 0.8, ease: 'power2.out' }, descStart + (index * 0.18));
     });
 
     const buttons = document.querySelectorAll('.slide-btn');
-    const buttonsStart = headlineLines.length * 0.18 + 0.35 + (descriptionLines.length * 0.18) + 0.25;
+    const buttonsStart = descStart + (descriptionLines.length * 0.18) + 0.25;
     buttons.forEach(btn => maskWrap(btn));
     gsap.set(buttons, { x: xStart, y: yStart });
     buttons.forEach((btn, index) => {
@@ -1185,18 +1234,25 @@ function animateContent() {
     });
 
     const headlineDone = headlineWords.length * 0.09;
-    maskWrap(subheadlineEl);
-    gsap.set(subheadlineEl, { x: xStart, y: yStart });
-    tl.to(subheadlineEl, { x: 0, y: 0, duration: 0.65, ease: 'power2.out' }, headlineDone + 0.15);
+    const splitSubheadline = new SplitText(subheadlineEl, { type: 'words' });
+    activeSplits.push(splitSubheadline);
+    const subheadlineWords = splitSubheadline.words;
+    const subStart = headlineDone + 0.15;
+    maskWrapUnits(subheadlineWords);
+    gsap.set(subheadlineWords, { x: xStart, y: yStart });
+    subheadlineWords.forEach((word, index) => {
+      tl.to(word, { x: 0, y: 0, duration: 0.6, ease: 'power2.out' }, subStart + index * 0.09);
+    });
 
+    const descStart = subStart + subheadlineWords.length * 0.09 + 0.15;
     maskWrapUnits(descriptionWords);
     gsap.set(descriptionWords, { x: xStart, y: yStart });
     descriptionWords.forEach((word, index) => {
-      tl.to(word, { x: 0, y: 0, duration: 0.5, ease: 'power2.out' }, headlineDone + 0.3 + (index * 0.055));
+      tl.to(word, { x: 0, y: 0, duration: 0.5, ease: 'power2.out' }, descStart + (index * 0.055));
     });
 
     const buttons = document.querySelectorAll('.slide-btn');
-    const buttonsStart = headlineDone + 0.3 + (descriptionWords.length * 0.055) + 0.25;
+    const buttonsStart = descStart + (descriptionWords.length * 0.055) + 0.25;
     buttons.forEach(btn => maskWrap(btn));
     gsap.set(buttons, { x: xStart, y: yStart });
     buttons.forEach((btn, index) => {
@@ -1228,18 +1284,25 @@ function animateContent() {
     });
 
     const headlineDone = headlineChars.length * 0.035;
-    maskWrap(subheadlineEl);
-    gsap.set(subheadlineEl, { x: xStart, y: yStart });
-    tl.to(subheadlineEl, { x: 0, y: 0, duration: 0.65, ease: 'power2.out' }, headlineDone + 0.15);
+    const splitSubheadline = new SplitText(subheadlineEl, { type: 'words,chars' });
+    activeSplits.push(splitSubheadline);
+    const subheadlineChars = splitSubheadline.chars;
+    const subStart = headlineDone + 0.15;
+    maskWrapUnits(subheadlineChars);
+    gsap.set(subheadlineChars, { x: xStart, y: yStart });
+    subheadlineChars.forEach((char, index) => {
+      tl.to(char, { x: 0, y: 0, duration: 0.4, ease: 'power2.out' }, subStart + index * 0.035);
+    });
 
+    const descStart = subStart + subheadlineChars.length * 0.035 + 0.15;
     maskWrapUnits(descriptionChars);
     gsap.set(descriptionChars, { x: xStart, y: yStart });
     descriptionChars.forEach((char, index) => {
-      tl.to(char, { x: 0, y: 0, duration: 0.35, ease: 'power2.out' }, headlineDone + 0.3 + (index * 0.018));
+      tl.to(char, { x: 0, y: 0, duration: 0.35, ease: 'power2.out' }, descStart + (index * 0.018));
     });
 
     const buttons = document.querySelectorAll('.slide-btn');
-    const buttonsStart = headlineDone + 0.3 + (descriptionChars.length * 0.018) + 0.25;
+    const buttonsStart = descStart + (descriptionChars.length * 0.018) + 0.25;
     buttons.forEach(btn => maskWrap(btn));
     gsap.set(buttons, { x: xStart, y: yStart });
     buttons.forEach((btn, index) => {
@@ -1266,11 +1329,7 @@ function updateSlideshow() {
   const animation = animations[currentIndex];
   subheadlineEl.textContent = animation.name;
   descriptionEl.textContent = animation.description;
-  const filtered = getFilteredSlides();
-  const filteredPos = filtered.indexOf(currentIndex) + 1 || currentIndex + 1;
-  const filteredTotal = filtered.length || animations.length;
-  currentSlideEl.textContent = filteredPos;
-  totalSlidesEl.textContent = filteredTotal;
+  updateCounter();
   animateContent();
 }
 
@@ -1367,10 +1426,16 @@ function navigateFiltered(dir) {
   updateSlideshow();
 }
 
-function updateFilterCount() {
-  const count = getFilteredSlides().length;
+function updateCounter() {
+  const filtered = getFilteredSlides();
+  const pos   = filtered.indexOf(currentIndex) + 1 || currentIndex + 1;
+  const total = filtered.length || animations.length;
+  currentSlideEl.textContent = pos;
+  totalSlidesEl.textContent  = total;
   document.getElementById('filter-count').textContent =
-    count === animations.length ? `${animations.length} slides` : `${count} of ${animations.length}`;
+    filtered.length === animations.length
+      ? `${animations.length} slides`
+      : `${filtered.length} of ${animations.length}`;
 }
 
 // Filter panel toggle
@@ -1413,7 +1478,7 @@ document.querySelectorAll('.filter-tag').forEach(btn => {
         updateSlideshow();
       }
     }
-    updateFilterCount();
+    updateCounter();
   });
 });
 
@@ -1421,7 +1486,7 @@ document.querySelectorAll('.filter-tag').forEach(btn => {
 document.getElementById('filter-clear').addEventListener('click', () => {
   ['style', 'split', 'direction'].forEach(cat => activeFilters[cat].clear());
   document.querySelectorAll('.filter-tag.active').forEach(btn => btn.classList.remove('active'));
-  updateFilterCount();
+  updateCounter();
 });
 
 // Button event listeners
@@ -1434,7 +1499,7 @@ nextBtn.addEventListener('click', () => navigateFiltered(1));
 
 // Initialize
 updateSlideshow();
-updateFilterCount();
+updateCounter();
 </script>
 
 </body>
