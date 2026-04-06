@@ -296,7 +296,7 @@
 </div>
 
 <span class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">8</span></span>
-<span class="version">v10</span>
+<span class="version">v11</span>
 </div>
 
 <script>
@@ -455,8 +455,8 @@ function animateContent() {
       tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0.45 + (index * 0.1));
     });
 
-  } else {
-    // Slides 4-7: Line-by-line animations
+  } else if (currentIndex < 8) {
+    // Slides 5-8: Line-by-line animations
     const slideIndex = currentIndex - 4;
 
     // Determine direction based on slide index
