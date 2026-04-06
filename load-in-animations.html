@@ -296,7 +296,7 @@
 </div>
 
 <span class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">8</span></span>
-<span class="version">v16</span>
+<span class="version">v15</span>
 </div>
 
 <script>
@@ -698,8 +698,15 @@ function animateContent() {
     });
 
   } else if (currentIndex < 20) {
-    // Slides 17-20: Whole-element clip reveal (left to right)
-    const clipFrom = 'inset(0 100% 0 0)';
+    // Slides 17-20: Whole-element clip reveal
+    const slideIndex = currentIndex - 16;
+    let clipFrom;
+    switch(slideIndex) {
+      case 0: clipFrom = 'inset(0 100% 0 0)';   break; // reveal from left
+      case 1: clipFrom = 'inset(100% 0 0 0)';   break; // reveal up
+      case 2: clipFrom = 'inset(0 0 0 100%)';   break; // reveal from right
+      case 3: clipFrom = 'inset(0 0 100% 0)';   break; // reveal down
+    }
     const clipTo = 'inset(0% 0% 0% 0%)';
 
     gsap.set([headlineEl, subheadlineEl, descriptionEl], { clipPath: clipFrom });
@@ -715,8 +722,15 @@ function animateContent() {
     });
 
   } else if (currentIndex < 24) {
-    // Slides 21-24: Line-by-line clip reveal (left to right)
-    const clipFrom = 'inset(0 100% 0 0)';
+    // Slides 21-24: Line-by-line clip reveal
+    const slideIndex = currentIndex - 20;
+    let clipFrom;
+    switch(slideIndex) {
+      case 0: clipFrom = 'inset(0 100% 0 0)';   break;
+      case 1: clipFrom = 'inset(100% 0 0 0)';   break;
+      case 2: clipFrom = 'inset(0 0 0 100%)';   break;
+      case 3: clipFrom = 'inset(0 0 100% 0)';   break;
+    }
     const clipTo = 'inset(0% 0% 0% 0%)';
 
     const splitHeadline = new SplitText(headlineEl, { type: 'lines' });
@@ -747,8 +761,15 @@ function animateContent() {
     });
 
   } else if (currentIndex < 28) {
-    // Slides 25-28: Word-by-word clip reveal (left to right)
-    const clipFrom = 'inset(0 100% 0 0)';
+    // Slides 25-28: Word-by-word clip reveal
+    const slideIndex = currentIndex - 24;
+    let clipFrom;
+    switch(slideIndex) {
+      case 0: clipFrom = 'inset(0 100% 0 0)';   break;
+      case 1: clipFrom = 'inset(100% 0 0 0)';   break;
+      case 2: clipFrom = 'inset(0 0 0 100%)';   break;
+      case 3: clipFrom = 'inset(0 0 100% 0)';   break;
+    }
     const clipTo = 'inset(0% 0% 0% 0%)';
 
     const splitHeadline = new SplitText(headlineEl, { type: 'words' });
@@ -780,8 +801,15 @@ function animateContent() {
     });
 
   } else {
-    // Slides 29-32: Char-by-char clip reveal (left to right)
-    const clipFrom = 'inset(0 100% 0 0)';
+    // Slides 29-32: Char-by-char clip reveal
+    const slideIndex = currentIndex - 28;
+    let clipFrom;
+    switch(slideIndex) {
+      case 0: clipFrom = 'inset(0 100% 0 0)';   break;
+      case 1: clipFrom = 'inset(100% 0 0 0)';   break;
+      case 2: clipFrom = 'inset(0 0 0 100%)';   break;
+      case 3: clipFrom = 'inset(0 0 100% 0)';   break;
+    }
     const clipTo = 'inset(0% 0% 0% 0%)';
 
     const splitHeadline = new SplitText(headlineEl, { type: 'chars' });
