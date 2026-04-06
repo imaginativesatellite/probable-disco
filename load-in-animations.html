@@ -296,7 +296,7 @@
 </div>
 
 <span class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">8</span></span>
-<span class="version">v8</span>
+<span class="version">v9</span>
 </div>
 
 <script>
@@ -379,10 +379,6 @@ let activeSplits = [];
 
 // Animate content staggered from top to bottom with different effects per slide
 function animateContent() {
-  // Revert any previous SplitText instances to restore original DOM
-  activeSplits.forEach(s => s.revert());
-  activeSplits = [];
-
   // Create timeline for all animations
   const tl = gsap.timeline();
 
@@ -500,6 +496,10 @@ function animateContent() {
 
 // Update slideshow display
 function updateSlideshow() {
+  // Revert any active SplitText before changing text content
+  activeSplits.forEach(s => s.revert());
+  activeSplits = [];
+
   const animation = animations[currentIndex];
   subheadlineEl.textContent = animation.name;
   descriptionEl.textContent = animation.description;
