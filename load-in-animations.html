@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Load In Animations | Lunamations</title>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/SplitText.min.js"></script>
   <style>
     :root {
       --bg: #0e0e0e;
@@ -295,7 +296,7 @@
 </div>
 
 <span class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">8</span></span>
-<span class="version">v7</span>
+<span class="version">v9</span>
 </div>
 
 <script>
@@ -323,6 +324,8 @@ menuOverlay.addEventListener('click', (e) => {
     menuOverlay.classList.remove('active');
   }
 });
+
+gsap.registerPlugin(SplitText);
 
 // Slideshow Functionality
 const animations = [
@@ -371,6 +374,8 @@ const totalSlidesEl = document.getElementById('total-slides');
 const reloadBtn = document.getElementById('reload-btn');
 const prevBtn = document.getElementById('prev-btn');
 const nextBtn = document.getElementById('next-btn');
+
+let activeSplits = [];
 
 // Animate content staggered from top to bottom with different effects per slide
 function animateContent() {
@@ -454,50 +459,18 @@ function animateContent() {
         break;
     }
 
-    // Helper: split element text into visual line spans by detecting word positions
-    function wrapTextIntoLines(el) {
-      const text = el.textContent.trim();
-      const words = text.split(/\s+/).filter(Boolean);
-      // Temporarily render words as spans for line position detection
-      el.innerHTML = '';
-      words.forEach(word => {
-        const span = document.createElement('span');
-        span.className = 'word';
-        span.textContent = word + ' ';
-        el.appendChild(span);
-      });
-      // Group words by visual line (offsetTop)
-      const wordSpans = Array.from(el.querySelectorAll('.word'));
-      const lineGroups = [];
-      let currentTop = null;
-      let currentGroup = [];
-      wordSpans.forEach(span => {
-        const top = span.offsetTop;
-        if (currentTop === null) currentTop = top;
-        if (top !== currentTop) {
-          lineGroups.push(currentGroup);
-          currentGroup = [];
-          currentTop = top;
-        }
-        currentGroup.push(span.textContent.trim());
-      });
-      if (currentGroup.length) lineGroups.push(currentGroup);
-      // Replace with one span per visual line using safe DOM methods
-      el.innerHTML = '';
-      return lineGroups.map(group => {
-        const span = document.createElement('span');
-        span.className = 'line';
-        span.textContent = group.join(' ');
-        el.appendChild(span);
-        return span;
-      });
-    }
+    // Split headline and description into lines using GSAP SplitText
+    const splitHeadline = new SplitText(headlineEl, { type: 'lines' });
+    const splitDescription = new SplitText(descriptionEl, { type: 'lines' });
+    activeSplits.push(splitHeadline, splitDescription);
+
+    const headlineLines = splitHeadline.lines;
+    const descriptionLines = splitDescription.lines;
 
     // Animate headline line by line
-    const headlineLines = wrapTextIntoLines(headlineEl);
     gsap.set(headlineLines, { opacity: 0, x: xOffset, y: yOffset });
-    headlineLines.forEach((span, index) => {
-      tl.to(span, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, index * 0.1);
+    headlineLines.forEach((line, index) => {
+      tl.to(line, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, index * 0.1);
     });
 
     // Animate subheadline
@@ -505,10 +478,9 @@ function animateContent() {
     tl.to(subheadlineEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, headlineLines.length * 0.1 + 0.1);
 
     // Animate description line by line
-    const descriptionLines = wrapTextIntoLines(descriptionEl);
     gsap.set(descriptionLines, { opacity: 0, x: xOffset, y: yOffset });
-    descriptionLines.forEach((span, index) => {
-      tl.to(span, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, headlineLines.length * 0.1 + 0.2 + (index * 0.1));
+    descriptionLines.forEach((line, index) => {
+      tl.to(line, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, headlineLines.length * 0.1 + 0.2 + (index * 0.1));
     });
 
     // Animate buttons
@@ -524,6 +496,10 @@ function animateContent() {
 
 // Update slideshow display
 function updateSlideshow() {
+  // Revert any active SplitText before changing text content
+  activeSplits.forEach(s => s.revert());
+  activeSplits = [];
+
   const animation = animations[currentIndex];
   subheadlineEl.textContent = animation.name;
   descriptionEl.textContent = animation.description;
