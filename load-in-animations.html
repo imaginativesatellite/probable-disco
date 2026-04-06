@@ -6,6 +6,7 @@
   <title>Load In Animations | Lunamations</title>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/SplitText.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   <style>
     :root {
       --bg: #0e0e0e;
@@ -399,9 +400,7 @@
 <!-- Filter Menu -->
 <div class="filter-menu" id="filter-menu">
   <button class="filter-toggle" id="filter-toggle" title="Filter slides">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-      <line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/>
-    </svg>
+    <i data-lucide="filter" width="16" height="16"></i>
   </button>
   <div class="filter-panel" id="filter-panel">
     <div class="filter-group">
@@ -447,18 +446,14 @@
   <p id="description">Elements smoothly fade in from transparent to fully opaque. This is the most basic and commonly used load-in animation, perfect for introducing content without distraction.</p>
 
   <div class="button-group">
-    <button class="slide-btn" id="reload-btn">↻</button>
+    <button class="slide-btn" id="reload-btn"><i data-lucide="rotate-cw" width="16" height="16"></i></button>
     <button class="slide-btn" id="prev-btn">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M19 12H5M12 19l-7-7 7-7"/>
-      </svg>
+      <i data-lucide="arrow-left" width="16" height="16"></i>
       Previous
     </button>
     <button class="slide-btn" id="next-btn">
       Next
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M5 12h14M12 5l7 7-7 7"/>
-      </svg>
+      <i data-lucide="arrow-right" width="16" height="16"></i>
     </button>
   </div>
 </div>
@@ -493,6 +488,7 @@ menuOverlay.addEventListener('click', (e) => {
   }
 });
 
+lucide.createIcons();
 gsap.registerPlugin(SplitText);
 
 // Slideshow Functionality
