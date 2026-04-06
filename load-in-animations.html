@@ -296,7 +296,7 @@
 </div>
 
 <span class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">8</span></span>
-<span class="version">v12</span>
+<span class="version">v13</span>
 </div>
 
 <script>
@@ -392,6 +392,70 @@ const animations = [
   {
     name: 'Char Down',
     description: 'Characters fall into place from above one by one. A meticulous, deliberate effect that commands the reader\'s full focus.'
+  },
+  {
+    name: 'Reveal From Left',
+    description: 'Elements are uncovered left to right with a clipping mask. Clean and dramatic — content feels like it\'s being unveiled rather than faded in.'
+  },
+  {
+    name: 'Reveal Up',
+    description: 'Content is unmasked from bottom to top. An elegant upward reveal that pairs well with important headlines and announcements.'
+  },
+  {
+    name: 'Reveal From Right',
+    description: 'Elements reveal with a clip sweeping right to left. Directional contrast creates a dynamic, eye-catching entrance.'
+  },
+  {
+    name: 'Reveal Down',
+    description: 'Content drops into view via a top-to-bottom clip. Authoritative and composed, perfect for titles that demand attention.'
+  },
+  {
+    name: 'Line Reveal From Left',
+    description: 'Each line is uncovered left to right in sequence. Precise and cinematic — like rolling credits coming sharply into focus.'
+  },
+  {
+    name: 'Line Reveal Up',
+    description: 'Lines are revealed bottom to top one at a time. Builds suspense as each line appears from beneath an invisible mask.'
+  },
+  {
+    name: 'Line Reveal From Right',
+    description: 'Each line sweeps in from right to left with a clip. Counter-directional rhythm that keeps viewers engaged throughout.'
+  },
+  {
+    name: 'Line Reveal Down',
+    description: 'Lines are uncovered top to bottom in sequence. Methodical and measured, giving each line its own moment to land.'
+  },
+  {
+    name: 'Word Reveal From Left',
+    description: 'Every word is unmasked left to right in rapid sequence. Dense and immersive — rewards attention with a satisfying cascade of reveals.'
+  },
+  {
+    name: 'Word Reveal Up',
+    description: 'Words are revealed bottom to top in quick succession. Kinetic and energetic, perfect for impactful headlines and calls to action.'
+  },
+  {
+    name: 'Word Reveal From Right',
+    description: 'Each word sweeps in from the right via clip mask. Unexpected directionality makes copy feel dynamic and alive.'
+  },
+  {
+    name: 'Word Reveal Down',
+    description: 'Words are uncovered top to bottom word by word. Deliberate and commanding — every word earns its place on screen.'
+  },
+  {
+    name: 'Char Reveal From Left',
+    description: 'Character by character reveal sweeping left to right. Ultra-detailed entrance with a mechanical, typewriter-like quality.'
+  },
+  {
+    name: 'Char Reveal Up',
+    description: 'Each character is unmasked from below in sequence. Granular and hypnotic — transforms text into pure visual spectacle.'
+  },
+  {
+    name: 'Char Reveal From Right',
+    description: 'Characters are revealed right to left one by one. Intricate reverse sweep that creates an unforgettable first impression.'
+  },
+  {
+    name: 'Char Reveal Down',
+    description: 'Characters drop into view from above individually. Maximally precise — every single letter gets its own moment to shine.'
   }
 ];
 
@@ -417,6 +481,9 @@ function animateContent() {
   // Kill any existing animations on these elements
   gsap.killTweensOf([headlineEl, subheadlineEl, descriptionEl]);
   gsap.killTweensOf(document.querySelectorAll('.slide-btn'));
+
+  // Clear any leftover clipPath from reveal slides before setting new initial state
+  gsap.set([headlineEl, subheadlineEl, descriptionEl, ...document.querySelectorAll('.slide-btn')], { clipPath: 'none' });
 
   let headlineStart = { opacity: 0, y: -10 };
   let subheadlineStart = { opacity: 0, y: -10 };
@@ -577,7 +644,7 @@ function animateContent() {
       tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.3, ease: 'sine.in' }, buttonsStartTime + (index * 0.1));
     });
 
-  } else {
+  } else if (currentIndex < 16) {
     // Slides 13-16: Char-by-char animations
     const slideIndex = currentIndex - 12;
 
@@ -628,6 +695,149 @@ function animateContent() {
     const buttonsStartTime = headlineDone + 0.2 + (descriptionChars.length * 0.01) + 0.2;
     buttons.forEach((btn, index) => {
       tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.3, ease: 'sine.in' }, buttonsStartTime + (index * 0.1));
+    });
+
+  } else if (currentIndex < 20) {
+    // Slides 17-20: Whole-element clip reveal
+    const slideIndex = currentIndex - 16;
+    let clipFrom;
+    switch(slideIndex) {
+      case 0: clipFrom = 'inset(0 100% 0 0)';   break; // reveal from left
+      case 1: clipFrom = 'inset(100% 0 0 0)';   break; // reveal up
+      case 2: clipFrom = 'inset(0 0 0 100%)';   break; // reveal from right
+      case 3: clipFrom = 'inset(0 0 100% 0)';   break; // reveal down
+    }
+    const clipTo = 'inset(0% 0% 0% 0%)';
+
+    gsap.set([headlineEl, subheadlineEl, descriptionEl], { clipPath: clipFrom });
+    gsap.set(document.querySelectorAll('.slide-btn'), { clipPath: clipFrom });
+
+    tl.to(headlineEl,    { clipPath: clipTo, duration: 0.6, ease: 'power2.out' }, 0)
+      .to(subheadlineEl, { clipPath: clipTo, duration: 0.6, ease: 'power2.out' }, 0.15)
+      .to(descriptionEl, { clipPath: clipTo, duration: 0.6, ease: 'power2.out' }, 0.3);
+
+    const buttons = document.querySelectorAll('.slide-btn');
+    buttons.forEach((btn, index) => {
+      tl.to(btn, { clipPath: clipTo, duration: 0.5, ease: 'power2.out' }, 0.45 + (index * 0.1));
+    });
+
+  } else if (currentIndex < 24) {
+    // Slides 21-24: Line-by-line clip reveal
+    const slideIndex = currentIndex - 20;
+    let clipFrom;
+    switch(slideIndex) {
+      case 0: clipFrom = 'inset(0 100% 0 0)';   break;
+      case 1: clipFrom = 'inset(100% 0 0 0)';   break;
+      case 2: clipFrom = 'inset(0 0 0 100%)';   break;
+      case 3: clipFrom = 'inset(0 0 100% 0)';   break;
+    }
+    const clipTo = 'inset(0% 0% 0% 0%)';
+
+    const splitHeadline = new SplitText(headlineEl, { type: 'lines' });
+    const splitDescription = new SplitText(descriptionEl, { type: 'lines' });
+    activeSplits.push(splitHeadline, splitDescription);
+
+    const headlineLines = splitHeadline.lines;
+    const descriptionLines = splitDescription.lines;
+
+    gsap.set(headlineLines, { clipPath: clipFrom });
+    headlineLines.forEach((line, index) => {
+      tl.to(line, { clipPath: clipTo, duration: 0.5, ease: 'power2.out' }, index * 0.1);
+    });
+
+    gsap.set(subheadlineEl, { clipPath: clipFrom });
+    tl.to(subheadlineEl, { clipPath: clipTo, duration: 0.5, ease: 'power2.out' }, headlineLines.length * 0.1 + 0.1);
+
+    gsap.set(descriptionLines, { clipPath: clipFrom });
+    descriptionLines.forEach((line, index) => {
+      tl.to(line, { clipPath: clipTo, duration: 0.5, ease: 'power2.out' }, headlineLines.length * 0.1 + 0.2 + (index * 0.1));
+    });
+
+    const buttons = document.querySelectorAll('.slide-btn');
+    const buttonsStart = headlineLines.length * 0.1 + 0.2 + (descriptionLines.length * 0.1) + 0.2;
+    gsap.set(buttons, { clipPath: clipFrom });
+    buttons.forEach((btn, index) => {
+      tl.to(btn, { clipPath: clipTo, duration: 0.5, ease: 'power2.out' }, buttonsStart + (index * 0.1));
+    });
+
+  } else if (currentIndex < 28) {
+    // Slides 25-28: Word-by-word clip reveal
+    const slideIndex = currentIndex - 24;
+    let clipFrom;
+    switch(slideIndex) {
+      case 0: clipFrom = 'inset(0 100% 0 0)';   break;
+      case 1: clipFrom = 'inset(100% 0 0 0)';   break;
+      case 2: clipFrom = 'inset(0 0 0 100%)';   break;
+      case 3: clipFrom = 'inset(0 0 100% 0)';   break;
+    }
+    const clipTo = 'inset(0% 0% 0% 0%)';
+
+    const splitHeadline = new SplitText(headlineEl, { type: 'words' });
+    const splitDescription = new SplitText(descriptionEl, { type: 'words' });
+    activeSplits.push(splitHeadline, splitDescription);
+
+    const headlineWords = splitHeadline.words;
+    const descriptionWords = splitDescription.words;
+
+    gsap.set(headlineWords, { clipPath: clipFrom });
+    headlineWords.forEach((word, index) => {
+      tl.to(word, { clipPath: clipTo, duration: 0.35, ease: 'power2.out' }, index * 0.05);
+    });
+
+    const headlineDone = headlineWords.length * 0.05;
+    gsap.set(subheadlineEl, { clipPath: clipFrom });
+    tl.to(subheadlineEl, { clipPath: clipTo, duration: 0.4, ease: 'power2.out' }, headlineDone + 0.1);
+
+    gsap.set(descriptionWords, { clipPath: clipFrom });
+    descriptionWords.forEach((word, index) => {
+      tl.to(word, { clipPath: clipTo, duration: 0.3, ease: 'power2.out' }, headlineDone + 0.2 + (index * 0.03));
+    });
+
+    const buttons = document.querySelectorAll('.slide-btn');
+    const buttonsStart = headlineDone + 0.2 + (descriptionWords.length * 0.03) + 0.2;
+    gsap.set(buttons, { clipPath: clipFrom });
+    buttons.forEach((btn, index) => {
+      tl.to(btn, { clipPath: clipTo, duration: 0.4, ease: 'power2.out' }, buttonsStart + (index * 0.1));
+    });
+
+  } else {
+    // Slides 29-32: Char-by-char clip reveal
+    const slideIndex = currentIndex - 28;
+    let clipFrom;
+    switch(slideIndex) {
+      case 0: clipFrom = 'inset(0 100% 0 0)';   break;
+      case 1: clipFrom = 'inset(100% 0 0 0)';   break;
+      case 2: clipFrom = 'inset(0 0 0 100%)';   break;
+      case 3: clipFrom = 'inset(0 0 100% 0)';   break;
+    }
+    const clipTo = 'inset(0% 0% 0% 0%)';
+
+    const splitHeadline = new SplitText(headlineEl, { type: 'chars' });
+    const splitDescription = new SplitText(descriptionEl, { type: 'chars' });
+    activeSplits.push(splitHeadline, splitDescription);
+
+    const headlineChars = splitHeadline.chars;
+    const descriptionChars = splitDescription.chars;
+
+    gsap.set(headlineChars, { clipPath: clipFrom });
+    headlineChars.forEach((char, index) => {
+      tl.to(char, { clipPath: clipTo, duration: 0.25, ease: 'power2.out' }, index * 0.02);
+    });
+
+    const headlineDone = headlineChars.length * 0.02;
+    gsap.set(subheadlineEl, { clipPath: clipFrom });
+    tl.to(subheadlineEl, { clipPath: clipTo, duration: 0.4, ease: 'power2.out' }, headlineDone + 0.1);
+
+    gsap.set(descriptionChars, { clipPath: clipFrom });
+    descriptionChars.forEach((char, index) => {
+      tl.to(char, { clipPath: clipTo, duration: 0.2, ease: 'power2.out' }, headlineDone + 0.2 + (index * 0.01));
+    });
+
+    const buttons = document.querySelectorAll('.slide-btn');
+    const buttonsStart = headlineDone + 0.2 + (descriptionChars.length * 0.01) + 0.2;
+    gsap.set(buttons, { clipPath: clipFrom });
+    buttons.forEach((btn, index) => {
+      tl.to(btn, { clipPath: clipTo, duration: 0.4, ease: 'power2.out' }, buttonsStart + (index * 0.1));
     });
   }
 }
