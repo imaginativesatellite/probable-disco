@@ -296,7 +296,7 @@
 </div>
 
 <span class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">8</span></span>
-<span class="version">v9</span>
+<span class="version">v10</span>
 </div>
 
 <script>
@@ -360,6 +360,22 @@ const animations = [
   {
     name: 'Line Down',
     description: 'Text enters line by line moving downward. Graceful sequential reveal that feels controlled and intentional.'
+  },
+  {
+    name: 'Word From Left',
+    description: 'Each word slides in from the left one at a time. Dense, rapid-fire entrance that rewards attention and builds energy across the headline.'
+  },
+  {
+    name: 'Word Up',
+    description: 'Words rise into place from below in quick succession. The fast stagger creates a sense of urgency and forward momentum.'
+  },
+  {
+    name: 'Word From Right',
+    description: 'Words arrive from the right side one by one. Reversed directionality creates contrast and makes headlines feel unexpected.'
+  },
+  {
+    name: 'Word Down',
+    description: 'Words drop into place from above in sequence. Controlled and deliberate, this effect pairs well with bold, authoritative copy.'
   }
 ];
 
@@ -490,6 +506,59 @@ function animateContent() {
     const buttonsStartTime = headlineLines.length * 0.1 + 0.2 + (descriptionLines.length * 0.1) + 0.2;
     buttons.forEach((btn, index) => {
       tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, buttonsStartTime + (index * 0.1));
+    });
+
+  } else {
+    // Slides 9-12: Word-by-word animations
+    const slideIndex = currentIndex - 8;
+
+    switch(slideIndex) {
+      case 0: // Word from left
+        xOffset = -20;
+        break;
+      case 1: // Word up
+        yOffset = 20;
+        break;
+      case 2: // Word from right
+        xOffset = 20;
+        break;
+      case 3: // Word down
+        yOffset = -20;
+        break;
+    }
+
+    // Split headline and description into words using GSAP SplitText
+    const splitHeadline = new SplitText(headlineEl, { type: 'words' });
+    const splitDescription = new SplitText(descriptionEl, { type: 'words' });
+    activeSplits.push(splitHeadline, splitDescription);
+
+    const headlineWords = splitHeadline.words;
+    const descriptionWords = splitDescription.words;
+
+    // Animate headline word by word
+    gsap.set(headlineWords, { opacity: 0, x: xOffset, y: yOffset });
+    headlineWords.forEach((word, index) => {
+      tl.to(word, { opacity: 1, x: 0, y: 0, duration: 0.3, ease: 'sine.in' }, index * 0.05);
+    });
+
+    // Animate subheadline
+    const headlineDone = headlineWords.length * 0.05;
+    gsap.set(subheadlineEl, { opacity: 0, x: xOffset, y: yOffset });
+    tl.to(subheadlineEl, { opacity: 1, x: 0, y: 0, duration: 0.3, ease: 'sine.in' }, headlineDone + 0.1);
+
+    // Animate description word by word
+    gsap.set(descriptionWords, { opacity: 0, x: xOffset, y: yOffset });
+    descriptionWords.forEach((word, index) => {
+      tl.to(word, { opacity: 1, x: 0, y: 0, duration: 0.25, ease: 'sine.in' }, headlineDone + 0.2 + (index * 0.03));
+    });
+
+    // Animate buttons
+    const buttons = document.querySelectorAll('.slide-btn');
+    gsap.set(buttons, { opacity: 0, x: xOffset, y: yOffset });
+
+    const buttonsStartTime = headlineDone + 0.2 + (descriptionWords.length * 0.03) + 0.2;
+    buttons.forEach((btn, index) => {
+      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.3, ease: 'sine.in' }, buttonsStartTime + (index * 0.1));
     });
   }
 }
