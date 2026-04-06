@@ -296,7 +296,7 @@
 </div>
 
 <span class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">8</span></span>
-<span class="version">v17</span>
+<span class="version">v18</span>
 </div>
 
 <script>
@@ -664,8 +664,10 @@ function animateContent() {
     }
 
     // Split headline and description into characters using GSAP SplitText
-    const splitHeadline = new SplitText(headlineEl, { type: 'chars' });
-    const splitDescription = new SplitText(descriptionEl, { type: 'chars' });
+    // type: 'words,chars' wraps each word's chars in an inline-block word span,
+    // preventing characters from breaking across lines mid-word
+    const splitHeadline = new SplitText(headlineEl, { type: 'words,chars' });
+    const splitDescription = new SplitText(descriptionEl, { type: 'words,chars' });
     activeSplits.push(splitHeadline, splitDescription);
 
     const headlineChars = splitHeadline.chars;
@@ -812,8 +814,8 @@ function animateContent() {
     }
     const clipTo = 'inset(0% 0% 0% 0%)';
 
-    const splitHeadline = new SplitText(headlineEl, { type: 'chars' });
-    const splitDescription = new SplitText(descriptionEl, { type: 'chars' });
+    const splitHeadline = new SplitText(headlineEl, { type: 'words,chars' });
+    const splitDescription = new SplitText(descriptionEl, { type: 'words,chars' });
     activeSplits.push(splitHeadline, splitDescription);
 
     const headlineChars = splitHeadline.chars;
