@@ -249,6 +249,130 @@
       font-size: 11px;
       z-index: 100;
     }
+
+    /* ── Filter Menu ── */
+    .filter-menu {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      z-index: 200;
+    }
+
+    .filter-toggle {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+
+    .filter-toggle:hover,
+    .filter-toggle.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .filter-panel {
+      position: absolute;
+      bottom: 56px;
+      left: 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--card-radius);
+      padding: 16px;
+      min-width: 230px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .filter-panel.open {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0);
+    }
+
+    .filter-group-label {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 7px;
+    }
+
+    .filter-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .filter-tag {
+      font-size: 12px;
+      font-family: inherit;
+      padding: 4px 11px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+
+    .filter-tag:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .filter-tag.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .filter-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0;
+    }
+
+    .filter-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .filter-count {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .filter-clear {
+      font-size: 11px;
+      font-family: inherit;
+      padding: 0;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+
+    .filter-clear:hover {
+      color: var(--text);
+    }
   </style>
 </head>
 <body>
@@ -270,6 +394,50 @@
     <li><a href="load-in-animations.html">Load In Animations</a></li>
     <li><a href="single-animation.html">Single Animation Test</a></li>
   </ul>
+</div>
+
+<!-- Filter Menu -->
+<div class="filter-menu" id="filter-menu">
+  <button class="filter-toggle" id="filter-toggle" title="Filter slides">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/>
+    </svg>
+  </button>
+  <div class="filter-panel" id="filter-panel">
+    <div class="filter-group">
+      <span class="filter-group-label">Style</span>
+      <div class="filter-tags">
+        <button class="filter-tag" data-category="style" data-value="Fade">Fade</button>
+        <button class="filter-tag" data-category="style" data-value="Reveal">Reveal</button>
+        <button class="filter-tag" data-category="style" data-value="Emerge">Emerge</button>
+      </div>
+    </div>
+    <div class="filter-divider"></div>
+    <div class="filter-group">
+      <span class="filter-group-label">Split</span>
+      <div class="filter-tags">
+        <button class="filter-tag" data-category="split" data-value="Whole">Whole</button>
+        <button class="filter-tag" data-category="split" data-value="Lines">Lines</button>
+        <button class="filter-tag" data-category="split" data-value="Words">Words</button>
+        <button class="filter-tag" data-category="split" data-value="Chars">Chars</button>
+      </div>
+    </div>
+    <div class="filter-divider"></div>
+    <div class="filter-group">
+      <span class="filter-group-label">Direction</span>
+      <div class="filter-tags">
+        <button class="filter-tag" data-category="direction" data-value="From Left">From Left</button>
+        <button class="filter-tag" data-category="direction" data-value="Up">Up</button>
+        <button class="filter-tag" data-category="direction" data-value="From Right">From Right</button>
+        <button class="filter-tag" data-category="direction" data-value="Down">Down</button>
+      </div>
+    </div>
+    <div class="filter-divider"></div>
+    <div class="filter-footer">
+      <span class="filter-count" id="filter-count">48 slides</span>
+      <button class="filter-clear" id="filter-clear">Clear all</button>
+    </div>
+  </div>
 </div>
 
 <!-- Slideshow Content -->
@@ -296,7 +464,7 @@
 </div>
 
 <span class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">8</span></span>
-<span class="version">v19</span>
+<span class="version">v20</span>
 </div>
 
 <script>
@@ -1098,29 +1266,175 @@ function updateSlideshow() {
   const animation = animations[currentIndex];
   subheadlineEl.textContent = animation.name;
   descriptionEl.textContent = animation.description;
-  currentSlideEl.textContent = currentIndex + 1;
-  totalSlidesEl.textContent = animations.length;
+  const filtered = getFilteredSlides();
+  const filteredPos = filtered.indexOf(currentIndex) + 1 || currentIndex + 1;
+  const filteredTotal = filtered.length || animations.length;
+  currentSlideEl.textContent = filteredPos;
+  totalSlidesEl.textContent = filteredTotal;
   animateContent();
 }
+
+// ── Filter System ──
+
+// Tag metadata for every slide (index matches animations array)
+const slideTags = [
+  // Slides 1-4:  Fade / Whole
+  { style:'Fade',   split:'Whole', direction:'From Left' },
+  { style:'Fade',   split:'Whole', direction:'Up' },
+  { style:'Fade',   split:'Whole', direction:'From Right' },
+  { style:'Fade',   split:'Whole', direction:'Down' },
+  // Slides 5-8:  Fade / Lines
+  { style:'Fade',   split:'Lines', direction:'From Left' },
+  { style:'Fade',   split:'Lines', direction:'Up' },
+  { style:'Fade',   split:'Lines', direction:'From Right' },
+  { style:'Fade',   split:'Lines', direction:'Down' },
+  // Slides 9-12: Fade / Words
+  { style:'Fade',   split:'Words', direction:'From Left' },
+  { style:'Fade',   split:'Words', direction:'Up' },
+  { style:'Fade',   split:'Words', direction:'From Right' },
+  { style:'Fade',   split:'Words', direction:'Down' },
+  // Slides 13-16: Fade / Chars
+  { style:'Fade',   split:'Chars', direction:'From Left' },
+  { style:'Fade',   split:'Chars', direction:'Up' },
+  { style:'Fade',   split:'Chars', direction:'From Right' },
+  { style:'Fade',   split:'Chars', direction:'Down' },
+  // Slides 17-20: Reveal / Whole
+  { style:'Reveal', split:'Whole', direction:'From Left' },
+  { style:'Reveal', split:'Whole', direction:'Up' },
+  { style:'Reveal', split:'Whole', direction:'From Right' },
+  { style:'Reveal', split:'Whole', direction:'Down' },
+  // Slides 21-24: Reveal / Lines
+  { style:'Reveal', split:'Lines', direction:'From Left' },
+  { style:'Reveal', split:'Lines', direction:'Up' },
+  { style:'Reveal', split:'Lines', direction:'From Right' },
+  { style:'Reveal', split:'Lines', direction:'Down' },
+  // Slides 25-28: Reveal / Words
+  { style:'Reveal', split:'Words', direction:'From Left' },
+  { style:'Reveal', split:'Words', direction:'Up' },
+  { style:'Reveal', split:'Words', direction:'From Right' },
+  { style:'Reveal', split:'Words', direction:'Down' },
+  // Slides 29-32: Reveal / Chars
+  { style:'Reveal', split:'Chars', direction:'From Left' },
+  { style:'Reveal', split:'Chars', direction:'Up' },
+  { style:'Reveal', split:'Chars', direction:'From Right' },
+  { style:'Reveal', split:'Chars', direction:'Down' },
+  // Slides 33-36: Emerge / Whole
+  { style:'Emerge', split:'Whole', direction:'From Left' },
+  { style:'Emerge', split:'Whole', direction:'Up' },
+  { style:'Emerge', split:'Whole', direction:'From Right' },
+  { style:'Emerge', split:'Whole', direction:'Down' },
+  // Slides 37-40: Emerge / Lines
+  { style:'Emerge', split:'Lines', direction:'From Left' },
+  { style:'Emerge', split:'Lines', direction:'Up' },
+  { style:'Emerge', split:'Lines', direction:'From Right' },
+  { style:'Emerge', split:'Lines', direction:'Down' },
+  // Slides 41-44: Emerge / Words
+  { style:'Emerge', split:'Words', direction:'From Left' },
+  { style:'Emerge', split:'Words', direction:'Up' },
+  { style:'Emerge', split:'Words', direction:'From Right' },
+  { style:'Emerge', split:'Words', direction:'Down' },
+  // Slides 45-48: Emerge / Chars
+  { style:'Emerge', split:'Chars', direction:'From Left' },
+  { style:'Emerge', split:'Chars', direction:'Up' },
+  { style:'Emerge', split:'Chars', direction:'From Right' },
+  { style:'Emerge', split:'Chars', direction:'Down' },
+];
+
+const activeFilters = { style: new Set(), split: new Set(), direction: new Set() };
+
+function slideMatchesFilters(index) {
+  const tags = slideTags[index];
+  if (activeFilters.style.size     && !activeFilters.style.has(tags.style))         return false;
+  if (activeFilters.split.size     && !activeFilters.split.has(tags.split))         return false;
+  if (activeFilters.direction.size && !activeFilters.direction.has(tags.direction)) return false;
+  return true;
+}
+
+function getFilteredSlides() {
+  return animations.map((_, i) => i).filter(i => slideMatchesFilters(i));
+}
+
+// Navigate to the next/prev slide that passes the filter (-1 = prev, +1 = next)
+function navigateFiltered(dir) {
+  const total = animations.length;
+  let next = (currentIndex + dir + total) % total;
+  const start = next;
+  while (!slideMatchesFilters(next)) {
+    next = (next + dir + total) % total;
+    if (next === start) return; // no matches at all — stay put
+  }
+  currentIndex = next;
+  updateSlideshow();
+}
+
+function updateFilterCount() {
+  const count = getFilteredSlides().length;
+  document.getElementById('filter-count').textContent =
+    count === animations.length ? `${animations.length} slides` : `${count} of ${animations.length}`;
+}
+
+// Filter panel toggle
+const filterToggle = document.getElementById('filter-toggle');
+const filterPanel  = document.getElementById('filter-panel');
+
+filterToggle.addEventListener('click', () => {
+  const open = filterPanel.classList.toggle('open');
+  filterToggle.classList.toggle('active', open);
+});
+
+// Close panel when clicking outside
+document.addEventListener('click', (e) => {
+  if (!document.getElementById('filter-menu').contains(e.target)) {
+    filterPanel.classList.remove('open');
+    filterToggle.classList.remove('active');
+  }
+});
+
+// Tag button clicks
+document.querySelectorAll('.filter-tag').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const cat = btn.dataset.category;
+    const val = btn.dataset.value;
+    if (activeFilters[cat].has(val)) {
+      activeFilters[cat].delete(val);
+      btn.classList.remove('active');
+    } else {
+      activeFilters[cat].add(val);
+      btn.classList.add('active');
+    }
+    // If current slide is now filtered out, jump to nearest match
+    if (!slideMatchesFilters(currentIndex)) {
+      const filtered = getFilteredSlides();
+      if (filtered.length) {
+        // find closest slide index
+        currentIndex = filtered.reduce((a, b) =>
+          Math.abs(b - currentIndex) < Math.abs(a - currentIndex) ? b : a
+        );
+        updateSlideshow();
+      }
+    }
+    updateFilterCount();
+  });
+});
+
+// Clear all filters
+document.getElementById('filter-clear').addEventListener('click', () => {
+  ['style', 'split', 'direction'].forEach(cat => activeFilters[cat].clear());
+  document.querySelectorAll('.filter-tag.active').forEach(btn => btn.classList.remove('active'));
+  updateFilterCount();
+});
 
 // Button event listeners
 reloadBtn.addEventListener('click', () => {
   updateSlideshow();
-  console.log('Reloading animation:', animations[currentIndex].headline);
 });
 
-prevBtn.addEventListener('click', () => {
-  currentIndex = (currentIndex - 1 + animations.length) % animations.length;
-  updateSlideshow();
-});
-
-nextBtn.addEventListener('click', () => {
-  currentIndex = (currentIndex + 1) % animations.length;
-  updateSlideshow();
-});
+prevBtn.addEventListener('click', () => navigateFiltered(-1));
+nextBtn.addEventListener('click', () => navigateFiltered(1));
 
 // Initialize
 updateSlideshow();
+updateFilterCount();
 </script>
 
 </body>
