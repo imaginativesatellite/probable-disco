@@ -296,7 +296,7 @@
 </div>
 
 <span class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">8</span></span>
-<span class="version">v11</span>
+<span class="version">v12</span>
 </div>
 
 <script>
@@ -376,6 +376,22 @@ const animations = [
   {
     name: 'Word Down',
     description: 'Words drop into place from above in sequence. Controlled and deliberate, this effect pairs well with bold, authoritative copy.'
+  },
+  {
+    name: 'Char From Left',
+    description: 'Every character slides in from the left one at a time. Ultra-granular entrance that gives headlines a typewriter-like intensity.'
+  },
+  {
+    name: 'Char Up',
+    description: 'Characters rise into place from below in rapid succession. High-energy reveal that makes even short words feel cinematic.'
+  },
+  {
+    name: 'Char From Right',
+    description: 'Each character arrives from the right side individually. Detailed and precise, this animation rewards viewers who pay close attention.'
+  },
+  {
+    name: 'Char Down',
+    description: 'Characters fall into place from above one by one. A meticulous, deliberate effect that commands the reader\'s full focus.'
   }
 ];
 
@@ -508,7 +524,7 @@ function animateContent() {
       tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, buttonsStartTime + (index * 0.1));
     });
 
-  } else {
+  } else if (currentIndex < 12) {
     // Slides 9-12: Word-by-word animations
     const slideIndex = currentIndex - 8;
 
@@ -557,6 +573,59 @@ function animateContent() {
     gsap.set(buttons, { opacity: 0, x: xOffset, y: yOffset });
 
     const buttonsStartTime = headlineDone + 0.2 + (descriptionWords.length * 0.03) + 0.2;
+    buttons.forEach((btn, index) => {
+      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.3, ease: 'sine.in' }, buttonsStartTime + (index * 0.1));
+    });
+
+  } else {
+    // Slides 13-16: Char-by-char animations
+    const slideIndex = currentIndex - 12;
+
+    switch(slideIndex) {
+      case 0: // Char from left
+        xOffset = -15;
+        break;
+      case 1: // Char up
+        yOffset = 15;
+        break;
+      case 2: // Char from right
+        xOffset = 15;
+        break;
+      case 3: // Char down
+        yOffset = -15;
+        break;
+    }
+
+    // Split headline and description into characters using GSAP SplitText
+    const splitHeadline = new SplitText(headlineEl, { type: 'chars' });
+    const splitDescription = new SplitText(descriptionEl, { type: 'chars' });
+    activeSplits.push(splitHeadline, splitDescription);
+
+    const headlineChars = splitHeadline.chars;
+    const descriptionChars = splitDescription.chars;
+
+    // Animate headline char by char
+    gsap.set(headlineChars, { opacity: 0, x: xOffset, y: yOffset });
+    headlineChars.forEach((char, index) => {
+      tl.to(char, { opacity: 1, x: 0, y: 0, duration: 0.2, ease: 'sine.in' }, index * 0.02);
+    });
+
+    // Animate subheadline
+    const headlineDone = headlineChars.length * 0.02;
+    gsap.set(subheadlineEl, { opacity: 0, x: xOffset, y: yOffset });
+    tl.to(subheadlineEl, { opacity: 1, x: 0, y: 0, duration: 0.3, ease: 'sine.in' }, headlineDone + 0.1);
+
+    // Animate description char by char
+    gsap.set(descriptionChars, { opacity: 0, x: xOffset, y: yOffset });
+    descriptionChars.forEach((char, index) => {
+      tl.to(char, { opacity: 1, x: 0, y: 0, duration: 0.15, ease: 'sine.in' }, headlineDone + 0.2 + (index * 0.01));
+    });
+
+    // Animate buttons
+    const buttons = document.querySelectorAll('.slide-btn');
+    gsap.set(buttons, { opacity: 0, x: xOffset, y: yOffset });
+
+    const buttonsStartTime = headlineDone + 0.2 + (descriptionChars.length * 0.01) + 0.2;
     buttons.forEach((btn, index) => {
       tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.3, ease: 'sine.in' }, buttonsStartTime + (index * 0.1));
     });
