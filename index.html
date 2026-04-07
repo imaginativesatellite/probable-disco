@@ -14,9 +14,9 @@
       --border: #2a2a2a;
       --text: #f0f0f0;
       --text-muted: #888;
-      --accent: #6c63ff;
-      --accent2: #ff6b6b;
-      --accent3: #43e97b;
+      --accent: #f26522;
+      --accent2: #ffcb05;
+      --accent3: #f26522;
       --radius: 12px;
       --card-radius: 16px;
     }
@@ -339,7 +339,7 @@
     .btn-lift-shadow {
       background: var(--accent);
       color: #fff;
-      box-shadow: 0 2px 8px rgba(108,99,255,0.2);
+      box-shadow: 0 2px 8px rgba(242,101,34,0.2);
     }
 
     /* 3. Border Draw */
@@ -385,7 +385,7 @@
 
     /* 5. Scale Pulse */
     .btn-scale-pulse {
-      background: linear-gradient(135deg, #6c63ff, #ff6b6b);
+      background: linear-gradient(135deg, #f26522, #ffcb05);
       color: #fff;
     }
 
@@ -1186,18 +1186,18 @@ reg('underline-slide',
 // 2. Underline Center
 reg('underline-center',
   (el) => {
-    const line = createUnderline(el, 'ul-center-line', '#ff6b6b');
+    const line = createUnderline(el, 'ul-center-line', '#ffcb05');
     gsap.fromTo(line, { left: '50%', right: '50%', width: 0 }, { left: '0%', right: '0%', width: '100%', duration: 0.4, ease: 'power2.out' });
   },
   (el) => {
-    const line = createUnderline(el, 'ul-center-line', '#ff6b6b');
+    const line = createUnderline(el, 'ul-center-line', '#ffcb05');
     gsap.to(line, { left: '50%', right: '50%', width: 0, duration: 0.3, ease: 'power2.in' });
   }
 );
 
 // 3. Color Shift
 reg('color-shift',
-  (el) => { gsap.to(el, { color: '#6c63ff', duration: 0.35, ease: 'power1.out' }); },
+  (el) => { gsap.to(el, { color: '#f26522', duration: 0.35, ease: 'power1.out' }); },
   (el) => { gsap.to(el, { color: '#888', duration: 0.3, ease: 'power1.in' }); }
 );
 
@@ -1299,14 +1299,14 @@ reg('fill-slide',
   (el) => {
     const layer = document.getElementById('fill-layer');
     gsap.to(layer, { x: '-100%', duration: 0.35, ease: 'power2.in' });
-    gsap.to(el, { color: '#6c63ff', duration: 0.35, ease: 'power2.in' });
+    gsap.to(el, { color: '#f26522', duration: 0.35, ease: 'power2.in' });
   }
 );
 
 // 2. Lift Shadow
 reg('lift-shadow',
-  (el) => { gsap.to(el, { y: -4, boxShadow: '0 12px 32px rgba(108,99,255,0.45)', duration: 0.35, ease: 'power2.out' }); },
-  (el) => { gsap.to(el, { y: 0, boxShadow: '0 2px 8px rgba(108,99,255,0.2)', duration: 0.4, ease: 'back.out(2)' }); }
+  (el) => { gsap.to(el, { y: -4, boxShadow: '0 12px 32px rgba(242,101,34,0.45)', duration: 0.35, ease: 'power2.out' }); },
+  (el) => { gsap.to(el, { y: 0, boxShadow: '0 2px 8px rgba(242,101,34,0.2)', duration: 0.4, ease: 'back.out(2)' }); }
 );
 
 // 3. Border Draw
@@ -1363,7 +1363,7 @@ reg('fill-rise',
     gsap.killTweensOf(layer);
     gsap.set(layer, { y: '0%', scaleY: 1 });
     gsap.to(layer, { scaleY: 0, transformOrigin: 'bottom center', duration: 0.35, ease: 'power2.in' });
-    gsap.to(el, { color: '#6c63ff', duration: 0.4, ease: 'power2.inOut' });
+    gsap.to(el, { color: '#f26522', duration: 0.4, ease: 'power2.inOut' });
   }
 );
 
@@ -1380,7 +1380,7 @@ reg('fill-surge',
     const layer = document.getElementById('fill-surge-layer');
     gsap.killTweensOf(layer);
     gsap.to(layer, { y: '-100%', duration: 0.35, ease: 'power2.in' });
-    gsap.to(el, { color: '#6c63ff', duration: 0.4, ease: 'power2.inOut' });
+    gsap.to(el, { color: '#f26522', duration: 0.4, ease: 'power2.inOut' });
   }
 );
 
@@ -1617,7 +1617,7 @@ const elMap = {
 // ============================================================
 // UNDERLINE HELPER (real DOM line, avoids CSS pseudo)
 // ============================================================
-function createUnderline(el, id, color = '#6c63ff') {
+function createUnderline(el, id, color = '#f26522') {
   let line = document.getElementById(id);
   if (!line) {
     line = document.createElement('span');
@@ -1639,7 +1639,7 @@ function createUnderline(el, id, color = '#6c63ff') {
 
 // Pre-create underlines so they're ready
 createUnderline(elMap['underline-slide'], 'ul-slide-line');
-createUnderline(elMap['underline-center'], 'ul-center-line', '#ff6b6b');
+createUnderline(elMap['underline-center'], 'ul-center-line', '#ffcb05');
 
 // ============================================================
 // HOVER WIRING (desktop)
