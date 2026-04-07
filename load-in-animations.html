@@ -413,6 +413,7 @@
         <button class="filter-tag" data-category="style" data-value="Type">Type</button>
         <button class="filter-tag" data-category="style" data-value="Grow">Grow</button>
         <button class="filter-tag" data-category="style" data-value="Bounce">Bounce</button>
+        <button class="filter-tag" data-category="style" data-value="Blur">Blur</button>
       </div>
     </div>
     <div class="filter-divider"></div>
@@ -463,7 +464,7 @@
 </div>
 
 <span class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">8</span></span>
-<span class="version">v22</span>
+<span class="version">v23</span>
 </div>
 
 <script>
@@ -748,7 +749,27 @@ const animations = [
   { name: 'Bounce Chars From Left',  description: 'Characters spring in one at a time from the left with elastic overshoot. Maximum granularity — every letterform gets its own tiny bounce before settling.' },
   { name: 'Bounce Chars Up',         description: 'Each character launches from below and bounces into place individually. Ultra-dense upward cascade that transforms text into pure kinetic spectacle.' },
   { name: 'Bounce Chars From Right', description: 'Characters spring in from the right one by one, each overshooting before landing. Intricate reverse-bounce that rewards viewers who pay close attention.' },
-  { name: 'Bounce Chars Down',       description: 'Characters drop from above in tight sequence, each bouncing past their final point before settling. Maximally detailed gravity bounce — every letter earns its entrance.' }
+  { name: 'Bounce Chars Down',       description: 'Characters drop from above in tight sequence, each bouncing past their final point before settling. Maximally detailed gravity bounce — every letter earns its entrance.' },
+  // Blur — Whole (97-100)
+  { name: 'Blur From Left',   description: 'The whole element fades in from the left while clearing from a soft blur. The double transition — direction and focus — creates a cinematic, lens-like entrance.' },
+  { name: 'Blur Up',          description: 'Elements rise from below while sharpening into focus. Combines upward momentum with a clearing blur for a polished, high-production feel.' },
+  { name: 'Blur From Right',  description: 'Content arrives from the right while resolving from blurred to sharp. Counter-directional entry paired with a focus pull creates a refined, editorial entrance.' },
+  { name: 'Blur Down',        description: 'Elements descend from above while coming into focus. The convergence of downward travel and sharpening creates a composed, gravity-driven arrival.' },
+  // Blur — Lines (101-104)
+  { name: 'Blur Lines From Left',  description: 'Each line slides in from the left while clearing from blur, one after another. A layered focus pull that unfolds line by line with cinematic precision.' },
+  { name: 'Blur Lines Up',         description: 'Lines rise from below and sharpen into focus sequentially. The staggered blur-to-clear creates a sense of each line materializing from the background.' },
+  { name: 'Blur Lines From Right', description: 'Lines arrive from the right while resolving into focus one by one. Counter-directional travel plus sequential sharpening keeps the eye engaged throughout.' },
+  { name: 'Blur Lines Down',       description: 'Each line descends from above and comes into sharp focus in sequence. Deliberate and controlled — like a camera slowly pulling focus across a composition.' },
+  // Blur — Words (105-108)
+  { name: 'Blur Words From Left',  description: 'Words slide in from the left and sharpen word by word. Dense left-to-right cascade where each word crystallizes out of softness — precise and immersive.' },
+  { name: 'Blur Words Up',         description: 'Words rise from below and resolve into focus in rapid succession. The upward float combined with sharpening gives each word a weightless, emerging quality.' },
+  { name: 'Blur Words From Right', description: 'Each word arrives from the right while clearing from blur. Rapid word-by-word focus pulls in reverse direction — dynamic and visually arresting.' },
+  { name: 'Blur Words Down',       description: 'Words descend from above and come into focus one at a time. A deliberate, word-by-word sharpening that gives the headline a measured, authoritative quality.' },
+  // Blur — Chars (109-112)
+  { name: 'Blur Chars From Left',  description: 'Every character slides in from the left and sharpens individually. Ultra-granular focus pulls at the character level — intricate, meticulous, unforgettable.' },
+  { name: 'Blur Chars Up',         description: 'Characters rise from below and resolve from blur one at a time. The tightest, most detailed blur entrance — each letterform gets its own moment of clarity.' },
+  { name: 'Blur Chars From Right', description: 'Each character arrives from the right while clearing from soft blur. Character-level reverse focus pulls create a hypnotic, mechanical visual rhythm.' },
+  { name: 'Blur Chars Down',       description: 'Characters descend from above and sharpen into focus individually. Maximally detailed — every single letter transitions from soft to sharp on its own timeline.' }
 ];
 
 let currentIndex = 0;
@@ -795,7 +816,7 @@ function animateContent() {
   gsap.killTweensOf(document.querySelectorAll('.slide-btn'));
 
   // Reset all properties that may be left over from any previous slide type
-  gsap.set([headlineEl, subheadlineEl, descriptionEl, ...document.querySelectorAll('.slide-btn')], { clipPath: 'none', x: 0, y: 0, opacity: 1, scale: 1, transformOrigin: '50% 50%' });
+  gsap.set([headlineEl, subheadlineEl, descriptionEl, ...document.querySelectorAll('.slide-btn')], { clipPath: 'none', x: 0, y: 0, opacity: 1, scale: 1, transformOrigin: '50% 50%', filter: 'none' });
 
   let headlineStart = { opacity: 0, y: -10 };
   let subheadlineStart = { opacity: 0, y: -10 };
@@ -1726,7 +1747,7 @@ function animateContent() {
       tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.45, ease: 'back.out(1.7)' }, buttonsStartTime + index * 0.12);
     });
 
-  } else {
+  } else if (currentIndex < 96) {
     // Slides 93-96: Bounce Chars — characters spring in from direction
     const slideIndex = currentIndex - 92;
     let xOffset = 0, yOffset = 0;
@@ -1769,6 +1790,163 @@ function animateContent() {
     const buttonsStartTime = descStart + descriptionChars.length * 0.015 + 0.2;
     buttons.forEach((btn, index) => {
       tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'back.out(1.7)' }, buttonsStartTime + index * 0.12);
+    });
+
+  } else if (currentIndex < 100) {
+    // Slides 97-100: Blur Whole — whole elements blur-fade in from direction
+    const slideIndex = currentIndex - 96;
+    let xOffset = 0, yOffset = 0;
+    switch(slideIndex) {
+      case 0: xOffset = -20; break;
+      case 1: yOffset =  20; break;
+      case 2: xOffset =  20; break;
+      case 3: yOffset = -20; break;
+    }
+
+    gsap.set([headlineEl, subheadlineEl, descriptionEl], { opacity: 0, x: xOffset, y: yOffset, filter: 'blur(14px)' });
+    tl.to(headlineEl,    { opacity: 1, x: 0, y: 0, filter: 'blur(0px)', duration: 0.7, ease: 'power2.out' }, 0)
+      .to(subheadlineEl, { opacity: 1, x: 0, y: 0, filter: 'blur(0px)', duration: 0.7, ease: 'power2.out' }, 0.25)
+      .to(descriptionEl, { opacity: 1, x: 0, y: 0, filter: 'blur(0px)', duration: 0.7, ease: 'power2.out' }, 0.5);
+
+    const buttons = document.querySelectorAll('.slide-btn');
+    gsap.set(buttons, { opacity: 0, x: xOffset, y: yOffset, filter: 'blur(14px)' });
+    buttons.forEach((btn, index) => {
+      tl.to(btn, { opacity: 1, x: 0, y: 0, filter: 'blur(0px)', duration: 0.6, ease: 'power2.out' }, 0.75 + index * 0.12);
+    });
+
+  } else if (currentIndex < 104) {
+    // Slides 101-104: Blur Lines — lines blur-fade in from direction
+    const slideIndex = currentIndex - 100;
+    let xOffset = 0, yOffset = 0;
+    switch(slideIndex) {
+      case 0: xOffset = -20; break;
+      case 1: yOffset =  20; break;
+      case 2: xOffset =  20; break;
+      case 3: yOffset = -20; break;
+    }
+
+    const splitHeadline    = new SplitText(headlineEl,    { type: 'lines' });
+    const splitDescription = new SplitText(descriptionEl, { type: 'lines' });
+    activeSplits.push(splitHeadline, splitDescription);
+
+    const headlineLines    = splitHeadline.lines;
+    const descriptionLines = splitDescription.lines;
+
+    gsap.set(headlineLines, { opacity: 0, x: xOffset, y: yOffset, filter: 'blur(10px)' });
+    headlineLines.forEach((line, index) => {
+      tl.to(line, { opacity: 1, x: 0, y: 0, filter: 'blur(0px)', duration: 0.6, ease: 'power2.out' }, index * 0.1);
+    });
+
+    const splitSubheadline = new SplitText(subheadlineEl, { type: 'lines' });
+    activeSplits.push(splitSubheadline);
+    const subheadlineLines = splitSubheadline.lines;
+    const subStart = headlineLines.length * 0.1 + 0.1;
+    gsap.set(subheadlineLines, { opacity: 0, x: xOffset, y: yOffset, filter: 'blur(10px)' });
+    subheadlineLines.forEach((line, index) => {
+      tl.to(line, { opacity: 1, x: 0, y: 0, filter: 'blur(0px)', duration: 0.6, ease: 'power2.out' }, subStart + index * 0.1);
+    });
+
+    const descStart = subStart + subheadlineLines.length * 0.1 + 0.1;
+    gsap.set(descriptionLines, { opacity: 0, x: xOffset, y: yOffset, filter: 'blur(10px)' });
+    descriptionLines.forEach((line, index) => {
+      tl.to(line, { opacity: 1, x: 0, y: 0, filter: 'blur(0px)', duration: 0.6, ease: 'power2.out' }, descStart + index * 0.1);
+    });
+
+    const buttons = document.querySelectorAll('.slide-btn');
+    gsap.set(buttons, { opacity: 0, x: xOffset, y: yOffset, filter: 'blur(10px)' });
+    const buttonsStartTime = descStart + descriptionLines.length * 0.1 + 0.2;
+    buttons.forEach((btn, index) => {
+      tl.to(btn, { opacity: 1, x: 0, y: 0, filter: 'blur(0px)', duration: 0.5, ease: 'power2.out' }, buttonsStartTime + index * 0.1);
+    });
+
+  } else if (currentIndex < 108) {
+    // Slides 105-108: Blur Words — words blur-fade in from direction
+    const slideIndex = currentIndex - 104;
+    let xOffset = 0, yOffset = 0;
+    switch(slideIndex) {
+      case 0: xOffset = -20; break;
+      case 1: yOffset =  20; break;
+      case 2: xOffset =  20; break;
+      case 3: yOffset = -20; break;
+    }
+
+    const splitHeadline    = new SplitText(headlineEl,    { type: 'words' });
+    const splitDescription = new SplitText(descriptionEl, { type: 'words' });
+    activeSplits.push(splitHeadline, splitDescription);
+
+    const headlineWords    = splitHeadline.words;
+    const descriptionWords = splitDescription.words;
+
+    gsap.set(headlineWords, { opacity: 0, x: xOffset, y: yOffset, filter: 'blur(8px)' });
+    headlineWords.forEach((word, index) => {
+      tl.to(word, { opacity: 1, x: 0, y: 0, filter: 'blur(0px)', duration: 0.45, ease: 'power2.out' }, index * 0.05);
+    });
+
+    const splitSubheadline = new SplitText(subheadlineEl, { type: 'words' });
+    activeSplits.push(splitSubheadline);
+    const subheadlineWords = splitSubheadline.words;
+    const subStart = headlineWords.length * 0.05 + 0.1;
+    gsap.set(subheadlineWords, { opacity: 0, x: xOffset, y: yOffset, filter: 'blur(8px)' });
+    subheadlineWords.forEach((word, index) => {
+      tl.to(word, { opacity: 1, x: 0, y: 0, filter: 'blur(0px)', duration: 0.45, ease: 'power2.out' }, subStart + index * 0.05);
+    });
+
+    const descStart = subStart + subheadlineWords.length * 0.05 + 0.1;
+    gsap.set(descriptionWords, { opacity: 0, x: xOffset, y: yOffset, filter: 'blur(8px)' });
+    descriptionWords.forEach((word, index) => {
+      tl.to(word, { opacity: 1, x: 0, y: 0, filter: 'blur(0px)', duration: 0.35, ease: 'power2.out' }, descStart + index * 0.03);
+    });
+
+    const buttons = document.querySelectorAll('.slide-btn');
+    gsap.set(buttons, { opacity: 0, x: xOffset, y: yOffset, filter: 'blur(8px)' });
+    const buttonsStartTime = descStart + descriptionWords.length * 0.03 + 0.2;
+    buttons.forEach((btn, index) => {
+      tl.to(btn, { opacity: 1, x: 0, y: 0, filter: 'blur(0px)', duration: 0.4, ease: 'power2.out' }, buttonsStartTime + index * 0.1);
+    });
+
+  } else {
+    // Slides 109-112: Blur Chars — characters blur-fade in from direction
+    const slideIndex = currentIndex - 108;
+    let xOffset = 0, yOffset = 0;
+    switch(slideIndex) {
+      case 0: xOffset = -15; break;
+      case 1: yOffset =  15; break;
+      case 2: xOffset =  15; break;
+      case 3: yOffset = -15; break;
+    }
+
+    const splitHeadline    = new SplitText(headlineEl,    { type: 'words,chars' });
+    const splitDescription = new SplitText(descriptionEl, { type: 'words,chars' });
+    activeSplits.push(splitHeadline, splitDescription);
+
+    const headlineChars    = splitHeadline.chars;
+    const descriptionChars = splitDescription.chars;
+
+    gsap.set(headlineChars, { opacity: 0, x: xOffset, y: yOffset, filter: 'blur(6px)' });
+    headlineChars.forEach((char, index) => {
+      tl.to(char, { opacity: 1, x: 0, y: 0, filter: 'blur(0px)', duration: 0.3, ease: 'power2.out' }, index * 0.02);
+    });
+
+    const splitSubheadline = new SplitText(subheadlineEl, { type: 'words,chars' });
+    activeSplits.push(splitSubheadline);
+    const subheadlineChars = splitSubheadline.chars;
+    const subStart = headlineChars.length * 0.02 + 0.1;
+    gsap.set(subheadlineChars, { opacity: 0, x: xOffset, y: yOffset, filter: 'blur(6px)' });
+    subheadlineChars.forEach((char, index) => {
+      tl.to(char, { opacity: 1, x: 0, y: 0, filter: 'blur(0px)', duration: 0.3, ease: 'power2.out' }, subStart + index * 0.02);
+    });
+
+    const descStart = subStart + subheadlineChars.length * 0.02 + 0.1;
+    gsap.set(descriptionChars, { opacity: 0, x: xOffset, y: yOffset, filter: 'blur(6px)' });
+    descriptionChars.forEach((char, index) => {
+      tl.to(char, { opacity: 1, x: 0, y: 0, filter: 'blur(0px)', duration: 0.2, ease: 'power2.out' }, descStart + index * 0.01);
+    });
+
+    const buttons = document.querySelectorAll('.slide-btn');
+    gsap.set(buttons, { opacity: 0, x: xOffset, y: yOffset, filter: 'blur(6px)' });
+    const buttonsStartTime = descStart + descriptionChars.length * 0.01 + 0.2;
+    buttons.forEach((btn, index) => {
+      tl.to(btn, { opacity: 1, x: 0, y: 0, filter: 'blur(0px)', duration: 0.3, ease: 'power2.out' }, buttonsStartTime + index * 0.1);
     });
   }
 }
@@ -1919,6 +2097,26 @@ const slideTags = [
   { style:'Bounce', split:'Chars', direction:'Up' },
   { style:'Bounce', split:'Chars', direction:'From Right' },
   { style:'Bounce', split:'Chars', direction:'Down' },
+  // Slides 97-100: Blur / Whole
+  { style:'Blur', split:'Whole', direction:'From Left' },
+  { style:'Blur', split:'Whole', direction:'Up' },
+  { style:'Blur', split:'Whole', direction:'From Right' },
+  { style:'Blur', split:'Whole', direction:'Down' },
+  // Slides 101-104: Blur / Lines
+  { style:'Blur', split:'Lines', direction:'From Left' },
+  { style:'Blur', split:'Lines', direction:'Up' },
+  { style:'Blur', split:'Lines', direction:'From Right' },
+  { style:'Blur', split:'Lines', direction:'Down' },
+  // Slides 105-108: Blur / Words
+  { style:'Blur', split:'Words', direction:'From Left' },
+  { style:'Blur', split:'Words', direction:'Up' },
+  { style:'Blur', split:'Words', direction:'From Right' },
+  { style:'Blur', split:'Words', direction:'Down' },
+  // Slides 109-112: Blur / Chars
+  { style:'Blur', split:'Chars', direction:'From Left' },
+  { style:'Blur', split:'Chars', direction:'Up' },
+  { style:'Blur', split:'Chars', direction:'From Right' },
+  { style:'Blur', split:'Chars', direction:'Down' },
 ];
 
 const activeFilters = { style: new Set(), split: new Set(), direction: new Set() };
