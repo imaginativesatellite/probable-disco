@@ -410,6 +410,9 @@
         <button class="filter-tag" data-category="style" data-value="Fade">Fade</button>
         <button class="filter-tag" data-category="style" data-value="Reveal">Reveal</button>
         <button class="filter-tag" data-category="style" data-value="Emerge">Emerge</button>
+        <button class="filter-tag" data-category="style" data-value="Type">Type</button>
+        <button class="filter-tag" data-category="style" data-value="Grow">Grow</button>
+        <button class="filter-tag" data-category="style" data-value="Bounce">Bounce</button>
       </div>
     </div>
     <div class="filter-divider"></div>
@@ -460,7 +463,7 @@
 </div>
 
 <span class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">8</span></span>
-<span class="version">v21</span>
+<span class="version">v22</span>
 </div>
 
 <script>
@@ -685,7 +688,67 @@ const animations = [
   {
     name: 'Char Mask Down',
     description: 'Characters descend into their visible areas one by one. Maximally detailed downward reveal — every letterform makes its own entrance.'
-  }
+  },
+  // Type — Whole (49-52)
+  { name: 'Type In From Left',  description: 'The entire element appears in a single instant pop — no movement, no fade. Raw immediacy that cuts through visual noise and commands attention.' },
+  { name: 'Type In Up',         description: 'Whole-element instant reveal. No fades, no travel — just clean, sudden presence. Works best for short, high-impact headlines.' },
+  { name: 'Type In From Right', description: 'Full element appears instantly with zero delay or easing. Direct and confident — the digital equivalent of stamping text into place.' },
+  { name: 'Type In Down',       description: 'The whole block arrives in one sharp beat. A staccato entrance that contrasts nicely with slower, more animated surrounding content.' },
+  // Type — Lines (53-56)
+  { name: 'Type Lines From Left',  description: 'Lines appear one by one in reading order, each snapping into place instantly. Feels like a teleprompter or script being revealed line by line.' },
+  { name: 'Type Lines Up',         description: 'Lines appear in reverse order — last to first — each popping in without transition. Creates a bottom-up sense of build and reveal.' },
+  { name: 'Type Lines From Right', description: 'Lines snap into view from the center outward. An unusual stagger pattern that feels symmetrical and visually balanced.' },
+  { name: 'Type Lines Down',       description: 'Lines appear in a randomized sequence, each popping into place without warning. Unpredictable and energetic — great for bold, chaotic aesthetics.' },
+  // Type — Words (57-60)
+  { name: 'Type Words From Left',  description: 'Words snap into place one by one left to right. Rapid-fire and decisive — mimics how a fast typist composes a sentence in real time.' },
+  { name: 'Type Words Up',         description: 'Words appear in reverse sequence, each arriving instantly. The backward stagger creates an unusual reading rhythm that demands attention.' },
+  { name: 'Type Words From Right', description: 'Words pop in from the center of the line outward. A symmetrical typewriter pattern that unfolds from the middle in both directions.' },
+  { name: 'Type Words Down',       description: 'Words appear in unpredictable sequence, each snapping in without transition. Energetic and chaotic — makes the headline feel alive and spontaneous.' },
+  // Type — Chars (61-64)
+  { name: 'Type Chars From Left',  description: 'The purest typewriter effect — characters appear one at a time, left to right, without any fading or movement. Just text, arriving letter by letter.' },
+  { name: 'Type Chars Up',         description: 'Characters appear in reverse order, each snapping into place from right to left. Reads like a typewriter running backwards — striking and unusual.' },
+  { name: 'Type Chars From Right', description: 'Characters appear from the center of the word outward in both directions. An intricate radial typewriter pattern that rewards close observation.' },
+  { name: 'Type Chars Down',       description: 'Characters appear in completely random order, each popping in with no transition. Every replay looks different — a generative, living entrance.' },
+  // Grow — Whole (65-68)
+  { name: 'Grow From Left',   description: 'The whole element scales up from its left edge — text grows rightward from a fixed anchor, like a headline expanding outward to fill its space.' },
+  { name: 'Grow Up',          description: 'Elements scale upward from their bottom edge, growing tall before settling. A natural, confident entrance with a satisfying elastic finish.' },
+  { name: 'Grow From Right',  description: 'Text expands from its right edge, scaling leftward into position. Counter-directional growth that creates a compelling sense of tension and release.' },
+  { name: 'Grow Down',        description: 'Elements grow downward from their top edge. A gravity-aware entrance where each block drops into its full size from a compressed starting point.' },
+  // Grow — Lines (69-72)
+  { name: 'Grow Lines From Left',  description: 'Each line scales up from its left edge in sequence. A cascade of expanding text that builds width-first, line by line, from left to right.' },
+  { name: 'Grow Lines Up',         description: 'Lines grow upward from their base in sequence. Each line springs tall before settling — a staggered vertical bloom across the headline.' },
+  { name: 'Grow Lines From Right', description: 'Each line expands from its right edge in sequence. The rightward anchor creates a counter-directional flow that feels dynamic and precise.' },
+  { name: 'Grow Lines Down',       description: 'Lines grow downward from their top edge one by one. A compressed-to-full entrance where each line unfolds with gravity-like weight.' },
+  // Grow — Words (73-76)
+  { name: 'Grow Words From Left',  description: 'Each word expands from its left side in rapid succession. A dense cascade of growing words that reads left-to-right with satisfying elastic weight.' },
+  { name: 'Grow Words Up',         description: 'Words spring upward to full size from a compressed base. Kinetic and energetic — the rapid stagger makes the headline pulse with life.' },
+  { name: 'Grow Words From Right', description: 'Each word scales from its right edge in sequence. Right-anchored growth creates an unexpected visual rhythm across the headline.' },
+  { name: 'Grow Words Down',       description: 'Words expand downward from their top edge one at a time. Each word drops into size, giving the headline a deliberate, weighted quality.' },
+  // Grow — Chars (77-80)
+  { name: 'Grow Chars From Left',  description: 'Every character scales up from its left anchor in tight succession. An ultra-dense cascade of growing letterforms that rewards close attention.' },
+  { name: 'Grow Chars Up',         description: 'Characters spring to full height one at a time. Ultra-granular vertical growth that turns each letterform into a tiny dramatic entrance.' },
+  { name: 'Grow Chars From Right', description: 'Each character expands from its right edge in sequence. Right-anchored character growth that creates a complex, mechanical visual rhythm.' },
+  { name: 'Grow Chars Down',       description: 'Characters grow downward to full size one by one. Maximally detailed — every single letterform has its own compressed-to-full moment.' },
+  // Bounce — Whole (81-84)
+  { name: 'Bounce From Left',   description: 'The whole element springs in from the left and overshoots slightly before settling. Energetic and physical — like content snapping into a magnetic grid.' },
+  { name: 'Bounce Up',          description: 'Elements launch upward from below and bounce past their final position before landing. A playful entrance with satisfying physical weight.' },
+  { name: 'Bounce From Right',  description: 'Text springs in from the right with an overshoot. The reverse momentum creates a dynamic, counter-directional snap that feels alive and responsive.' },
+  { name: 'Bounce Down',        description: 'Content drops in from above and bounces down past its resting point before settling. Gravity-driven and fun — great for approachable, energetic layouts.' },
+  // Bounce — Lines (85-88)
+  { name: 'Bounce Lines From Left',  description: 'Lines spring in from the left one by one, each overshooting before settling. Sequential bounce creates a lively, rhythmic entrance with physical momentum.' },
+  { name: 'Bounce Lines Up',         description: 'Each line launches from below and bounces into place in sequence. Rapid upward stagger with elastic settle — kinetic and full of forward energy.' },
+  { name: 'Bounce Lines From Right', description: 'Lines spring in from the right in sequence, each snapping past center before landing. Counter-directional bounce that keeps viewers engaged through the full reveal.' },
+  { name: 'Bounce Lines Down',       description: 'Lines drop from above one by one, each bouncing past their resting point before settling. Gravity-driven stagger with a playful, weighted quality.' },
+  // Bounce — Words (89-92)
+  { name: 'Bounce Words From Left',  description: 'Words spring in from the left in rapid succession, each with a satisfying overshoot. Dense left-to-right momentum that builds energy across the full headline.' },
+  { name: 'Bounce Words Up',         description: 'Words launch from below in quick stagger, each bouncing past their final position. Ultra-kinetic upward cascade that makes every word feel like a small arrival.' },
+  { name: 'Bounce Words From Right', description: 'Each word springs from the right with an elastic overshoot. Rapid reverse-direction cascade that creates a thrilling right-to-settled rhythm.' },
+  { name: 'Bounce Words Down',       description: 'Words drop from above in sequence, each bouncing below their resting point before settling. Gravity-fueled word-by-word descent with playful physical weight.' },
+  // Bounce — Chars (93-96)
+  { name: 'Bounce Chars From Left',  description: 'Characters spring in one at a time from the left with elastic overshoot. Maximum granularity — every letterform gets its own tiny bounce before settling.' },
+  { name: 'Bounce Chars Up',         description: 'Each character launches from below and bounces into place individually. Ultra-dense upward cascade that transforms text into pure kinetic spectacle.' },
+  { name: 'Bounce Chars From Right', description: 'Characters spring in from the right one by one, each overshooting before landing. Intricate reverse-bounce that rewards viewers who pay close attention.' },
+  { name: 'Bounce Chars Down',       description: 'Characters drop from above in tight sequence, each bouncing past their final point before settling. Maximally detailed gravity bounce — every letter earns its entrance.' }
 ];
 
 let currentIndex = 0;
@@ -732,7 +795,7 @@ function animateContent() {
   gsap.killTweensOf(document.querySelectorAll('.slide-btn'));
 
   // Reset all properties that may be left over from any previous slide type
-  gsap.set([headlineEl, subheadlineEl, descriptionEl, ...document.querySelectorAll('.slide-btn')], { clipPath: 'none', x: 0, y: 0, opacity: 1 });
+  gsap.set([headlineEl, subheadlineEl, descriptionEl, ...document.querySelectorAll('.slide-btn')], { clipPath: 'none', x: 0, y: 0, opacity: 1, scale: 1, transformOrigin: '50% 50%' });
 
   let headlineStart = { opacity: 0, y: -10 };
   let subheadlineStart = { opacity: 0, y: -10 };
@@ -1256,7 +1319,7 @@ function animateContent() {
       tl.to(btn, { x: 0, y: 0, duration: 0.65, ease: 'power2.out' }, buttonsStart + (index * 0.15));
     });
 
-  } else {
+  } else if (currentIndex < 48) {
     // Slides 45-48: Char-by-char mask slide
     const slideIndex = currentIndex - 44;
     let xStart = 0, yStart = 0;
@@ -1304,6 +1367,408 @@ function animateContent() {
     gsap.set(buttons, { x: xStart, y: yStart });
     buttons.forEach((btn, index) => {
       tl.to(btn, { x: 0, y: 0, duration: 0.65, ease: 'power2.out' }, buttonsStart + (index * 0.15));
+    });
+
+  } else if (currentIndex < 52) {
+    // Slides 49-52: Type Whole — whole elements appear instantly
+    gsap.set([headlineEl, subheadlineEl, descriptionEl], { opacity: 0 });
+    tl.to(headlineEl,    { opacity: 1, duration: 0.001 }, 0)
+      .to(subheadlineEl, { opacity: 1, duration: 0.001 }, 0.4)
+      .to(descriptionEl, { opacity: 1, duration: 0.001 }, 0.8);
+
+    const buttons = document.querySelectorAll('.slide-btn');
+    gsap.set(buttons, { opacity: 0 });
+    buttons.forEach((btn, index) => {
+      tl.to(btn, { opacity: 1, duration: 0.001 }, 1.2 + index * 0.12);
+    });
+
+  } else if (currentIndex < 56) {
+    // Slides 53-56: Type Lines — lines appear instantly, stagger order varies by direction
+    const slideIndex = currentIndex - 52;
+    const staggerFrom = ['start', 'end', 'center', 'random'][slideIndex];
+
+    const splitHeadline    = new SplitText(headlineEl,    { type: 'lines' });
+    const splitDescription = new SplitText(descriptionEl, { type: 'lines' });
+    activeSplits.push(splitHeadline, splitDescription);
+
+    const headlineLines    = splitHeadline.lines;
+    const descriptionLines = splitDescription.lines;
+
+    gsap.set(headlineLines, { opacity: 0 });
+    tl.to(headlineLines, { opacity: 1, duration: 0.001, stagger: { each: 0.08, from: staggerFrom } }, 0);
+
+    const splitSubheadline = new SplitText(subheadlineEl, { type: 'lines' });
+    activeSplits.push(splitSubheadline);
+    const subheadlineLines = splitSubheadline.lines;
+    const subStart = headlineLines.length * 0.08 + 0.15;
+    gsap.set(subheadlineLines, { opacity: 0 });
+    tl.to(subheadlineLines, { opacity: 1, duration: 0.001, stagger: { each: 0.08, from: staggerFrom } }, subStart);
+
+    const descStart = subStart + subheadlineLines.length * 0.08 + 0.1;
+    gsap.set(descriptionLines, { opacity: 0 });
+    tl.to(descriptionLines, { opacity: 1, duration: 0.001, stagger: { each: 0.08, from: staggerFrom } }, descStart);
+
+    const buttons = document.querySelectorAll('.slide-btn');
+    gsap.set(buttons, { opacity: 0 });
+    const buttonsStartTime = descStart + descriptionLines.length * 0.08 + 0.2;
+    buttons.forEach((btn, index) => {
+      tl.to(btn, { opacity: 1, duration: 0.001 }, buttonsStartTime + index * 0.1);
+    });
+
+  } else if (currentIndex < 60) {
+    // Slides 57-60: Type Words — words appear instantly, stagger order varies by direction
+    const slideIndex = currentIndex - 56;
+    const staggerFrom = ['start', 'end', 'center', 'random'][slideIndex];
+
+    const splitHeadline    = new SplitText(headlineEl,    { type: 'words' });
+    const splitDescription = new SplitText(descriptionEl, { type: 'words' });
+    activeSplits.push(splitHeadline, splitDescription);
+
+    const headlineWords    = splitHeadline.words;
+    const descriptionWords = splitDescription.words;
+
+    gsap.set(headlineWords, { opacity: 0 });
+    tl.to(headlineWords, { opacity: 1, duration: 0.001, stagger: { each: 0.05, from: staggerFrom } }, 0);
+
+    const splitSubheadline = new SplitText(subheadlineEl, { type: 'words' });
+    activeSplits.push(splitSubheadline);
+    const subheadlineWords = splitSubheadline.words;
+    const subStart = headlineWords.length * 0.05 + 0.1;
+    gsap.set(subheadlineWords, { opacity: 0 });
+    tl.to(subheadlineWords, { opacity: 1, duration: 0.001, stagger: { each: 0.05, from: staggerFrom } }, subStart);
+
+    const descStart = subStart + subheadlineWords.length * 0.05 + 0.1;
+    gsap.set(descriptionWords, { opacity: 0 });
+    tl.to(descriptionWords, { opacity: 1, duration: 0.001, stagger: { each: 0.05, from: staggerFrom } }, descStart);
+
+    const buttons = document.querySelectorAll('.slide-btn');
+    gsap.set(buttons, { opacity: 0 });
+    const buttonsStartTime = descStart + descriptionWords.length * 0.05 + 0.2;
+    buttons.forEach((btn, index) => {
+      tl.to(btn, { opacity: 1, duration: 0.001 }, buttonsStartTime + index * 0.1);
+    });
+
+  } else if (currentIndex < 64) {
+    // Slides 61-64: Type Chars — characters appear instantly (true typewriter effect)
+    const slideIndex = currentIndex - 60;
+    const staggerFrom = ['start', 'end', 'center', 'random'][slideIndex];
+
+    const splitHeadline    = new SplitText(headlineEl,    { type: 'words,chars' });
+    const splitDescription = new SplitText(descriptionEl, { type: 'words,chars' });
+    activeSplits.push(splitHeadline, splitDescription);
+
+    const headlineChars    = splitHeadline.chars;
+    const descriptionChars = splitDescription.chars;
+
+    gsap.set(headlineChars, { opacity: 0 });
+    tl.to(headlineChars, { opacity: 1, duration: 0.001, stagger: { each: 0.025, from: staggerFrom } }, 0);
+
+    const splitSubheadline = new SplitText(subheadlineEl, { type: 'words,chars' });
+    activeSplits.push(splitSubheadline);
+    const subheadlineChars = splitSubheadline.chars;
+    const subStart = headlineChars.length * 0.025 + 0.1;
+    gsap.set(subheadlineChars, { opacity: 0 });
+    tl.to(subheadlineChars, { opacity: 1, duration: 0.001, stagger: { each: 0.025, from: staggerFrom } }, subStart);
+
+    const descStart = subStart + subheadlineChars.length * 0.025 + 0.1;
+    gsap.set(descriptionChars, { opacity: 0 });
+    tl.to(descriptionChars, { opacity: 1, duration: 0.001, stagger: { each: 0.015, from: staggerFrom } }, descStart);
+
+    const buttons = document.querySelectorAll('.slide-btn');
+    gsap.set(buttons, { opacity: 0 });
+    const buttonsStartTime = descStart + descriptionChars.length * 0.015 + 0.2;
+    buttons.forEach((btn, index) => {
+      tl.to(btn, { opacity: 1, duration: 0.001 }, buttonsStartTime + index * 0.1);
+    });
+
+  } else if (currentIndex < 68) {
+    // Slides 65-68: Grow Whole — whole elements scale up from directional origin
+    const slideIndex = currentIndex - 64;
+    const transformOrigin = ['left center', 'center bottom', 'right center', 'center top'][slideIndex];
+
+    gsap.set([headlineEl, subheadlineEl, descriptionEl], { scale: 0, opacity: 0, transformOrigin });
+    tl.to(headlineEl,    { scale: 1, opacity: 1, duration: 0.6, ease: 'back.out(1.4)', transformOrigin }, 0)
+      .to(subheadlineEl, { scale: 1, opacity: 1, duration: 0.6, ease: 'back.out(1.4)', transformOrigin }, 0.3)
+      .to(descriptionEl, { scale: 1, opacity: 1, duration: 0.6, ease: 'back.out(1.4)', transformOrigin }, 0.6);
+
+    const buttons = document.querySelectorAll('.slide-btn');
+    gsap.set(buttons, { scale: 0, opacity: 0, transformOrigin: 'center center' });
+    buttons.forEach((btn, index) => {
+      tl.to(btn, { scale: 1, opacity: 1, duration: 0.5, ease: 'back.out(1.4)', transformOrigin: 'center center' }, 0.9 + index * 0.12);
+    });
+
+  } else if (currentIndex < 72) {
+    // Slides 69-72: Grow Lines — lines scale up from directional origin
+    const slideIndex = currentIndex - 68;
+    const transformOrigin = ['left center', 'center bottom', 'right center', 'center top'][slideIndex];
+
+    const splitHeadline    = new SplitText(headlineEl,    { type: 'lines' });
+    const splitDescription = new SplitText(descriptionEl, { type: 'lines' });
+    activeSplits.push(splitHeadline, splitDescription);
+
+    const headlineLines    = splitHeadline.lines;
+    const descriptionLines = splitDescription.lines;
+
+    gsap.set(headlineLines, { scale: 0, opacity: 0, transformOrigin });
+    headlineLines.forEach((line, index) => {
+      tl.to(line, { scale: 1, opacity: 1, duration: 0.5, ease: 'back.out(1.4)', transformOrigin }, index * 0.12);
+    });
+
+    const splitSubheadline = new SplitText(subheadlineEl, { type: 'lines' });
+    activeSplits.push(splitSubheadline);
+    const subheadlineLines = splitSubheadline.lines;
+    const subStart = headlineLines.length * 0.12 + 0.15;
+    gsap.set(subheadlineLines, { scale: 0, opacity: 0, transformOrigin });
+    subheadlineLines.forEach((line, index) => {
+      tl.to(line, { scale: 1, opacity: 1, duration: 0.5, ease: 'back.out(1.4)', transformOrigin }, subStart + index * 0.12);
+    });
+
+    const descStart = subStart + subheadlineLines.length * 0.12 + 0.1;
+    gsap.set(descriptionLines, { scale: 0, opacity: 0, transformOrigin });
+    descriptionLines.forEach((line, index) => {
+      tl.to(line, { scale: 1, opacity: 1, duration: 0.5, ease: 'back.out(1.4)', transformOrigin }, descStart + index * 0.12);
+    });
+
+    const buttons = document.querySelectorAll('.slide-btn');
+    gsap.set(buttons, { scale: 0, opacity: 0, transformOrigin: 'center center' });
+    const buttonsStartTime = descStart + descriptionLines.length * 0.12 + 0.2;
+    buttons.forEach((btn, index) => {
+      tl.to(btn, { scale: 1, opacity: 1, duration: 0.5, ease: 'back.out(1.4)', transformOrigin: 'center center' }, buttonsStartTime + index * 0.12);
+    });
+
+  } else if (currentIndex < 76) {
+    // Slides 73-76: Grow Words — words scale up from directional origin
+    const slideIndex = currentIndex - 72;
+    const transformOrigin = ['left center', 'center bottom', 'right center', 'center top'][slideIndex];
+
+    const splitHeadline    = new SplitText(headlineEl,    { type: 'words' });
+    const splitDescription = new SplitText(descriptionEl, { type: 'words' });
+    activeSplits.push(splitHeadline, splitDescription);
+
+    const headlineWords    = splitHeadline.words;
+    const descriptionWords = splitDescription.words;
+
+    gsap.set(headlineWords, { scale: 0, opacity: 0, transformOrigin });
+    headlineWords.forEach((word, index) => {
+      tl.to(word, { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(1.4)', transformOrigin }, index * 0.07);
+    });
+
+    const splitSubheadline = new SplitText(subheadlineEl, { type: 'words' });
+    activeSplits.push(splitSubheadline);
+    const subheadlineWords = splitSubheadline.words;
+    const subStart = headlineWords.length * 0.07 + 0.1;
+    gsap.set(subheadlineWords, { scale: 0, opacity: 0, transformOrigin });
+    subheadlineWords.forEach((word, index) => {
+      tl.to(word, { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(1.4)', transformOrigin }, subStart + index * 0.07);
+    });
+
+    const descStart = subStart + subheadlineWords.length * 0.07 + 0.1;
+    gsap.set(descriptionWords, { scale: 0, opacity: 0, transformOrigin });
+    descriptionWords.forEach((word, index) => {
+      tl.to(word, { scale: 1, opacity: 1, duration: 0.35, ease: 'back.out(1.4)', transformOrigin }, descStart + index * 0.05);
+    });
+
+    const buttons = document.querySelectorAll('.slide-btn');
+    gsap.set(buttons, { scale: 0, opacity: 0, transformOrigin: 'center center' });
+    const buttonsStartTime = descStart + descriptionWords.length * 0.05 + 0.2;
+    buttons.forEach((btn, index) => {
+      tl.to(btn, { scale: 1, opacity: 1, duration: 0.45, ease: 'back.out(1.4)', transformOrigin: 'center center' }, buttonsStartTime + index * 0.12);
+    });
+
+  } else if (currentIndex < 80) {
+    // Slides 77-80: Grow Chars — characters scale up from directional origin
+    const slideIndex = currentIndex - 76;
+    const transformOrigin = ['left center', 'center bottom', 'right center', 'center top'][slideIndex];
+
+    const splitHeadline    = new SplitText(headlineEl,    { type: 'words,chars' });
+    const splitDescription = new SplitText(descriptionEl, { type: 'words,chars' });
+    activeSplits.push(splitHeadline, splitDescription);
+
+    const headlineChars    = splitHeadline.chars;
+    const descriptionChars = splitDescription.chars;
+
+    gsap.set(headlineChars, { scale: 0, opacity: 0, transformOrigin });
+    headlineChars.forEach((char, index) => {
+      tl.to(char, { scale: 1, opacity: 1, duration: 0.3, ease: 'back.out(1.4)', transformOrigin }, index * 0.025);
+    });
+
+    const splitSubheadline = new SplitText(subheadlineEl, { type: 'words,chars' });
+    activeSplits.push(splitSubheadline);
+    const subheadlineChars = splitSubheadline.chars;
+    const subStart = headlineChars.length * 0.025 + 0.1;
+    gsap.set(subheadlineChars, { scale: 0, opacity: 0, transformOrigin });
+    subheadlineChars.forEach((char, index) => {
+      tl.to(char, { scale: 1, opacity: 1, duration: 0.3, ease: 'back.out(1.4)', transformOrigin }, subStart + index * 0.025);
+    });
+
+    const descStart = subStart + subheadlineChars.length * 0.025 + 0.1;
+    gsap.set(descriptionChars, { scale: 0, opacity: 0, transformOrigin });
+    descriptionChars.forEach((char, index) => {
+      tl.to(char, { scale: 1, opacity: 1, duration: 0.25, ease: 'back.out(1.4)', transformOrigin }, descStart + index * 0.015);
+    });
+
+    const buttons = document.querySelectorAll('.slide-btn');
+    gsap.set(buttons, { scale: 0, opacity: 0, transformOrigin: 'center center' });
+    const buttonsStartTime = descStart + descriptionChars.length * 0.015 + 0.2;
+    buttons.forEach((btn, index) => {
+      tl.to(btn, { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(1.4)', transformOrigin: 'center center' }, buttonsStartTime + index * 0.12);
+    });
+
+  } else if (currentIndex < 84) {
+    // Slides 81-84: Bounce Whole — whole elements spring in from direction
+    const slideIndex = currentIndex - 80;
+    let xOffset = 0, yOffset = 0;
+    switch(slideIndex) {
+      case 0: xOffset = -40; break;
+      case 1: yOffset =  40; break;
+      case 2: xOffset =  40; break;
+      case 3: yOffset = -40; break;
+    }
+
+    gsap.set([headlineEl, subheadlineEl, descriptionEl], { opacity: 0, x: xOffset, y: yOffset });
+    tl.to(headlineEl,    { opacity: 1, x: 0, y: 0, duration: 0.6, ease: 'back.out(1.7)' }, 0)
+      .to(subheadlineEl, { opacity: 1, x: 0, y: 0, duration: 0.6, ease: 'back.out(1.7)' }, 0.25)
+      .to(descriptionEl, { opacity: 1, x: 0, y: 0, duration: 0.6, ease: 'back.out(1.7)' }, 0.5);
+
+    const buttons = document.querySelectorAll('.slide-btn');
+    gsap.set(buttons, { opacity: 0, x: xOffset, y: yOffset });
+    buttons.forEach((btn, index) => {
+      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'back.out(1.7)' }, 0.75 + index * 0.12);
+    });
+
+  } else if (currentIndex < 88) {
+    // Slides 85-88: Bounce Lines — lines spring in from direction
+    const slideIndex = currentIndex - 84;
+    let xOffset = 0, yOffset = 0;
+    switch(slideIndex) {
+      case 0: xOffset = -30; break;
+      case 1: yOffset =  30; break;
+      case 2: xOffset =  30; break;
+      case 3: yOffset = -30; break;
+    }
+
+    const splitHeadline    = new SplitText(headlineEl,    { type: 'lines' });
+    const splitDescription = new SplitText(descriptionEl, { type: 'lines' });
+    activeSplits.push(splitHeadline, splitDescription);
+
+    const headlineLines    = splitHeadline.lines;
+    const descriptionLines = splitDescription.lines;
+
+    gsap.set(headlineLines, { opacity: 0, x: xOffset, y: yOffset });
+    headlineLines.forEach((line, index) => {
+      tl.to(line, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'back.out(1.7)' }, index * 0.1);
+    });
+
+    const splitSubheadline = new SplitText(subheadlineEl, { type: 'lines' });
+    activeSplits.push(splitSubheadline);
+    const subheadlineLines = splitSubheadline.lines;
+    const subStart = headlineLines.length * 0.1 + 0.15;
+    gsap.set(subheadlineLines, { opacity: 0, x: xOffset, y: yOffset });
+    subheadlineLines.forEach((line, index) => {
+      tl.to(line, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'back.out(1.7)' }, subStart + index * 0.1);
+    });
+
+    const descStart = subStart + subheadlineLines.length * 0.1 + 0.1;
+    gsap.set(descriptionLines, { opacity: 0, x: xOffset, y: yOffset });
+    descriptionLines.forEach((line, index) => {
+      tl.to(line, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'back.out(1.7)' }, descStart + index * 0.1);
+    });
+
+    const buttons = document.querySelectorAll('.slide-btn');
+    gsap.set(buttons, { opacity: 0, x: xOffset, y: yOffset });
+    const buttonsStartTime = descStart + descriptionLines.length * 0.1 + 0.2;
+    buttons.forEach((btn, index) => {
+      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'back.out(1.7)' }, buttonsStartTime + index * 0.12);
+    });
+
+  } else if (currentIndex < 92) {
+    // Slides 89-92: Bounce Words — words spring in from direction
+    const slideIndex = currentIndex - 88;
+    let xOffset = 0, yOffset = 0;
+    switch(slideIndex) {
+      case 0: xOffset = -25; break;
+      case 1: yOffset =  25; break;
+      case 2: xOffset =  25; break;
+      case 3: yOffset = -25; break;
+    }
+
+    const splitHeadline    = new SplitText(headlineEl,    { type: 'words' });
+    const splitDescription = new SplitText(descriptionEl, { type: 'words' });
+    activeSplits.push(splitHeadline, splitDescription);
+
+    const headlineWords    = splitHeadline.words;
+    const descriptionWords = splitDescription.words;
+
+    gsap.set(headlineWords, { opacity: 0, x: xOffset, y: yOffset });
+    headlineWords.forEach((word, index) => {
+      tl.to(word, { opacity: 1, x: 0, y: 0, duration: 0.45, ease: 'back.out(1.7)' }, index * 0.06);
+    });
+
+    const splitSubheadline = new SplitText(subheadlineEl, { type: 'words' });
+    activeSplits.push(splitSubheadline);
+    const subheadlineWords = splitSubheadline.words;
+    const subStart = headlineWords.length * 0.06 + 0.1;
+    gsap.set(subheadlineWords, { opacity: 0, x: xOffset, y: yOffset });
+    subheadlineWords.forEach((word, index) => {
+      tl.to(word, { opacity: 1, x: 0, y: 0, duration: 0.45, ease: 'back.out(1.7)' }, subStart + index * 0.06);
+    });
+
+    const descStart = subStart + subheadlineWords.length * 0.06 + 0.1;
+    gsap.set(descriptionWords, { opacity: 0, x: xOffset, y: yOffset });
+    descriptionWords.forEach((word, index) => {
+      tl.to(word, { opacity: 1, x: 0, y: 0, duration: 0.35, ease: 'back.out(1.7)' }, descStart + index * 0.04);
+    });
+
+    const buttons = document.querySelectorAll('.slide-btn');
+    gsap.set(buttons, { opacity: 0, x: xOffset, y: yOffset });
+    const buttonsStartTime = descStart + descriptionWords.length * 0.04 + 0.2;
+    buttons.forEach((btn, index) => {
+      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.45, ease: 'back.out(1.7)' }, buttonsStartTime + index * 0.12);
+    });
+
+  } else {
+    // Slides 93-96: Bounce Chars — characters spring in from direction
+    const slideIndex = currentIndex - 92;
+    let xOffset = 0, yOffset = 0;
+    switch(slideIndex) {
+      case 0: xOffset = -20; break;
+      case 1: yOffset =  20; break;
+      case 2: xOffset =  20; break;
+      case 3: yOffset = -20; break;
+    }
+
+    const splitHeadline    = new SplitText(headlineEl,    { type: 'words,chars' });
+    const splitDescription = new SplitText(descriptionEl, { type: 'words,chars' });
+    activeSplits.push(splitHeadline, splitDescription);
+
+    const headlineChars    = splitHeadline.chars;
+    const descriptionChars = splitDescription.chars;
+
+    gsap.set(headlineChars, { opacity: 0, x: xOffset, y: yOffset });
+    headlineChars.forEach((char, index) => {
+      tl.to(char, { opacity: 1, x: 0, y: 0, duration: 0.35, ease: 'back.out(1.7)' }, index * 0.025);
+    });
+
+    const splitSubheadline = new SplitText(subheadlineEl, { type: 'words,chars' });
+    activeSplits.push(splitSubheadline);
+    const subheadlineChars = splitSubheadline.chars;
+    const subStart = headlineChars.length * 0.025 + 0.1;
+    gsap.set(subheadlineChars, { opacity: 0, x: xOffset, y: yOffset });
+    subheadlineChars.forEach((char, index) => {
+      tl.to(char, { opacity: 1, x: 0, y: 0, duration: 0.35, ease: 'back.out(1.7)' }, subStart + index * 0.025);
+    });
+
+    const descStart = subStart + subheadlineChars.length * 0.025 + 0.1;
+    gsap.set(descriptionChars, { opacity: 0, x: xOffset, y: yOffset });
+    descriptionChars.forEach((char, index) => {
+      tl.to(char, { opacity: 1, x: 0, y: 0, duration: 0.25, ease: 'back.out(1.7)' }, descStart + index * 0.015);
+    });
+
+    const buttons = document.querySelectorAll('.slide-btn');
+    gsap.set(buttons, { opacity: 0, x: xOffset, y: yOffset });
+    const buttonsStartTime = descStart + descriptionChars.length * 0.015 + 0.2;
+    buttons.forEach((btn, index) => {
+      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'back.out(1.7)' }, buttonsStartTime + index * 0.12);
     });
   }
 }
@@ -1394,6 +1859,66 @@ const slideTags = [
   { style:'Emerge', split:'Chars', direction:'Up' },
   { style:'Emerge', split:'Chars', direction:'From Right' },
   { style:'Emerge', split:'Chars', direction:'Down' },
+  // Slides 49-52: Type / Whole
+  { style:'Type', split:'Whole', direction:'From Left' },
+  { style:'Type', split:'Whole', direction:'Up' },
+  { style:'Type', split:'Whole', direction:'From Right' },
+  { style:'Type', split:'Whole', direction:'Down' },
+  // Slides 53-56: Type / Lines
+  { style:'Type', split:'Lines', direction:'From Left' },
+  { style:'Type', split:'Lines', direction:'Up' },
+  { style:'Type', split:'Lines', direction:'From Right' },
+  { style:'Type', split:'Lines', direction:'Down' },
+  // Slides 57-60: Type / Words
+  { style:'Type', split:'Words', direction:'From Left' },
+  { style:'Type', split:'Words', direction:'Up' },
+  { style:'Type', split:'Words', direction:'From Right' },
+  { style:'Type', split:'Words', direction:'Down' },
+  // Slides 61-64: Type / Chars
+  { style:'Type', split:'Chars', direction:'From Left' },
+  { style:'Type', split:'Chars', direction:'Up' },
+  { style:'Type', split:'Chars', direction:'From Right' },
+  { style:'Type', split:'Chars', direction:'Down' },
+  // Slides 65-68: Grow / Whole
+  { style:'Grow', split:'Whole', direction:'From Left' },
+  { style:'Grow', split:'Whole', direction:'Up' },
+  { style:'Grow', split:'Whole', direction:'From Right' },
+  { style:'Grow', split:'Whole', direction:'Down' },
+  // Slides 69-72: Grow / Lines
+  { style:'Grow', split:'Lines', direction:'From Left' },
+  { style:'Grow', split:'Lines', direction:'Up' },
+  { style:'Grow', split:'Lines', direction:'From Right' },
+  { style:'Grow', split:'Lines', direction:'Down' },
+  // Slides 73-76: Grow / Words
+  { style:'Grow', split:'Words', direction:'From Left' },
+  { style:'Grow', split:'Words', direction:'Up' },
+  { style:'Grow', split:'Words', direction:'From Right' },
+  { style:'Grow', split:'Words', direction:'Down' },
+  // Slides 77-80: Grow / Chars
+  { style:'Grow', split:'Chars', direction:'From Left' },
+  { style:'Grow', split:'Chars', direction:'Up' },
+  { style:'Grow', split:'Chars', direction:'From Right' },
+  { style:'Grow', split:'Chars', direction:'Down' },
+  // Slides 81-84: Bounce / Whole
+  { style:'Bounce', split:'Whole', direction:'From Left' },
+  { style:'Bounce', split:'Whole', direction:'Up' },
+  { style:'Bounce', split:'Whole', direction:'From Right' },
+  { style:'Bounce', split:'Whole', direction:'Down' },
+  // Slides 85-88: Bounce / Lines
+  { style:'Bounce', split:'Lines', direction:'From Left' },
+  { style:'Bounce', split:'Lines', direction:'Up' },
+  { style:'Bounce', split:'Lines', direction:'From Right' },
+  { style:'Bounce', split:'Lines', direction:'Down' },
+  // Slides 89-92: Bounce / Words
+  { style:'Bounce', split:'Words', direction:'From Left' },
+  { style:'Bounce', split:'Words', direction:'Up' },
+  { style:'Bounce', split:'Words', direction:'From Right' },
+  { style:'Bounce', split:'Words', direction:'Down' },
+  // Slides 93-96: Bounce / Chars
+  { style:'Bounce', split:'Chars', direction:'From Left' },
+  { style:'Bounce', split:'Chars', direction:'Up' },
+  { style:'Bounce', split:'Chars', direction:'From Right' },
+  { style:'Bounce', split:'Chars', direction:'Down' },
 ];
 
 const activeFilters = { style: new Set(), split: new Set(), direction: new Set() };
