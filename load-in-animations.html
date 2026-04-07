@@ -2202,13 +2202,13 @@ function animateContent() {
       case 3: yOffset = -40; break;
     }
     gsap.set([headlineEl, subheadlineEl, descriptionEl], { opacity: 0, x: xOffset, y: yOffset });
-    tl.to(headlineEl,    { opacity: 1, x: 0, y: 0, duration: 1.0, ease: 'elastic.out(1, 0.5)' }, 0)
-      .to(subheadlineEl, { opacity: 1, x: 0, y: 0, duration: 1.0, ease: 'elastic.out(1, 0.5)' }, 0.25)
-      .to(descriptionEl, { opacity: 1, x: 0, y: 0, duration: 1.0, ease: 'elastic.out(1, 0.5)' }, 0.5);
+    tl.to(headlineEl,    { opacity: 1, x: 0, y: 0, duration: 1.0, ease: 'bounce.out' }, 0)
+      .to(subheadlineEl, { opacity: 1, x: 0, y: 0, duration: 1.0, ease: 'bounce.out' }, 0.25)
+      .to(descriptionEl, { opacity: 1, x: 0, y: 0, duration: 1.0, ease: 'bounce.out' }, 0.5);
     const buttonsB2W = document.querySelectorAll('.slide-btn');
     gsap.set(buttonsB2W, { opacity: 0, x: xOffset, y: yOffset });
     buttonsB2W.forEach((btn, i) => {
-      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.8, ease: 'elastic.out(1, 0.5)' }, 0.75 + i * 0.12);
+      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.8, ease: 'bounce.out' }, 0.75 + i * 0.12);
     });
 
   } else if (currentIndex < 120) {
@@ -2225,19 +2225,19 @@ function animateContent() {
     const splitD = new SplitText(descriptionEl, { type: 'lines' });
     activeSplits.push(splitH, splitD);
     gsap.set(splitH.lines, { opacity: 0, x: xOffset, y: yOffset });
-    splitH.lines.forEach((l, i) => { tl.to(l, { opacity: 1, x: 0, y: 0, duration: 0.8, ease: 'elastic.out(1, 0.5)' }, i * 0.1); });
+    splitH.lines.forEach((l, i) => { tl.to(l, { opacity: 1, x: 0, y: 0, duration: 0.8, ease: 'bounce.out' }, i * 0.1); });
     const splitSB2L = new SplitText(subheadlineEl, { type: 'lines' });
     activeSplits.push(splitSB2L);
     const ssB2L = splitH.lines.length * 0.1 + 0.15;
     gsap.set(splitSB2L.lines, { opacity: 0, x: xOffset, y: yOffset });
-    splitSB2L.lines.forEach((l, i) => { tl.to(l, { opacity: 1, x: 0, y: 0, duration: 0.8, ease: 'elastic.out(1, 0.5)' }, ssB2L + i * 0.1); });
+    splitSB2L.lines.forEach((l, i) => { tl.to(l, { opacity: 1, x: 0, y: 0, duration: 0.8, ease: 'bounce.out' }, ssB2L + i * 0.1); });
     const sdB2L = ssB2L + splitSB2L.lines.length * 0.1 + 0.1;
     gsap.set(splitD.lines, { opacity: 0, x: xOffset, y: yOffset });
-    splitD.lines.forEach((l, i) => { tl.to(l, { opacity: 1, x: 0, y: 0, duration: 0.8, ease: 'elastic.out(1, 0.5)' }, sdB2L + i * 0.1); });
+    splitD.lines.forEach((l, i) => { tl.to(l, { opacity: 1, x: 0, y: 0, duration: 0.8, ease: 'bounce.out' }, sdB2L + i * 0.1); });
     const buttonsB2L = document.querySelectorAll('.slide-btn');
     gsap.set(buttonsB2L, { opacity: 0, x: xOffset, y: yOffset });
     const sbB2L = sdB2L + splitD.lines.length * 0.1 + 0.2;
-    buttonsB2L.forEach((b, i) => { tl.to(b, { opacity: 1, x: 0, y: 0, duration: 0.8, ease: 'elastic.out(1, 0.5)' }, sbB2L + i * 0.12); });
+    buttonsB2L.forEach((b, i) => { tl.to(b, { opacity: 1, x: 0, y: 0, duration: 0.8, ease: 'bounce.out' }, sbB2L + i * 0.12); });
 
   } else if (currentIndex < 124) {
     // Slides 121-124: Bounce 2 Words — words double-bounce in
@@ -2253,19 +2253,19 @@ function animateContent() {
     const splitD = new SplitText(descriptionEl, { type: 'words' });
     activeSplits.push(splitH, splitD);
     gsap.set(splitH.words, { opacity: 0, x: xOffset, y: yOffset });
-    splitH.words.forEach((w, i) => { tl.to(w, { opacity: 1, x: 0, y: 0, duration: 0.7, ease: 'elastic.out(1, 0.5)' }, i * 0.06); });
+    splitH.words.forEach((w, i) => { tl.to(w, { opacity: 1, x: 0, y: 0, duration: 0.7, ease: 'bounce.out' }, i * 0.06); });
     const splitSB2W = new SplitText(subheadlineEl, { type: 'words' });
     activeSplits.push(splitSB2W);
     const ssB2W = splitH.words.length * 0.06 + 0.1;
     gsap.set(splitSB2W.words, { opacity: 0, x: xOffset, y: yOffset });
-    splitSB2W.words.forEach((w, i) => { tl.to(w, { opacity: 1, x: 0, y: 0, duration: 0.7, ease: 'elastic.out(1, 0.5)' }, ssB2W + i * 0.06); });
+    splitSB2W.words.forEach((w, i) => { tl.to(w, { opacity: 1, x: 0, y: 0, duration: 0.7, ease: 'bounce.out' }, ssB2W + i * 0.06); });
     const sdB2W = ssB2W + splitSB2W.words.length * 0.06 + 0.1;
     gsap.set(splitD.words, { opacity: 0, x: xOffset, y: yOffset });
-    splitD.words.forEach((w, i) => { tl.to(w, { opacity: 1, x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.5)' }, sdB2W + i * 0.04); });
+    splitD.words.forEach((w, i) => { tl.to(w, { opacity: 1, x: 0, y: 0, duration: 0.6, ease: 'bounce.out' }, sdB2W + i * 0.04); });
     const buttonsB2Wrd = document.querySelectorAll('.slide-btn');
     gsap.set(buttonsB2Wrd, { opacity: 0, x: xOffset, y: yOffset });
     const sbB2W = sdB2W + splitD.words.length * 0.04 + 0.2;
-    buttonsB2Wrd.forEach((b, i) => { tl.to(b, { opacity: 1, x: 0, y: 0, duration: 0.7, ease: 'elastic.out(1, 0.5)' }, sbB2W + i * 0.12); });
+    buttonsB2Wrd.forEach((b, i) => { tl.to(b, { opacity: 1, x: 0, y: 0, duration: 0.7, ease: 'bounce.out' }, sbB2W + i * 0.12); });
 
   } else {
     // Slides 125-128: Bounce 2 Chars — characters double-bounce in
@@ -2281,19 +2281,19 @@ function animateContent() {
     const splitD = new SplitText(descriptionEl, { type: 'words,chars' });
     activeSplits.push(splitH, splitD);
     gsap.set(splitH.chars, { opacity: 0, x: xOffset, y: yOffset });
-    splitH.chars.forEach((c, i) => { tl.to(c, { opacity: 1, x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.5)' }, i * 0.025); });
+    splitH.chars.forEach((c, i) => { tl.to(c, { opacity: 1, x: 0, y: 0, duration: 0.6, ease: 'bounce.out' }, i * 0.025); });
     const splitSB2C = new SplitText(subheadlineEl, { type: 'words,chars' });
     activeSplits.push(splitSB2C);
     const ssB2C = splitH.chars.length * 0.025 + 0.1;
     gsap.set(splitSB2C.chars, { opacity: 0, x: xOffset, y: yOffset });
-    splitSB2C.chars.forEach((c, i) => { tl.to(c, { opacity: 1, x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.5)' }, ssB2C + i * 0.025); });
+    splitSB2C.chars.forEach((c, i) => { tl.to(c, { opacity: 1, x: 0, y: 0, duration: 0.6, ease: 'bounce.out' }, ssB2C + i * 0.025); });
     const sdB2C = ssB2C + splitSB2C.chars.length * 0.025 + 0.1;
     gsap.set(splitD.chars, { opacity: 0, x: xOffset, y: yOffset });
-    splitD.chars.forEach((c, i) => { tl.to(c, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.5)' }, sdB2C + i * 0.015); });
+    splitD.chars.forEach((c, i) => { tl.to(c, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'bounce.out' }, sdB2C + i * 0.015); });
     const buttonsB2C = document.querySelectorAll('.slide-btn');
     gsap.set(buttonsB2C, { opacity: 0, x: xOffset, y: yOffset });
     const sbB2C = sdB2C + splitD.chars.length * 0.015 + 0.2;
-    buttonsB2C.forEach((b, i) => { tl.to(b, { opacity: 1, x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.5)' }, sbB2C + i * 0.12); });
+    buttonsB2C.forEach((b, i) => { tl.to(b, { opacity: 1, x: 0, y: 0, duration: 0.6, ease: 'bounce.out' }, sbB2C + i * 0.12); });
   }
 }
 
