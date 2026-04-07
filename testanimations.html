@@ -3,417 +3,469 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>20 Flat Text Loading Animations with GSAP</title>
+  <title>Animation Prototypes</title>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: system-ui, -apple-system, sans-serif;
-      background: #0f0f0f;
+      background: #0a0a0a;
       color: #fff;
-      padding: 20px;
-      line-height: 1.6;
-      max-width: 100%;
+      padding: 40px 24px 80px;
+      line-height: 1.5;
     }
     h1 {
       text-align: center;
-      margin-bottom: 40px;
-      font-size: 1.8rem;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #666;
+      margin-bottom: 60px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .style-group {
+      margin-bottom: 70px;
+    }
+    .style-heading {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #555;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border-bottom: 1px solid #1e1e1e;
+      padding-bottom: 10px;
+      margin-bottom: 24px;
+    }
+    .style-heading span {
+      color: #888;
+      font-weight: 400;
+    }
+    .demos {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
     }
     .demo {
-      margin: 50px 0;
-      padding: 30px 20px;
-      background: #1a1a1a;
-      border-radius: 12px;
-      border: 1px solid #333;
+      background: #111;
+      border: 1px solid #1e1e1e;
+      border-radius: 10px;
+      padding: 28px 24px 20px;
+      min-height: 160px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
-    .label {
-      font-size: 1rem;
-      color: #aaa;
-      margin-bottom: 12px;
-      display: block;
+    .demo-label {
+      font-size: 0.7rem;
+      color: #444;
+      margin-bottom: 18px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
     }
-    .text-container {
-      font-size: 2.2rem;
+    .headline {
+      font-size: 1.8rem;
       font-weight: 700;
       letter-spacing: -0.02em;
-      min-height: 60px;
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.05em;
-      position: relative;
+      line-height: 1.15;
+      margin-bottom: 8px;
+      min-height: 44px;
     }
-    @media (max-width: 480px) {
-      .text-container {
-        font-size: 1.8rem;
-      }
+    .sub {
+      font-size: 1rem;
+      font-weight: 400;
+      color: #aaa;
+      min-height: 24px;
     }
-    .char {
-      display: inline-block;
-      white-space: pre;
-    }
-    button {
-      margin-top: 15px;
-      padding: 10px 20px;
-      background: #333;
-      color: #fff;
-      border: none;
+    .replay-btn {
+      margin-top: 18px;
+      padding: 7px 16px;
+      background: #1e1e1e;
+      color: #888;
+      border: 1px solid #2a2a2a;
       border-radius: 6px;
       cursor: pointer;
-      font-size: 1rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.04em;
+      align-self: flex-start;
+      transition: background 0.15s, color 0.15s;
     }
-    button:hover {
-      background: #555;
-    }
+    .replay-btn:hover { background: #2a2a2a; color: #ccc; }
+    .word  { display: inline-block; }
+    .char  { display: inline-block; white-space: pre; }
   </style>
 </head>
 <body>
-  <h1>20 Flat Text Loading Animations (GSAP)</h1>
+  <h1>Animation Prototypes</h1>
 
-  <div class="demo">
-    <span class="label">1. Typing Effect (with blinking cursor)</span>
-    <div id="anim1" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(1)">Replay</button>
-  </div>
+  <!-- ── 1. SNAP ─────────────────────────────────────────────────── -->
+  <div class="style-group">
+    <div class="style-heading">Snap <span>— expo.out · flies in and stops dead, no linger</span></div>
+    <div class="demos">
 
-  <div class="demo">
-    <span class="label">2. Sequential Fade-In</span>
-    <div id="anim2" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(2)">Replay</button>
-  </div>
+      <div class="demo" id="snap-whole">
+        <div>
+          <div class="demo-label">Whole · from left</div>
+          <div class="headline">Headline Text</div>
+          <div class="sub">Supporting line below</div>
+        </div>
+        <button class="replay-btn" onclick="play('snap-whole')">Replay</button>
+      </div>
 
-  <div class="demo">
-    <span class="label">3. Letter Pulse</span>
-    <div id="anim3" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(3)">Replay</button>
-  </div>
+      <div class="demo" id="snap-words">
+        <div>
+          <div class="demo-label">Words · from below</div>
+          <div class="headline">Headline Text</div>
+          <div class="sub">Supporting line below</div>
+        </div>
+        <button class="replay-btn" onclick="play('snap-words')">Replay</button>
+      </div>
 
-  <div class="demo">
-    <span class="label">4. Wave Bounce</span>
-    <div id="anim4" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(4)">Replay</button>
-  </div>
+      <div class="demo" id="snap-chars">
+        <div>
+          <div class="demo-label">Chars · from right</div>
+          <div class="headline">Headline Text</div>
+          <div class="sub">Supporting line below</div>
+        </div>
+        <button class="replay-btn" onclick="play('snap-chars')">Replay</button>
+      </div>
 
-  <div class="demo">
-    <span class="label">5. Color Sweep</span>
-    <div id="anim5" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(5)">Replay</button>
-  </div>
-
-  <div class="demo">
-    <span class="label">6. Underline Draw</span>
-    <div id="anim6" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(6)">Replay</button>
-  </div>
-
-  <div class="demo">
-    <span class="label">7. Dot Matrix Fill (pop-in)</span>
-    <div id="anim7" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(7)">Replay</button>
-  </div>
-
-  <div class="demo">
-    <span class="label">8. Opacity Wave</span>
-    <div id="anim8" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(8)">Replay</button>
-  </div>
-
-  <div class="demo">
-    <span class="label">9. Horizontal Stretch</span>
-    <div id="anim9" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(9)">Replay</button>
-  </div>
-
-  <div class="demo">
-    <span class="label">10. Progress Bar</span>
-    <div id="anim10" class="text-container">Loading Text <span id="progress">0%</span></div>
-    <div style="height:4px; background:#333; margin-top:10px; border-radius:2px; overflow:hidden;">
-      <div id="bar" style="height:100%; width:0%; background:#0f0;"></div>
     </div>
-    <button onclick="restartAnim(10)">Replay</button>
   </div>
 
-  <div class="demo">
-    <span class="label">11. Highlight Sweep</span>
-    <div id="anim11" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(11)">Replay</button>
+  <!-- ── 2. SPRING ───────────────────────────────────────────────── -->
+  <div class="style-group">
+    <div class="style-heading">Spring <span>— elastic.out(0.8, 0.3) · soft oscillation, settles gently</span></div>
+    <div class="demos">
+
+      <div class="demo" id="spring-whole">
+        <div>
+          <div class="demo-label">Whole · from left</div>
+          <div class="headline">Headline Text</div>
+          <div class="sub">Supporting line below</div>
+        </div>
+        <button class="replay-btn" onclick="play('spring-whole')">Replay</button>
+      </div>
+
+      <div class="demo" id="spring-words">
+        <div>
+          <div class="demo-label">Words · from below</div>
+          <div class="headline">Headline Text</div>
+          <div class="sub">Supporting line below</div>
+        </div>
+        <button class="replay-btn" onclick="play('spring-words')">Replay</button>
+      </div>
+
+      <div class="demo" id="spring-chars">
+        <div>
+          <div class="demo-label">Chars · from left</div>
+          <div class="headline">Headline Text</div>
+          <div class="sub">Supporting line below</div>
+        </div>
+        <button class="replay-btn" onclick="play('spring-chars')">Replay</button>
+      </div>
+
+    </div>
   </div>
 
-  <div class="demo">
-    <span class="label">12. Fade & Scale</span>
-    <div id="anim12" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(12)">Replay</button>
+  <!-- ── 3. OVERSHOOT ────────────────────────────────────────────── -->
+  <div class="style-group">
+    <div class="style-heading">Overshoot <span>— back.out(3) · snaps past destination then pulls back hard</span></div>
+    <div class="demos">
+
+      <div class="demo" id="over-whole">
+        <div>
+          <div class="demo-label">Whole · from left</div>
+          <div class="headline">Headline Text</div>
+          <div class="sub">Supporting line below</div>
+        </div>
+        <button class="replay-btn" onclick="play('over-whole')">Replay</button>
+      </div>
+
+      <div class="demo" id="over-words">
+        <div>
+          <div class="demo-label">Words · from below</div>
+          <div class="headline">Headline Text</div>
+          <div class="sub">Supporting line below</div>
+        </div>
+        <button class="replay-btn" onclick="play('over-words')">Replay</button>
+      </div>
+
+      <div class="demo" id="over-chars">
+        <div>
+          <div class="demo-label">Chars · scale from center</div>
+          <div class="headline">Headline Text</div>
+          <div class="sub">Supporting line below</div>
+        </div>
+        <button class="replay-btn" onclick="play('over-chars')">Replay</button>
+      </div>
+
+    </div>
   </div>
 
-  <div class="demo">
-    <span class="label">13. Thin to Full Trace</span>
-    <div id="anim13" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(13)">Replay</button>
+  <!-- ── 4. STAGGER SINE ─────────────────────────────────────────── -->
+  <div class="style-group">
+    <div class="style-heading">Stagger Sine <span>— sine.out · restrained wave, content-forward</span></div>
+    <div class="demos">
+
+      <div class="demo" id="sine-chars-y">
+        <div>
+          <div class="demo-label">Chars · tiny y + opacity wave</div>
+          <div class="headline">Headline Text</div>
+          <div class="sub">Supporting line below</div>
+        </div>
+        <button class="replay-btn" onclick="play('sine-chars-y')">Replay</button>
+      </div>
+
+      <div class="demo" id="sine-words">
+        <div>
+          <div class="demo-label">Words · gentle rise + fade</div>
+          <div class="headline">Headline Text</div>
+          <div class="sub">Supporting line below</div>
+        </div>
+        <button class="replay-btn" onclick="play('sine-words')">Replay</button>
+      </div>
+
+      <div class="demo" id="sine-chars-fade">
+        <div>
+          <div class="demo-label">Chars · opacity only, no movement</div>
+          <div class="headline">Headline Text</div>
+          <div class="sub">Supporting line below</div>
+        </div>
+        <button class="replay-btn" onclick="play('sine-chars-fade')">Replay</button>
+      </div>
+
+    </div>
   </div>
 
-  <div class="demo">
-    <span class="label">14. Vertical Fill</span>
-    <div id="anim14" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(14)">Replay</button>
-  </div>
+  <!-- ── 5. EXPO DROP ────────────────────────────────────────────── -->
+  <div class="style-group">
+    <div class="style-heading">Expo Drop <span>— expo.out · gravity-like fall from above, zero bounce</span></div>
+    <div class="demos">
 
-  <div class="demo">
-    <span class="label">15. Blink Sequence</span>
-    <div id="anim15" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(15)">Replay</button>
-  </div>
+      <div class="demo" id="expo-whole">
+        <div>
+          <div class="demo-label">Whole · from above</div>
+          <div class="headline">Headline Text</div>
+          <div class="sub">Supporting line below</div>
+        </div>
+        <button class="replay-btn" onclick="play('expo-whole')">Replay</button>
+      </div>
 
-  <div class="demo">
-    <span class="label">16. Shimmer Line</span>
-    <div id="anim16" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(16)">Replay</button>
-  </div>
+      <div class="demo" id="expo-words">
+        <div>
+          <div class="demo-label">Words · from above</div>
+          <div class="headline">Headline Text</div>
+          <div class="sub">Supporting line below</div>
+        </div>
+        <button class="replay-btn" onclick="play('expo-words')">Replay</button>
+      </div>
 
-  <div class="demo">
-    <span class="label">17. Dot Pulse</span>
-    <div id="anim17" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(17)">Replay</button>
-  </div>
+      <div class="demo" id="expo-chars">
+        <div>
+          <div class="demo-label">Chars · from above</div>
+          <div class="headline">Headline Text</div>
+          <div class="sub">Supporting line below</div>
+        </div>
+        <button class="replay-btn" onclick="play('expo-chars')">Replay</button>
+      </div>
 
-  <div class="demo">
-    <span class="label">18. Word Wipe</span>
-    <div id="anim18" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(18)">Replay</button>
-  </div>
-
-  <div class="demo">
-    <span class="label">19. Letter Pop-In</span>
-    <div id="anim19" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(19)">Replay</button>
-  </div>
-
-  <div class="demo">
-    <span class="label">20. Pulsing Dots</span>
-    <div id="anim20" class="text-container">Loading Text<span id="dots">...</span></div>
-    <button onclick="restartAnim(20)">Replay</button>
+    </div>
   </div>
 
   <script>
-    const gsapLib = window.gsap;
+    const gsap = window.gsap;
+    const tls = {};
 
-    function resetContainer(id) {
-      const container = document.getElementById(`anim${id}`);
-      if (!container) return;
-
-      // Remove extra elements (underline, shimmer, wipe, cursor, etc.)
-      Array.from(container.children).forEach(child => {
-        if (!child.classList.contains('char') &&
-            child.id !== 'progress' &&
-            child.id !== 'dots' &&
-            child.id !== 'bar') {
-          child.remove();
-        }
+    function splitWords(el) {
+      const text = el.textContent.trim();
+      el.innerHTML = '';
+      text.split(' ').forEach((w, i, arr) => {
+        const span = document.createElement('span');
+        span.className = 'word';
+        span.textContent = w;
+        el.appendChild(span);
+        if (i < arr.length - 1) el.appendChild(document.createTextNode(' '));
       });
-
-      if (id === 10) {
-        container.innerHTML = 'Loading Text <span id="progress">0%</span>';
-        document.getElementById('bar').style.width = '0%';
-      } else if (id === 20) {
-        container.innerHTML = 'Loading Text<span id="dots">...</span>';
-      } else {
-        container.textContent = 'Loading Text';
-      }
+      return el.querySelectorAll('.word');
     }
 
-    function splitText(container) {
-      const text = container.textContent.trim();
-      container.innerHTML = '';
-      [...text].forEach(char => {
+    function splitChars(el) {
+      const text = el.textContent.trim();
+      el.innerHTML = '';
+      [...text].forEach(ch => {
         const span = document.createElement('span');
         span.className = 'char';
-        span.textContent = char === ' ' ? '\u00A0' : char;
-        container.appendChild(span);
+        span.textContent = ch === ' ' ? '\u00A0' : ch;
+        el.appendChild(span);
       });
-      return container.querySelectorAll('.char');
+      return el.querySelectorAll('.char');
     }
 
-    let currentTimelines = {};
-
-    function createAndPlay(id) {
-      resetContainer(id);
-      const container = document.getElementById(`anim${id}`);
-      let tl;
-
-      switch(id) {
-        case 1: // Typing
-          const chars1 = splitText(container);
-          tl = gsapLib.timeline({repeat: -1, repeatDelay: 1.5});
-          tl.from(chars1, {opacity: 0, duration: 0.06, stagger: 0.08});
-          const cursor = document.createElement('span');
-          cursor.textContent = '|';
-          cursor.style.marginLeft = '4px';
-          cursor.style.animation = 'blink 0.8s step-end infinite';
-          container.appendChild(cursor);
-          break;
-
-        case 2:
-          const chars2 = splitText(container);
-          tl = gsapLib.from(chars2, {opacity: 0, stagger: 0.06, duration: 0.8, ease: "power2.out"});
-          break;
-
-        case 3:
-          const chars3 = splitText(container);
-          tl = gsapLib.to(chars3, {scale: 1.08, duration: 1.2, stagger: {each: 0.1, repeat: -1, yoyo: true}, ease: "sine.inOut"});
-          break;
-
-        case 4:
-          const chars4 = splitText(container);
-          tl = gsapLib.from(chars4, {y: -35, duration: 0.8, stagger: 0.05, ease: "bounce.out"});
-          break;
-
-        case 5:
-          const chars5 = splitText(container);
-          tl = gsapLib.fromTo(chars5, {color: "#666"}, {color: "#fff", duration: 1.2, stagger: 0.07});
-          break;
-
-        case 6:
-          const chars6 = splitText(container);
-          const underline = document.createElement('div');
-          underline.style.position = 'absolute';
-          underline.style.bottom = '-6px';
-          underline.style.left = '0';
-          underline.style.height = '3px';
-          underline.style.background = '#0f0';
-          underline.style.width = '0%';
-          container.appendChild(underline);
-          gsapLib.from(chars6, {opacity: 0, y: 15, stagger: 0.05, duration: 0.6});
-          tl = gsapLib.to(underline, {width: '100%', duration: 1.8, ease: "power2.out"});
-          break;
-
-        case 7:
-          const chars7 = splitText(container);
-          tl = gsapLib.from(chars7, {scale: 0.2, opacity: 0, stagger: 0.06, duration: 0.7, ease: "back.out(1.4)"});
-          break;
-
-        case 8:
-          const chars8 = splitText(container);
-          tl = gsapLib.to(chars8, {opacity: 0.35, duration: 1.4, stagger: {each: 0.08, repeat: -1, yoyo: true}, ease: "sine.inOut"});
-          break;
-
-        case 9:
-          const chars9 = splitText(container);
-          tl = gsapLib.from(chars9, {scaleX: 0.1, opacity: 0, stagger: 0.07, duration: 0.9, ease: "power3.out"});
-          break;
-
-        case 10:
-          const bar = document.getElementById('bar');
-          const percent = document.getElementById('progress');
-          tl = gsapLib.to(bar, {
-            width: '100%',
-            duration: 2.5,
-            ease: "power2.inOut",
-            onUpdate: function() {
-              percent.textContent = Math.round(this.progress() * 100) + '%';
-            }
-          });
-          break;
-
-        case 11:
-          const chars11 = splitText(container);
-          tl = gsapLib.to(chars11, {color: "#0ff", duration: 0.4, stagger: 0.08, repeat: -1, repeatDelay: 1.2, yoyo: true});
-          break;
-
-        case 12:
-          const chars12 = splitText(container);
-          tl = gsapLib.from(chars12, {opacity: 0, scale: 0.6, stagger: 0.07, duration: 0.9, ease: "back.out(1.2)"});
-          break;
-
-        case 13:
-          const chars13 = splitText(container);
-          tl = gsapLib.from(chars13, {scaleX: 0.01, opacity: 0.3, stagger: 0.09, duration: 1, ease: "power2.out"});
-          break;
-
-        case 14:
-          const chars14 = splitText(container);
-          tl = gsapLib.from(chars14, {y: 50, opacity: 0, stagger: 0.06, duration: 0.8, ease: "power2.out"});
-          break;
-
-        case 15:
-          const chars15 = splitText(container);
-          tl = gsapLib.to(chars15, {opacity: 0.25, duration: 0.2, stagger: 0.12, repeat: -1, yoyo: true});
-          break;
-
-        case 16:
-          const chars16 = splitText(container);
-          const shimmer = document.createElement('div');
-          shimmer.style.position = 'absolute';
-          shimmer.style.top = '0';
-          shimmer.style.left = '-100%';
-          shimmer.style.width = '40%';
-          shimmer.style.height = '100%';
-          shimmer.style.background = 'linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent)';
-          shimmer.style.pointerEvents = 'none';
-          container.appendChild(shimmer);
-          tl = gsapLib.to(shimmer, {left: '140%', duration: 1.8, repeat: -1, ease: "none"});
-          break;
-
-        case 17:
-          const chars17 = splitText(container);
-          tl = gsapLib.to(chars17, {scale: 1.15, duration: 0.8, stagger: {each: 0.15, repeat: -1, yoyo: true}, ease: "sine.inOut"});
-          break;
-
-        case 18:
-          const chars18 = splitText(container);
-          const wipe = document.createElement('div');
-          wipe.style.position = 'absolute';
-          wipe.style.top = '0';
-          wipe.style.left = '0';
-          wipe.style.width = '0%';
-          wipe.style.height = '100%';
-          wipe.style.background = '#0f0';
-          wipe.style.opacity = '0.25';
-          container.appendChild(wipe);
-          gsapLib.to(wipe, {width: '100%', duration: 1.6, ease: "power2.inOut"});
-          tl = gsapLib.from(chars18, {opacity: 0.4, stagger: 0.05});
-          break;
-
-        case 19:
-          const chars19 = splitText(container);
-          tl = gsapLib.from(chars19, {scale: 0.75, opacity: 0, stagger: 0.06, duration: 0.7, ease: "back.out(1.7)"});
-          break;
-
-        case 20:
-          const dots = document.getElementById('dots');
-          tl = gsapLib.to({}, {
-            duration: 1,
-            repeat: -1,
-            onRepeat: () => {
-              const len = (dots.textContent.length % 3) + 1;
-              dots.textContent = '.'.repeat(len);
-            }
-          });
-          break;
-      }
-
-      currentTimelines[id] = tl;
-      return tl;
+    function reset(id) {
+      if (tls[id]) { tls[id].kill(); delete tls[id]; }
+      const demo = document.getElementById(id);
+      demo.querySelectorAll('.headline, .sub').forEach(el => {
+        el.innerHTML = el.dataset.orig || el.textContent;
+      });
+      // restore original text
+      demo.querySelectorAll('.headline').forEach(el => { el.textContent = 'Headline Text'; });
+      demo.querySelectorAll('.sub').forEach(el => { el.textContent = 'Supporting line below'; });
+      gsap.set(demo.querySelectorAll('.headline, .sub'), { clearProps: 'all' });
     }
 
-    window.restartAnim = function(id) {
-      if (currentTimelines[id]) {
-        currentTimelines[id].kill();
-      }
-      createAndPlay(id);
-    };
+    function play(id) {
+      reset(id);
+      const demo  = document.getElementById(id);
+      const h     = demo.querySelector('.headline');
+      const s     = demo.querySelector('.sub');
+      const tl    = gsap.timeline();
+      tls[id]     = tl;
 
-    // Initialize on load
-    window.onload = function() {
-      // Add blink animation style
-      const style = document.createElement('style');
-      style.innerHTML = `@keyframes blink { 50% { opacity: 0; } }`;
-      document.head.appendChild(style);
+      switch (id) {
 
-      // Start all animations with a small delay
-      setTimeout(() => {
-        for (let i = 1; i <= 20; i++) {
-          createAndPlay(i);
+        // ── SNAP ────────────────────────────────────────────────────
+        case 'snap-whole':
+          gsap.set([h, s], { opacity: 0, x: -60 });
+          tl.to(h, { opacity: 1, x: 0, duration: 0.45, ease: 'expo.out' }, 0)
+            .to(s, { opacity: 1, x: 0, duration: 0.45, ease: 'expo.out' }, 0.18);
+          break;
+
+        case 'snap-words': {
+          const hw = splitWords(h);
+          const sw = splitWords(s);
+          gsap.set([...hw, ...sw], { opacity: 0, y: 30 });
+          tl.to(hw, { opacity: 1, y: 0, duration: 0.4, ease: 'expo.out', stagger: 0.07 }, 0)
+            .to(sw, { opacity: 1, y: 0, duration: 0.4, ease: 'expo.out', stagger: 0.06 }, 0.2);
+          break;
         }
-      }, 300);
+
+        case 'snap-chars': {
+          const hc = splitChars(h);
+          const sc = splitChars(s);
+          gsap.set([...hc, ...sc], { opacity: 0, x: 40 });
+          tl.to(hc, { opacity: 1, x: 0, duration: 0.35, ease: 'expo.out', stagger: 0.03 }, 0)
+            .to(sc, { opacity: 1, x: 0, duration: 0.35, ease: 'expo.out', stagger: 0.025 }, 0.25);
+          break;
+        }
+
+        // ── SPRING ──────────────────────────────────────────────────
+        case 'spring-whole':
+          gsap.set([h, s], { opacity: 0, x: -50 });
+          tl.to(h, { opacity: 1, x: 0, duration: 1.1, ease: 'elastic.out(0.8, 0.3)' }, 0)
+            .to(s, { opacity: 1, x: 0, duration: 1.1, ease: 'elastic.out(0.8, 0.3)' }, 0.22);
+          break;
+
+        case 'spring-words': {
+          const hw = splitWords(h);
+          const sw = splitWords(s);
+          gsap.set([...hw, ...sw], { opacity: 0, y: 35 });
+          tl.to(hw, { opacity: 1, y: 0, duration: 1.0, ease: 'elastic.out(0.8, 0.3)', stagger: 0.1 }, 0)
+            .to(sw, { opacity: 1, y: 0, duration: 1.0, ease: 'elastic.out(0.8, 0.3)', stagger: 0.08 }, 0.3);
+          break;
+        }
+
+        case 'spring-chars': {
+          const hc = splitChars(h);
+          const sc = splitChars(s);
+          gsap.set([...hc, ...sc], { opacity: 0, x: -30 });
+          tl.to(hc, { opacity: 1, x: 0, duration: 0.9, ease: 'elastic.out(0.8, 0.3)', stagger: 0.04 }, 0)
+            .to(sc, { opacity: 1, x: 0, duration: 0.9, ease: 'elastic.out(0.8, 0.3)', stagger: 0.035 }, 0.3);
+          break;
+        }
+
+        // ── OVERSHOOT ────────────────────────────────────────────────
+        case 'over-whole':
+          gsap.set([h, s], { opacity: 0, x: -50 });
+          tl.to(h, { opacity: 1, x: 0, duration: 0.7, ease: 'back.out(3)' }, 0)
+            .to(s, { opacity: 1, x: 0, duration: 0.7, ease: 'back.out(3)' }, 0.2);
+          break;
+
+        case 'over-words': {
+          const hw = splitWords(h);
+          const sw = splitWords(s);
+          gsap.set([...hw, ...sw], { opacity: 0, y: 40 });
+          tl.to(hw, { opacity: 1, y: 0, duration: 0.65, ease: 'back.out(3)', stagger: 0.09 }, 0)
+            .to(sw, { opacity: 1, y: 0, duration: 0.65, ease: 'back.out(3)', stagger: 0.07 }, 0.28);
+          break;
+        }
+
+        case 'over-chars': {
+          const hc = splitChars(h);
+          const sc = splitChars(s);
+          gsap.set([...hc, ...sc], { opacity: 0, scale: 0.4 });
+          tl.to(hc, { opacity: 1, scale: 1, duration: 0.6, ease: 'back.out(3)', stagger: 0.04 }, 0)
+            .to(sc, { opacity: 1, scale: 1, duration: 0.6, ease: 'back.out(3)', stagger: 0.035 }, 0.3);
+          break;
+        }
+
+        // ── STAGGER SINE ─────────────────────────────────────────────
+        case 'sine-chars-y': {
+          const hc = splitChars(h);
+          const sc = splitChars(s);
+          gsap.set([...hc, ...sc], { opacity: 0, y: 12 });
+          tl.to(hc, { opacity: 1, y: 0, duration: 0.9, ease: 'sine.out', stagger: 0.04 }, 0)
+            .to(sc, { opacity: 1, y: 0, duration: 0.9, ease: 'sine.out', stagger: 0.035 }, 0.35);
+          break;
+        }
+
+        case 'sine-words': {
+          const hw = splitWords(h);
+          const sw = splitWords(s);
+          gsap.set([...hw, ...sw], { opacity: 0, y: 16 });
+          tl.to(hw, { opacity: 1, y: 0, duration: 1.0, ease: 'sine.out', stagger: 0.12 }, 0)
+            .to(sw, { opacity: 1, y: 0, duration: 1.0, ease: 'sine.out', stagger: 0.1 }, 0.38);
+          break;
+        }
+
+        case 'sine-chars-fade': {
+          const hc = splitChars(h);
+          const sc = splitChars(s);
+          gsap.set([...hc, ...sc], { opacity: 0 });
+          tl.to(hc, { opacity: 1, duration: 0.8, ease: 'sine.out', stagger: 0.04 }, 0)
+            .to(sc, { opacity: 1, duration: 0.8, ease: 'sine.out', stagger: 0.035 }, 0.35);
+          break;
+        }
+
+        // ── EXPO DROP ────────────────────────────────────────────────
+        case 'expo-whole':
+          gsap.set([h, s], { opacity: 0, y: -50 });
+          tl.to(h, { opacity: 1, y: 0, duration: 0.6, ease: 'expo.out' }, 0)
+            .to(s, { opacity: 1, y: 0, duration: 0.6, ease: 'expo.out' }, 0.2);
+          break;
+
+        case 'expo-words': {
+          const hw = splitWords(h);
+          const sw = splitWords(s);
+          gsap.set([...hw, ...sw], { opacity: 0, y: -40 });
+          tl.to(hw, { opacity: 1, y: 0, duration: 0.55, ease: 'expo.out', stagger: 0.09 }, 0)
+            .to(sw, { opacity: 1, y: 0, duration: 0.55, ease: 'expo.out', stagger: 0.07 }, 0.28);
+          break;
+        }
+
+        case 'expo-chars': {
+          const hc = splitChars(h);
+          const sc = splitChars(s);
+          gsap.set([...hc, ...sc], { opacity: 0, y: -35 });
+          tl.to(hc, { opacity: 1, y: 0, duration: 0.5, ease: 'expo.out', stagger: 0.035 }, 0)
+            .to(sc, { opacity: 1, y: 0, duration: 0.5, ease: 'expo.out', stagger: 0.03 }, 0.3);
+          break;
+        }
+      }
+    }
+
+    window.onload = () => {
+      const ids = [
+        'snap-whole','snap-words','snap-chars',
+        'spring-whole','spring-words','spring-chars',
+        'over-whole','over-words','over-chars',
+        'sine-chars-y','sine-words','sine-chars-fade',
+        'expo-whole','expo-words','expo-chars',
+      ];
+      let delay = 0;
+      ids.forEach(id => {
+        setTimeout(() => play(id), delay);
+        delay += 120;
+      });
     };
   </script>
 </body>
