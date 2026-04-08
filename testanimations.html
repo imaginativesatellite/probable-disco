@@ -363,7 +363,7 @@
   <div class="card" id="d24">
     <div class="card-label">Parallax Reveal From Top</div>
     <div class="media-wrap"><div class="media-box">
-      <img src="https://images.unsplash.com/photo-1472214103451-9374f2d10a58?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
     </div></div>
     <button class="replay-btn" onclick="play(24)">Replay</button>
   </div>
@@ -427,9 +427,41 @@
   <div class="card" id="d32">
     <div class="card-label">Parallax Flow From Top</div>
     <div class="media-wrap"><div class="media-box">
-      <img src="https://images.unsplash.com/photo-1472214103451-9374f2d10a58?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+      <img src="https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
     </div></div>
     <button class="replay-btn" onclick="play(32)">Replay</button>
+  </div>
+
+  <div class="card" id="d33">
+    <div class="card-label">Grow Right, Then Down</div>
+    <div class="media-wrap"><div class="media-box">
+      <img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+    </div></div>
+    <button class="replay-btn" onclick="play(33)">Replay</button>
+  </div>
+
+  <div class="card" id="d34">
+    <div class="card-label">Letterbox Open</div>
+    <div class="media-wrap"><div class="media-box">
+      <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+    </div></div>
+    <button class="replay-btn" onclick="play(34)">Replay</button>
+  </div>
+
+  <div class="card" id="d35">
+    <div class="card-label">Slide In, Then Expand</div>
+    <div class="media-wrap"><div class="media-box">
+      <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+    </div></div>
+    <button class="replay-btn" onclick="play(35)">Replay</button>
+  </div>
+
+  <div class="card" id="d36">
+    <div class="card-label">Drop, Then Pivot</div>
+    <div class="media-wrap"><div class="media-box">
+      <img src="https://images.unsplash.com/photo-1488161628813-04466f872be2?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+    </div></div>
+    <button class="replay-btn" onclick="play(36)">Replay</button>
   </div>
 
 </div>
@@ -683,12 +715,39 @@
         tl.to(wrap, { clipPath: 'inset(0 0 0% 0)', duration: 1.4, ease: 'expo.out' }, 0)
           .to(img,  { y: 0, duration: 2.0, ease: 'power2.out' }, 0);
         break;
+
+      // ── Sequential two-step dual-motion animations ──
+
+      case 33: // Grow Right, Then Down — scaleX expands first, then scaleY expands
+        gsap.set(wrap, { scaleX: 0, scaleY: 0.04, transformOrigin: 'left top', opacity: 1 });
+        tl.to(wrap, { scaleX: 1, duration: 0.7, ease: 'expo.out' }, 0)
+          .to(wrap, { scaleY: 1, duration: 0.9, ease: 'expo.out' }, '>');
+        break;
+
+      case 34: // Letterbox Open — snaps visible as center band, then expands to full frame
+        gsap.set(wrap, { clipPath: 'inset(42% 0 42% 0)', opacity: 0 });
+        tl.to(wrap, { opacity: 1, duration: 0.15, ease: 'none' }, 0)
+          .to(wrap, { clipPath: 'inset(0% 0 0% 0)', duration: 1.0, ease: 'expo.out' }, '>');
+        break;
+
+      case 35: // Slide In, Then Expand — compressed sliver enters from left, then opens full width
+        gsap.set(wrap, { scaleX: 0.04, x: '-100%', transformOrigin: 'left center', opacity: 0 });
+        tl.to(wrap, { opacity: 1, duration: 0.1, ease: 'none' }, 0)
+          .to(wrap, { x: 0, duration: 0.7, ease: 'expo.out' }, 0)
+          .to(wrap, { scaleX: 1, duration: 0.8, ease: 'expo.out' }, '>');
+        break;
+
+      case 36: // Drop, Then Pivot — drops from above while tilted, then rotates to straight
+        gsap.set(wrap, { y: -100, rotation: -10, opacity: 0, transformOrigin: 'center top' });
+        tl.to(wrap, { y: 0, opacity: 1, duration: 0.7, ease: 'expo.out' }, 0)
+          .to(wrap, { rotation: 0, duration: 0.5, ease: 'expo.out' }, '>-0.1');
+        break;
     }
   }
 
   // Auto-play on load, staggered
   window.onload = () => {
-    for (let i = 1; i <= 32; i++) {
+    for (let i = 1; i <= 36; i++) {
       setTimeout(() => play(i), i * 80);
     }
   };
