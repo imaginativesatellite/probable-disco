@@ -472,7 +472,7 @@
 </div>
 
 <span class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">8</span></span>
-<span class="version">v26</span>
+<span class="version">v27</span>
 </div>
 
 <script>
@@ -1532,14 +1532,14 @@ function animateContent() {
     const transformOrigin = ['left center', 'center bottom', 'right center', 'center top'][slideIndex];
 
     gsap.set([headlineEl, subheadlineEl, descriptionEl], { scale: 0, opacity: 0, transformOrigin });
-    tl.to(headlineEl,    { scale: 1, opacity: 1, duration: 0.6, ease: 'power2.out', transformOrigin }, 0)
-      .to(subheadlineEl, { scale: 1, opacity: 1, duration: 0.6, ease: 'power2.out', transformOrigin }, 0.3)
-      .to(descriptionEl, { scale: 1, opacity: 1, duration: 0.6, ease: 'power2.out', transformOrigin }, 0.6);
+    tl.to(headlineEl,    { scale: 1, opacity: 1, duration: 0.6, ease: 'expo.out', transformOrigin }, 0)
+      .to(subheadlineEl, { scale: 1, opacity: 1, duration: 0.6, ease: 'expo.out', transformOrigin }, 0.3)
+      .to(descriptionEl, { scale: 1, opacity: 1, duration: 0.6, ease: 'expo.out', transformOrigin }, 0.6);
 
     const buttons = document.querySelectorAll('.slide-btn');
     gsap.set(buttons, { scale: 0, opacity: 0, transformOrigin: 'center center' });
     buttons.forEach((btn, index) => {
-      tl.to(btn, { scale: 1, opacity: 1, duration: 0.5, ease: 'power2.out', transformOrigin: 'center center' }, 0.9 + index * 0.12);
+      tl.to(btn, { scale: 1, opacity: 1, duration: 0.5, ease: 'expo.out', transformOrigin: 'center center' }, 0.9 + index * 0.12);
     });
 
   } else if (currentIndex < 60) {
@@ -1556,7 +1556,7 @@ function animateContent() {
 
     gsap.set(headlineLines, { scale: 0, opacity: 0, transformOrigin });
     headlineLines.forEach((line, index) => {
-      tl.to(line, { scale: 1, opacity: 1, duration: 0.5, ease: 'power2.out', transformOrigin }, index * 0.12);
+      tl.to(line, { scale: 1, opacity: 1, duration: 0.5, ease: 'expo.out', transformOrigin }, index * 0.12);
     });
 
     const splitSubheadlineGL = new SplitText(subheadlineEl, { type: 'lines' });
@@ -1565,20 +1565,20 @@ function animateContent() {
     const subStartGL = headlineLines.length * 0.12 + 0.15;
     gsap.set(subheadlineLinesGL, { scale: 0, opacity: 0, transformOrigin });
     subheadlineLinesGL.forEach((line, index) => {
-      tl.to(line, { scale: 1, opacity: 1, duration: 0.5, ease: 'power2.out', transformOrigin }, subStartGL + index * 0.12);
+      tl.to(line, { scale: 1, opacity: 1, duration: 0.5, ease: 'expo.out', transformOrigin }, subStartGL + index * 0.12);
     });
 
     const descStartGL = subStartGL + subheadlineLinesGL.length * 0.12 + 0.1;
     gsap.set(descriptionLines, { scale: 0, opacity: 0, transformOrigin });
     descriptionLines.forEach((line, index) => {
-      tl.to(line, { scale: 1, opacity: 1, duration: 0.5, ease: 'power2.out', transformOrigin }, descStartGL + index * 0.12);
+      tl.to(line, { scale: 1, opacity: 1, duration: 0.5, ease: 'expo.out', transformOrigin }, descStartGL + index * 0.12);
     });
 
     const buttonsGL = document.querySelectorAll('.slide-btn');
     gsap.set(buttonsGL, { scale: 0, opacity: 0, transformOrigin: 'center center' });
     const btnsStartGL = descStartGL + descriptionLines.length * 0.12 + 0.2;
     buttonsGL.forEach((btn, index) => {
-      tl.to(btn, { scale: 1, opacity: 1, duration: 0.5, ease: 'power2.out', transformOrigin: 'center center' }, btnsStartGL + index * 0.12);
+      tl.to(btn, { scale: 1, opacity: 1, duration: 0.5, ease: 'expo.out', transformOrigin: 'center center' }, btnsStartGL + index * 0.12);
     });
 
   } else if (currentIndex < 64) {
@@ -1595,7 +1595,7 @@ function animateContent() {
 
     gsap.set(headlineWords, { scale: 0, opacity: 0, transformOrigin });
     headlineWords.forEach((word, index) => {
-      tl.to(word, { scale: 1, opacity: 1, duration: 0.4, ease: 'power2.out', transformOrigin }, index * 0.07);
+      tl.to(word, { scale: 1, opacity: 1, duration: 0.4, ease: 'expo.out', transformOrigin }, index * 0.07);
     });
 
     const splitSubheadlineGW = new SplitText(subheadlineEl, { type: 'words' });
@@ -1604,20 +1604,20 @@ function animateContent() {
     const subStartGW = headlineWords.length * 0.07 + 0.1;
     gsap.set(subheadlineWordsGW, { scale: 0, opacity: 0, transformOrigin });
     subheadlineWordsGW.forEach((word, index) => {
-      tl.to(word, { scale: 1, opacity: 1, duration: 0.4, ease: 'power2.out', transformOrigin }, subStartGW + index * 0.07);
+      tl.to(word, { scale: 1, opacity: 1, duration: 0.4, ease: 'expo.out', transformOrigin }, subStartGW + index * 0.07);
     });
 
     const descStartGW = subStartGW + subheadlineWordsGW.length * 0.07 + 0.1;
     gsap.set(descriptionWords, { scale: 0, opacity: 0, transformOrigin });
     descriptionWords.forEach((word, index) => {
-      tl.to(word, { scale: 1, opacity: 1, duration: 0.35, ease: 'power2.out', transformOrigin }, descStartGW + index * 0.05);
+      tl.to(word, { scale: 1, opacity: 1, duration: 0.35, ease: 'expo.out', transformOrigin }, descStartGW + index * 0.05);
     });
 
     const buttonsGW = document.querySelectorAll('.slide-btn');
     gsap.set(buttonsGW, { scale: 0, opacity: 0, transformOrigin: 'center center' });
     const btnsStartGW = descStartGW + descriptionWords.length * 0.05 + 0.2;
     buttonsGW.forEach((btn, index) => {
-      tl.to(btn, { scale: 1, opacity: 1, duration: 0.45, ease: 'power2.out', transformOrigin: 'center center' }, btnsStartGW + index * 0.12);
+      tl.to(btn, { scale: 1, opacity: 1, duration: 0.45, ease: 'expo.out', transformOrigin: 'center center' }, btnsStartGW + index * 0.12);
     });
 
   } else if (currentIndex < 68) {
@@ -1634,7 +1634,7 @@ function animateContent() {
 
     gsap.set(headlineChars, { scale: 0, opacity: 0, transformOrigin });
     headlineChars.forEach((char, index) => {
-      tl.to(char, { scale: 1, opacity: 1, duration: 0.3, ease: 'power2.out', transformOrigin }, index * 0.025);
+      tl.to(char, { scale: 1, opacity: 1, duration: 0.3, ease: 'expo.out', transformOrigin }, index * 0.025);
     });
 
     const splitSubheadlineGC = new SplitText(subheadlineEl, { type: 'words,chars' });
@@ -1643,20 +1643,20 @@ function animateContent() {
     const subStartGC = headlineChars.length * 0.025 + 0.1;
     gsap.set(subheadlineCharsGC, { scale: 0, opacity: 0, transformOrigin });
     subheadlineCharsGC.forEach((char, index) => {
-      tl.to(char, { scale: 1, opacity: 1, duration: 0.3, ease: 'power2.out', transformOrigin }, subStartGC + index * 0.025);
+      tl.to(char, { scale: 1, opacity: 1, duration: 0.3, ease: 'expo.out', transformOrigin }, subStartGC + index * 0.025);
     });
 
     const descStartGC = subStartGC + subheadlineCharsGC.length * 0.025 + 0.1;
     gsap.set(descriptionChars, { scale: 0, opacity: 0, transformOrigin });
     descriptionChars.forEach((char, index) => {
-      tl.to(char, { scale: 1, opacity: 1, duration: 0.25, ease: 'power2.out', transformOrigin }, descStartGC + index * 0.015);
+      tl.to(char, { scale: 1, opacity: 1, duration: 0.25, ease: 'expo.out', transformOrigin }, descStartGC + index * 0.015);
     });
 
     const buttonsGC = document.querySelectorAll('.slide-btn');
     gsap.set(buttonsGC, { scale: 0, opacity: 0, transformOrigin: 'center center' });
     const btnsStartGC = descStartGC + descriptionChars.length * 0.015 + 0.2;
     buttonsGC.forEach((btn, index) => {
-      tl.to(btn, { scale: 1, opacity: 1, duration: 0.4, ease: 'power2.out', transformOrigin: 'center center' }, btnsStartGC + index * 0.12);
+      tl.to(btn, { scale: 1, opacity: 1, duration: 0.4, ease: 'expo.out', transformOrigin: 'center center' }, btnsStartGC + index * 0.12);
     });
 
   } else if (currentIndex < 72) {
@@ -1666,13 +1666,13 @@ function animateContent() {
     if (slideIndex === 0) {
       // Grow Whole None
       gsap.set([headlineEl, subheadlineEl, descriptionEl], { scale: 0, opacity: 0, transformOrigin: 'center center' });
-      tl.to(headlineEl,    { scale: 1, opacity: 1, duration: 0.6, ease: 'power2.out' }, 0)
-        .to(subheadlineEl, { scale: 1, opacity: 1, duration: 0.6, ease: 'power2.out' }, 0.3)
-        .to(descriptionEl, { scale: 1, opacity: 1, duration: 0.6, ease: 'power2.out' }, 0.6);
+      tl.to(headlineEl,    { scale: 1, opacity: 1, duration: 0.6, ease: 'expo.out' }, 0)
+        .to(subheadlineEl, { scale: 1, opacity: 1, duration: 0.6, ease: 'expo.out' }, 0.3)
+        .to(descriptionEl, { scale: 1, opacity: 1, duration: 0.6, ease: 'expo.out' }, 0.6);
       const buttonsGN0 = document.querySelectorAll('.slide-btn');
       gsap.set(buttonsGN0, { scale: 0, opacity: 0, transformOrigin: 'center center' });
       buttonsGN0.forEach((btn, i) => {
-        tl.to(btn, { scale: 1, opacity: 1, duration: 0.5, ease: 'power2.out' }, 0.9 + i * 0.12);
+        tl.to(btn, { scale: 1, opacity: 1, duration: 0.5, ease: 'expo.out' }, 0.9 + i * 0.12);
       });
     } else if (slideIndex === 1) {
       // Grow Lines None
@@ -1682,17 +1682,17 @@ function animateContent() {
       activeSplits.push(splitH, splitS, splitD);
       const to = 'center center';
       gsap.set(splitH.lines, { scale: 0, opacity: 0, transformOrigin: to });
-      splitH.lines.forEach((l, i) => { tl.to(l, { scale: 1, opacity: 1, duration: 0.5, ease: 'power2.out', transformOrigin: to }, i * 0.12); });
+      splitH.lines.forEach((l, i) => { tl.to(l, { scale: 1, opacity: 1, duration: 0.5, ease: 'expo.out', transformOrigin: to }, i * 0.12); });
       const ss1 = splitH.lines.length * 0.12 + 0.15;
       gsap.set(splitS.lines, { scale: 0, opacity: 0, transformOrigin: to });
-      splitS.lines.forEach((l, i) => { tl.to(l, { scale: 1, opacity: 1, duration: 0.5, ease: 'power2.out', transformOrigin: to }, ss1 + i * 0.12); });
+      splitS.lines.forEach((l, i) => { tl.to(l, { scale: 1, opacity: 1, duration: 0.5, ease: 'expo.out', transformOrigin: to }, ss1 + i * 0.12); });
       const sd1 = ss1 + splitS.lines.length * 0.12 + 0.1;
       gsap.set(splitD.lines, { scale: 0, opacity: 0, transformOrigin: to });
-      splitD.lines.forEach((l, i) => { tl.to(l, { scale: 1, opacity: 1, duration: 0.5, ease: 'power2.out', transformOrigin: to }, sd1 + i * 0.12); });
+      splitD.lines.forEach((l, i) => { tl.to(l, { scale: 1, opacity: 1, duration: 0.5, ease: 'expo.out', transformOrigin: to }, sd1 + i * 0.12); });
       const buttonsGN1 = document.querySelectorAll('.slide-btn');
       gsap.set(buttonsGN1, { scale: 0, opacity: 0, transformOrigin: to });
       const sb1 = sd1 + splitD.lines.length * 0.12 + 0.2;
-      buttonsGN1.forEach((b, i) => { tl.to(b, { scale: 1, opacity: 1, duration: 0.5, ease: 'power2.out', transformOrigin: to }, sb1 + i * 0.12); });
+      buttonsGN1.forEach((b, i) => { tl.to(b, { scale: 1, opacity: 1, duration: 0.5, ease: 'expo.out', transformOrigin: to }, sb1 + i * 0.12); });
     } else if (slideIndex === 2) {
       // Grow Words None
       const splitH = new SplitText(headlineEl,    { type: 'words' });
@@ -1701,17 +1701,17 @@ function animateContent() {
       activeSplits.push(splitH, splitS, splitD);
       const to = 'center center';
       gsap.set(splitH.words, { scale: 0, opacity: 0, transformOrigin: to });
-      splitH.words.forEach((w, i) => { tl.to(w, { scale: 1, opacity: 1, duration: 0.4, ease: 'power2.out', transformOrigin: to }, i * 0.07); });
+      splitH.words.forEach((w, i) => { tl.to(w, { scale: 1, opacity: 1, duration: 0.4, ease: 'expo.out', transformOrigin: to }, i * 0.07); });
       const ss2 = splitH.words.length * 0.07 + 0.1;
       gsap.set(splitS.words, { scale: 0, opacity: 0, transformOrigin: to });
-      splitS.words.forEach((w, i) => { tl.to(w, { scale: 1, opacity: 1, duration: 0.4, ease: 'power2.out', transformOrigin: to }, ss2 + i * 0.07); });
+      splitS.words.forEach((w, i) => { tl.to(w, { scale: 1, opacity: 1, duration: 0.4, ease: 'expo.out', transformOrigin: to }, ss2 + i * 0.07); });
       const sd2 = ss2 + splitS.words.length * 0.07 + 0.1;
       gsap.set(splitD.words, { scale: 0, opacity: 0, transformOrigin: to });
-      splitD.words.forEach((w, i) => { tl.to(w, { scale: 1, opacity: 1, duration: 0.35, ease: 'power2.out', transformOrigin: to }, sd2 + i * 0.05); });
+      splitD.words.forEach((w, i) => { tl.to(w, { scale: 1, opacity: 1, duration: 0.35, ease: 'expo.out', transformOrigin: to }, sd2 + i * 0.05); });
       const buttonsGN2 = document.querySelectorAll('.slide-btn');
       gsap.set(buttonsGN2, { scale: 0, opacity: 0, transformOrigin: to });
       const sb2 = sd2 + splitD.words.length * 0.05 + 0.2;
-      buttonsGN2.forEach((b, i) => { tl.to(b, { scale: 1, opacity: 1, duration: 0.45, ease: 'power2.out', transformOrigin: to }, sb2 + i * 0.12); });
+      buttonsGN2.forEach((b, i) => { tl.to(b, { scale: 1, opacity: 1, duration: 0.45, ease: 'expo.out', transformOrigin: to }, sb2 + i * 0.12); });
     } else {
       // Grow Chars None
       const splitH = new SplitText(headlineEl,    { type: 'words,chars' });
@@ -1720,17 +1720,17 @@ function animateContent() {
       activeSplits.push(splitH, splitS, splitD);
       const to = 'center center';
       gsap.set(splitH.chars, { scale: 0, opacity: 0, transformOrigin: to });
-      splitH.chars.forEach((c, i) => { tl.to(c, { scale: 1, opacity: 1, duration: 0.3, ease: 'power2.out', transformOrigin: to }, i * 0.025); });
+      splitH.chars.forEach((c, i) => { tl.to(c, { scale: 1, opacity: 1, duration: 0.3, ease: 'expo.out', transformOrigin: to }, i * 0.025); });
       const ss3 = splitH.chars.length * 0.025 + 0.1;
       gsap.set(splitS.chars, { scale: 0, opacity: 0, transformOrigin: to });
-      splitS.chars.forEach((c, i) => { tl.to(c, { scale: 1, opacity: 1, duration: 0.3, ease: 'power2.out', transformOrigin: to }, ss3 + i * 0.025); });
+      splitS.chars.forEach((c, i) => { tl.to(c, { scale: 1, opacity: 1, duration: 0.3, ease: 'expo.out', transformOrigin: to }, ss3 + i * 0.025); });
       const sd3 = ss3 + splitS.chars.length * 0.025 + 0.1;
       gsap.set(splitD.chars, { scale: 0, opacity: 0, transformOrigin: to });
-      splitD.chars.forEach((c, i) => { tl.to(c, { scale: 1, opacity: 1, duration: 0.25, ease: 'power2.out', transformOrigin: to }, sd3 + i * 0.015); });
+      splitD.chars.forEach((c, i) => { tl.to(c, { scale: 1, opacity: 1, duration: 0.25, ease: 'expo.out', transformOrigin: to }, sd3 + i * 0.015); });
       const buttonsGN3 = document.querySelectorAll('.slide-btn');
       gsap.set(buttonsGN3, { scale: 0, opacity: 0, transformOrigin: to });
       const sb3 = sd3 + splitD.chars.length * 0.015 + 0.2;
-      buttonsGN3.forEach((b, i) => { tl.to(b, { scale: 1, opacity: 1, duration: 0.4, ease: 'power2.out', transformOrigin: to }, sb3 + i * 0.12); });
+      buttonsGN3.forEach((b, i) => { tl.to(b, { scale: 1, opacity: 1, duration: 0.4, ease: 'expo.out', transformOrigin: to }, sb3 + i * 0.12); });
     }
 
   } else if (currentIndex < 76) {
