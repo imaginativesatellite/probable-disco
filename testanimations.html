@@ -718,23 +718,24 @@
 
       // ── Sequential two-step dual-motion animations ──
 
-      case 33: // Grow Right, Then Down — scaleX expands first, then scaleY expands
-        gsap.set(wrap, { scaleX: 0, scaleY: 0.04, transformOrigin: 'left top', opacity: 1 });
-        tl.to(wrap, { scaleX: 1, duration: 0.7, ease: 'expo.out' }, 0)
-          .to(wrap, { scaleY: 1, duration: 0.9, ease: 'expo.out' }, '>');
+      case 33: // Grow Right, Then Down — thin strip reveals rightward, then clip opens downward
+        gsap.set(wrap, { clipPath: 'inset(0 100% 95% 0)' });
+        gsap.set(img,  { x: 0, y: 0, scale: 1 });
+        tl.to(wrap, { clipPath: 'inset(0 0% 95% 0)', duration: 0.7, ease: 'expo.out' }, 0)
+          .to(wrap, { clipPath: 'inset(0 0% 0% 0)', duration: 0.9, ease: 'expo.out' }, '>');
         break;
 
       case 34: // Letterbox Open — snaps visible as center band, then expands to full frame
         gsap.set(wrap, { clipPath: 'inset(42% 0 42% 0)', opacity: 0 });
         tl.to(wrap, { opacity: 1, duration: 0.15, ease: 'none' }, 0)
-          .to(wrap, { clipPath: 'inset(0% 0 0% 0)', duration: 1.0, ease: 'expo.out' }, '>');
+          .to(wrap, { clipPath: 'inset(0% 0 0% 0)', duration: 1.6, ease: 'expo.out' }, '>');
         break;
 
-      case 35: // Slide In, Then Expand — compressed sliver enters from left, then opens full width
-        gsap.set(wrap, { scaleX: 0.04, x: '-100%', transformOrigin: 'left center', opacity: 0 });
-        tl.to(wrap, { opacity: 1, duration: 0.1, ease: 'none' }, 0)
-          .to(wrap, { x: 0, duration: 0.7, ease: 'expo.out' }, 0)
-          .to(wrap, { scaleX: 1, duration: 0.8, ease: 'expo.out' }, '>');
+      case 35: // Slide In, Then Expand — sliver enters from left via clip, then opens full width
+        gsap.set(wrap, { x: '-100%', clipPath: 'inset(0 85% 0 0)' });
+        gsap.set(img,  { x: 0, y: 0, scale: 1 });
+        tl.to(wrap, { x: 0, duration: 0.7, ease: 'expo.out' }, 0)
+          .to(wrap, { clipPath: 'inset(0 0% 0 0)', duration: 0.8, ease: 'expo.out' }, '>');
         break;
 
       case 36: // Drop, Then Pivot — drops from above while tilted, then rotates to straight
