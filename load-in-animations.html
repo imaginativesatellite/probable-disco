@@ -472,7 +472,7 @@
 </div>
 
 <span class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">8</span></span>
-<span class="version">v27</span>
+<span class="version">v28</span>
 </div>
 
 <script>
@@ -889,14 +889,14 @@ function animateContent() {
     gsap.set(document.querySelectorAll('.slide-btn'), buttonStart);
 
     // Animate using timeline
-    tl.to(headlineEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0)
-      .to(subheadlineEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0.15)
-      .to(descriptionEl, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0.3);
+    tl.to(headlineEl, { opacity: 1, x: 0, y: 0, duration: 0.65, ease: 'sine.in' }, 0)
+      .to(subheadlineEl, { opacity: 1, x: 0, y: 0, duration: 0.65, ease: 'sine.in' }, 0.15)
+      .to(descriptionEl, { opacity: 1, x: 0, y: 0, duration: 0.65, ease: 'sine.in' }, 0.3);
 
     // Animate each button individually
     const buttons = document.querySelectorAll('.slide-btn');
     buttons.forEach((btn, index) => {
-      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, 0.45 + (index * 0.1));
+      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.65, ease: 'sine.in' }, 0.45 + (index * 0.1));
     });
 
   } else if (currentIndex < 8) {
@@ -930,7 +930,7 @@ function animateContent() {
     // Animate headline line by line
     gsap.set(headlineLines, { opacity: 0, x: xOffset, y: yOffset });
     headlineLines.forEach((line, index) => {
-      tl.to(line, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, index * 0.1);
+      tl.to(line, { opacity: 1, x: 0, y: 0, duration: 0.65, ease: 'sine.in' }, index * 0.1);
     });
 
     // Animate subheadline line by line
@@ -940,14 +940,14 @@ function animateContent() {
     const subStart = headlineLines.length * 0.1 + 0.1;
     gsap.set(subheadlineLines, { opacity: 0, x: xOffset, y: yOffset });
     subheadlineLines.forEach((line, index) => {
-      tl.to(line, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, subStart + index * 0.1);
+      tl.to(line, { opacity: 1, x: 0, y: 0, duration: 0.65, ease: 'sine.in' }, subStart + index * 0.1);
     });
 
     // Animate description line by line
     const descStart = subStart + subheadlineLines.length * 0.1 + 0.1;
     gsap.set(descriptionLines, { opacity: 0, x: xOffset, y: yOffset });
     descriptionLines.forEach((line, index) => {
-      tl.to(line, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, descStart + (index * 0.1));
+      tl.to(line, { opacity: 1, x: 0, y: 0, duration: 0.65, ease: 'sine.in' }, descStart + (index * 0.1));
     });
 
     // Animate buttons
@@ -956,7 +956,7 @@ function animateContent() {
 
     const buttonsStartTime = descStart + (descriptionLines.length * 0.1) + 0.2;
     buttons.forEach((btn, index) => {
-      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, buttonsStartTime + (index * 0.1));
+      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.65, ease: 'sine.in' }, buttonsStartTime + (index * 0.1));
     });
 
   } else if (currentIndex < 12) {
@@ -989,7 +989,7 @@ function animateContent() {
     // Animate headline word by word
     gsap.set(headlineWords, { opacity: 0, x: xOffset, y: yOffset });
     headlineWords.forEach((word, index) => {
-      tl.to(word, { opacity: 1, x: 0, y: 0, duration: 0.3, ease: 'sine.in' }, index * 0.05);
+      tl.to(word, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'sine.in' }, index * 0.05);
     });
 
     // Animate subheadline word by word
@@ -1000,14 +1000,14 @@ function animateContent() {
     const subStart = headlineDone + 0.1;
     gsap.set(subheadlineWords, { opacity: 0, x: xOffset, y: yOffset });
     subheadlineWords.forEach((word, index) => {
-      tl.to(word, { opacity: 1, x: 0, y: 0, duration: 0.3, ease: 'sine.in' }, subStart + index * 0.05);
+      tl.to(word, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'sine.in' }, subStart + index * 0.05);
     });
 
     // Animate description word by word
     const descStart = subStart + subheadlineWords.length * 0.05 + 0.1;
     gsap.set(descriptionWords, { opacity: 0, x: xOffset, y: yOffset });
     descriptionWords.forEach((word, index) => {
-      tl.to(word, { opacity: 1, x: 0, y: 0, duration: 0.25, ease: 'sine.in' }, descStart + (index * 0.03));
+      tl.to(word, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'sine.in' }, descStart + (index * 0.03));
     });
 
     // Animate buttons
@@ -1016,7 +1016,7 @@ function animateContent() {
 
     const buttonsStartTime = descStart + (descriptionWords.length * 0.03) + 0.2;
     buttons.forEach((btn, index) => {
-      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.3, ease: 'sine.in' }, buttonsStartTime + (index * 0.1));
+      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'sine.in' }, buttonsStartTime + (index * 0.1));
     });
 
   } else if (currentIndex < 16) {
@@ -1051,7 +1051,7 @@ function animateContent() {
     // Animate headline char by char
     gsap.set(headlineChars, { opacity: 0, x: xOffset, y: yOffset });
     headlineChars.forEach((char, index) => {
-      tl.to(char, { opacity: 1, x: 0, y: 0, duration: 0.2, ease: 'sine.in' }, index * 0.02);
+      tl.to(char, { opacity: 1, x: 0, y: 0, duration: 0.35, ease: 'sine.in' }, index * 0.02);
     });
 
     // Animate subheadline char by char
@@ -1062,14 +1062,14 @@ function animateContent() {
     const subStart = headlineDone + 0.1;
     gsap.set(subheadlineChars, { opacity: 0, x: xOffset, y: yOffset });
     subheadlineChars.forEach((char, index) => {
-      tl.to(char, { opacity: 1, x: 0, y: 0, duration: 0.2, ease: 'sine.in' }, subStart + index * 0.02);
+      tl.to(char, { opacity: 1, x: 0, y: 0, duration: 0.35, ease: 'sine.in' }, subStart + index * 0.02);
     });
 
     // Animate description char by char
     const descStart = subStart + subheadlineChars.length * 0.02 + 0.1;
     gsap.set(descriptionChars, { opacity: 0, x: xOffset, y: yOffset });
     descriptionChars.forEach((char, index) => {
-      tl.to(char, { opacity: 1, x: 0, y: 0, duration: 0.15, ease: 'sine.in' }, descStart + (index * 0.01));
+      tl.to(char, { opacity: 1, x: 0, y: 0, duration: 0.25, ease: 'sine.in' }, descStart + (index * 0.01));
     });
 
     // Animate buttons
@@ -1078,7 +1078,7 @@ function animateContent() {
 
     const buttonsStartTime = descStart + (descriptionChars.length * 0.01) + 0.2;
     buttons.forEach((btn, index) => {
-      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.3, ease: 'sine.in' }, buttonsStartTime + (index * 0.1));
+      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'sine.in' }, buttonsStartTime + (index * 0.1));
     });
 
   } else if (currentIndex < 20) {
@@ -1745,14 +1745,14 @@ function animateContent() {
     }
 
     gsap.set([headlineEl, subheadlineEl, descriptionEl], { opacity: 0, x: xOffset, y: yOffset });
-    tl.to(headlineEl,    { opacity: 1, x: 0, y: 0, duration: 0.6, ease: 'elastic.out(0.8, 0.3)' }, 0)
-      .to(subheadlineEl, { opacity: 1, x: 0, y: 0, duration: 0.6, ease: 'elastic.out(0.8, 0.3)' }, 0.25)
-      .to(descriptionEl, { opacity: 1, x: 0, y: 0, duration: 0.6, ease: 'elastic.out(0.8, 0.3)' }, 0.5);
+    tl.to(headlineEl,    { opacity: 1, x: 0, y: 0, duration: 1.1, ease: 'elastic.out(0.8, 0.3)' }, 0)
+      .to(subheadlineEl, { opacity: 1, x: 0, y: 0, duration: 1.1, ease: 'elastic.out(0.8, 0.3)' }, 0.25)
+      .to(descriptionEl, { opacity: 1, x: 0, y: 0, duration: 1.1, ease: 'elastic.out(0.8, 0.3)' }, 0.5);
 
     const buttons = document.querySelectorAll('.slide-btn');
     gsap.set(buttons, { opacity: 0, x: xOffset, y: yOffset });
     buttons.forEach((btn, index) => {
-      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'elastic.out(0.8, 0.3)' }, 0.75 + index * 0.12);
+      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.9, ease: 'elastic.out(0.8, 0.3)' }, 0.75 + index * 0.12);
     });
 
   } else if (currentIndex < 80) {
@@ -1775,7 +1775,7 @@ function animateContent() {
 
     gsap.set(headlineLines, { opacity: 0, x: xOffset, y: yOffset });
     headlineLines.forEach((line, index) => {
-      tl.to(line, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'elastic.out(0.8, 0.3)' }, index * 0.1);
+      tl.to(line, { opacity: 1, x: 0, y: 0, duration: 0.9, ease: 'elastic.out(0.8, 0.3)' }, index * 0.1);
     });
 
     const splitSubheadline = new SplitText(subheadlineEl, { type: 'lines' });
@@ -1784,20 +1784,20 @@ function animateContent() {
     const subStart = headlineLines.length * 0.1 + 0.15;
     gsap.set(subheadlineLines, { opacity: 0, x: xOffset, y: yOffset });
     subheadlineLines.forEach((line, index) => {
-      tl.to(line, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'elastic.out(0.8, 0.3)' }, subStart + index * 0.1);
+      tl.to(line, { opacity: 1, x: 0, y: 0, duration: 0.9, ease: 'elastic.out(0.8, 0.3)' }, subStart + index * 0.1);
     });
 
     const descStart = subStart + subheadlineLines.length * 0.1 + 0.1;
     gsap.set(descriptionLines, { opacity: 0, x: xOffset, y: yOffset });
     descriptionLines.forEach((line, index) => {
-      tl.to(line, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'elastic.out(0.8, 0.3)' }, descStart + index * 0.1);
+      tl.to(line, { opacity: 1, x: 0, y: 0, duration: 0.9, ease: 'elastic.out(0.8, 0.3)' }, descStart + index * 0.1);
     });
 
     const buttons = document.querySelectorAll('.slide-btn');
     gsap.set(buttons, { opacity: 0, x: xOffset, y: yOffset });
     const buttonsStartTime = descStart + descriptionLines.length * 0.1 + 0.2;
     buttons.forEach((btn, index) => {
-      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'elastic.out(0.8, 0.3)' }, buttonsStartTime + index * 0.12);
+      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.9, ease: 'elastic.out(0.8, 0.3)' }, buttonsStartTime + index * 0.12);
     });
 
   } else if (currentIndex < 84) {
@@ -1820,7 +1820,7 @@ function animateContent() {
 
     gsap.set(headlineWords, { opacity: 0, x: xOffset, y: yOffset });
     headlineWords.forEach((word, index) => {
-      tl.to(word, { opacity: 1, x: 0, y: 0, duration: 0.45, ease: 'elastic.out(0.8, 0.3)' }, index * 0.06);
+      tl.to(word, { opacity: 1, x: 0, y: 0, duration: 0.8, ease: 'elastic.out(0.8, 0.3)' }, index * 0.06);
     });
 
     const splitSubheadline = new SplitText(subheadlineEl, { type: 'words' });
@@ -1829,20 +1829,20 @@ function animateContent() {
     const subStart = headlineWords.length * 0.06 + 0.1;
     gsap.set(subheadlineWords, { opacity: 0, x: xOffset, y: yOffset });
     subheadlineWords.forEach((word, index) => {
-      tl.to(word, { opacity: 1, x: 0, y: 0, duration: 0.45, ease: 'elastic.out(0.8, 0.3)' }, subStart + index * 0.06);
+      tl.to(word, { opacity: 1, x: 0, y: 0, duration: 0.8, ease: 'elastic.out(0.8, 0.3)' }, subStart + index * 0.06);
     });
 
     const descStart = subStart + subheadlineWords.length * 0.06 + 0.1;
     gsap.set(descriptionWords, { opacity: 0, x: xOffset, y: yOffset });
     descriptionWords.forEach((word, index) => {
-      tl.to(word, { opacity: 1, x: 0, y: 0, duration: 0.35, ease: 'elastic.out(0.8, 0.3)' }, descStart + index * 0.04);
+      tl.to(word, { opacity: 1, x: 0, y: 0, duration: 0.6, ease: 'elastic.out(0.8, 0.3)' }, descStart + index * 0.04);
     });
 
     const buttons = document.querySelectorAll('.slide-btn');
     gsap.set(buttons, { opacity: 0, x: xOffset, y: yOffset });
     const buttonsStartTime = descStart + descriptionWords.length * 0.04 + 0.2;
     buttons.forEach((btn, index) => {
-      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.45, ease: 'elastic.out(0.8, 0.3)' }, buttonsStartTime + index * 0.12);
+      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.8, ease: 'elastic.out(0.8, 0.3)' }, buttonsStartTime + index * 0.12);
     });
 
   } else if (currentIndex < 88) {
@@ -1865,7 +1865,7 @@ function animateContent() {
 
     gsap.set(headlineChars, { opacity: 0, x: xOffset, y: yOffset });
     headlineChars.forEach((char, index) => {
-      tl.to(char, { opacity: 1, x: 0, y: 0, duration: 0.35, ease: 'elastic.out(0.8, 0.3)' }, index * 0.025);
+      tl.to(char, { opacity: 1, x: 0, y: 0, duration: 0.6, ease: 'elastic.out(0.8, 0.3)' }, index * 0.025);
     });
 
     const splitSubheadline = new SplitText(subheadlineEl, { type: 'words,chars' });
@@ -1874,20 +1874,20 @@ function animateContent() {
     const subStart = headlineChars.length * 0.025 + 0.1;
     gsap.set(subheadlineChars, { opacity: 0, x: xOffset, y: yOffset });
     subheadlineChars.forEach((char, index) => {
-      tl.to(char, { opacity: 1, x: 0, y: 0, duration: 0.35, ease: 'elastic.out(0.8, 0.3)' }, subStart + index * 0.025);
+      tl.to(char, { opacity: 1, x: 0, y: 0, duration: 0.6, ease: 'elastic.out(0.8, 0.3)' }, subStart + index * 0.025);
     });
 
     const descStart = subStart + subheadlineChars.length * 0.025 + 0.1;
     gsap.set(descriptionChars, { opacity: 0, x: xOffset, y: yOffset });
     descriptionChars.forEach((char, index) => {
-      tl.to(char, { opacity: 1, x: 0, y: 0, duration: 0.25, ease: 'elastic.out(0.8, 0.3)' }, descStart + index * 0.015);
+      tl.to(char, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'elastic.out(0.8, 0.3)' }, descStart + index * 0.015);
     });
 
     const buttons = document.querySelectorAll('.slide-btn');
     gsap.set(buttons, { opacity: 0, x: xOffset, y: yOffset });
     const buttonsStartTime = descStart + descriptionChars.length * 0.015 + 0.2;
     buttons.forEach((btn, index) => {
-      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'elastic.out(0.8, 0.3)' }, buttonsStartTime + index * 0.12);
+      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.7, ease: 'elastic.out(0.8, 0.3)' }, buttonsStartTime + index * 0.12);
     });
 
   } else if (currentIndex < 92) {
