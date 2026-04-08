@@ -421,6 +421,7 @@
         <button class="filter-tag" data-category="style" data-value="Spring">Spring</button>
         <button class="filter-tag" data-category="style" data-value="Bounce">Bounce</button>
         <button class="filter-tag" data-category="style" data-value="Blur">Blur</button>
+        <button class="filter-tag" data-category="style" data-value="Slide">Slide</button>
       </div>
     </div>
     <div class="filter-divider"></div>
@@ -635,67 +636,67 @@ const animations = [
     description: 'Characters drop into view from above individually. Maximally precise — every single letter gets its own moment to shine.'
   },
   {
-    name: 'Mask Slide From Left',
+    name: 'Emerge From Left',
     description: 'Elements slide in from the left into a fixed clip window. Text appears to emerge from behind a hidden edge — crisp, theatrical, and immediate.'
   },
   {
-    name: 'Mask Slide Up',
+    name: 'Emerge Up',
     description: 'Content rises into its fixed clip position from below. A refined upward entrance where the mask stays still and the text does the work.'
   },
   {
-    name: 'Mask Slide From Right',
+    name: 'Emerge From Right',
     description: 'Elements enter from the right into a fixed clip window. Directional energy that pulls the eye across the layout with precision.'
   },
   {
-    name: 'Mask Slide Down',
+    name: 'Emerge Down',
     description: 'Text descends into its visible clip area from above. A gravity-driven entrance with a composed, deliberate quality.'
   },
   {
-    name: 'Line Mask From Left',
+    name: 'Emerge Lines From Left',
     description: 'Each line slides in from the left through its own clip window. Sequential line-by-line entrance with sharp mechanical precision.'
   },
   {
-    name: 'Line Mask Up',
+    name: 'Emerge Lines Up',
     description: 'Lines rise into their masked positions one by one. The upward stagger builds momentum with each line that appears.'
   },
   {
-    name: 'Line Mask From Right',
+    name: 'Emerge Lines From Right',
     description: 'Lines enter from the right through individual clip windows. Counter-directional flow that creates a compelling visual rhythm.'
   },
   {
-    name: 'Line Mask Down',
+    name: 'Emerge Lines Down',
     description: 'Each line drops into its visible area in sequence. A descending stagger that feels authoritative and controlled.'
   },
   {
-    name: 'Word Mask From Left',
+    name: 'Emerge Words From Left',
     description: 'Words slide in from the left through individual clip windows. Rapid, dense left-to-right reveal that rewards close attention.'
   },
   {
-    name: 'Word Mask Up',
+    name: 'Emerge Words Up',
     description: 'Each word rises up into its clip window in quick succession. Fast vertical stagger that pulses with kinetic energy.'
   },
   {
-    name: 'Word Mask From Right',
+    name: 'Emerge Words From Right',
     description: 'Words enter from the right through their own clip windows. Unexpected directionality that makes every word feel like an arrival.'
   },
   {
-    name: 'Word Mask Down',
+    name: 'Emerge Words Down',
     description: 'Words descend into position word by word. Deliberate downward cascade that commands the reader\'s attention throughout.'
   },
   {
-    name: 'Char Mask From Left',
+    name: 'Emerge Chars From Left',
     description: 'Every character slides in from the left through its own clip window. Maximum granularity — the most precise entrance in the entire set.'
   },
   {
-    name: 'Char Mask Up',
+    name: 'Emerge Chars Up',
     description: 'Characters rise into their clip windows in tight succession. Ultra-dense upward cascade that transforms text into kinetic sculpture.'
   },
   {
-    name: 'Char Mask From Right',
+    name: 'Emerge Chars From Right',
     description: 'Each character enters from the right through an individual clip. Intricate reverse sweep with a mechanical, watch-movement quality.'
   },
   {
-    name: 'Char Mask Down',
+    name: 'Emerge Chars Down',
     description: 'Characters descend into their visible areas one by one. Maximally detailed downward reveal — every letterform makes its own entrance.'
   },
   // Type None — instant pop, no directional movement (49-52)
@@ -797,7 +798,27 @@ const animations = [
   { name: 'Bounce Chars From Left',  description: 'Characters spring from the left one at a time, each with a double overshoot. Maximum granularity — every letterform gets two beats of elastic energy before settling.' },
   { name: 'Bounce Chars Up',         description: 'Each character launches upward and bounces twice individually. Ultra-dense double-bounce cascade that transforms the headline into pure kinetic spectacle.' },
   { name: 'Bounce Chars From Right', description: 'Characters enter from the right one by one, each oscillating twice before landing. Intricate reverse double-bounce with hypnotic, mechanical precision.' },
-  { name: 'Bounce Chars Down',       description: 'Characters descend from above in tight sequence, each with a primary drop and a softer rebound. Maximally detailed — every single letter earns its double entrance.' }
+  { name: 'Bounce Chars Down',       description: 'Characters descend from above in tight sequence, each with a primary drop and a softer rebound. Maximally detailed — every single letter earns its double entrance.' },
+  // Slide — Whole (129-132)
+  { name: 'Slide From Left',  description: 'The element snaps into view instantly and glides from the left to its final position. Opacity resolves in a flash — what you see is pure movement.' },
+  { name: 'Slide Up',         description: 'Content appears immediately and slides upward into place. The fade is almost imperceptible, leaving a clean, confident upward motion as the dominant impression.' },
+  { name: 'Slide From Right', description: 'The element flashes in and sweeps from the right with expo deceleration. Fast and decisive — a slide that means business.' },
+  { name: 'Slide Down',       description: 'Content materialises at once and descends into position. The motion is the message — gravity-driven and immediate.' },
+  // Slide — Lines (133-136)
+  { name: 'Slide Lines From Left',  description: 'Each line snaps into existence and glides in from the left in sequence. The staggered slide reads like a rapid-fire presentation.' },
+  { name: 'Slide Lines Up',         description: 'Lines pop in one by one and drift upward to rest. Minimal fade, maximum motion — a line-by-line slide that feels purposeful and sharp.' },
+  { name: 'Slide Lines From Right', description: 'Lines appear and sweep in from the right sequentially. Counter-directional momentum that builds with each line.' },
+  { name: 'Slide Lines Down',       description: 'Each line materialises and drops into place. The downward stagger is quick and composed, with movement doing all the work.' },
+  // Slide — Words (137-140)
+  { name: 'Slide Words From Left',  description: 'Words snap in and slide from the left word by word. The rapid-fire stagger turns the headline into a kinetic stream of arriving text.' },
+  { name: 'Slide Words Up',         description: 'Each word appears and glides upward into position. Dense, fast, and motion-forward — the fade is barely a blink.' },
+  { name: 'Slide Words From Right', description: 'Words flash in and sweep from the right in quick succession. Unexpected directionality with a snappy, rhythmic arrival.' },
+  { name: 'Slide Words Down',       description: 'Words materialise and descend into place one by one. A word-level downward slide that is deliberate and punchy.' },
+  // Slide — Chars (141-144)
+  { name: 'Slide Chars From Left',  description: 'Every character snaps in and slides from the left in tight succession. Maximum granularity — a char-level slide that rewards close attention.' },
+  { name: 'Slide Chars Up',         description: 'Characters appear and glide upward individually. Ultra-dense upward slide where every letterform gets its own moment of motion.' },
+  { name: 'Slide Chars From Right', description: 'Each character flashes in and sweeps from the right. Intricate reverse slide with a mechanical, watch-movement quality.' },
+  { name: 'Slide Chars Down',       description: 'Characters materialise and drop into position one by one. Maximally detailed — every letterform descends with swift precision.' }
 ];
 
 let currentIndex = 0;
@@ -2267,7 +2288,7 @@ function animateContent() {
     const sbB2W = sdB2W + splitD.words.length * 0.04 + 0.2;
     buttonsB2Wrd.forEach((b, i) => { tl.to(b, { opacity: 1, x: 0, y: 0, duration: 0.7, ease: 'bounce.out' }, sbB2W + i * 0.12); });
 
-  } else {
+  } else if (currentIndex < 128) {
     // Slides 125-128: Bounce 2 Chars — characters double-bounce in
     const slideIndex = currentIndex - 124;
     let xOffset = 0, yOffset = 0;
@@ -2294,6 +2315,152 @@ function animateContent() {
     gsap.set(buttonsB2C, { opacity: 0, x: xOffset, y: yOffset });
     const sbB2C = sdB2C + splitD.chars.length * 0.015 + 0.2;
     buttonsB2C.forEach((b, i) => { tl.to(b, { opacity: 1, x: 0, y: 0, duration: 0.6, ease: 'bounce.out' }, sbB2C + i * 0.12); });
+
+  } else if (currentIndex < 132) {
+    // Slides 129-132: Slide Whole — opacity snaps in fast, position slides with expo.out
+    const slideIndex = currentIndex - 128;
+    let xOffset = 0, yOffset = 0;
+    switch(slideIndex) {
+      case 0: xOffset = -30; break;
+      case 1: yOffset =  30; break;
+      case 2: xOffset =  30; break;
+      case 3: yOffset = -30; break;
+    }
+    gsap.set([headlineEl, subheadlineEl, descriptionEl], { opacity: 0, x: xOffset, y: yOffset });
+    gsap.set(document.querySelectorAll('.slide-btn'), { opacity: 0, x: xOffset, y: yOffset });
+
+    tl.to(headlineEl,    { opacity: 1, duration: 0.15, ease: 'power2.out' }, 0)
+      .to(headlineEl,    { x: 0, y: 0, duration: 0.75, ease: 'expo.out' }, 0)
+      .to(subheadlineEl, { opacity: 1, duration: 0.15, ease: 'power2.out' }, 0.15)
+      .to(subheadlineEl, { x: 0, y: 0, duration: 0.75, ease: 'expo.out' }, 0.15)
+      .to(descriptionEl, { opacity: 1, duration: 0.15, ease: 'power2.out' }, 0.3)
+      .to(descriptionEl, { x: 0, y: 0, duration: 0.75, ease: 'expo.out' }, 0.3);
+
+    const buttonsSW = document.querySelectorAll('.slide-btn');
+    buttonsSW.forEach((btn, i) => {
+      tl.to(btn, { opacity: 1, duration: 0.15, ease: 'power2.out' }, 0.45 + i * 0.1)
+        .to(btn, { x: 0, y: 0, duration: 0.75, ease: 'expo.out' }, 0.45 + i * 0.1);
+    });
+
+  } else if (currentIndex < 136) {
+    // Slides 133-136: Slide Lines — line-by-line snap + slide
+    const slideIndex = currentIndex - 132;
+    let xOffset = 0, yOffset = 0;
+    switch(slideIndex) {
+      case 0: xOffset = -25; break;
+      case 1: yOffset =  25; break;
+      case 2: xOffset =  25; break;
+      case 3: yOffset = -25; break;
+    }
+    const splitHSL = new SplitText(headlineEl,    { type: 'lines' });
+    const splitDSL = new SplitText(descriptionEl, { type: 'lines' });
+    activeSplits.push(splitHSL, splitDSL);
+    gsap.set(splitHSL.lines, { opacity: 0, x: xOffset, y: yOffset });
+    splitHSL.lines.forEach((l, i) => {
+      tl.to(l, { opacity: 1, duration: 0.15, ease: 'power2.out' }, i * 0.1)
+        .to(l, { x: 0, y: 0, duration: 0.65, ease: 'expo.out' }, i * 0.1);
+    });
+    const splitSSL = new SplitText(subheadlineEl, { type: 'lines' });
+    activeSplits.push(splitSSL);
+    const ssSlL = splitHSL.lines.length * 0.1 + 0.1;
+    gsap.set(splitSSL.lines, { opacity: 0, x: xOffset, y: yOffset });
+    splitSSL.lines.forEach((l, i) => {
+      tl.to(l, { opacity: 1, duration: 0.15, ease: 'power2.out' }, ssSlL + i * 0.1)
+        .to(l, { x: 0, y: 0, duration: 0.65, ease: 'expo.out' }, ssSlL + i * 0.1);
+    });
+    const sdSlL = ssSlL + splitSSL.lines.length * 0.1 + 0.1;
+    gsap.set(splitDSL.lines, { opacity: 0, x: xOffset, y: yOffset });
+    splitDSL.lines.forEach((l, i) => {
+      tl.to(l, { opacity: 1, duration: 0.15, ease: 'power2.out' }, sdSlL + i * 0.1)
+        .to(l, { x: 0, y: 0, duration: 0.65, ease: 'expo.out' }, sdSlL + i * 0.1);
+    });
+    const sbSlL = sdSlL + splitDSL.lines.length * 0.1 + 0.2;
+    const buttonsSL = document.querySelectorAll('.slide-btn');
+    gsap.set(buttonsSL, { opacity: 0, x: xOffset, y: yOffset });
+    buttonsSL.forEach((btn, i) => {
+      tl.to(btn, { opacity: 1, duration: 0.15, ease: 'power2.out' }, sbSlL + i * 0.1)
+        .to(btn, { x: 0, y: 0, duration: 0.65, ease: 'expo.out' }, sbSlL + i * 0.1);
+    });
+
+  } else if (currentIndex < 140) {
+    // Slides 137-140: Slide Words — word-by-word snap + slide
+    const slideIndex = currentIndex - 136;
+    let xOffset = 0, yOffset = 0;
+    switch(slideIndex) {
+      case 0: xOffset = -20; break;
+      case 1: yOffset =  20; break;
+      case 2: xOffset =  20; break;
+      case 3: yOffset = -20; break;
+    }
+    const splitHSW = new SplitText(headlineEl,    { type: 'words' });
+    const splitDSW = new SplitText(descriptionEl, { type: 'words' });
+    activeSplits.push(splitHSW, splitDSW);
+    gsap.set(splitHSW.words, { opacity: 0, x: xOffset, y: yOffset });
+    splitHSW.words.forEach((w, i) => {
+      tl.to(w, { opacity: 1, duration: 0.12, ease: 'power2.out' }, i * 0.07)
+        .to(w, { x: 0, y: 0, duration: 0.55, ease: 'expo.out' }, i * 0.07);
+    });
+    const splitSSW = new SplitText(subheadlineEl, { type: 'words' });
+    activeSplits.push(splitSSW);
+    const ssSlW = splitHSW.words.length * 0.07 + 0.1;
+    gsap.set(splitSSW.words, { opacity: 0, x: xOffset, y: yOffset });
+    splitSSW.words.forEach((w, i) => {
+      tl.to(w, { opacity: 1, duration: 0.12, ease: 'power2.out' }, ssSlW + i * 0.07)
+        .to(w, { x: 0, y: 0, duration: 0.55, ease: 'expo.out' }, ssSlW + i * 0.07);
+    });
+    const sdSlW = ssSlW + splitSSW.words.length * 0.07 + 0.1;
+    gsap.set(splitDSW.words, { opacity: 0, x: xOffset, y: yOffset });
+    splitDSW.words.forEach((w, i) => {
+      tl.to(w, { opacity: 1, duration: 0.1, ease: 'power2.out' }, sdSlW + i * 0.05)
+        .to(w, { x: 0, y: 0, duration: 0.45, ease: 'expo.out' }, sdSlW + i * 0.05);
+    });
+    const sbSlW = sdSlW + splitDSW.words.length * 0.05 + 0.2;
+    const buttonsSLW = document.querySelectorAll('.slide-btn');
+    gsap.set(buttonsSLW, { opacity: 0, x: xOffset, y: yOffset });
+    buttonsSLW.forEach((btn, i) => {
+      tl.to(btn, { opacity: 1, duration: 0.12, ease: 'power2.out' }, sbSlW + i * 0.1)
+        .to(btn, { x: 0, y: 0, duration: 0.55, ease: 'expo.out' }, sbSlW + i * 0.1);
+    });
+
+  } else {
+    // Slides 141-144: Slide Chars — char-by-char snap + slide
+    const slideIndex = currentIndex - 140;
+    let xOffset = 0, yOffset = 0;
+    switch(slideIndex) {
+      case 0: xOffset = -15; break;
+      case 1: yOffset =  15; break;
+      case 2: xOffset =  15; break;
+      case 3: yOffset = -15; break;
+    }
+    const splitHSC = new SplitText(headlineEl,    { type: 'words,chars' });
+    const splitDSC = new SplitText(descriptionEl, { type: 'words,chars' });
+    activeSplits.push(splitHSC, splitDSC);
+    gsap.set(splitHSC.chars, { opacity: 0, x: xOffset, y: yOffset });
+    splitHSC.chars.forEach((c, i) => {
+      tl.to(c, { opacity: 1, duration: 0.1, ease: 'power2.out' }, i * 0.03)
+        .to(c, { x: 0, y: 0, duration: 0.4, ease: 'expo.out' }, i * 0.03);
+    });
+    const splitSSC = new SplitText(subheadlineEl, { type: 'words,chars' });
+    activeSplits.push(splitSSC);
+    const ssSlC = splitHSC.chars.length * 0.03 + 0.1;
+    gsap.set(splitSSC.chars, { opacity: 0, x: xOffset, y: yOffset });
+    splitSSC.chars.forEach((c, i) => {
+      tl.to(c, { opacity: 1, duration: 0.1, ease: 'power2.out' }, ssSlC + i * 0.03)
+        .to(c, { x: 0, y: 0, duration: 0.4, ease: 'expo.out' }, ssSlC + i * 0.03);
+    });
+    const sdSlC = ssSlC + splitSSC.chars.length * 0.03 + 0.1;
+    gsap.set(splitDSC.chars, { opacity: 0, x: xOffset, y: yOffset });
+    splitDSC.chars.forEach((c, i) => {
+      tl.to(c, { opacity: 1, duration: 0.08, ease: 'power2.out' }, sdSlC + i * 0.018)
+        .to(c, { x: 0, y: 0, duration: 0.3, ease: 'expo.out' }, sdSlC + i * 0.018);
+    });
+    const sbSlC = sdSlC + splitDSC.chars.length * 0.018 + 0.2;
+    const buttonsSLC = document.querySelectorAll('.slide-btn');
+    gsap.set(buttonsSLC, { opacity: 0, x: xOffset, y: yOffset });
+    buttonsSLC.forEach((btn, i) => {
+      tl.to(btn, { opacity: 1, duration: 0.1, ease: 'power2.out' }, sbSlC + i * 0.1)
+        .to(btn, { x: 0, y: 0, duration: 0.4, ease: 'expo.out' }, sbSlC + i * 0.1);
+    });
   }
 }
 
@@ -2483,6 +2650,26 @@ const slideTags = [
   { style:'Bounce', split:'Chars', direction:'Up' },
   { style:'Bounce', split:'Chars', direction:'From Right' },
   { style:'Bounce', split:'Chars', direction:'Down' },
+  // Slides 129-132: Slide / Whole
+  { style:'Slide', split:'Whole', direction:'From Left' },
+  { style:'Slide', split:'Whole', direction:'Up' },
+  { style:'Slide', split:'Whole', direction:'From Right' },
+  { style:'Slide', split:'Whole', direction:'Down' },
+  // Slides 133-136: Slide / Lines
+  { style:'Slide', split:'Lines', direction:'From Left' },
+  { style:'Slide', split:'Lines', direction:'Up' },
+  { style:'Slide', split:'Lines', direction:'From Right' },
+  { style:'Slide', split:'Lines', direction:'Down' },
+  // Slides 137-140: Slide / Words
+  { style:'Slide', split:'Words', direction:'From Left' },
+  { style:'Slide', split:'Words', direction:'Up' },
+  { style:'Slide', split:'Words', direction:'From Right' },
+  { style:'Slide', split:'Words', direction:'Down' },
+  // Slides 141-144: Slide / Chars
+  { style:'Slide', split:'Chars', direction:'From Left' },
+  { style:'Slide', split:'Chars', direction:'Up' },
+  { style:'Slide', split:'Chars', direction:'From Right' },
+  { style:'Slide', split:'Chars', direction:'Down' },
 ];
 
 const activeFilters = { style: new Set(), split: new Set(), direction: new Set() };
