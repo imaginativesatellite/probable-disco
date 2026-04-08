@@ -339,7 +339,7 @@
   <div class="card" id="d21">
     <div class="card-label">Parallax Reveal From Left</div>
     <div class="media-wrap"><div class="media-box">
-      <img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+      <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
     </div></div>
     <button class="replay-btn" onclick="play(21)">Replay</button>
   </div>
@@ -347,7 +347,7 @@
   <div class="card" id="d22">
     <div class="card-label">Parallax Reveal From Right</div>
     <div class="media-wrap"><div class="media-box">
-      <img src="https://images.unsplash.com/photo-1426122402196-9e6d9b73d342?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+      <img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
     </div></div>
     <button class="replay-btn" onclick="play(22)">Replay</button>
   </div>
@@ -371,7 +371,7 @@
   <div class="card" id="d25">
     <div class="card-label">Swing In</div>
     <div class="media-wrap"><div class="media-box">
-      <img src="https://images.unsplash.com/photo-1499602906572-e08bb09bc7e4?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+      <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
     </div></div>
     <button class="replay-btn" onclick="play(25)">Replay</button>
   </div>
@@ -387,7 +387,7 @@
   <div class="card" id="d27">
     <div class="card-label">Compress Slide</div>
     <div class="media-wrap"><div class="media-box">
-      <img src="https://images.unsplash.com/photo-1489824904134-6b07d01e6b78?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+      <img src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
     </div></div>
     <button class="replay-btn" onclick="play(27)">Replay</button>
   </div>
@@ -398,6 +398,38 @@
       <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
     </div></div>
     <button class="replay-btn" onclick="play(28)">Replay</button>
+  </div>
+
+  <div class="card" id="d29">
+    <div class="card-label">Parallax Flow From Left</div>
+    <div class="media-wrap"><div class="media-box">
+      <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+    </div></div>
+    <button class="replay-btn" onclick="play(29)">Replay</button>
+  </div>
+
+  <div class="card" id="d30">
+    <div class="card-label">Parallax Flow From Right</div>
+    <div class="media-wrap"><div class="media-box">
+      <img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+    </div></div>
+    <button class="replay-btn" onclick="play(30)">Replay</button>
+  </div>
+
+  <div class="card" id="d31">
+    <div class="card-label">Parallax Flow From Bottom</div>
+    <div class="media-wrap"><div class="media-box">
+      <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+    </div></div>
+    <button class="replay-btn" onclick="play(31)">Replay</button>
+  </div>
+
+  <div class="card" id="d32">
+    <div class="card-label">Parallax Flow From Top</div>
+    <div class="media-wrap"><div class="media-box">
+      <img src="https://images.unsplash.com/photo-1472214103451-9374f2d10a58?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+    </div></div>
+    <button class="replay-btn" onclick="play(32)">Replay</button>
   </div>
 
 </div>
@@ -621,12 +653,42 @@
         gsap.set(wrap, { opacity: 0, y: -80, rotation: 6, transformOrigin: 'center top' });
         tl.to(wrap, { opacity: 1, y: 0, rotation: 0, duration: 1.3, ease: 'expo.out', transformOrigin: 'center top' }, 0);
         break;
+
+      // ── Parallax flow reveals (clip at full speed, img drifts in SAME direction) ──
+
+      case 29: // Parallax Flow From Left — img drifts rightward (same as reveal sweep)
+        gsap.set(wrap, { clipPath: 'inset(0 100% 0 0)' });
+        gsap.set(img,  { x: -30 });
+        tl.to(wrap, { clipPath: 'inset(0 0% 0 0)', duration: 1.4, ease: 'expo.out' }, 0)
+          .to(img,  { x: 0, duration: 2.0, ease: 'power2.out' }, 0);
+        break;
+
+      case 30: // Parallax Flow From Right — img drifts leftward (same as reveal sweep)
+        gsap.set(wrap, { clipPath: 'inset(0 0 0 100%)' });
+        gsap.set(img,  { x: 30 });
+        tl.to(wrap, { clipPath: 'inset(0 0 0 0%)', duration: 1.4, ease: 'expo.out' }, 0)
+          .to(img,  { x: 0, duration: 2.0, ease: 'power2.out' }, 0);
+        break;
+
+      case 31: // Parallax Flow From Bottom — img drifts upward (same as reveal sweep)
+        gsap.set(wrap, { clipPath: 'inset(100% 0 0 0)' });
+        gsap.set(img,  { y: 30 });
+        tl.to(wrap, { clipPath: 'inset(0% 0 0 0)', duration: 1.4, ease: 'expo.out' }, 0)
+          .to(img,  { y: 0, duration: 2.0, ease: 'power2.out' }, 0);
+        break;
+
+      case 32: // Parallax Flow From Top — img drifts downward (same as reveal sweep)
+        gsap.set(wrap, { clipPath: 'inset(0 0 100% 0)' });
+        gsap.set(img,  { y: -30 });
+        tl.to(wrap, { clipPath: 'inset(0 0 0% 0)', duration: 1.4, ease: 'expo.out' }, 0)
+          .to(img,  { y: 0, duration: 2.0, ease: 'power2.out' }, 0);
+        break;
     }
   }
 
   // Auto-play on load, staggered
   window.onload = () => {
-    for (let i = 1; i <= 28; i++) {
+    for (let i = 1; i <= 32; i++) {
       setTimeout(() => play(i), i * 80);
     }
   };
