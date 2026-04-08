@@ -418,8 +418,8 @@
         <button class="filter-tag" data-category="style" data-value="Emerge">Emerge</button>
         <button class="filter-tag" data-category="style" data-value="Type">Type</button>
         <button class="filter-tag" data-category="style" data-value="Grow">Grow</button>
+        <button class="filter-tag" data-category="style" data-value="Spring">Spring</button>
         <button class="filter-tag" data-category="style" data-value="Bounce">Bounce</button>
-        <button class="filter-tag" data-category="style" data-value="Bounce 2">Bounce 2</button>
         <button class="filter-tag" data-category="style" data-value="Blur">Blur</button>
       </div>
     </div>
@@ -472,7 +472,7 @@
 </div>
 
 <span class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">8</span></span>
-<span class="version">v25</span>
+<span class="version">v26</span>
 </div>
 
 <script>
@@ -729,25 +729,25 @@ const animations = [
   { name: 'Grow Words None',  description: 'Words scale from their center to full size one after another. Clean, symmetrical growth that keeps the focus on the content rather than the direction.' },
   { name: 'Grow Chars None',  description: 'Each character expands from its center point individually. Maximally granular symmetrical growth — every letterform gets its own moment to bloom.' },
   // Bounce — Whole (73-76)
-  { name: 'Bounce From Left',   description: 'The whole element springs in from the left and overshoots slightly before settling. Energetic and physical — like content snapping into a magnetic grid.' },
-  { name: 'Bounce Up',          description: 'Elements launch upward from below and bounce past their final position before landing. A playful entrance with satisfying physical weight.' },
-  { name: 'Bounce From Right',  description: 'Text springs in from the right with an overshoot. The reverse momentum creates a dynamic, counter-directional snap that feels alive and responsive.' },
-  { name: 'Bounce Down',        description: 'Content drops in from above and bounces down past its resting point before settling. Gravity-driven and fun — great for approachable, energetic layouts.' },
+  { name: 'Spring From Left',   description: 'The whole element springs in from the left and overshoots slightly before settling. Energetic and physical — like content snapping into a magnetic grid.' },
+  { name: 'Spring Up',          description: 'Elements launch upward from below and bounce past their final position before landing. A playful entrance with satisfying physical weight.' },
+  { name: 'Spring From Right',  description: 'Text springs in from the right with an overshoot. The reverse momentum creates a dynamic, counter-directional snap that feels alive and responsive.' },
+  { name: 'Spring Down',        description: 'Content drops in from above and bounces down past its resting point before settling. Gravity-driven and fun — great for approachable, energetic layouts.' },
   // Bounce — Lines (77-80)
-  { name: 'Bounce Lines From Left',  description: 'Lines spring in from the left one by one, each overshooting before settling. Sequential bounce creates a lively, rhythmic entrance with physical momentum.' },
-  { name: 'Bounce Lines Up',         description: 'Each line launches from below and bounces into place in sequence. Rapid upward stagger with elastic settle — kinetic and full of forward energy.' },
-  { name: 'Bounce Lines From Right', description: 'Lines spring in from the right in sequence, each snapping past center before landing. Counter-directional bounce that keeps viewers engaged through the full reveal.' },
-  { name: 'Bounce Lines Down',       description: 'Lines drop from above one by one, each bouncing past their resting point before settling. Gravity-driven stagger with a playful, weighted quality.' },
+  { name: 'Spring Lines From Left',  description: 'Lines spring in from the left one by one, each overshooting before settling. Sequential bounce creates a lively, rhythmic entrance with physical momentum.' },
+  { name: 'Spring Lines Up',         description: 'Each line launches from below and bounces into place in sequence. Rapid upward stagger with elastic settle — kinetic and full of forward energy.' },
+  { name: 'Spring Lines From Right', description: 'Lines spring in from the right in sequence, each snapping past center before landing. Counter-directional bounce that keeps viewers engaged through the full reveal.' },
+  { name: 'Spring Lines Down',       description: 'Lines drop from above one by one, each bouncing past their resting point before settling. Gravity-driven stagger with a playful, weighted quality.' },
   // Bounce — Words (81-84)
-  { name: 'Bounce Words From Left',  description: 'Words spring in from the left in rapid succession, each with a satisfying overshoot. Dense left-to-right momentum that builds energy across the full headline.' },
-  { name: 'Bounce Words Up',         description: 'Words launch from below in quick stagger, each bouncing past their final position. Ultra-kinetic upward cascade that makes every word feel like a small arrival.' },
-  { name: 'Bounce Words From Right', description: 'Each word springs from the right with an elastic overshoot. Rapid reverse-direction cascade that creates a thrilling right-to-settled rhythm.' },
-  { name: 'Bounce Words Down',       description: 'Words drop from above in sequence, each bouncing below their resting point before settling. Gravity-fueled word-by-word descent with playful physical weight.' },
+  { name: 'Spring Words From Left',  description: 'Words spring in from the left in rapid succession, each with a satisfying overshoot. Dense left-to-right momentum that builds energy across the full headline.' },
+  { name: 'Spring Words Up',         description: 'Words launch from below in quick stagger, each bouncing past their final position. Ultra-kinetic upward cascade that makes every word feel like a small arrival.' },
+  { name: 'Spring Words From Right', description: 'Each word springs from the right with an elastic overshoot. Rapid reverse-direction cascade that creates a thrilling right-to-settled rhythm.' },
+  { name: 'Spring Words Down',       description: 'Words drop from above in sequence, each bouncing below their resting point before settling. Gravity-fueled word-by-word descent with playful physical weight.' },
   // Bounce — Chars (85-88)
-  { name: 'Bounce Chars From Left',  description: 'Characters spring in one at a time from the left with elastic overshoot. Maximum granularity — every letterform gets its own tiny bounce before settling.' },
-  { name: 'Bounce Chars Up',         description: 'Each character launches from below and bounces into place individually. Ultra-dense upward cascade that transforms text into pure kinetic spectacle.' },
-  { name: 'Bounce Chars From Right', description: 'Characters spring in from the right one by one, each overshooting before landing. Intricate reverse-bounce that rewards viewers who pay close attention.' },
-  { name: 'Bounce Chars Down',       description: 'Characters drop from above in tight sequence, each bouncing past their final point before settling. Maximally detailed gravity bounce — every letter earns its entrance.' },
+  { name: 'Spring Chars From Left',  description: 'Characters spring in one at a time from the left with elastic overshoot. Maximum granularity — every letterform gets its own tiny bounce before settling.' },
+  { name: 'Spring Chars Up',         description: 'Each character launches from below and bounces into place individually. Ultra-dense upward cascade that transforms text into pure kinetic spectacle.' },
+  { name: 'Spring Chars From Right', description: 'Characters spring in from the right one by one, each overshooting before landing. Intricate reverse-bounce that rewards viewers who pay close attention.' },
+  { name: 'Spring Chars Down',       description: 'Characters drop from above in tight sequence, each bouncing past their final point before settling. Maximally detailed gravity bounce — every letter earns its entrance.' },
   // Blur — Whole (89-92)
   { name: 'Blur From Left',   description: 'The whole element fades in from the left while clearing from a soft blur. The double transition — direction and focus — creates a cinematic, lens-like entrance.' },
   { name: 'Blur Up',          description: 'Elements rise from below while sharpening into focus. Combines upward momentum with a clearing blur for a polished, high-production feel.' },
@@ -779,25 +779,25 @@ const animations = [
   { name: 'Fade Words None',  description: 'Every word fades into view one after another with no motion. Understated and precise — ideal when the words themselves are the focus.' },
   { name: 'Fade Chars None',  description: 'Each character fades in individually with zero movement. The most restrained entrance possible — pure opacity, character by character.' },
   // Bounce 2 — Whole (113-116)
-  { name: 'Bounce 2 From Left',   description: 'The whole element springs from the left with a double overshoot — a strong first bounce followed by a softer echo before settling. Rich physical weight with layered momentum.' },
-  { name: 'Bounce 2 Up',          description: 'Elements launch from below with two oscillations — the first bold, the second a gentle aftershock. Like an object landing and briefly rebounding before coming to rest.' },
-  { name: 'Bounce 2 From Right',  description: 'Content springs from the right and bounces twice before landing — a primary snap and a softer rebound. Counter-directional energy with extra tactile depth.' },
-  { name: 'Bounce 2 Down',        description: 'Content drops from above with a double gravity bounce — a strong initial overshoot and a lighter echo. Feels like something heavy landing and briefly lifting off again.' },
+  { name: 'Bounce From Left',   description: 'The whole element springs from the left with a double overshoot — a strong first bounce followed by a softer echo before settling. Rich physical weight with layered momentum.' },
+  { name: 'Bounce Up',          description: 'Elements launch from below with two oscillations — the first bold, the second a gentle aftershock. Like an object landing and briefly rebounding before coming to rest.' },
+  { name: 'Bounce From Right',  description: 'Content springs from the right and bounces twice before landing — a primary snap and a softer rebound. Counter-directional energy with extra tactile depth.' },
+  { name: 'Bounce Down',        description: 'Content drops from above with a double gravity bounce — a strong initial overshoot and a lighter echo. Feels like something heavy landing and briefly lifting off again.' },
   // Bounce 2 — Lines (117-120)
-  { name: 'Bounce 2 Lines From Left',  description: 'Lines spring from the left in sequence, each with a double overshoot before settling. The layered momentum cascades across the layout with satisfying physical depth.' },
-  { name: 'Bounce 2 Lines Up',         description: 'Each line launches from below with a two-stage bounce — a strong arrival and a gentle rebound. Staggered double-bounce that builds kinetic rhythm line by line.' },
-  { name: 'Bounce 2 Lines From Right', description: 'Lines enter from the right in sequence, each oscillating twice before landing. Counter-directional double-bounce that adds extra life to every line reveal.' },
-  { name: 'Bounce 2 Lines Down',       description: 'Lines descend from above one by one, each with a primary drop and a softer rebound. A gravity-driven stagger with two beats of physical weight per line.' },
+  { name: 'Bounce Lines From Left',  description: 'Lines spring from the left in sequence, each with a double overshoot before settling. The layered momentum cascades across the layout with satisfying physical depth.' },
+  { name: 'Bounce Lines Up',         description: 'Each line launches from below with a two-stage bounce — a strong arrival and a gentle rebound. Staggered double-bounce that builds kinetic rhythm line by line.' },
+  { name: 'Bounce Lines From Right', description: 'Lines enter from the right in sequence, each oscillating twice before landing. Counter-directional double-bounce that adds extra life to every line reveal.' },
+  { name: 'Bounce Lines Down',       description: 'Lines descend from above one by one, each with a primary drop and a softer rebound. A gravity-driven stagger with two beats of physical weight per line.' },
   // Bounce 2 — Words (121-124)
-  { name: 'Bounce 2 Words From Left',  description: 'Words spring from the left in rapid sequence, each bouncing twice before landing. Dense double-bounce cascade that pulses with kinetic energy across the headline.' },
-  { name: 'Bounce 2 Words Up',         description: 'Words launch upward and bounce twice in quick succession. The two-stage settle adds depth to each word arrival — energetic and satisfying at speed.' },
-  { name: 'Bounce 2 Words From Right', description: 'Each word enters from the right with a double overshoot. Rapid reverse-direction double-bounce that creates a complex, layered visual rhythm.' },
-  { name: 'Bounce 2 Words Down',       description: 'Words drop from above and bounce twice before settling, word by word. Extra physical presence per word — the secondary rebound makes every landing feel earned.' },
+  { name: 'Bounce Words From Left',  description: 'Words spring from the left in rapid sequence, each bouncing twice before landing. Dense double-bounce cascade that pulses with kinetic energy across the headline.' },
+  { name: 'Bounce Words Up',         description: 'Words launch upward and bounce twice in quick succession. The two-stage settle adds depth to each word arrival — energetic and satisfying at speed.' },
+  { name: 'Bounce Words From Right', description: 'Each word enters from the right with a double overshoot. Rapid reverse-direction double-bounce that creates a complex, layered visual rhythm.' },
+  { name: 'Bounce Words Down',       description: 'Words drop from above and bounce twice before settling, word by word. Extra physical presence per word — the secondary rebound makes every landing feel earned.' },
   // Bounce 2 — Chars (125-128)
-  { name: 'Bounce 2 Chars From Left',  description: 'Characters spring from the left one at a time, each with a double overshoot. Maximum granularity — every letterform gets two beats of elastic energy before settling.' },
-  { name: 'Bounce 2 Chars Up',         description: 'Each character launches upward and bounces twice individually. Ultra-dense double-bounce cascade that transforms the headline into pure kinetic spectacle.' },
-  { name: 'Bounce 2 Chars From Right', description: 'Characters enter from the right one by one, each oscillating twice before landing. Intricate reverse double-bounce with hypnotic, mechanical precision.' },
-  { name: 'Bounce 2 Chars Down',       description: 'Characters descend from above in tight sequence, each with a primary drop and a softer rebound. Maximally detailed — every single letter earns its double entrance.' }
+  { name: 'Bounce Chars From Left',  description: 'Characters spring from the left one at a time, each with a double overshoot. Maximum granularity — every letterform gets two beats of elastic energy before settling.' },
+  { name: 'Bounce Chars Up',         description: 'Each character launches upward and bounces twice individually. Ultra-dense double-bounce cascade that transforms the headline into pure kinetic spectacle.' },
+  { name: 'Bounce Chars From Right', description: 'Characters enter from the right one by one, each oscillating twice before landing. Intricate reverse double-bounce with hypnotic, mechanical precision.' },
+  { name: 'Bounce Chars Down',       description: 'Characters descend from above in tight sequence, each with a primary drop and a softer rebound. Maximally detailed — every single letter earns its double entrance.' }
 ];
 
 let currentIndex = 0;
@@ -1260,13 +1260,13 @@ function animateContent() {
     allEls.forEach(el => maskWrap(el));
     gsap.set(allEls, { x: xStart, y: yStart });
 
-    tl.to(headlineEl,    { x: 0, y: 0, duration: 1.0, ease: 'power2.out' }, 0)
-      .to(subheadlineEl, { x: 0, y: 0, duration: 1.0, ease: 'power2.out' }, 0.25)
-      .to(descriptionEl, { x: 0, y: 0, duration: 1.0, ease: 'power2.out' }, 0.5);
+    tl.to(headlineEl,    { x: 0, y: 0, duration: 1.0, ease: 'expo.out' }, 0)
+      .to(subheadlineEl, { x: 0, y: 0, duration: 1.0, ease: 'expo.out' }, 0.25)
+      .to(descriptionEl, { x: 0, y: 0, duration: 1.0, ease: 'expo.out' }, 0.5);
 
     const buttons = document.querySelectorAll('.slide-btn');
     buttons.forEach((btn, index) => {
-      tl.to(btn, { x: 0, y: 0, duration: 0.8, ease: 'power2.out' }, 0.75 + (index * 0.15));
+      tl.to(btn, { x: 0, y: 0, duration: 0.8, ease: 'expo.out' }, 0.75 + (index * 0.15));
     });
 
   } else if (currentIndex < 40) {
@@ -1290,7 +1290,7 @@ function animateContent() {
     maskWrapUnits(headlineLines);
     gsap.set(headlineLines, { x: xStart, y: yStart });
     headlineLines.forEach((line, index) => {
-      tl.to(line, { x: 0, y: 0, duration: 0.8, ease: 'power2.out' }, index * 0.18);
+      tl.to(line, { x: 0, y: 0, duration: 0.8, ease: 'expo.out' }, index * 0.18);
     });
 
     const splitSubheadline = new SplitText(subheadlineEl, { type: 'lines' });
@@ -1300,14 +1300,14 @@ function animateContent() {
     maskWrapUnits(subheadlineLines);
     gsap.set(subheadlineLines, { x: xStart, y: yStart });
     subheadlineLines.forEach((line, index) => {
-      tl.to(line, { x: 0, y: 0, duration: 0.8, ease: 'power2.out' }, subStart + index * 0.18);
+      tl.to(line, { x: 0, y: 0, duration: 0.8, ease: 'expo.out' }, subStart + index * 0.18);
     });
 
     const descStart = subStart + subheadlineLines.length * 0.18 + 0.2;
     maskWrapUnits(descriptionLines);
     gsap.set(descriptionLines, { x: xStart, y: yStart });
     descriptionLines.forEach((line, index) => {
-      tl.to(line, { x: 0, y: 0, duration: 0.8, ease: 'power2.out' }, descStart + (index * 0.18));
+      tl.to(line, { x: 0, y: 0, duration: 0.8, ease: 'expo.out' }, descStart + (index * 0.18));
     });
 
     const buttons = document.querySelectorAll('.slide-btn');
@@ -1315,7 +1315,7 @@ function animateContent() {
     buttons.forEach(btn => maskWrap(btn));
     gsap.set(buttons, { x: xStart, y: yStart });
     buttons.forEach((btn, index) => {
-      tl.to(btn, { x: 0, y: 0, duration: 0.8, ease: 'power2.out' }, buttonsStart + (index * 0.15));
+      tl.to(btn, { x: 0, y: 0, duration: 0.8, ease: 'expo.out' }, buttonsStart + (index * 0.15));
     });
 
   } else if (currentIndex < 44) {
@@ -1339,7 +1339,7 @@ function animateContent() {
     maskWrapUnits(headlineWords);
     gsap.set(headlineWords, { x: xStart, y: yStart });
     headlineWords.forEach((word, index) => {
-      tl.to(word, { x: 0, y: 0, duration: 0.6, ease: 'power2.out' }, index * 0.09);
+      tl.to(word, { x: 0, y: 0, duration: 0.6, ease: 'expo.out' }, index * 0.09);
     });
 
     const headlineDone = headlineWords.length * 0.09;
@@ -1350,14 +1350,14 @@ function animateContent() {
     maskWrapUnits(subheadlineWords);
     gsap.set(subheadlineWords, { x: xStart, y: yStart });
     subheadlineWords.forEach((word, index) => {
-      tl.to(word, { x: 0, y: 0, duration: 0.6, ease: 'power2.out' }, subStart + index * 0.09);
+      tl.to(word, { x: 0, y: 0, duration: 0.6, ease: 'expo.out' }, subStart + index * 0.09);
     });
 
     const descStart = subStart + subheadlineWords.length * 0.09 + 0.15;
     maskWrapUnits(descriptionWords);
     gsap.set(descriptionWords, { x: xStart, y: yStart });
     descriptionWords.forEach((word, index) => {
-      tl.to(word, { x: 0, y: 0, duration: 0.5, ease: 'power2.out' }, descStart + (index * 0.055));
+      tl.to(word, { x: 0, y: 0, duration: 0.5, ease: 'expo.out' }, descStart + (index * 0.055));
     });
 
     const buttons = document.querySelectorAll('.slide-btn');
@@ -1365,7 +1365,7 @@ function animateContent() {
     buttons.forEach(btn => maskWrap(btn));
     gsap.set(buttons, { x: xStart, y: yStart });
     buttons.forEach((btn, index) => {
-      tl.to(btn, { x: 0, y: 0, duration: 0.65, ease: 'power2.out' }, buttonsStart + (index * 0.15));
+      tl.to(btn, { x: 0, y: 0, duration: 0.65, ease: 'expo.out' }, buttonsStart + (index * 0.15));
     });
 
   } else if (currentIndex < 48) {
@@ -1389,7 +1389,7 @@ function animateContent() {
     maskWrapUnits(headlineChars);
     gsap.set(headlineChars, { x: xStart, y: yStart });
     headlineChars.forEach((char, index) => {
-      tl.to(char, { x: 0, y: 0, duration: 0.4, ease: 'power2.out' }, index * 0.035);
+      tl.to(char, { x: 0, y: 0, duration: 0.4, ease: 'expo.out' }, index * 0.035);
     });
 
     const headlineDone = headlineChars.length * 0.035;
@@ -1400,14 +1400,14 @@ function animateContent() {
     maskWrapUnits(subheadlineChars);
     gsap.set(subheadlineChars, { x: xStart, y: yStart });
     subheadlineChars.forEach((char, index) => {
-      tl.to(char, { x: 0, y: 0, duration: 0.4, ease: 'power2.out' }, subStart + index * 0.035);
+      tl.to(char, { x: 0, y: 0, duration: 0.4, ease: 'expo.out' }, subStart + index * 0.035);
     });
 
     const descStart = subStart + subheadlineChars.length * 0.035 + 0.15;
     maskWrapUnits(descriptionChars);
     gsap.set(descriptionChars, { x: xStart, y: yStart });
     descriptionChars.forEach((char, index) => {
-      tl.to(char, { x: 0, y: 0, duration: 0.35, ease: 'power2.out' }, descStart + (index * 0.018));
+      tl.to(char, { x: 0, y: 0, duration: 0.35, ease: 'expo.out' }, descStart + (index * 0.018));
     });
 
     const buttons = document.querySelectorAll('.slide-btn');
@@ -1415,7 +1415,7 @@ function animateContent() {
     buttons.forEach(btn => maskWrap(btn));
     gsap.set(buttons, { x: xStart, y: yStart });
     buttons.forEach((btn, index) => {
-      tl.to(btn, { x: 0, y: 0, duration: 0.65, ease: 'power2.out' }, buttonsStart + (index * 0.15));
+      tl.to(btn, { x: 0, y: 0, duration: 0.65, ease: 'expo.out' }, buttonsStart + (index * 0.15));
     });
 
   } else if (currentIndex < 52) {
@@ -1745,14 +1745,14 @@ function animateContent() {
     }
 
     gsap.set([headlineEl, subheadlineEl, descriptionEl], { opacity: 0, x: xOffset, y: yOffset });
-    tl.to(headlineEl,    { opacity: 1, x: 0, y: 0, duration: 0.6, ease: 'back.out(1.7)' }, 0)
-      .to(subheadlineEl, { opacity: 1, x: 0, y: 0, duration: 0.6, ease: 'back.out(1.7)' }, 0.25)
-      .to(descriptionEl, { opacity: 1, x: 0, y: 0, duration: 0.6, ease: 'back.out(1.7)' }, 0.5);
+    tl.to(headlineEl,    { opacity: 1, x: 0, y: 0, duration: 0.6, ease: 'elastic.out(0.8, 0.3)' }, 0)
+      .to(subheadlineEl, { opacity: 1, x: 0, y: 0, duration: 0.6, ease: 'elastic.out(0.8, 0.3)' }, 0.25)
+      .to(descriptionEl, { opacity: 1, x: 0, y: 0, duration: 0.6, ease: 'elastic.out(0.8, 0.3)' }, 0.5);
 
     const buttons = document.querySelectorAll('.slide-btn');
     gsap.set(buttons, { opacity: 0, x: xOffset, y: yOffset });
     buttons.forEach((btn, index) => {
-      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'back.out(1.7)' }, 0.75 + index * 0.12);
+      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'elastic.out(0.8, 0.3)' }, 0.75 + index * 0.12);
     });
 
   } else if (currentIndex < 80) {
@@ -1775,7 +1775,7 @@ function animateContent() {
 
     gsap.set(headlineLines, { opacity: 0, x: xOffset, y: yOffset });
     headlineLines.forEach((line, index) => {
-      tl.to(line, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'back.out(1.7)' }, index * 0.1);
+      tl.to(line, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'elastic.out(0.8, 0.3)' }, index * 0.1);
     });
 
     const splitSubheadline = new SplitText(subheadlineEl, { type: 'lines' });
@@ -1784,20 +1784,20 @@ function animateContent() {
     const subStart = headlineLines.length * 0.1 + 0.15;
     gsap.set(subheadlineLines, { opacity: 0, x: xOffset, y: yOffset });
     subheadlineLines.forEach((line, index) => {
-      tl.to(line, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'back.out(1.7)' }, subStart + index * 0.1);
+      tl.to(line, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'elastic.out(0.8, 0.3)' }, subStart + index * 0.1);
     });
 
     const descStart = subStart + subheadlineLines.length * 0.1 + 0.1;
     gsap.set(descriptionLines, { opacity: 0, x: xOffset, y: yOffset });
     descriptionLines.forEach((line, index) => {
-      tl.to(line, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'back.out(1.7)' }, descStart + index * 0.1);
+      tl.to(line, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'elastic.out(0.8, 0.3)' }, descStart + index * 0.1);
     });
 
     const buttons = document.querySelectorAll('.slide-btn');
     gsap.set(buttons, { opacity: 0, x: xOffset, y: yOffset });
     const buttonsStartTime = descStart + descriptionLines.length * 0.1 + 0.2;
     buttons.forEach((btn, index) => {
-      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'back.out(1.7)' }, buttonsStartTime + index * 0.12);
+      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'elastic.out(0.8, 0.3)' }, buttonsStartTime + index * 0.12);
     });
 
   } else if (currentIndex < 84) {
@@ -1820,7 +1820,7 @@ function animateContent() {
 
     gsap.set(headlineWords, { opacity: 0, x: xOffset, y: yOffset });
     headlineWords.forEach((word, index) => {
-      tl.to(word, { opacity: 1, x: 0, y: 0, duration: 0.45, ease: 'back.out(1.7)' }, index * 0.06);
+      tl.to(word, { opacity: 1, x: 0, y: 0, duration: 0.45, ease: 'elastic.out(0.8, 0.3)' }, index * 0.06);
     });
 
     const splitSubheadline = new SplitText(subheadlineEl, { type: 'words' });
@@ -1829,20 +1829,20 @@ function animateContent() {
     const subStart = headlineWords.length * 0.06 + 0.1;
     gsap.set(subheadlineWords, { opacity: 0, x: xOffset, y: yOffset });
     subheadlineWords.forEach((word, index) => {
-      tl.to(word, { opacity: 1, x: 0, y: 0, duration: 0.45, ease: 'back.out(1.7)' }, subStart + index * 0.06);
+      tl.to(word, { opacity: 1, x: 0, y: 0, duration: 0.45, ease: 'elastic.out(0.8, 0.3)' }, subStart + index * 0.06);
     });
 
     const descStart = subStart + subheadlineWords.length * 0.06 + 0.1;
     gsap.set(descriptionWords, { opacity: 0, x: xOffset, y: yOffset });
     descriptionWords.forEach((word, index) => {
-      tl.to(word, { opacity: 1, x: 0, y: 0, duration: 0.35, ease: 'back.out(1.7)' }, descStart + index * 0.04);
+      tl.to(word, { opacity: 1, x: 0, y: 0, duration: 0.35, ease: 'elastic.out(0.8, 0.3)' }, descStart + index * 0.04);
     });
 
     const buttons = document.querySelectorAll('.slide-btn');
     gsap.set(buttons, { opacity: 0, x: xOffset, y: yOffset });
     const buttonsStartTime = descStart + descriptionWords.length * 0.04 + 0.2;
     buttons.forEach((btn, index) => {
-      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.45, ease: 'back.out(1.7)' }, buttonsStartTime + index * 0.12);
+      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.45, ease: 'elastic.out(0.8, 0.3)' }, buttonsStartTime + index * 0.12);
     });
 
   } else if (currentIndex < 88) {
@@ -1865,7 +1865,7 @@ function animateContent() {
 
     gsap.set(headlineChars, { opacity: 0, x: xOffset, y: yOffset });
     headlineChars.forEach((char, index) => {
-      tl.to(char, { opacity: 1, x: 0, y: 0, duration: 0.35, ease: 'back.out(1.7)' }, index * 0.025);
+      tl.to(char, { opacity: 1, x: 0, y: 0, duration: 0.35, ease: 'elastic.out(0.8, 0.3)' }, index * 0.025);
     });
 
     const splitSubheadline = new SplitText(subheadlineEl, { type: 'words,chars' });
@@ -1874,20 +1874,20 @@ function animateContent() {
     const subStart = headlineChars.length * 0.025 + 0.1;
     gsap.set(subheadlineChars, { opacity: 0, x: xOffset, y: yOffset });
     subheadlineChars.forEach((char, index) => {
-      tl.to(char, { opacity: 1, x: 0, y: 0, duration: 0.35, ease: 'back.out(1.7)' }, subStart + index * 0.025);
+      tl.to(char, { opacity: 1, x: 0, y: 0, duration: 0.35, ease: 'elastic.out(0.8, 0.3)' }, subStart + index * 0.025);
     });
 
     const descStart = subStart + subheadlineChars.length * 0.025 + 0.1;
     gsap.set(descriptionChars, { opacity: 0, x: xOffset, y: yOffset });
     descriptionChars.forEach((char, index) => {
-      tl.to(char, { opacity: 1, x: 0, y: 0, duration: 0.25, ease: 'back.out(1.7)' }, descStart + index * 0.015);
+      tl.to(char, { opacity: 1, x: 0, y: 0, duration: 0.25, ease: 'elastic.out(0.8, 0.3)' }, descStart + index * 0.015);
     });
 
     const buttons = document.querySelectorAll('.slide-btn');
     gsap.set(buttons, { opacity: 0, x: xOffset, y: yOffset });
     const buttonsStartTime = descStart + descriptionChars.length * 0.015 + 0.2;
     buttons.forEach((btn, index) => {
-      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'back.out(1.7)' }, buttonsStartTime + index * 0.12);
+      tl.to(btn, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: 'elastic.out(0.8, 0.3)' }, buttonsStartTime + index * 0.12);
     });
 
   } else if (currentIndex < 92) {
@@ -2054,12 +2054,12 @@ function animateContent() {
     if (slideIndex === 0) {
       // Blur Whole None
       gsap.set([headlineEl, subheadlineEl, descriptionEl], { opacity: 0, filter: 'blur(14px)' });
-      tl.to(headlineEl,    { opacity: 1, filter: 'blur(0px)', duration: 0.7, ease: 'power2.out' }, 0)
-        .to(subheadlineEl, { opacity: 1, filter: 'blur(0px)', duration: 0.7, ease: 'power2.out' }, 0.25)
-        .to(descriptionEl, { opacity: 1, filter: 'blur(0px)', duration: 0.7, ease: 'power2.out' }, 0.5);
+      tl.to(headlineEl,    { opacity: 1, filter: 'blur(0px)', duration: 0.7, ease: 'sine.out' }, 0)
+        .to(subheadlineEl, { opacity: 1, filter: 'blur(0px)', duration: 0.7, ease: 'sine.out' }, 0.25)
+        .to(descriptionEl, { opacity: 1, filter: 'blur(0px)', duration: 0.7, ease: 'sine.out' }, 0.5);
       const btnsBlN0 = document.querySelectorAll('.slide-btn');
       gsap.set(btnsBlN0, { opacity: 0, filter: 'blur(14px)' });
-      btnsBlN0.forEach((btn, i) => { tl.to(btn, { opacity: 1, filter: 'blur(0px)', duration: 0.6, ease: 'power2.out' }, 0.75 + i * 0.12); });
+      btnsBlN0.forEach((btn, i) => { tl.to(btn, { opacity: 1, filter: 'blur(0px)', duration: 0.6, ease: 'sine.out' }, 0.75 + i * 0.12); });
 
     } else if (slideIndex === 1) {
       // Blur Lines None
@@ -2068,17 +2068,17 @@ function animateContent() {
       const sD = new SplitText(descriptionEl, { type: 'lines' });
       activeSplits.push(sH, sS, sD);
       gsap.set(sH.lines, { opacity: 0, filter: 'blur(10px)' });
-      sH.lines.forEach((l, i) => { tl.to(l, { opacity: 1, filter: 'blur(0px)', duration: 0.6, ease: 'power2.out' }, i * 0.1); });
+      sH.lines.forEach((l, i) => { tl.to(l, { opacity: 1, filter: 'blur(0px)', duration: 0.6, ease: 'sine.out' }, i * 0.1); });
       const ss = sH.lines.length * 0.1 + 0.1;
       gsap.set(sS.lines, { opacity: 0, filter: 'blur(10px)' });
-      sS.lines.forEach((l, i) => { tl.to(l, { opacity: 1, filter: 'blur(0px)', duration: 0.6, ease: 'power2.out' }, ss + i * 0.1); });
+      sS.lines.forEach((l, i) => { tl.to(l, { opacity: 1, filter: 'blur(0px)', duration: 0.6, ease: 'sine.out' }, ss + i * 0.1); });
       const sd = ss + sS.lines.length * 0.1 + 0.1;
       gsap.set(sD.lines, { opacity: 0, filter: 'blur(10px)' });
-      sD.lines.forEach((l, i) => { tl.to(l, { opacity: 1, filter: 'blur(0px)', duration: 0.6, ease: 'power2.out' }, sd + i * 0.1); });
+      sD.lines.forEach((l, i) => { tl.to(l, { opacity: 1, filter: 'blur(0px)', duration: 0.6, ease: 'sine.out' }, sd + i * 0.1); });
       const btnsBlN1 = document.querySelectorAll('.slide-btn');
       gsap.set(btnsBlN1, { opacity: 0, filter: 'blur(10px)' });
       const sb = sd + sD.lines.length * 0.1 + 0.2;
-      btnsBlN1.forEach((b, i) => { tl.to(b, { opacity: 1, filter: 'blur(0px)', duration: 0.5, ease: 'power2.out' }, sb + i * 0.1); });
+      btnsBlN1.forEach((b, i) => { tl.to(b, { opacity: 1, filter: 'blur(0px)', duration: 0.5, ease: 'sine.out' }, sb + i * 0.1); });
 
     } else if (slideIndex === 2) {
       // Blur Words None
@@ -2087,17 +2087,17 @@ function animateContent() {
       const sD = new SplitText(descriptionEl, { type: 'words' });
       activeSplits.push(sH, sS, sD);
       gsap.set(sH.words, { opacity: 0, filter: 'blur(8px)' });
-      sH.words.forEach((w, i) => { tl.to(w, { opacity: 1, filter: 'blur(0px)', duration: 0.45, ease: 'power2.out' }, i * 0.05); });
+      sH.words.forEach((w, i) => { tl.to(w, { opacity: 1, filter: 'blur(0px)', duration: 0.45, ease: 'sine.out' }, i * 0.05); });
       const ss = sH.words.length * 0.05 + 0.1;
       gsap.set(sS.words, { opacity: 0, filter: 'blur(8px)' });
-      sS.words.forEach((w, i) => { tl.to(w, { opacity: 1, filter: 'blur(0px)', duration: 0.45, ease: 'power2.out' }, ss + i * 0.05); });
+      sS.words.forEach((w, i) => { tl.to(w, { opacity: 1, filter: 'blur(0px)', duration: 0.45, ease: 'sine.out' }, ss + i * 0.05); });
       const sd = ss + sS.words.length * 0.05 + 0.1;
       gsap.set(sD.words, { opacity: 0, filter: 'blur(8px)' });
-      sD.words.forEach((w, i) => { tl.to(w, { opacity: 1, filter: 'blur(0px)', duration: 0.35, ease: 'power2.out' }, sd + i * 0.03); });
+      sD.words.forEach((w, i) => { tl.to(w, { opacity: 1, filter: 'blur(0px)', duration: 0.35, ease: 'sine.out' }, sd + i * 0.03); });
       const btnsBlN2 = document.querySelectorAll('.slide-btn');
       gsap.set(btnsBlN2, { opacity: 0, filter: 'blur(8px)' });
       const sb = sd + sD.words.length * 0.03 + 0.2;
-      btnsBlN2.forEach((b, i) => { tl.to(b, { opacity: 1, filter: 'blur(0px)', duration: 0.4, ease: 'power2.out' }, sb + i * 0.1); });
+      btnsBlN2.forEach((b, i) => { tl.to(b, { opacity: 1, filter: 'blur(0px)', duration: 0.4, ease: 'sine.out' }, sb + i * 0.1); });
 
     } else {
       // Blur Chars None
@@ -2106,17 +2106,17 @@ function animateContent() {
       const sD = new SplitText(descriptionEl, { type: 'words,chars' });
       activeSplits.push(sH, sS, sD);
       gsap.set(sH.chars, { opacity: 0, filter: 'blur(6px)' });
-      sH.chars.forEach((c, i) => { tl.to(c, { opacity: 1, filter: 'blur(0px)', duration: 0.3, ease: 'power2.out' }, i * 0.02); });
+      sH.chars.forEach((c, i) => { tl.to(c, { opacity: 1, filter: 'blur(0px)', duration: 0.3, ease: 'sine.out' }, i * 0.02); });
       const ss = sH.chars.length * 0.02 + 0.1;
       gsap.set(sS.chars, { opacity: 0, filter: 'blur(6px)' });
-      sS.chars.forEach((c, i) => { tl.to(c, { opacity: 1, filter: 'blur(0px)', duration: 0.3, ease: 'power2.out' }, ss + i * 0.02); });
+      sS.chars.forEach((c, i) => { tl.to(c, { opacity: 1, filter: 'blur(0px)', duration: 0.3, ease: 'sine.out' }, ss + i * 0.02); });
       const sd = ss + sS.chars.length * 0.02 + 0.1;
       gsap.set(sD.chars, { opacity: 0, filter: 'blur(6px)' });
-      sD.chars.forEach((c, i) => { tl.to(c, { opacity: 1, filter: 'blur(0px)', duration: 0.2, ease: 'power2.out' }, sd + i * 0.01); });
+      sD.chars.forEach((c, i) => { tl.to(c, { opacity: 1, filter: 'blur(0px)', duration: 0.2, ease: 'sine.out' }, sd + i * 0.01); });
       const btnsBlN3 = document.querySelectorAll('.slide-btn');
       gsap.set(btnsBlN3, { opacity: 0, filter: 'blur(6px)' });
       const sb = sd + sD.chars.length * 0.01 + 0.2;
-      btnsBlN3.forEach((b, i) => { tl.to(b, { opacity: 1, filter: 'blur(0px)', duration: 0.3, ease: 'power2.out' }, sb + i * 0.1); });
+      btnsBlN3.forEach((b, i) => { tl.to(b, { opacity: 1, filter: 'blur(0px)', duration: 0.3, ease: 'sine.out' }, sb + i * 0.1); });
     }
 
   } else if (currentIndex < 112) {
@@ -2126,11 +2126,11 @@ function animateContent() {
     if (slideIndex === 0) {
       // Fade Whole None
       gsap.set([headlineEl, subheadlineEl, descriptionEl, ...document.querySelectorAll('.slide-btn')], { opacity: 0 });
-      tl.to(headlineEl,    { opacity: 1, duration: 0.8, ease: 'power2.out' }, 0);
-      tl.to(subheadlineEl, { opacity: 1, duration: 0.8, ease: 'power2.out' }, 0.3);
-      tl.to(descriptionEl, { opacity: 1, duration: 0.8, ease: 'power2.out' }, 0.5);
+      tl.to(headlineEl,    { opacity: 1, duration: 0.8, ease: 'sine.out' }, 0);
+      tl.to(subheadlineEl, { opacity: 1, duration: 0.8, ease: 'sine.out' }, 0.3);
+      tl.to(descriptionEl, { opacity: 1, duration: 0.8, ease: 'sine.out' }, 0.5);
       document.querySelectorAll('.slide-btn').forEach((btn, i) => {
-        tl.to(btn, { opacity: 1, duration: 0.5, ease: 'power2.out' }, 0.7 + i * 0.1);
+        tl.to(btn, { opacity: 1, duration: 0.5, ease: 'sine.out' }, 0.7 + i * 0.1);
       });
 
     } else if (slideIndex === 1) {
@@ -2140,17 +2140,17 @@ function animateContent() {
       const sD = new SplitText(descriptionEl, { type: 'lines' });
       activeSplits.push(sH, sS, sD);
       gsap.set(sH.lines, { opacity: 0 });
-      sH.lines.forEach((l, i) => { tl.to(l, { opacity: 1, duration: 0.6, ease: 'power2.out' }, i * 0.12); });
+      sH.lines.forEach((l, i) => { tl.to(l, { opacity: 1, duration: 0.6, ease: 'sine.out' }, i * 0.12); });
       const ss = sH.lines.length * 0.12 + 0.15;
       gsap.set(sS.lines, { opacity: 0 });
-      sS.lines.forEach((l, i) => { tl.to(l, { opacity: 1, duration: 0.5, ease: 'power2.out' }, ss + i * 0.1); });
+      sS.lines.forEach((l, i) => { tl.to(l, { opacity: 1, duration: 0.5, ease: 'sine.out' }, ss + i * 0.1); });
       const sd = ss + sS.lines.length * 0.1 + 0.15;
       gsap.set(sD.lines, { opacity: 0 });
-      sD.lines.forEach((l, i) => { tl.to(l, { opacity: 1, duration: 0.4, ease: 'power2.out' }, sd + i * 0.1); });
+      sD.lines.forEach((l, i) => { tl.to(l, { opacity: 1, duration: 0.4, ease: 'sine.out' }, sd + i * 0.1); });
       const bFN1 = document.querySelectorAll('.slide-btn');
       gsap.set(bFN1, { opacity: 0 });
       const sb = sd + sD.lines.length * 0.1 + 0.2;
-      bFN1.forEach((b, i) => { tl.to(b, { opacity: 1, duration: 0.4, ease: 'power2.out' }, sb + i * 0.1); });
+      bFN1.forEach((b, i) => { tl.to(b, { opacity: 1, duration: 0.4, ease: 'sine.out' }, sb + i * 0.1); });
 
     } else if (slideIndex === 2) {
       // Fade Words None
@@ -2159,17 +2159,17 @@ function animateContent() {
       const sD = new SplitText(descriptionEl, { type: 'words' });
       activeSplits.push(sH, sS, sD);
       gsap.set(sH.words, { opacity: 0 });
-      sH.words.forEach((w, i) => { tl.to(w, { opacity: 1, duration: 0.5, ease: 'power2.out' }, i * 0.07); });
+      sH.words.forEach((w, i) => { tl.to(w, { opacity: 1, duration: 0.5, ease: 'sine.out' }, i * 0.07); });
       const ss = sH.words.length * 0.07 + 0.15;
       gsap.set(sS.words, { opacity: 0 });
-      sS.words.forEach((w, i) => { tl.to(w, { opacity: 1, duration: 0.4, ease: 'power2.out' }, ss + i * 0.06); });
+      sS.words.forEach((w, i) => { tl.to(w, { opacity: 1, duration: 0.4, ease: 'sine.out' }, ss + i * 0.06); });
       const sd = ss + sS.words.length * 0.06 + 0.15;
       gsap.set(sD.words, { opacity: 0 });
-      sD.words.forEach((w, i) => { tl.to(w, { opacity: 1, duration: 0.3, ease: 'power2.out' }, sd + i * 0.04); });
+      sD.words.forEach((w, i) => { tl.to(w, { opacity: 1, duration: 0.3, ease: 'sine.out' }, sd + i * 0.04); });
       const bFN2 = document.querySelectorAll('.slide-btn');
       gsap.set(bFN2, { opacity: 0 });
       const sb = sd + sD.words.length * 0.04 + 0.2;
-      bFN2.forEach((b, i) => { tl.to(b, { opacity: 1, duration: 0.4, ease: 'power2.out' }, sb + i * 0.1); });
+      bFN2.forEach((b, i) => { tl.to(b, { opacity: 1, duration: 0.4, ease: 'sine.out' }, sb + i * 0.1); });
 
     } else {
       // Fade Chars None
@@ -2178,17 +2178,17 @@ function animateContent() {
       const sD = new SplitText(descriptionEl, { type: 'words,chars' });
       activeSplits.push(sH, sS, sD);
       gsap.set(sH.chars, { opacity: 0 });
-      sH.chars.forEach((c, i) => { tl.to(c, { opacity: 1, duration: 0.25, ease: 'power2.out' }, i * 0.025); });
+      sH.chars.forEach((c, i) => { tl.to(c, { opacity: 1, duration: 0.25, ease: 'sine.out' }, i * 0.025); });
       const ss = sH.chars.length * 0.025 + 0.1;
       gsap.set(sS.chars, { opacity: 0 });
-      sS.chars.forEach((c, i) => { tl.to(c, { opacity: 1, duration: 0.2, ease: 'power2.out' }, ss + i * 0.02); });
+      sS.chars.forEach((c, i) => { tl.to(c, { opacity: 1, duration: 0.2, ease: 'sine.out' }, ss + i * 0.02); });
       const sd = ss + sS.chars.length * 0.02 + 0.1;
       gsap.set(sD.chars, { opacity: 0 });
-      sD.chars.forEach((c, i) => { tl.to(c, { opacity: 1, duration: 0.15, ease: 'power2.out' }, sd + i * 0.01); });
+      sD.chars.forEach((c, i) => { tl.to(c, { opacity: 1, duration: 0.15, ease: 'sine.out' }, sd + i * 0.01); });
       const bFN3 = document.querySelectorAll('.slide-btn');
       gsap.set(bFN3, { opacity: 0 });
       const sb = sd + sD.chars.length * 0.01 + 0.2;
-      bFN3.forEach((b, i) => { tl.to(b, { opacity: 1, duration: 0.4, ease: 'power2.out' }, sb + i * 0.1); });
+      bFN3.forEach((b, i) => { tl.to(b, { opacity: 1, duration: 0.4, ease: 'sine.out' }, sb + i * 0.1); });
     }
 
   } else if (currentIndex < 116) {
@@ -2414,25 +2414,25 @@ const slideTags = [
   { style:'Grow', split:'Words', direction:'None' },
   { style:'Grow', split:'Chars', direction:'None' },
   // Slides 73-76: Bounce / Whole
-  { style:'Bounce', split:'Whole', direction:'From Left' },
-  { style:'Bounce', split:'Whole', direction:'Up' },
-  { style:'Bounce', split:'Whole', direction:'From Right' },
-  { style:'Bounce', split:'Whole', direction:'Down' },
+  { style:'Spring', split:'Whole', direction:'From Left' },
+  { style:'Spring', split:'Whole', direction:'Up' },
+  { style:'Spring', split:'Whole', direction:'From Right' },
+  { style:'Spring', split:'Whole', direction:'Down' },
   // Slides 77-80: Bounce / Lines
-  { style:'Bounce', split:'Lines', direction:'From Left' },
-  { style:'Bounce', split:'Lines', direction:'Up' },
-  { style:'Bounce', split:'Lines', direction:'From Right' },
-  { style:'Bounce', split:'Lines', direction:'Down' },
+  { style:'Spring', split:'Lines', direction:'From Left' },
+  { style:'Spring', split:'Lines', direction:'Up' },
+  { style:'Spring', split:'Lines', direction:'From Right' },
+  { style:'Spring', split:'Lines', direction:'Down' },
   // Slides 81-84: Bounce / Words
-  { style:'Bounce', split:'Words', direction:'From Left' },
-  { style:'Bounce', split:'Words', direction:'Up' },
-  { style:'Bounce', split:'Words', direction:'From Right' },
-  { style:'Bounce', split:'Words', direction:'Down' },
+  { style:'Spring', split:'Words', direction:'From Left' },
+  { style:'Spring', split:'Words', direction:'Up' },
+  { style:'Spring', split:'Words', direction:'From Right' },
+  { style:'Spring', split:'Words', direction:'Down' },
   // Slides 85-88: Bounce / Chars
-  { style:'Bounce', split:'Chars', direction:'From Left' },
-  { style:'Bounce', split:'Chars', direction:'Up' },
-  { style:'Bounce', split:'Chars', direction:'From Right' },
-  { style:'Bounce', split:'Chars', direction:'Down' },
+  { style:'Spring', split:'Chars', direction:'From Left' },
+  { style:'Spring', split:'Chars', direction:'Up' },
+  { style:'Spring', split:'Chars', direction:'From Right' },
+  { style:'Spring', split:'Chars', direction:'Down' },
   // Slides 89-92: Blur / Whole
   { style:'Blur', split:'Whole', direction:'From Left' },
   { style:'Blur', split:'Whole', direction:'Up' },
@@ -2464,25 +2464,25 @@ const slideTags = [
   { style:'Fade', split:'Words', direction:'None' },
   { style:'Fade', split:'Chars', direction:'None' },
   // Slides 113-116: Bounce 2 / Whole
-  { style:'Bounce 2', split:'Whole', direction:'From Left' },
-  { style:'Bounce 2', split:'Whole', direction:'Up' },
-  { style:'Bounce 2', split:'Whole', direction:'From Right' },
-  { style:'Bounce 2', split:'Whole', direction:'Down' },
+  { style:'Bounce', split:'Whole', direction:'From Left' },
+  { style:'Bounce', split:'Whole', direction:'Up' },
+  { style:'Bounce', split:'Whole', direction:'From Right' },
+  { style:'Bounce', split:'Whole', direction:'Down' },
   // Slides 117-120: Bounce 2 / Lines
-  { style:'Bounce 2', split:'Lines', direction:'From Left' },
-  { style:'Bounce 2', split:'Lines', direction:'Up' },
-  { style:'Bounce 2', split:'Lines', direction:'From Right' },
-  { style:'Bounce 2', split:'Lines', direction:'Down' },
+  { style:'Bounce', split:'Lines', direction:'From Left' },
+  { style:'Bounce', split:'Lines', direction:'Up' },
+  { style:'Bounce', split:'Lines', direction:'From Right' },
+  { style:'Bounce', split:'Lines', direction:'Down' },
   // Slides 121-124: Bounce 2 / Words
-  { style:'Bounce 2', split:'Words', direction:'From Left' },
-  { style:'Bounce 2', split:'Words', direction:'Up' },
-  { style:'Bounce 2', split:'Words', direction:'From Right' },
-  { style:'Bounce 2', split:'Words', direction:'Down' },
+  { style:'Bounce', split:'Words', direction:'From Left' },
+  { style:'Bounce', split:'Words', direction:'Up' },
+  { style:'Bounce', split:'Words', direction:'From Right' },
+  { style:'Bounce', split:'Words', direction:'Down' },
   // Slides 125-128: Bounce 2 / Chars
-  { style:'Bounce 2', split:'Chars', direction:'From Left' },
-  { style:'Bounce 2', split:'Chars', direction:'Up' },
-  { style:'Bounce 2', split:'Chars', direction:'From Right' },
-  { style:'Bounce 2', split:'Chars', direction:'Down' },
+  { style:'Bounce', split:'Chars', direction:'From Left' },
+  { style:'Bounce', split:'Chars', direction:'Up' },
+  { style:'Bounce', split:'Chars', direction:'From Right' },
+  { style:'Bounce', split:'Chars', direction:'Down' },
 ];
 
 const activeFilters = { style: new Set(), split: new Set(), direction: new Set() };
