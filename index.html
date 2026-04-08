@@ -36,11 +36,11 @@
       margin: 0 auto 56px;
       position: relative;
       min-height: 144px;
-      padding-top: 72px;
+      padding-top: 120px;
     }
 
     .header h1 {
-      font-size: clamp(28px, 5vw, 42px);
+      font-size: clamp(42px, 6vw, 56px);
       font-weight: 700;
       letter-spacing: -0.03em;
       margin-bottom: 10px;
@@ -80,7 +80,8 @@
 
     .section-header h2 {
       font-size: 20px;
-      font-weight: 600;
+      font-weight: 500;
+      color: #ffcb05;
       letter-spacing: -0.02em;
     }
 
@@ -775,25 +776,20 @@
 <div class="menu-overlay" id="menu-overlay">
   <ul>
     <li><a href="index.html">Hover Animations</a></li>
-    <li><a href="load-in-animations.html">Load In Animations</a></li>
-    <li><a href="testanimations.html">Test Animations</a></li>
+    <li><a href="load-in-animations.html">Entrance Animations</a></li>
+    <li><a href="testanimations.html">Media Animations</a></li>
   </ul>
 </div>
 
 <div class="header">
   <h1>Hover Animations</h1>
-  <div class="badge">GSAP Reference</div>
-  <p>Standard naming for designers and developers. Hover over any element to preview the animation. On mobile, use the <strong>Play</strong> button to trigger and toggle each animation.</p>
-  <p style="font-size:11px; color:var(--text-muted); margin-top:8px;">Modified April 2, 2026 · 4:38 AM CST</p>
 </div>
 
 <!-- ============================================================
      SECTION 1: TEXT LINKS
 ============================================================ -->
 <section class="section">
-  <div class="section-tag"><span></span>Text Links</div>
-  <div class="section-header"><h2>Text Link Hover Animations</h2></div>
-  <p class="section-desc">Applied to anchor tags and inline text links. Pair with <code>cursor: pointer</code> in Webflow.</p>
+  <div class="section-header"><h2>Text Links</h2></div>
 
   <div class="grid">
 
@@ -924,9 +920,7 @@
      SECTION 2: WORD BUTTONS
 ============================================================ -->
 <section class="section">
-  <div class="section-tag"><span style="background:var(--accent2)"></span>Word Buttons</div>
-  <div class="section-header"><h2>Button Hover Animations</h2></div>
-  <p class="section-desc">Applied to CTA and nav buttons. All use GSAP tweens — no CSS transitions.</p>
+  <div class="section-header"><h2>Buttons</h2></div>
 
   <div class="grid">
 
@@ -1060,9 +1054,7 @@
      SECTION 3: ICON BUTTONS
 ============================================================ -->
 <section class="section">
-  <div class="section-tag"><span style="background:var(--accent3)"></span>Icon Buttons</div>
-  <div class="section-header"><h2>Icon-Only Button Animations</h2></div>
-  <p class="section-desc">Applied to icon-only CTAs, social links, and utility buttons.</p>
+  <div class="section-header"><h2>Icon Buttons</h2></div>
 
   <div class="grid">
 
@@ -1149,11 +1141,6 @@
   </div>
 </section>
 
-<div class="footnote">
-  <strong>Naming Convention</strong> — Names follow the Webflow component-property pattern: <em>ElementType-AnimationName</em>.<br>
-  Designers specify the animation name; developers implement using GSAP <code>gsap.to()</code> / <code>gsap.fromTo()</code> on <code>mouseenter</code> / <code>mouseleave</code> events.<br>
-  All durations default to <strong>0.35s</strong> with <code>ease: "power2.out"</code> unless noted. Bounce variants use <code>ease: "back.out(1.7)"</code>.
-</div>
 
 <script>
 // Convert all <i data-lucide="..."> to SVG before any GSAP code queries them

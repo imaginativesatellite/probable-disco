@@ -1,420 +1,516 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>20 Flat Text Loading Animations with GSAP</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Media Entrance Animations | Lunamations</title>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
   <style>
+    :root {
+      --bg: #0e0e0e;
+      --border: #2a2a2a;
+      --text: #f0f0f0;
+      --text-muted: #888;
+      --headline-color: #ffcb05;
+      --accent: #6c63ff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      font-family: system-ui, -apple-system, sans-serif;
-      background: #0f0f0f;
-      color: #fff;
-      padding: 20px;
-      line-height: 1.6;
-      max-width: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      padding: 120px 24px 80px;
     }
-    h1 {
-      text-align: center;
-      margin-bottom: 40px;
-      font-size: 1.8rem;
-    }
-    .demo {
-      margin: 50px 0;
-      padding: 30px 20px;
-      background: #1a1a1a;
-      border-radius: 12px;
-      border: 1px solid #333;
-    }
-    .label {
-      font-size: 1rem;
-      color: #aaa;
-      margin-bottom: 12px;
-      display: block;
-    }
-    .text-container {
-      font-size: 2.2rem;
+
+    /* ── Logo ── */
+    .logo {
+      position: fixed;
+      top: 24px; left: 24px;
+      z-index: 1001;
+      font-size: 14px;
       font-weight: 700;
-      letter-spacing: -0.02em;
-      min-height: 60px;
+      letter-spacing: 2px;
+      color: var(--text);
+      text-decoration: none;
+      height: 48px;
       display: flex;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 0.05em;
-      position: relative;
     }
-    @media (max-width: 480px) {
-      .text-container {
-        font-size: 1.8rem;
-      }
+
+    /* ── Hamburger ── */
+    .hamburger-btn {
+      position: fixed;
+      top: 24px; right: 24px;
+      width: 48px; height: 48px;
+      background: none; border: none;
+      cursor: pointer;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 6px; z-index: 1001; padding: 0;
     }
-    .char {
-      display: inline-block;
-      white-space: pre;
+    .hamburger-btn:hover { opacity: 0.8; }
+    .hamburger-btn span {
+      width: 24px; height: 2px;
+      background: var(--text);
+      border-radius: 1px; display: block;
+      transition: all 0.3s ease;
+      transform-origin: center;
     }
-    button {
-      margin-top: 15px;
-      padding: 10px 20px;
-      background: #333;
-      color: #fff;
-      border: none;
+    .hamburger-btn.active span:nth-child(1) { transform: rotate(45deg) translateY(11px); }
+    .hamburger-btn.active span:nth-child(2) { opacity: 0; }
+    .hamburger-btn.active span:nth-child(3) { transform: rotate(-45deg) translateY(-11px); }
+
+    /* ── Menu Overlay ── */
+    .menu-overlay {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(14,14,14,0.98);
+      backdrop-filter: blur(10px);
+      z-index: 1000; display: none;
+      flex-direction: column; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.3s ease;
+    }
+    .menu-overlay.active { display: flex; opacity: 1; }
+    .menu-overlay ul { list-style: none; text-align: center; }
+    .menu-overlay li { margin: 24px 0; }
+    .menu-overlay a {
+      font-size: 32px; font-weight: 600;
+      color: var(--text); text-decoration: none;
+      letter-spacing: -0.5px; transition: color 0.3s ease;
+    }
+    .menu-overlay a:hover { color: var(--accent); }
+
+    /* ── Page header ── */
+    .page-header {
+      max-width: 1100px;
+      margin: 0 auto 56px;
+    }
+    .page-header h1 {
+      font-size: clamp(42px, 6vw, 56px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+    }
+
+    /* ── Grid ── */
+    .grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px 32px;
+    }
+    @media (max-width: 680px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── Card ── */
+    .card {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .card-label {
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--headline-color);
+      letter-spacing: -0.02em;
+    }
+
+    .media-wrap {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+    }
+
+    .media-box {
+      width: 100%; height: 100%;
+      overflow: hidden;
+    }
+
+    .media-box img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .replay-btn {
+      align-self: flex-start;
+      padding: 7px 16px;
+      background: #1e1e1e;
+      color: #666;
+      border: 1px solid #2a2a2a;
       border-radius: 6px;
       cursor: pointer;
-      font-size: 1rem;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      transition: background 0.15s, color 0.15s;
     }
-    button:hover {
-      background: #555;
-    }
+    .replay-btn:hover { background: #2a2a2a; color: #ccc; }
   </style>
 </head>
 <body>
-  <h1>20 Flat Text Loading Animations (GSAP)</h1>
 
-  <div class="demo">
-    <span class="label">1. Typing Effect (with blinking cursor)</span>
-    <div id="anim1" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(1)">Replay</button>
+<a href="index.html" class="logo">LUNAMATIONS</a>
+
+<button class="hamburger-btn" id="hamburger-btn">
+  <span></span><span></span><span></span>
+</button>
+
+<div class="menu-overlay" id="menu-overlay">
+  <ul>
+    <li><a href="index.html">Hover Animations</a></li>
+    <li><a href="load-in-animations.html">Entrance Animations</a></li>
+    <li><a href="testanimations.html">Media Animations</a></li>
+  </ul>
+</div>
+
+<div class="page-header">
+  <h1>Media Entrance Animations</h1>
+</div>
+
+<div class="grid">
+
+  <div class="card" id="d1">
+    <div class="card-label">Fade In From Left</div>
+    <div class="media-wrap"><div class="media-box">
+      <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+    </div></div>
+    <button class="replay-btn" onclick="play(1)">Replay</button>
   </div>
 
-  <div class="demo">
-    <span class="label">2. Sequential Fade-In</span>
-    <div id="anim2" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(2)">Replay</button>
+  <div class="card" id="d2">
+    <div class="card-label">Fade In From Right</div>
+    <div class="media-wrap"><div class="media-box">
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+    </div></div>
+    <button class="replay-btn" onclick="play(2)">Replay</button>
   </div>
 
-  <div class="demo">
-    <span class="label">3. Letter Pulse</span>
-    <div id="anim3" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(3)">Replay</button>
+  <div class="card" id="d3">
+    <div class="card-label">Fade In From Bottom</div>
+    <div class="media-wrap"><div class="media-box">
+      <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+    </div></div>
+    <button class="replay-btn" onclick="play(3)">Replay</button>
   </div>
 
-  <div class="demo">
-    <span class="label">4. Wave Bounce</span>
-    <div id="anim4" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(4)">Replay</button>
+  <div class="card" id="d4">
+    <div class="card-label">Fade In From Top</div>
+    <div class="media-wrap"><div class="media-box">
+      <img src="https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+    </div></div>
+    <button class="replay-btn" onclick="play(4)">Replay</button>
   </div>
 
-  <div class="demo">
-    <span class="label">5. Color Sweep</span>
-    <div id="anim5" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(5)">Replay</button>
+  <div class="card" id="d5">
+    <div class="card-label">Scale Up</div>
+    <div class="media-wrap"><div class="media-box">
+      <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+    </div></div>
+    <button class="replay-btn" onclick="play(5)">Replay</button>
   </div>
 
-  <div class="demo">
-    <span class="label">6. Underline Draw</span>
-    <div id="anim6" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(6)">Replay</button>
+  <div class="card" id="d6">
+    <div class="card-label">Scale Down</div>
+    <div class="media-wrap"><div class="media-box">
+      <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+    </div></div>
+    <button class="replay-btn" onclick="play(6)">Replay</button>
   </div>
 
-  <div class="demo">
-    <span class="label">7. Dot Matrix Fill (pop-in)</span>
-    <div id="anim7" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(7)">Replay</button>
+  <div class="card" id="d7">
+    <div class="card-label">Reveal From Left</div>
+    <div class="media-wrap"><div class="media-box">
+      <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+    </div></div>
+    <button class="replay-btn" onclick="play(7)">Replay</button>
   </div>
 
-  <div class="demo">
-    <span class="label">8. Opacity Wave</span>
-    <div id="anim8" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(8)">Replay</button>
+  <div class="card" id="d8">
+    <div class="card-label">Reveal From Right</div>
+    <div class="media-wrap"><div class="media-box">
+      <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+    </div></div>
+    <button class="replay-btn" onclick="play(8)">Replay</button>
   </div>
 
-  <div class="demo">
-    <span class="label">9. Horizontal Stretch</span>
-    <div id="anim9" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(9)">Replay</button>
+  <div class="card" id="d9">
+    <div class="card-label">Reveal From Bottom</div>
+    <div class="media-wrap"><div class="media-box">
+      <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+    </div></div>
+    <button class="replay-btn" onclick="play(9)">Replay</button>
   </div>
 
-  <div class="demo">
-    <span class="label">10. Progress Bar</span>
-    <div id="anim10" class="text-container">Loading Text <span id="progress">0%</span></div>
-    <div style="height:4px; background:#333; margin-top:10px; border-radius:2px; overflow:hidden;">
-      <div id="bar" style="height:100%; width:0%; background:#0f0;"></div>
-    </div>
-    <button onclick="restartAnim(10)">Replay</button>
+  <div class="card" id="d10">
+    <div class="card-label">Reveal From Top</div>
+    <div class="media-wrap"><div class="media-box">
+      <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+    </div></div>
+    <button class="replay-btn" onclick="play(10)">Replay</button>
   </div>
 
-  <div class="demo">
-    <span class="label">11. Highlight Sweep</span>
-    <div id="anim11" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(11)">Replay</button>
+  <div class="card" id="d11">
+    <div class="card-label">Spring In From Left</div>
+    <div class="media-wrap"><div class="media-box">
+      <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+    </div></div>
+    <button class="replay-btn" onclick="play(11)">Replay</button>
   </div>
 
-  <div class="demo">
-    <span class="label">12. Fade & Scale</span>
-    <div id="anim12" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(12)">Replay</button>
+  <div class="card" id="d12">
+    <div class="card-label">Spring In From Bottom</div>
+    <div class="media-wrap"><div class="media-box">
+      <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+    </div></div>
+    <button class="replay-btn" onclick="play(12)">Replay</button>
   </div>
 
-  <div class="demo">
-    <span class="label">13. Thin to Full Trace</span>
-    <div id="anim13" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(13)">Replay</button>
+  <div class="card" id="d13">
+    <div class="card-label">Bounce In</div>
+    <div class="media-wrap"><div class="media-box">
+      <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+    </div></div>
+    <button class="replay-btn" onclick="play(13)">Replay</button>
   </div>
 
-  <div class="demo">
-    <span class="label">14. Vertical Fill</span>
-    <div id="anim14" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(14)">Replay</button>
+  <div class="card" id="d14">
+    <div class="card-label">Blur In From Left</div>
+    <div class="media-wrap"><div class="media-box">
+      <img src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+    </div></div>
+    <button class="replay-btn" onclick="play(14)">Replay</button>
   </div>
 
-  <div class="demo">
-    <span class="label">15. Blink Sequence</span>
-    <div id="anim15" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(15)">Replay</button>
+  <div class="card" id="d15">
+    <div class="card-label">Blur In From Bottom</div>
+    <div class="media-wrap"><div class="media-box">
+      <img src="https://images.unsplash.com/photo-1488161628813-04466f872be2?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+    </div></div>
+    <button class="replay-btn" onclick="play(15)">Replay</button>
   </div>
 
-  <div class="demo">
-    <span class="label">16. Shimmer Line</span>
-    <div id="anim16" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(16)">Replay</button>
+  <div class="card" id="d16">
+    <div class="card-label">Blur Reveal</div>
+    <div class="media-wrap"><div class="media-box">
+      <img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+    </div></div>
+    <button class="replay-btn" onclick="play(16)">Replay</button>
   </div>
 
-  <div class="demo">
-    <span class="label">17. Dot Pulse</span>
-    <div id="anim17" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(17)">Replay</button>
+  <div class="card" id="d17">
+    <div class="card-label">Zoom Blur</div>
+    <div class="media-wrap"><div class="media-box">
+      <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+    </div></div>
+    <button class="replay-btn" onclick="play(17)">Replay</button>
   </div>
 
-  <div class="demo">
-    <span class="label">18. Word Wipe</span>
-    <div id="anim18" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(18)">Replay</button>
+  <div class="card" id="d18">
+    <div class="card-label">Rotate In</div>
+    <div class="media-wrap"><div class="media-box">
+      <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+    </div></div>
+    <button class="replay-btn" onclick="play(18)">Replay</button>
   </div>
 
-  <div class="demo">
-    <span class="label">19. Letter Pop-In</span>
-    <div id="anim19" class="text-container">Loading Text</div>
-    <button onclick="restartAnim(19)">Replay</button>
+  <div class="card" id="d19">
+    <div class="card-label">Flip In</div>
+    <div class="media-wrap"><div class="media-box">
+      <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+    </div></div>
+    <button class="replay-btn" onclick="play(19)">Replay</button>
   </div>
 
-  <div class="demo">
-    <span class="label">20. Pulsing Dots</span>
-    <div id="anim20" class="text-container">Loading Text<span id="dots">...</span></div>
-    <button onclick="restartAnim(20)">Replay</button>
+  <div class="card" id="d20">
+    <div class="card-label">Drop In</div>
+    <div class="media-wrap"><div class="media-box">
+      <img src="https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+    </div></div>
+    <button class="replay-btn" onclick="play(20)">Replay</button>
   </div>
 
-  <script>
-    const gsapLib = window.gsap;
+</div>
 
-    function resetContainer(id) {
-      const container = document.getElementById(`anim${id}`);
-      if (!container) return;
-
-      // Remove extra elements (underline, shimmer, wipe, cursor, etc.)
-      Array.from(container.children).forEach(child => {
-        if (!child.classList.contains('char') &&
-            child.id !== 'progress' &&
-            child.id !== 'dots' &&
-            child.id !== 'bar') {
-          child.remove();
-        }
-      });
-
-      if (id === 10) {
-        container.innerHTML = 'Loading Text <span id="progress">0%</span>';
-        document.getElementById('bar').style.width = '0%';
-      } else if (id === 20) {
-        container.innerHTML = 'Loading Text<span id="dots">...</span>';
-      } else {
-        container.textContent = 'Loading Text';
-      }
+<script>
+  // ── Menu ──
+  const hamburgerBtn = document.getElementById('hamburger-btn');
+  const menuOverlay  = document.getElementById('menu-overlay');
+  hamburgerBtn.addEventListener('click', () => {
+    hamburgerBtn.classList.toggle('active');
+    menuOverlay.classList.toggle('active');
+  });
+  menuOverlay.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburgerBtn.classList.remove('active');
+      menuOverlay.classList.remove('active');
+    });
+  });
+  menuOverlay.addEventListener('click', e => {
+    if (e.target === menuOverlay) {
+      hamburgerBtn.classList.remove('active');
+      menuOverlay.classList.remove('active');
     }
+  });
 
-    function splitText(container) {
-      const text = container.textContent.trim();
-      container.innerHTML = '';
-      [...text].forEach(char => {
-        const span = document.createElement('span');
-        span.className = 'char';
-        span.textContent = char === ' ' ? '\u00A0' : char;
-        container.appendChild(span);
-      });
-      return container.querySelectorAll('.char');
+  // ── Animations ──
+  const tls = {};
+
+  function getWrap(n) { return document.querySelector(`#d${n} .media-wrap`); }
+  function getImg(n)  { return document.querySelector(`#d${n} img`); }
+
+  // Parallax helpers: wrap animates directionally, img counter-animates at smaller offset
+  // img starts at scale 1.2 (20% oversized) so counter-offset never shows a gap at edges
+
+  function play(n) {
+    if (tls[n]) tls[n].kill();
+    const wrap = getWrap(n);
+    const img  = getImg(n);
+    const tl   = gsap.timeline();
+    tls[n] = tl;
+
+    switch(n) {
+      case 1: // Fade In From Left
+        gsap.set(wrap, { opacity: 0, x: -80 });
+        gsap.set(img,  { x: 30, scale: 1.2, transformOrigin: 'center center' });
+        tl.to(wrap, { opacity: 1, x: 0, duration: 1.1, ease: 'expo.out' }, 0)
+          .to(img,  { x: 0, scale: 1, duration: 1.1, ease: 'expo.out' }, 0);
+        break;
+
+      case 2: // Fade In From Right
+        gsap.set(wrap, { opacity: 0, x: 80 });
+        gsap.set(img,  { x: -30, scale: 1.2, transformOrigin: 'center center' });
+        tl.to(wrap, { opacity: 1, x: 0, duration: 1.1, ease: 'expo.out' }, 0)
+          .to(img,  { x: 0, scale: 1, duration: 1.1, ease: 'expo.out' }, 0);
+        break;
+
+      case 3: // Fade In From Bottom
+        gsap.set(wrap, { opacity: 0, y: 80 });
+        gsap.set(img,  { y: -30, scale: 1.2, transformOrigin: 'center center' });
+        tl.to(wrap, { opacity: 1, y: 0, duration: 1.1, ease: 'expo.out' }, 0)
+          .to(img,  { y: 0, scale: 1, duration: 1.1, ease: 'expo.out' }, 0);
+        break;
+
+      case 4: // Fade In From Top
+        gsap.set(wrap, { opacity: 0, y: -80 });
+        gsap.set(img,  { y: 30, scale: 1.2, transformOrigin: 'center center' });
+        tl.to(wrap, { opacity: 1, y: 0, duration: 1.1, ease: 'expo.out' }, 0)
+          .to(img,  { y: 0, scale: 1, duration: 1.1, ease: 'expo.out' }, 0);
+        break;
+
+      case 5: // Scale Up
+        gsap.set(wrap, { opacity: 0, scale: 0.7, transformOrigin: 'center center' });
+        tl.to(wrap, { opacity: 1, scale: 1, duration: 1.1, ease: 'expo.out' }, 0);
+        break;
+
+      case 6: // Scale Down
+        gsap.set(wrap, { opacity: 0, scale: 1.25, transformOrigin: 'center center' });
+        tl.to(wrap, { opacity: 1, scale: 1, duration: 1.2, ease: 'expo.out' }, 0);
+        break;
+
+      case 7: // Reveal From Left (clip-path + parallax drift)
+        gsap.set(wrap, { clipPath: 'inset(0 100% 0 0)' });
+        gsap.set(img,  { x: 30, scale: 1.2, transformOrigin: 'center center' });
+        tl.to(wrap, { clipPath: 'inset(0 0% 0 0)', duration: 1.2, ease: 'power2.out' }, 0)
+          .to(img,  { x: 0, scale: 1, duration: 1.2, ease: 'power2.out' }, 0);
+        break;
+
+      case 8: // Reveal From Right
+        gsap.set(wrap, { clipPath: 'inset(0 0 0 100%)' });
+        gsap.set(img,  { x: -30, scale: 1.2, transformOrigin: 'center center' });
+        tl.to(wrap, { clipPath: 'inset(0 0 0 0%)', duration: 1.2, ease: 'power2.out' }, 0)
+          .to(img,  { x: 0, scale: 1, duration: 1.2, ease: 'power2.out' }, 0);
+        break;
+
+      case 9: // Reveal From Bottom
+        gsap.set(wrap, { clipPath: 'inset(100% 0 0 0)' });
+        gsap.set(img,  { y: -30, scale: 1.2, transformOrigin: 'center center' });
+        tl.to(wrap, { clipPath: 'inset(0% 0 0 0)', duration: 1.2, ease: 'power2.out' }, 0)
+          .to(img,  { y: 0, scale: 1, duration: 1.2, ease: 'power2.out' }, 0);
+        break;
+
+      case 10: // Reveal From Top
+        gsap.set(wrap, { clipPath: 'inset(0 0 100% 0)' });
+        gsap.set(img,  { y: 30, scale: 1.2, transformOrigin: 'center center' });
+        tl.to(wrap, { clipPath: 'inset(0 0 0% 0)', duration: 1.2, ease: 'power2.out' }, 0)
+          .to(img,  { y: 0, scale: 1, duration: 1.2, ease: 'power2.out' }, 0);
+        break;
+
+      case 11: // Spring In From Left
+        gsap.set(wrap, { opacity: 0, x: -80 });
+        gsap.set(img,  { x: 30, scale: 1.2, transformOrigin: 'center center' });
+        tl.to(wrap, { opacity: 1, x: 0, duration: 1.6, ease: 'elastic.out(0.8, 0.3)' }, 0)
+          .to(img,  { x: 0, scale: 1, duration: 1.6, ease: 'elastic.out(0.8, 0.3)' }, 0);
+        break;
+
+      case 12: // Spring In From Bottom
+        gsap.set(wrap, { opacity: 0, y: 80 });
+        gsap.set(img,  { y: -30, scale: 1.2, transformOrigin: 'center center' });
+        tl.to(wrap, { opacity: 1, y: 0, duration: 1.6, ease: 'elastic.out(0.8, 0.3)' }, 0)
+          .to(img,  { y: 0, scale: 1, duration: 1.6, ease: 'elastic.out(0.8, 0.3)' }, 0);
+        break;
+
+      case 13: // Bounce In
+        gsap.set(wrap, { opacity: 0, y: -80 });
+        gsap.set(img,  { y: 30, scale: 1.2, transformOrigin: 'center center' });
+        tl.to(wrap, { opacity: 1, y: 0, duration: 1.5, ease: 'bounce.out' }, 0)
+          .to(img,  { y: 0, scale: 1, duration: 1.5, ease: 'bounce.out' }, 0);
+        break;
+
+      case 14: // Blur In From Left
+        gsap.set(wrap, { opacity: 0, x: -80, filter: 'blur(12px)' });
+        gsap.set(img,  { x: 30, scale: 1.2, transformOrigin: 'center center' });
+        tl.to(wrap, { opacity: 1, x: 0, filter: 'blur(0px)', duration: 1.2, ease: 'power2.out' }, 0)
+          .to(img,  { x: 0, scale: 1, duration: 1.2, ease: 'power2.out' }, 0);
+        break;
+
+      case 15: // Blur In From Bottom
+        gsap.set(wrap, { opacity: 0, y: 80, filter: 'blur(12px)' });
+        gsap.set(img,  { y: -30, scale: 1.2, transformOrigin: 'center center' });
+        tl.to(wrap, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.2, ease: 'power2.out' }, 0)
+          .to(img,  { y: 0, scale: 1, duration: 1.2, ease: 'power2.out' }, 0);
+        break;
+
+      case 16: // Blur Reveal
+        gsap.set(wrap, { opacity: 0, filter: 'blur(18px)' });
+        tl.to(wrap, { opacity: 1, filter: 'blur(0px)', duration: 1.5, ease: 'sine.out' }, 0);
+        break;
+
+      case 17: // Zoom Blur
+        gsap.set(wrap, { opacity: 0, scale: 0.88, filter: 'blur(14px)', transformOrigin: 'center center' });
+        tl.to(wrap, { opacity: 1, scale: 1, filter: 'blur(0px)', duration: 1.5, ease: 'power2.out' }, 0);
+        break;
+
+      case 18: // Rotate In
+        gsap.set(wrap, { opacity: 0, rotation: 6, y: 40, transformOrigin: 'center bottom' });
+        tl.to(wrap, { opacity: 1, rotation: 0, y: 0, duration: 1.2, ease: 'expo.out', transformOrigin: 'center bottom' }, 0);
+        break;
+
+      case 19: // Flip In
+        gsap.set(wrap, { scaleX: 0, transformOrigin: 'left center' });
+        tl.to(wrap, { scaleX: 1, duration: 1.1, ease: 'expo.out', transformOrigin: 'left center' }, 0);
+        break;
+
+      case 20: // Drop In
+        gsap.set(wrap, { opacity: 0, y: -80 });
+        gsap.set(img,  { y: 30, scale: 1.2, transformOrigin: 'center center' });
+        tl.to(wrap, { opacity: 1, y: 0, duration: 0.9, ease: 'expo.out' }, 0)
+          .to(img,  { y: 0, scale: 1, duration: 0.9, ease: 'expo.out' }, 0);
+        break;
     }
+  }
 
-    let currentTimelines = {};
-
-    function createAndPlay(id) {
-      resetContainer(id);
-      const container = document.getElementById(`anim${id}`);
-      let tl;
-
-      switch(id) {
-        case 1: // Typing
-          const chars1 = splitText(container);
-          tl = gsapLib.timeline({repeat: -1, repeatDelay: 1.5});
-          tl.from(chars1, {opacity: 0, duration: 0.06, stagger: 0.08});
-          const cursor = document.createElement('span');
-          cursor.textContent = '|';
-          cursor.style.marginLeft = '4px';
-          cursor.style.animation = 'blink 0.8s step-end infinite';
-          container.appendChild(cursor);
-          break;
-
-        case 2:
-          const chars2 = splitText(container);
-          tl = gsapLib.from(chars2, {opacity: 0, stagger: 0.06, duration: 0.8, ease: "power2.out"});
-          break;
-
-        case 3:
-          const chars3 = splitText(container);
-          tl = gsapLib.to(chars3, {scale: 1.08, duration: 1.2, stagger: {each: 0.1, repeat: -1, yoyo: true}, ease: "sine.inOut"});
-          break;
-
-        case 4:
-          const chars4 = splitText(container);
-          tl = gsapLib.from(chars4, {y: -35, duration: 0.8, stagger: 0.05, ease: "bounce.out"});
-          break;
-
-        case 5:
-          const chars5 = splitText(container);
-          tl = gsapLib.fromTo(chars5, {color: "#666"}, {color: "#fff", duration: 1.2, stagger: 0.07});
-          break;
-
-        case 6:
-          const chars6 = splitText(container);
-          const underline = document.createElement('div');
-          underline.style.position = 'absolute';
-          underline.style.bottom = '-6px';
-          underline.style.left = '0';
-          underline.style.height = '3px';
-          underline.style.background = '#0f0';
-          underline.style.width = '0%';
-          container.appendChild(underline);
-          gsapLib.from(chars6, {opacity: 0, y: 15, stagger: 0.05, duration: 0.6});
-          tl = gsapLib.to(underline, {width: '100%', duration: 1.8, ease: "power2.out"});
-          break;
-
-        case 7:
-          const chars7 = splitText(container);
-          tl = gsapLib.from(chars7, {scale: 0.2, opacity: 0, stagger: 0.06, duration: 0.7, ease: "back.out(1.4)"});
-          break;
-
-        case 8:
-          const chars8 = splitText(container);
-          tl = gsapLib.to(chars8, {opacity: 0.35, duration: 1.4, stagger: {each: 0.08, repeat: -1, yoyo: true}, ease: "sine.inOut"});
-          break;
-
-        case 9:
-          const chars9 = splitText(container);
-          tl = gsapLib.from(chars9, {scaleX: 0.1, opacity: 0, stagger: 0.07, duration: 0.9, ease: "power3.out"});
-          break;
-
-        case 10:
-          const bar = document.getElementById('bar');
-          const percent = document.getElementById('progress');
-          tl = gsapLib.to(bar, {
-            width: '100%',
-            duration: 2.5,
-            ease: "power2.inOut",
-            onUpdate: function() {
-              percent.textContent = Math.round(this.progress() * 100) + '%';
-            }
-          });
-          break;
-
-        case 11:
-          const chars11 = splitText(container);
-          tl = gsapLib.to(chars11, {color: "#0ff", duration: 0.4, stagger: 0.08, repeat: -1, repeatDelay: 1.2, yoyo: true});
-          break;
-
-        case 12:
-          const chars12 = splitText(container);
-          tl = gsapLib.from(chars12, {opacity: 0, scale: 0.6, stagger: 0.07, duration: 0.9, ease: "back.out(1.2)"});
-          break;
-
-        case 13:
-          const chars13 = splitText(container);
-          tl = gsapLib.from(chars13, {scaleX: 0.01, opacity: 0.3, stagger: 0.09, duration: 1, ease: "power2.out"});
-          break;
-
-        case 14:
-          const chars14 = splitText(container);
-          tl = gsapLib.from(chars14, {y: 50, opacity: 0, stagger: 0.06, duration: 0.8, ease: "power2.out"});
-          break;
-
-        case 15:
-          const chars15 = splitText(container);
-          tl = gsapLib.to(chars15, {opacity: 0.25, duration: 0.2, stagger: 0.12, repeat: -1, yoyo: true});
-          break;
-
-        case 16:
-          const chars16 = splitText(container);
-          const shimmer = document.createElement('div');
-          shimmer.style.position = 'absolute';
-          shimmer.style.top = '0';
-          shimmer.style.left = '-100%';
-          shimmer.style.width = '40%';
-          shimmer.style.height = '100%';
-          shimmer.style.background = 'linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent)';
-          shimmer.style.pointerEvents = 'none';
-          container.appendChild(shimmer);
-          tl = gsapLib.to(shimmer, {left: '140%', duration: 1.8, repeat: -1, ease: "none"});
-          break;
-
-        case 17:
-          const chars17 = splitText(container);
-          tl = gsapLib.to(chars17, {scale: 1.15, duration: 0.8, stagger: {each: 0.15, repeat: -1, yoyo: true}, ease: "sine.inOut"});
-          break;
-
-        case 18:
-          const chars18 = splitText(container);
-          const wipe = document.createElement('div');
-          wipe.style.position = 'absolute';
-          wipe.style.top = '0';
-          wipe.style.left = '0';
-          wipe.style.width = '0%';
-          wipe.style.height = '100%';
-          wipe.style.background = '#0f0';
-          wipe.style.opacity = '0.25';
-          container.appendChild(wipe);
-          gsapLib.to(wipe, {width: '100%', duration: 1.6, ease: "power2.inOut"});
-          tl = gsapLib.from(chars18, {opacity: 0.4, stagger: 0.05});
-          break;
-
-        case 19:
-          const chars19 = splitText(container);
-          tl = gsapLib.from(chars19, {scale: 0.75, opacity: 0, stagger: 0.06, duration: 0.7, ease: "back.out(1.7)"});
-          break;
-
-        case 20:
-          const dots = document.getElementById('dots');
-          tl = gsapLib.to({}, {
-            duration: 1,
-            repeat: -1,
-            onRepeat: () => {
-              const len = (dots.textContent.length % 3) + 1;
-              dots.textContent = '.'.repeat(len);
-            }
-          });
-          break;
-      }
-
-      currentTimelines[id] = tl;
-      return tl;
+  // Auto-play on load, staggered
+  window.onload = () => {
+    for (let i = 1; i <= 20; i++) {
+      setTimeout(() => play(i), i * 80);
     }
-
-    window.restartAnim = function(id) {
-      if (currentTimelines[id]) {
-        currentTimelines[id].kill();
-      }
-      createAndPlay(id);
-    };
-
-    // Initialize on load
-    window.onload = function() {
-      // Add blink animation style
-      const style = document.createElement('style');
-      style.innerHTML = `@keyframes blink { 50% { opacity: 0; } }`;
-      document.head.appendChild(style);
-
-      // Start all animations with a small delay
-      setTimeout(() => {
-        for (let i = 1; i <= 20; i++) {
-          createAndPlay(i);
-        }
-      }, 300);
-    };
-  </script>
+  };
+</script>
 </body>
 </html>
