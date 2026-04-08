@@ -194,7 +194,7 @@
   <div class="card" id="d3">
     <div class="card-label">Fade In From Bottom</div>
     <div class="media-wrap"><div class="media-box">
-      <img src="https://images.unsplash.com/photo-1454391304501-d42b32ae6f87?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+      <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
     </div></div>
     <button class="replay-btn" onclick="play(3)">Replay</button>
   </div>
@@ -218,7 +218,7 @@
   <div class="card" id="d6">
     <div class="card-label">Scale Down</div>
     <div class="media-wrap"><div class="media-box">
-      <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+      <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
     </div></div>
     <button class="replay-btn" onclick="play(6)">Replay</button>
   </div>
@@ -314,7 +314,7 @@
   <div class="card" id="d18">
     <div class="card-label">Rotate In</div>
     <div class="media-wrap"><div class="media-box">
-      <img src="https://images.unsplash.com/photo-1504703395950-b89145a5425b?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
+      <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
     </div></div>
     <button class="replay-btn" onclick="play(18)">Replay</button>
   </div>
@@ -361,92 +361,146 @@
   // ── Animations ──
   const tls = {};
 
-  function box(n) { return document.querySelector(`#d${n} .media-box`); }
+  function getWrap(n) { return document.querySelector(`#d${n} .media-wrap`); }
+  function getImg(n)  { return document.querySelector(`#d${n} img`); }
+
+  // Parallax helpers: wrap animates directionally, img counter-animates at smaller offset
+  // img starts at scale 1.2 (20% oversized) so counter-offset never shows a gap at edges
 
   function play(n) {
     if (tls[n]) tls[n].kill();
-    const el = box(n);
+    const wrap = getWrap(n);
+    const img  = getImg(n);
+    const tl   = gsap.timeline();
+    tls[n] = tl;
 
     switch(n) {
-      case 1:
-        gsap.set(el, { opacity: 0, x: -60 });
-        tls[n] = gsap.to(el, { opacity: 1, x: 0, duration: 0.7, ease: 'expo.out' });
+      case 1: // Fade In From Left
+        gsap.set(wrap, { opacity: 0, x: -80 });
+        gsap.set(img,  { x: 30, scale: 1.2, transformOrigin: 'center center' });
+        tl.to(wrap, { opacity: 1, x: 0, duration: 1.1, ease: 'expo.out' }, 0)
+          .to(img,  { x: 0, scale: 1, duration: 1.1, ease: 'expo.out' }, 0);
         break;
-      case 2:
-        gsap.set(el, { opacity: 0, x: 60 });
-        tls[n] = gsap.to(el, { opacity: 1, x: 0, duration: 0.7, ease: 'expo.out' });
+
+      case 2: // Fade In From Right
+        gsap.set(wrap, { opacity: 0, x: 80 });
+        gsap.set(img,  { x: -30, scale: 1.2, transformOrigin: 'center center' });
+        tl.to(wrap, { opacity: 1, x: 0, duration: 1.1, ease: 'expo.out' }, 0)
+          .to(img,  { x: 0, scale: 1, duration: 1.1, ease: 'expo.out' }, 0);
         break;
-      case 3:
-        gsap.set(el, { opacity: 0, y: 60 });
-        tls[n] = gsap.to(el, { opacity: 1, y: 0, duration: 0.7, ease: 'expo.out' });
+
+      case 3: // Fade In From Bottom
+        gsap.set(wrap, { opacity: 0, y: 80 });
+        gsap.set(img,  { y: -30, scale: 1.2, transformOrigin: 'center center' });
+        tl.to(wrap, { opacity: 1, y: 0, duration: 1.1, ease: 'expo.out' }, 0)
+          .to(img,  { y: 0, scale: 1, duration: 1.1, ease: 'expo.out' }, 0);
         break;
-      case 4:
-        gsap.set(el, { opacity: 0, y: -60 });
-        tls[n] = gsap.to(el, { opacity: 1, y: 0, duration: 0.7, ease: 'expo.out' });
+
+      case 4: // Fade In From Top
+        gsap.set(wrap, { opacity: 0, y: -80 });
+        gsap.set(img,  { y: 30, scale: 1.2, transformOrigin: 'center center' });
+        tl.to(wrap, { opacity: 1, y: 0, duration: 1.1, ease: 'expo.out' }, 0)
+          .to(img,  { y: 0, scale: 1, duration: 1.1, ease: 'expo.out' }, 0);
         break;
-      case 5:
-        gsap.set(el, { opacity: 0, scale: 0.7, transformOrigin: 'center center' });
-        tls[n] = gsap.to(el, { opacity: 1, scale: 1, duration: 0.7, ease: 'expo.out', transformOrigin: 'center center' });
+
+      case 5: // Scale Up
+        gsap.set(wrap, { opacity: 0, scale: 0.7, transformOrigin: 'center center' });
+        tl.to(wrap, { opacity: 1, scale: 1, duration: 1.1, ease: 'expo.out' }, 0);
         break;
-      case 6:
-        gsap.set(el, { opacity: 0, scale: 1.25, transformOrigin: 'center center' });
-        tls[n] = gsap.to(el, { opacity: 1, scale: 1, duration: 0.8, ease: 'expo.out', transformOrigin: 'center center' });
+
+      case 6: // Scale Down
+        gsap.set(wrap, { opacity: 0, scale: 1.25, transformOrigin: 'center center' });
+        tl.to(wrap, { opacity: 1, scale: 1, duration: 1.2, ease: 'expo.out' }, 0);
         break;
-      case 7:
-        gsap.set(el, { clipPath: 'inset(0 100% 0 0)' });
-        tls[n] = gsap.to(el, { clipPath: 'inset(0 0% 0 0)', duration: 0.8, ease: 'power2.out' });
+
+      case 7: // Reveal From Left (clip-path + parallax drift)
+        gsap.set(wrap, { clipPath: 'inset(0 100% 0 0)' });
+        gsap.set(img,  { x: 30, scale: 1.2, transformOrigin: 'center center' });
+        tl.to(wrap, { clipPath: 'inset(0 0% 0 0)', duration: 1.2, ease: 'power2.out' }, 0)
+          .to(img,  { x: 0, scale: 1, duration: 1.2, ease: 'power2.out' }, 0);
         break;
-      case 8:
-        gsap.set(el, { clipPath: 'inset(0 0 0 100%)' });
-        tls[n] = gsap.to(el, { clipPath: 'inset(0 0 0 0%)', duration: 0.8, ease: 'power2.out' });
+
+      case 8: // Reveal From Right
+        gsap.set(wrap, { clipPath: 'inset(0 0 0 100%)' });
+        gsap.set(img,  { x: -30, scale: 1.2, transformOrigin: 'center center' });
+        tl.to(wrap, { clipPath: 'inset(0 0 0 0%)', duration: 1.2, ease: 'power2.out' }, 0)
+          .to(img,  { x: 0, scale: 1, duration: 1.2, ease: 'power2.out' }, 0);
         break;
-      case 9:
-        gsap.set(el, { clipPath: 'inset(100% 0 0 0)' });
-        tls[n] = gsap.to(el, { clipPath: 'inset(0% 0 0 0)', duration: 0.8, ease: 'power2.out' });
+
+      case 9: // Reveal From Bottom
+        gsap.set(wrap, { clipPath: 'inset(100% 0 0 0)' });
+        gsap.set(img,  { y: -30, scale: 1.2, transformOrigin: 'center center' });
+        tl.to(wrap, { clipPath: 'inset(0% 0 0 0)', duration: 1.2, ease: 'power2.out' }, 0)
+          .to(img,  { y: 0, scale: 1, duration: 1.2, ease: 'power2.out' }, 0);
         break;
-      case 10:
-        gsap.set(el, { clipPath: 'inset(0 0 100% 0)' });
-        tls[n] = gsap.to(el, { clipPath: 'inset(0 0 0% 0)', duration: 0.8, ease: 'power2.out' });
+
+      case 10: // Reveal From Top
+        gsap.set(wrap, { clipPath: 'inset(0 0 100% 0)' });
+        gsap.set(img,  { y: 30, scale: 1.2, transformOrigin: 'center center' });
+        tl.to(wrap, { clipPath: 'inset(0 0 0% 0)', duration: 1.2, ease: 'power2.out' }, 0)
+          .to(img,  { y: 0, scale: 1, duration: 1.2, ease: 'power2.out' }, 0);
         break;
-      case 11:
-        gsap.set(el, { opacity: 0, x: -60 });
-        tls[n] = gsap.to(el, { opacity: 1, x: 0, duration: 1.1, ease: 'elastic.out(0.8, 0.3)' });
+
+      case 11: // Spring In From Left
+        gsap.set(wrap, { opacity: 0, x: -80 });
+        gsap.set(img,  { x: 30, scale: 1.2, transformOrigin: 'center center' });
+        tl.to(wrap, { opacity: 1, x: 0, duration: 1.6, ease: 'elastic.out(0.8, 0.3)' }, 0)
+          .to(img,  { x: 0, scale: 1, duration: 1.6, ease: 'elastic.out(0.8, 0.3)' }, 0);
         break;
-      case 12:
-        gsap.set(el, { opacity: 0, y: 60 });
-        tls[n] = gsap.to(el, { opacity: 1, y: 0, duration: 1.1, ease: 'elastic.out(0.8, 0.3)' });
+
+      case 12: // Spring In From Bottom
+        gsap.set(wrap, { opacity: 0, y: 80 });
+        gsap.set(img,  { y: -30, scale: 1.2, transformOrigin: 'center center' });
+        tl.to(wrap, { opacity: 1, y: 0, duration: 1.6, ease: 'elastic.out(0.8, 0.3)' }, 0)
+          .to(img,  { y: 0, scale: 1, duration: 1.6, ease: 'elastic.out(0.8, 0.3)' }, 0);
         break;
-      case 13:
-        gsap.set(el, { opacity: 0, y: -60 });
-        tls[n] = gsap.to(el, { opacity: 1, y: 0, duration: 1.0, ease: 'bounce.out' });
+
+      case 13: // Bounce In
+        gsap.set(wrap, { opacity: 0, y: -80 });
+        gsap.set(img,  { y: 30, scale: 1.2, transformOrigin: 'center center' });
+        tl.to(wrap, { opacity: 1, y: 0, duration: 1.5, ease: 'bounce.out' }, 0)
+          .to(img,  { y: 0, scale: 1, duration: 1.5, ease: 'bounce.out' }, 0);
         break;
-      case 14:
-        gsap.set(el, { opacity: 0, x: -40, filter: 'blur(12px)' });
-        tls[n] = gsap.to(el, { opacity: 1, x: 0, filter: 'blur(0px)', duration: 0.8, ease: 'power2.out' });
+
+      case 14: // Blur In From Left
+        gsap.set(wrap, { opacity: 0, x: -80, filter: 'blur(12px)' });
+        gsap.set(img,  { x: 30, scale: 1.2, transformOrigin: 'center center' });
+        tl.to(wrap, { opacity: 1, x: 0, filter: 'blur(0px)', duration: 1.2, ease: 'power2.out' }, 0)
+          .to(img,  { x: 0, scale: 1, duration: 1.2, ease: 'power2.out' }, 0);
         break;
-      case 15:
-        gsap.set(el, { opacity: 0, y: 40, filter: 'blur(12px)' });
-        tls[n] = gsap.to(el, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.8, ease: 'power2.out' });
+
+      case 15: // Blur In From Bottom
+        gsap.set(wrap, { opacity: 0, y: 80, filter: 'blur(12px)' });
+        gsap.set(img,  { y: -30, scale: 1.2, transformOrigin: 'center center' });
+        tl.to(wrap, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.2, ease: 'power2.out' }, 0)
+          .to(img,  { y: 0, scale: 1, duration: 1.2, ease: 'power2.out' }, 0);
         break;
-      case 16:
-        gsap.set(el, { opacity: 0, filter: 'blur(18px)' });
-        tls[n] = gsap.to(el, { opacity: 1, filter: 'blur(0px)', duration: 1.0, ease: 'sine.out' });
+
+      case 16: // Blur Reveal
+        gsap.set(wrap, { opacity: 0, filter: 'blur(18px)' });
+        tl.to(wrap, { opacity: 1, filter: 'blur(0px)', duration: 1.5, ease: 'sine.out' }, 0);
         break;
-      case 17:
-        gsap.set(el, { opacity: 0, scale: 0.88, filter: 'blur(14px)', transformOrigin: 'center center' });
-        tls[n] = gsap.to(el, { opacity: 1, scale: 1, filter: 'blur(0px)', duration: 1.0, ease: 'power2.out', transformOrigin: 'center center' });
+
+      case 17: // Zoom Blur
+        gsap.set(wrap, { opacity: 0, scale: 0.88, filter: 'blur(14px)', transformOrigin: 'center center' });
+        tl.to(wrap, { opacity: 1, scale: 1, filter: 'blur(0px)', duration: 1.5, ease: 'power2.out' }, 0);
         break;
-      case 18:
-        gsap.set(el, { opacity: 0, rotation: 6, y: 40, transformOrigin: 'center bottom' });
-        tls[n] = gsap.to(el, { opacity: 1, rotation: 0, y: 0, duration: 0.8, ease: 'expo.out', transformOrigin: 'center bottom' });
+
+      case 18: // Rotate In
+        gsap.set(wrap, { opacity: 0, rotation: 6, y: 40, transformOrigin: 'center bottom' });
+        tl.to(wrap, { opacity: 1, rotation: 0, y: 0, duration: 1.2, ease: 'expo.out', transformOrigin: 'center bottom' }, 0);
         break;
-      case 19:
-        gsap.set(el, { scaleX: 0, transformOrigin: 'left center' });
-        tls[n] = gsap.to(el, { scaleX: 1, duration: 0.7, ease: 'expo.out', transformOrigin: 'left center' });
+
+      case 19: // Flip In
+        gsap.set(wrap, { scaleX: 0, transformOrigin: 'left center' });
+        tl.to(wrap, { scaleX: 1, duration: 1.1, ease: 'expo.out', transformOrigin: 'left center' }, 0);
         break;
-      case 20:
-        gsap.set(el, { opacity: 0, y: -80 });
-        tls[n] = gsap.to(el, { opacity: 1, y: 0, duration: 0.6, ease: 'expo.out' });
+
+      case 20: // Drop In
+        gsap.set(wrap, { opacity: 0, y: -80 });
+        gsap.set(img,  { y: 30, scale: 1.2, transformOrigin: 'center center' });
+        tl.to(wrap, { opacity: 1, y: 0, duration: 0.9, ease: 'expo.out' }, 0)
+          .to(img,  { y: 0, scale: 1, duration: 0.9, ease: 'expo.out' }, 0);
         break;
     }
   }
