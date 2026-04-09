@@ -737,11 +737,11 @@
           .to(wrap, { clipPath: 'inset(0% 0 0% 0)', duration: 1.6, ease: 'expo.out' }, '>');
         break;
 
-      case 35: { // Slide Down, Then Expand — strip slides in from top, expands left and right simultaneously
-        gsap.set(wrap, { y: '-100%', clipPath: 'inset(0 42.5% 0 42.5%)' });
+      case 35: { // Slide Down, Then Expand — thin strip grows downward from top center, then expands left and right
+        gsap.set(wrap, { x: 0, y: 0, clipPath: 'inset(0% 47% 100% 47%)' });
         gsap.set(img,  { x: 0, y: 0, scale: 1 });
-        const proxy35 = { v: 42.5 };
-        tl.to(wrap, { y: 0, duration: 0.7, ease: 'expo.out' }, 0)
+        const proxy35 = { v: 47 };
+        tl.to(wrap, { clipPath: 'inset(0% 47% 0% 47%)', duration: 0.7, ease: 'expo.out' }, 0)
           .to(proxy35, {
             v: 0, duration: 0.7, ease: 'expo.out',
             onUpdate: () => { wrap.style.clipPath = `inset(0% ${proxy35.v}% 0% ${proxy35.v}%)`; }
