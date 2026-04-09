@@ -720,9 +720,10 @@
 
       case 33: { // Grow Right, Then Expand — strip starts left-center, sweeps right, then opens up and down simultaneously
         gsap.set(wrap, { clipPath: 'inset(47% 100% 47% 0%)' });
-        gsap.set(img,  { x: 0, y: 0, scale: 1 });
+        gsap.set(img,  { x: '-41.7%', y: 0, scale: 1 });
         const proxy33 = { v: 47 };
         tl.to(wrap, { clipPath: 'inset(47% 0% 47% 0%)', duration: 0.7, ease: 'expo.out' }, 0)
+          .to(img,  { x: 0, duration: 0.7, ease: 'expo.out' }, 0)
           .to(proxy33, {
             v: 0, duration: 0.7, ease: 'expo.out',
             onUpdate: () => { wrap.style.clipPath = `inset(${proxy33.v}% 0% ${proxy33.v}% 0%)`; }
