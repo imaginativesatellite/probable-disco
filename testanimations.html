@@ -718,13 +718,17 @@
 
       // ── Sequential two-step dual-motion animations ──
 
-      case 33: // Grow Right, Then Expand — strip starts left-center, sweeps right, then opens up and down simultaneously
+      case 33: { // Grow Right, Then Expand — strip starts left-center, sweeps right, then opens up and down simultaneously
         gsap.set(wrap, { clipPath: 'inset(47% 100% 47% 0%)' });
         gsap.set(img,  { x: 0, y: 0, scale: 1 });
-        tl.to(wrap,  { clipPath: 'inset(47% 0% 47% 0%)', duration: 0.7, ease: 'expo.out' }, 0)
-          .set(wrap,  { clipPath: 'inset(47% 0% 47% 0%)' })
-          .to(wrap,   { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.7, ease: 'expo.out' });
+        const proxy33 = { v: 47 };
+        tl.to(wrap, { clipPath: 'inset(47% 0% 47% 0%)', duration: 0.7, ease: 'expo.out' }, 0)
+          .to(proxy33, {
+            v: 0, duration: 0.7, ease: 'expo.out',
+            onUpdate: () => { wrap.style.clipPath = `inset(${proxy33.v}% 0% ${proxy33.v}% 0%)`; }
+          }, '>');
         break;
+      }
 
       case 34: // Letterbox Open — snaps visible as center band, then expands to full frame
         gsap.set(wrap, { clipPath: 'inset(42% 0 42% 0)', opacity: 0 });
