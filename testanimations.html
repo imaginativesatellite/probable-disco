@@ -449,7 +449,7 @@
   </div>
 
   <div class="card" id="d35">
-    <div class="card-label">Slide In, Then Expand</div>
+    <div class="card-label">Slide Down, Then Expand</div>
     <div class="media-wrap"><div class="media-box">
       <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&h=450&fit=crop&auto=format&q=80" alt="" loading="lazy" />
     </div></div>
@@ -737,12 +737,17 @@
           .to(wrap, { clipPath: 'inset(0% 0 0% 0)', duration: 1.6, ease: 'expo.out' }, '>');
         break;
 
-      case 35: // Slide In, Then Expand — center sliver enters from left, clip opens symmetrically
-        gsap.set(wrap, { x: '-100%', clipPath: 'inset(0 42.5% 0 42.5%)' });
+      case 35: { // Slide Down, Then Expand — strip slides in from top, expands left and right simultaneously
+        gsap.set(wrap, { y: '-100%', clipPath: 'inset(0 42.5% 0 42.5%)' });
         gsap.set(img,  { x: 0, y: 0, scale: 1 });
-        tl.to(wrap, { x: 0, duration: 0.7, ease: 'expo.out' }, 0)
-          .to(wrap, { clipPath: 'inset(0 0% 0 0%)', duration: 0.8, ease: 'expo.out' }, '>');
+        const proxy35 = { v: 42.5 };
+        tl.to(wrap, { y: 0, duration: 0.7, ease: 'expo.out' }, 0)
+          .to(proxy35, {
+            v: 0, duration: 0.7, ease: 'expo.out',
+            onUpdate: () => { wrap.style.clipPath = `inset(0% ${proxy35.v}% 0% ${proxy35.v}%)`; }
+          }, '>');
         break;
+      }
 
       case 36: // Drop, Then Pivot — drops from above while tilted, then rotates to straight
         gsap.set(wrap, { y: -100, rotation: -10, opacity: 0, transformOrigin: 'center top' });
