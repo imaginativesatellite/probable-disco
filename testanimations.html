@@ -718,11 +718,10 @@
 
       // ── Sequential two-step dual-motion animations ──
 
-      case 33: // Grow Right, Then Up, Then Down — strip starts left-center, sweeps right, then opens vertically in sequence
+      case 33: // Grow Right, Then Expand — strip starts left-center, sweeps right, then opens up and down simultaneously
         gsap.set(wrap, { clipPath: 'inset(47% 100% 47% 0%)' });
         gsap.set(img,  { x: 0, y: 0, scale: 1 });
         tl.to(wrap, { clipPath: 'inset(47% 0% 47% 0%)', duration: 0.7, ease: 'expo.out' }, 0)
-          .to(wrap, { clipPath: 'inset(0% 0% 47% 0%)', duration: 0.7, ease: 'expo.out' }, '>')
           .to(wrap, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.7, ease: 'expo.out' }, '>');
         break;
 
