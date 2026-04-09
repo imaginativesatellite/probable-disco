@@ -738,13 +738,17 @@
         break;
 
       case 35: { // Slide Down, Then Expand — thin strip grows downward from top center, then expands left and right
-        gsap.set(wrap, { x: 0, y: 0, clipPath: 'inset(0% 47% 100% 47%)' });
+        gsap.set(wrap, { x: 0, y: 0, clipPath: 'inset(0% 48% 100% 48%)' });
         gsap.set(img,  { x: 0, y: 0, scale: 1 });
-        const proxy35 = { v: 47 };
-        tl.to(wrap, { clipPath: 'inset(0% 47% 0% 47%)', duration: 0.7, ease: 'expo.out' }, 0)
-          .to(proxy35, {
+        const proxy35a = { v: 100 };
+        const proxy35b = { v: 48 };
+        tl.to(proxy35a, {
             v: 0, duration: 0.7, ease: 'expo.out',
-            onUpdate: () => { wrap.style.clipPath = `inset(0% ${proxy35.v}% 0% ${proxy35.v}%)`; }
+            onUpdate: () => { wrap.style.clipPath = `inset(0% 48% ${proxy35a.v}% 48%)`; }
+          }, 0)
+          .to(proxy35b, {
+            v: 0, duration: 0.7, ease: 'expo.out',
+            onUpdate: () => { wrap.style.clipPath = `inset(0% ${proxy35b.v}% 0% ${proxy35b.v}%)`; }
           }, '>');
         break;
       }
