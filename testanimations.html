@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Media Entrance Animations | Lunamations</title>
+  <title>Media Entrance Animations | GSAP</title>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   <style>
     :root {
       --bg: #0e0e0e;
@@ -27,22 +28,34 @@
 
     /* ── Logo ── */
     .logo {
-      position: fixed;
+      position: absolute;
       top: 24px; left: 24px;
       z-index: 1001;
       font-size: 14px;
       font-weight: 700;
       letter-spacing: 2px;
-      color: var(--text);
+      color: #88CE02;
       text-decoration: none;
       height: 48px;
       display: flex;
       align-items: center;
+      gap: 10px;
+    }
+    .logo-icon {
+      width: 32px; height: 32px;
+      background: #88CE02;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .logo-icon svg {
+      width: 18px; height: 18px;
+      color: #0e0e0e; stroke: #0e0e0e;
     }
 
     /* ── Hamburger ── */
     .hamburger-btn {
-      position: fixed;
+      position: absolute;
       top: 24px; right: 24px;
       width: 48px; height: 48px;
       background: none; border: none;
@@ -156,7 +169,10 @@
 </head>
 <body>
 
-<a href="index.html" class="logo">LUNAMATIONS</a>
+<a href="index.html" class="logo">
+  <span class="logo-icon"><i data-lucide="gamepad-directional"></i></span>
+  GSAP
+</a>
 
 <button class="hamburger-btn" id="hamburger-btn">
   <span></span><span></span><span></span>
@@ -459,6 +475,8 @@
 </div>
 
 <script>
+  lucide.createIcons();
+
   // ── Menu ──
   const hamburgerBtn = document.getElementById('hamburger-btn');
   const menuOverlay  = document.getElementById('menu-overlay');
