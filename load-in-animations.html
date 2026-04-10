@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Entrance Animations | Lunamations</title>
+  <title>Entrance Animations | GSAP</title>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/SplitText.min.js"></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
@@ -143,11 +143,28 @@
       font-size: 14px;
       font-weight: 700;
       letter-spacing: 2px;
-      color: var(--text);
+      color: #88CE02;
       text-decoration: none;
       height: 48px;
       display: flex;
       align-items: center;
+      gap: 10px;
+    }
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: #88CE02;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .logo-icon svg {
+      width: 18px;
+      height: 18px;
+      color: #0e0e0e;
+      stroke: #0e0e0e;
     }
 
     .slideshow-container {
@@ -385,7 +402,10 @@
 <body>
 
 <!-- Logo -->
-<a href="index.html" class="logo">LUNAMATIONS</a>
+<a href="index.html" class="logo">
+  <span class="logo-icon"><i data-lucide="gamepad-directional"></i></span>
+  GSAP
+</a>
 
 <!-- Hamburger Menu Button -->
 <button class="hamburger-btn" id="hamburger-btn">
