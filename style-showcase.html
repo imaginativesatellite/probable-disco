@@ -621,6 +621,331 @@
     }
     .wellness-btn-ghost:hover { border-color: #8b7355; }
 
+    /* ═══════════════════════════════════════
+       SLIDE 5 — FILM / CINEMATIC
+    ═══════════════════════════════════════ */
+    .slide-film {
+      background: #080808;
+      align-items: flex-start;
+      justify-content: flex-start;
+      overflow: hidden;
+    }
+    .film-curtain {
+      position: absolute;
+      inset: 0;
+      background: #080808;
+      z-index: 5;
+      pointer-events: none;
+    }
+    .film-inner {
+      width: 100%;
+      height: 100%;
+      padding: clamp(52px, 8vh, 96px) clamp(28px, 6vw, 80px) clamp(32px, 5vh, 56px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      z-index: 1;
+    }
+    .film-eyebrow {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(232, 215, 190, 0.28);
+    }
+    .film-headline {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(52px, 9.5vw, 126px);
+      font-weight: 700;
+      line-height: 1.0;
+      letter-spacing: -0.025em;
+      color: #ede8e0;
+    }
+    .film-line-wrap { overflow: hidden; display: block; }
+    .film-line { display: block; }
+    .film-amber { color: #e8a245; font-style: italic; }
+    .film-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .film-cta-btn {
+      font-family: inherit;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #ede8e0;
+      background: transparent;
+      border: 1px solid rgba(232, 220, 195, 0.2);
+      padding: 12px 24px;
+      cursor: pointer;
+      transition: border-color 0.4s;
+    }
+    .film-cta-btn:hover { border-color: #e8a245; }
+    .film-credits {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(232, 215, 190, 0.18);
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE 6 — BRUTALIST
+    ═══════════════════════════════════════ */
+    .slide-brutalist {
+      background: #eeebe4;
+      align-items: flex-start;
+      justify-content: flex-start;
+      overflow: hidden;
+    }
+    .brutalist-inner {
+      width: 100%;
+      height: 100%;
+      padding: clamp(52px, 8vh, 96px) clamp(28px, 6vw, 72px) clamp(32px, 5vh, 52px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .brutalist-hr {
+      width: 100%;
+      height: 2px;
+      background: #111;
+      transform-origin: left center;
+      flex-shrink: 0;
+    }
+    .brutalist-hr-top { margin-bottom: clamp(18px, 3vh, 40px); }
+    .brutalist-hr-bottom { margin-top: clamp(18px, 3vh, 40px); }
+    .brutalist-headline {
+      font-family: 'Bebas Neue', Impact, 'Arial Black', sans-serif;
+      font-size: clamp(56px, 11vw, 148px);
+      font-weight: 400;
+      line-height: 0.88;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      color: #111;
+    }
+    .brutalist-accent { color: #f03c1f; font-style: italic; }
+    .brutalist-footer {
+      display: flex;
+      align-items: center;
+      gap: clamp(14px, 3vw, 32px);
+      margin-top: clamp(18px, 3vh, 32px);
+      flex-wrap: wrap;
+    }
+    .brutalist-tag {
+      font-family: 'Courier New', 'Lucida Console', monospace;
+      font-size: clamp(9px, 1vw, 11px);
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #888;
+    }
+    .brutalist-tag.b-red { color: #f03c1f; }
+
+    /* ═══════════════════════════════════════
+       SLIDE 7 — NEON / CYBERPUNK
+    ═══════════════════════════════════════ */
+    .slide-neon {
+      background: #03030f;
+      overflow: hidden;
+    }
+    .neon-scan {
+      position: absolute;
+      left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #00f5ff 20%, #bf5af2 50%, #00f5ff 80%, transparent);
+      box-shadow: 0 0 18px 5px rgba(0, 245, 255, 0.45);
+      top: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+    .neon-inner {
+      text-align: center;
+      max-width: 860px;
+      width: 100%;
+      padding: 80px 24px 100px;
+      position: relative;
+      z-index: 1;
+    }
+    .neon-eyebrow {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: rgba(0, 245, 255, 0.28);
+      margin-bottom: 24px;
+    }
+    .neon-h1 {
+      font-family: 'Bebas Neue', Impact, sans-serif;
+      font-size: clamp(80px, 16vw, 200px);
+      font-weight: 400;
+      line-height: 0.85;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #ff2d7f;
+    }
+    .neon-h2 {
+      font-family: 'Bebas Neue', Impact, sans-serif;
+      font-size: clamp(80px, 16vw, 200px);
+      font-weight: 400;
+      line-height: 0.85;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #00f5ff;
+      margin-bottom: 44px;
+    }
+    .neon-footer {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .neon-tag {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.18);
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE 8 — ARCHITECTURE / 3D SPATIAL
+    ═══════════════════════════════════════ */
+    .slide-arch {
+      background: #f4f3f0;
+      padding: 80px 24px 100px;
+      justify-content: center;
+      align-items: center;
+    }
+    .arch-inner {
+      max-width: 760px;
+      width: 100%;
+    }
+    .arch-eyebrow {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #bbb;
+      margin-bottom: clamp(18px, 3vh, 36px);
+    }
+    .arch-headline-wrap {
+      perspective: 900px;
+      margin-bottom: 28px;
+      overflow: hidden;
+    }
+    .arch-headline {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(36px, 5.5vw, 72px);
+      font-weight: 700;
+      line-height: 1.12;
+      letter-spacing: -0.025em;
+      color: #1a1a1a;
+    }
+    .arch-rule {
+      width: 60px;
+      height: 2px;
+      background: #1a1a1a;
+      transform-origin: left center;
+      margin-bottom: 22px;
+    }
+    .arch-tags {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .arch-tag {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: #999;
+    }
+    .arch-tag-dot {
+      width: 3px;
+      height: 3px;
+      background: #ccc;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE 9 — PORTFOLIO / SPLIT REVEAL
+    ═══════════════════════════════════════ */
+    .slide-portfolio {
+      background: #111;
+      overflow: hidden;
+    }
+    .port-panel {
+      position: absolute;
+      left: 0; right: 0;
+      height: 50.5%;
+      z-index: 5;
+      background: #e8e0d2;
+      pointer-events: none;
+    }
+    .port-panel-top { top: 0; }
+    .port-panel-bottom { bottom: 0; }
+    .port-inner {
+      text-align: center;
+      max-width: 680px;
+      width: 100%;
+      padding: 80px 24px 100px;
+      position: relative;
+      z-index: 1;
+    }
+    .port-eyebrow {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.2);
+      margin-bottom: 24px;
+    }
+    .port-name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(46px, 8.5vw, 106px);
+      font-weight: 700;
+      font-style: italic;
+      line-height: 1.0;
+      color: #ede8de;
+      margin-bottom: 16px;
+    }
+    .port-role {
+      font-size: clamp(12px, 1.3vw, 13px);
+      color: rgba(255, 255, 255, 0.28);
+      letter-spacing: 0.1em;
+      margin-bottom: 48px;
+    }
+    .port-works {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      text-align: left;
+      max-width: 340px;
+      margin: 0 auto;
+    }
+    .port-work-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.26);
+      letter-spacing: 0.04em;
+      padding: 13px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .port-work-num {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.14);
+      flex-shrink: 0;
+    }
+
     /* ── Misc ── */
     @media (max-width: 400px) {
       .logo-text { display: none; }
@@ -741,6 +1066,97 @@
     </div>
   </div>
 
+  <!-- Slide 5: Film / Cinematic -->
+  <div class="slide slide-film" id="slide-5">
+    <div class="film-curtain"></div>
+    <div class="film-inner">
+      <p class="fi-eyebrow film-eyebrow">A24 · MMXXVI · Production</p>
+      <div class="fi-headline film-headline">
+        <div class="film-line-wrap"><span class="film-line">Where</span></div>
+        <div class="film-line-wrap"><span class="film-line">Darkness</span></div>
+        <div class="film-line-wrap"><span class="film-line film-amber">Breathes.</span></div>
+      </div>
+      <div class="film-bottom">
+        <button class="fi-cta film-cta-btn">View Reel ↗</button>
+        <span class="fi-credits film-credits">Dir. Marcus Bell · DoP. Yau Wing</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 6: Brutalist -->
+  <div class="slide slide-brutalist" id="slide-6">
+    <div class="brutalist-inner">
+      <div class="br-hr-top brutalist-hr brutalist-hr-top"></div>
+      <h1 class="br-headline brutalist-headline">Nothing<br>Works<br>Until It<br><span class="brutalist-accent">Does.</span></h1>
+      <div class="br-hr-bottom brutalist-hr brutalist-hr-bottom"></div>
+      <div class="br-footer brutalist-footer">
+        <span class="brutalist-tag b-red">Studio · 2026</span>
+        <span class="brutalist-tag">02–08 Launch</span>
+        <span class="brutalist-tag">↗ Enter Site</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 7: Neon / Cyberpunk -->
+  <div class="slide slide-neon" id="slide-7">
+    <div class="neon-scan"></div>
+    <div class="neon-inner">
+      <p class="neo-eyebrow neon-eyebrow">Enter The Grid</p>
+      <h1 class="neo-h1 neon-h1">NEON</h1>
+      <h2 class="neo-h2 neon-h2">REBORN</h2>
+      <div class="neon-footer">
+        <span class="neo-tag neon-tag">Play</span>
+        <span class="neo-tag neon-tag">·</span>
+        <span class="neo-tag neon-tag">Explore</span>
+        <span class="neo-tag neon-tag">·</span>
+        <span class="neo-tag neon-tag">Experience</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 8: Architecture / 3D Spatial -->
+  <div class="slide slide-arch" id="slide-8">
+    <div class="arch-inner">
+      <p class="ar-eyebrow arch-eyebrow">Spatial Design Studio</p>
+      <div class="arch-headline-wrap">
+        <h1 class="ar-headline arch-headline">Building Spaces<br>That Endure.</h1>
+      </div>
+      <div class="ar-rule arch-rule"></div>
+      <div class="arch-tags">
+        <span class="ar-tag arch-tag">Architecture</span>
+        <span class="ar-dot arch-tag-dot"></span>
+        <span class="ar-tag arch-tag">Interiors</span>
+        <span class="ar-dot arch-tag-dot"></span>
+        <span class="ar-tag arch-tag">Urban Planning</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 9: Portfolio / Split Reveal -->
+  <div class="slide slide-portfolio" id="slide-9">
+    <div class="port-panel port-panel-top"></div>
+    <div class="port-panel port-panel-bottom"></div>
+    <div class="port-inner">
+      <p class="po-eyebrow port-eyebrow">Selected Work · 2026</p>
+      <h1 class="po-name port-name">Alex Mercer</h1>
+      <p class="po-role port-role">Art Director &amp; Creative Technologist</p>
+      <div class="port-works">
+        <div class="po-work port-work-item">
+          <span class="port-work-num">01</span>
+          <span>Brand Identity · Studio Nox</span>
+        </div>
+        <div class="po-work port-work-item">
+          <span class="port-work-num">02</span>
+          <span>Motion Design · Arc Labs</span>
+        </div>
+        <div class="po-work port-work-item">
+          <span class="port-work-num">03</span>
+          <span>Web Experience · Luminary</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <!-- Navigation Controls -->
@@ -751,7 +1167,7 @@
   <div class="nav-divider"></div>
   <div class="nav-info">
     <span class="nav-style-name" id="style-name">Luxury Fashion</span>
-    <span class="nav-counter"><span id="current-slide">1</span> / 5</span>
+    <span class="nav-counter"><span id="current-slide">1</span> / 10</span>
   </div>
   <div class="nav-divider"></div>
   <button class="nav-btn" id="replay-btn" title="Replay (R)">
@@ -762,7 +1178,7 @@
   </button>
 </div>
 
-<span class="version">v1</span>
+<span class="version">v2</span>
 
 <script>
 gsap.registerPlugin(SplitText);
@@ -935,6 +1351,159 @@ const SLIDES = [
         .to(el.querySelector('.w-body'),    { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.15, ease: 'power2.out' }, 0.8)
         .to(el.querySelector('.w-btn-p'),   { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.0,  ease: 'power2.out' }, 1.15)
         .to(el.querySelector('.w-btn-g'),   { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.0,  ease: 'power2.out' }, 1.32);
+      return tl;
+    }
+  },
+
+  // ── 5: Film / Cinematic ──────────────────────────────────
+  {
+    name: 'Film / Cinematic',
+    theme: 'dark',
+
+    prepare(el) {
+      gsap.set(el.querySelector('.film-curtain'), { y: '0%' });
+      gsap.set(el.querySelectorAll('.film-line'), { y: '105%' });
+      gsap.set(el.querySelector('.fi-eyebrow'), { opacity: 0 });
+      gsap.set(el.querySelector('.fi-cta'), { opacity: 0, x: 12 });
+      gsap.set(el.querySelector('.fi-credits'), { opacity: 0 });
+    },
+
+    animate(el) {
+      const tl = gsap.timeline();
+      tl.to(el.querySelector('.film-curtain'), { y: '-101%', duration: 1.0, ease: 'power3.inOut' }, 0)
+        .to(el.querySelector('.fi-eyebrow'), { opacity: 1, duration: 0.5, ease: 'power2.out' }, 0.35)
+        .to(el.querySelectorAll('.film-line'), { y: '0%', duration: 0.95, ease: 'power4.out', stagger: 0.16 }, 0.6)
+        .to(el.querySelector('.fi-cta'), { opacity: 1, x: 0, duration: 0.5, ease: 'power2.out' }, 1.15)
+        .to(el.querySelector('.fi-credits'), { opacity: 1, duration: 0.5, ease: 'power2.out' }, 1.35);
+      return tl;
+    }
+  },
+
+  // ── 6: Brutalist ─────────────────────────────────────────
+  {
+    name: 'Brutalist',
+    theme: 'light',
+
+    prepare(el) {
+      if (el._st) { el._st.revert(); el._st = null; }
+      el._st = new SplitText(el.querySelector('.br-headline'), { type: 'lines' });
+      gsap.set(el.querySelector('.br-hr-top'), { scaleX: 0 });
+      gsap.set(el.querySelector('.br-hr-bottom'), { scaleX: 0 });
+      el._st.lines.forEach((line, i) => {
+        gsap.set(line, { x: i % 2 === 0 ? -700 : 700, opacity: 0 });
+      });
+      gsap.set(el.querySelector('.br-footer'), { opacity: 0, y: 14 });
+    },
+
+    animate(el) {
+      const tl = gsap.timeline({
+        onComplete() { if (el._st) { el._st.revert(); el._st = null; } }
+      });
+      tl.to(el.querySelector('.br-hr-top'), { scaleX: 1, duration: 0.55, ease: 'power3.inOut' }, 0);
+      el._st.lines.forEach((line, i) => {
+        tl.to(line, { x: 0, opacity: 1, duration: 0.65, ease: 'expo.out' }, 0.08 + i * 0.07);
+      });
+      tl.to(el.querySelector('.br-hr-bottom'), { scaleX: 1, duration: 0.55, ease: 'power3.inOut' }, 0.3)
+        .to(el.querySelector('.br-footer'), { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, 0.55);
+      return tl;
+    }
+  },
+
+  // ── 7: Neon / Cyberpunk ──────────────────────────────────
+  {
+    name: 'Neon / Cyberpunk',
+    theme: 'dark',
+
+    prepare(el) {
+      if (el._st1) { el._st1.revert(); el._st1 = null; }
+      if (el._st2) { el._st2.revert(); el._st2 = null; }
+      el._st1 = new SplitText(el.querySelector('.neo-h1'), { type: 'chars' });
+      el._st2 = new SplitText(el.querySelector('.neo-h2'), { type: 'chars' });
+      gsap.set(el.querySelector('.neon-scan'), { top: '-4px' });
+      gsap.set(el.querySelector('.neo-eyebrow'), { opacity: 0 });
+      gsap.set([...el._st1.chars, ...el._st2.chars], { opacity: 0 });
+      gsap.set(el.querySelectorAll('.neo-tag'), { opacity: 0 });
+    },
+
+    animate(el) {
+      const allChars = [...el._st1.chars, ...el._st2.chars];
+      const tl = gsap.timeline({
+        onComplete() {
+          if (el._st1) { el._st1.revert(); el._st1 = null; }
+          if (el._st2) { el._st2.revert(); el._st2 = null; }
+        }
+      });
+      tl.to(el.querySelector('.neon-scan'), { top: '102%', duration: 0.85, ease: 'none' }, 0)
+        .to(el.querySelector('.neo-eyebrow'), { opacity: 1, duration: 0.4 }, 0.15)
+        .to(allChars, {
+          opacity: 1,
+          duration: 0.001,
+          ease: 'none',
+          stagger: { each: 0.045, from: 'random' }
+        }, 0.3)
+        .to(el.querySelectorAll('.neo-tag'), {
+          opacity: 1, duration: 0.35, stagger: 0.09
+        }, 0.95);
+      return tl;
+    }
+  },
+
+  // ── 8: Architecture / 3D Spatial ────────────────────────
+  {
+    name: 'Architecture',
+    theme: 'light',
+
+    prepare(el) {
+      if (el._st) { el._st.revert(); el._st = null; }
+      el._st = new SplitText(el.querySelector('.ar-headline'), { type: 'words' });
+      gsap.set(el.querySelector('.ar-eyebrow'), { opacity: 0, y: 14 });
+      gsap.set(el._st.words, { opacity: 0, rotateX: -90, transformOrigin: '50% 100% -10px' });
+      gsap.set(el.querySelector('.ar-rule'), { scaleX: 0, transformOrigin: 'left center' });
+      gsap.set(el.querySelectorAll('.ar-tag, .ar-dot'), { opacity: 0 });
+    },
+
+    animate(el) {
+      const tl = gsap.timeline({
+        onComplete() { if (el._st) { el._st.revert(); el._st = null; } }
+      });
+      tl.to(el.querySelector('.ar-eyebrow'), { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 0)
+        .to(el._st.words, {
+          opacity: 1, rotateX: 0,
+          duration: 0.72, ease: 'power3.out',
+          stagger: { each: 0.1 }
+        }, 0.18)
+        .to(el.querySelector('.ar-rule'), { scaleX: 1, duration: 0.65, ease: 'power2.inOut' }, 0.65)
+        .to(el.querySelectorAll('.ar-tag, .ar-dot'), {
+          opacity: 1, duration: 0.4, stagger: 0.08
+        }, 0.88);
+      return tl;
+    }
+  },
+
+  // ── 9: Portfolio / Split Reveal ──────────────────────────
+  {
+    name: 'Portfolio',
+    theme: 'dark',
+
+    prepare(el) {
+      gsap.set(el.querySelector('.port-panel-top'), { y: '0%' });
+      gsap.set(el.querySelector('.port-panel-bottom'), { y: '0%' });
+      gsap.set(el.querySelector('.po-eyebrow'), { opacity: 0 });
+      gsap.set(el.querySelector('.po-name'), { opacity: 0, y: 55 });
+      gsap.set(el.querySelector('.po-role'), { opacity: 0, y: 18 });
+      gsap.set(el.querySelectorAll('.po-work'), { opacity: 0, x: -18 });
+    },
+
+    animate(el) {
+      const tl = gsap.timeline();
+      tl.to(el.querySelector('.port-panel-top'),    { y: '-101%', duration: 0.95, ease: 'power3.inOut' }, 0)
+        .to(el.querySelector('.port-panel-bottom'),  { y: '101%',  duration: 0.95, ease: 'power3.inOut' }, 0.08)
+        .to(el.querySelector('.po-eyebrow'), { opacity: 1, duration: 0.45, ease: 'power2.out' }, 0.6)
+        .to(el.querySelector('.po-name'),    { opacity: 1, y: 0, duration: 0.75, ease: 'back.out(1.2)' }, 0.7)
+        .to(el.querySelector('.po-role'),    { opacity: 1, y: 0, duration: 0.5,  ease: 'power2.out'    }, 0.9)
+        .to(el.querySelectorAll('.po-work'), {
+          opacity: 1, x: 0, duration: 0.45, ease: 'power2.out', stagger: 0.1
+        }, 1.05);
       return tl;
     }
   },
