@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Style Showcase | GSAP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,300;1,400&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/SplitText.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: #0e0e0e;
+    }
+
+    /* ── Logo ── */
+    .logo {
+      position: fixed;
+      top: 24px;
+      left: 24px;
+      z-index: 200;
+      text-decoration: none;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: opacity 0.3s;
+    }
+    .logo:hover { opacity: 0.8; }
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: #88CE02;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .logo-icon svg { width: 22px; height: 22px; stroke: #0e0e0e; }
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .logo-name, .logo-sub {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      line-height: 1;
+      color: #88CE02;
+      transition: color 0.4s;
+    }
+    .logo.theme-light .logo-name,
+    .logo.theme-light .logo-sub { color: #222; }
+
+    /* ── Hamburger ── */
+    .hamburger-btn {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      width: 48px;
+      height: 48px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      z-index: 201;
+      padding: 0;
+      transition: opacity 0.2s;
+    }
+    .hamburger-btn:hover { opacity: 0.7; }
+    .hamburger-btn span {
+      width: 24px;
+      height: 2px;
+      background: #f0f0f0;
+      border-radius: 1px;
+      transition: transform 0.3s ease, opacity 0.3s ease, background 0.4s ease;
+      display: block;
+      transform-origin: center;
+    }
+    .hamburger-btn.theme-dark span { background: #222; }
+    .hamburger-btn.active span:nth-child(1) { transform: rotate(45deg) translateY(11px); }
+    .hamburger-btn.active span:nth-child(2) { opacity: 0; }
+    .hamburger-btn.active span:nth-child(3) { transform: rotate(-45deg) translateY(-11px); }
+    /* Force white lines when menu is open (dark overlay) */
+    .hamburger-btn.active span { background: #f0f0f0 !important; }
+
+    /* ── Menu Overlay ── */
+    .menu-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(14, 14, 14, 0.98);
+      backdrop-filter: blur(10px);
+      z-index: 300;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .menu-overlay.active { display: flex; opacity: 1; }
+    .menu-overlay ul { list-style: none; text-align: center; }
+    .menu-overlay li { margin: 22px 0; }
+    .menu-overlay a {
+      font-size: 30px;
+      font-weight: 600;
+      color: #f0f0f0;
+      text-decoration: none;
+      letter-spacing: -0.5px;
+      transition: color 0.2s;
+    }
+    .menu-overlay a:hover { color: #f26522; }
+    .menu-overlay a.current { color: #88CE02; }
+
+    /* ── Slideshow ── */
+    #slideshow {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      visibility: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .slide.is-active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* ── Navigation Controls ── */
+    .nav-controls {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(10, 10, 10, 0.82);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50px;
+      padding: 5px;
+      white-space: nowrap;
+      user-select: none;
+    }
+    .nav-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.6);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, color 0.2s;
+      flex-shrink: 0;
+    }
+    .nav-btn:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
+    .nav-btn:active { transform: scale(0.9); }
+    .nav-btn:disabled { opacity: 0.25; cursor: not-allowed; pointer-events: none; }
+    .nav-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 0 14px;
+      min-width: 130px;
+    }
+    .nav-style-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 0.01em;
+    }
+    .nav-counter {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.35);
+      letter-spacing: 0.06em;
+    }
+    .nav-divider {
+      width: 1px;
+      height: 22px;
+      background: rgba(255, 255, 255, 0.12);
+      flex-shrink: 0;
+      margin: 0 2px;
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE 1 — LUXURY FASHION
+    ═══════════════════════════════════════ */
+    .slide-luxury {
+      background: #0c0b09;
+      padding: 80px 24px 100px;
+    }
+    .luxury-inner {
+      max-width: 560px;
+      width: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .luxury-eyebrow {
+      font-size: clamp(9px, 1.1vw, 11px);
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #7a6a5a;
+      margin-bottom: 36px;
+    }
+    .luxury-headline {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(40px, 6.5vw, 84px);
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      color: #e8e0d5;
+      margin-bottom: 40px;
+    }
+    .luxury-rule {
+      width: 56px;
+      height: 1px;
+      background: #c9a96e;
+      margin-bottom: 32px;
+      transform-origin: left center;
+    }
+    .luxury-body {
+      font-size: clamp(12px, 1.3vw, 14px);
+      color: #5a5048;
+      line-height: 1.8;
+      letter-spacing: 0.05em;
+      margin-bottom: 52px;
+      max-width: 320px;
+    }
+    .luxury-cta {
+      font-family: inherit;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #e8e0d5;
+      background: transparent;
+      border: 1px solid rgba(232, 224, 213, 0.25);
+      padding: 15px 36px;
+      cursor: pointer;
+      transition: border-color 0.4s, color 0.4s;
+    }
+    .luxury-cta:hover { border-color: #c9a96e; color: #c9a96e; }
+
+    /* ═══════════════════════════════════════
+       SLIDE 2 — SAAS / TECH
+    ═══════════════════════════════════════ */
+    .slide-saas {
+      background: #07071a;
+      background-image: radial-gradient(ellipse 70% 55% at 50% 45%, rgba(99, 102, 241, 0.14) 0%, transparent 70%);
+      padding: 80px 24px 100px;
+    }
+    .saas-inner {
+      max-width: 640px;
+      width: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .saas-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #a5b4fc;
+      background: rgba(99, 102, 241, 0.12);
+      border: 1px solid rgba(99, 102, 241, 0.28);
+      border-radius: 50px;
+      padding: 5px 14px;
+      margin-bottom: 28px;
+      letter-spacing: 0.01em;
+    }
+    .saas-badge-dot {
+      width: 6px;
+      height: 6px;
+      background: #6366f1;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .saas-headline {
+      font-size: clamp(38px, 6vw, 74px);
+      font-weight: 800;
+      line-height: 1.04;
+      letter-spacing: -0.035em;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+    .saas-accent {
+      background: linear-gradient(90deg, #818cf8, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .saas-body {
+      font-size: clamp(14px, 1.5vw, 16px);
+      color: rgba(255, 255, 255, 0.5);
+      line-height: 1.65;
+      max-width: 460px;
+      margin-bottom: 36px;
+    }
+    .saas-ctas {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .saas-btn-primary {
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      background: #6366f1;
+      border: none;
+      border-radius: 8px;
+      padding: 13px 26px;
+      cursor: pointer;
+      letter-spacing: -0.01em;
+      transition: background 0.2s;
+    }
+    .saas-btn-primary:hover { background: #4f46e5; }
+    .saas-btn-ghost {
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.65);
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 8px;
+      padding: 13px 26px;
+      cursor: pointer;
+      letter-spacing: -0.01em;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .saas-btn-ghost:hover { border-color: rgba(255,255,255,0.35); color: #fff; }
+    .saas-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .saas-pill {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.38);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 50px;
+      padding: 5px 12px;
+      letter-spacing: 0.01em;
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE 3 — CREATIVE AGENCY
+    ═══════════════════════════════════════ */
+    .slide-agency {
+      background: #eeeae4;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 0;
+    }
+    .agency-inner {
+      width: 100%;
+      padding: clamp(80px, 12vh, 160px) clamp(28px, 8vw, 120px) clamp(80px, 10vh, 120px);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .agency-eyebrow {
+      font-size: clamp(9px, 1vw, 11px);
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #aaa;
+      margin-bottom: clamp(16px, 3vh, 36px);
+    }
+    .agency-headline {
+      font-family: 'Bebas Neue', Impact, 'Arial Black', sans-serif;
+      font-size: clamp(68px, 13.5vw, 176px);
+      font-weight: 400;
+      line-height: 0.9;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      color: #111;
+      margin-bottom: clamp(20px, 4vh, 52px);
+    }
+    .agency-accent {
+      -webkit-text-stroke: 3px #111;
+      color: transparent;
+    }
+    @media (max-width: 480px) {
+      .agency-accent { -webkit-text-stroke: 2px #111; }
+    }
+    .agency-cta {
+      font-family: inherit;
+      font-size: clamp(12px, 1.4vw, 14px);
+      font-weight: 600;
+      color: #111;
+      background: none;
+      border: none;
+      border-bottom: 1.5px solid #111;
+      padding-bottom: 3px;
+      cursor: pointer;
+      letter-spacing: 0.03em;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: gap 0.3s ease;
+    }
+    .agency-cta:hover { gap: 20px; }
+
+    /* ═══════════════════════════════════════
+       SLIDE 4 — EDITORIAL MAGAZINE
+    ═══════════════════════════════════════ */
+    .slide-editorial {
+      background: #f8f6f2;
+      align-items: stretch;
+      justify-content: stretch;
+      padding: 0;
+    }
+    .editorial-grid {
+      display: grid;
+      grid-template-columns: 55fr 45fr;
+      width: 100%;
+      height: 100%;
+    }
+    .editorial-left {
+      padding: clamp(80px, 11vh, 140px) clamp(28px, 5vw, 80px) 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .editorial-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #c0392b;
+      margin-bottom: 22px;
+    }
+    .editorial-headline {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(26px, 3.2vw, 50px);
+      font-weight: 700;
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+      color: #1a1612;
+      margin-bottom: 22px;
+    }
+    .editorial-body {
+      font-size: clamp(13px, 1.3vw, 14px);
+      color: #5a5248;
+      line-height: 1.8;
+      margin-bottom: 28px;
+      max-width: 400px;
+    }
+    .editorial-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      color: #9a8f88;
+      letter-spacing: 0.02em;
+    }
+    .editorial-meta-dot {
+      width: 3px;
+      height: 3px;
+      background: currentColor;
+      border-radius: 50%;
+    }
+    .editorial-right {
+      position: relative;
+      overflow: hidden;
+    }
+    .editorial-image {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(150deg, #d4c4b0 0%, #b8a08a 40%, #9a7e65 80%, #7c6352 100%);
+    }
+    .editorial-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 60px,
+          rgba(0,0,0,0.018) 60px,
+          rgba(0,0,0,0.018) 61px
+        );
+    }
+    @media (max-width: 640px) {
+      .editorial-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: 38% 1fr;
+      }
+      .editorial-right { order: -1; }
+      .editorial-left {
+        padding: 24px 24px 100px;
+        justify-content: flex-start;
+      }
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE 5 — WELLNESS / LIFESTYLE
+    ═══════════════════════════════════════ */
+    .slide-wellness {
+      background: #f4f1ec;
+      padding: 80px 24px 100px;
+    }
+    .wellness-inner {
+      max-width: 460px;
+      width: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .wellness-eyebrow {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #b5a492;
+      margin-bottom: 28px;
+    }
+    .wellness-headline {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(48px, 8.5vw, 100px);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      color: #3a2e24;
+      margin-bottom: 32px;
+    }
+    .wellness-dot {
+      width: 5px;
+      height: 5px;
+      background: #c8b49a;
+      border-radius: 50%;
+      margin-bottom: 28px;
+    }
+    .wellness-body {
+      font-size: clamp(13px, 1.4vw, 14px);
+      color: #80705e;
+      line-height: 1.85;
+      margin-bottom: 48px;
+      max-width: 320px;
+    }
+    .wellness-ctas {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .wellness-btn-primary {
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      color: #fff;
+      background: #8b7355;
+      border: none;
+      border-radius: 50px;
+      padding: 14px 32px;
+      cursor: pointer;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: background 0.25s;
+    }
+    .wellness-btn-primary:hover { background: #7a6348; }
+    .wellness-btn-ghost {
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 500;
+      color: #8b7355;
+      background: transparent;
+      border: 1.5px solid #c8b49a;
+      border-radius: 50px;
+      padding: 14px 32px;
+      cursor: pointer;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: border-color 0.25s;
+    }
+    .wellness-btn-ghost:hover { border-color: #8b7355; }
+
+    /* ── Misc ── */
+    @media (max-width: 400px) {
+      .logo-text { display: none; }
+    }
+
+    .version {
+      position: fixed;
+      bottom: 28px;
+      right: 24px;
+      color: rgba(255, 255, 255, 0.2);
+      font-size: 11px;
+      z-index: 50;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Logo -->
+<a href="index.html" class="logo" id="logo">
+  <span class="logo-icon"><i data-lucide="gamepad-directional"></i></span>
+  <span class="logo-text">
+    <span class="logo-name">GSAP</span>
+    <span class="logo-sub">REFERENCE</span>
+  </span>
+</a>
+
+<!-- Hamburger -->
+<button class="hamburger-btn" id="hamburger-btn">
+  <span></span><span></span><span></span>
+</button>
+
+<!-- Menu Overlay -->
+<div class="menu-overlay" id="menu-overlay">
+  <ul>
+    <li><a href="index.html">Hover Animations</a></li>
+    <li><a href="load-in-animations.html">Entrance Animations</a></li>
+    <li><a href="testanimations.html">Media Animations</a></li>
+    <li><a href="style-showcase.html" class="current">Style Showcase</a></li>
+  </ul>
+</div>
+
+<!-- Slideshow -->
+<div id="slideshow">
+
+  <!-- Slide 0: Luxury Fashion -->
+  <div class="slide slide-luxury is-active" id="slide-0">
+    <div class="luxury-inner">
+      <p class="l-eyebrow luxury-eyebrow">SS 2026 Collection</p>
+      <h1 class="l-headline luxury-headline">The Art of<br>Effortless<br>Refinement</h1>
+      <div class="l-rule luxury-rule"></div>
+      <p class="l-body luxury-body">Crafted for those who understand<br>the language of silence.</p>
+      <button class="l-cta luxury-cta">Explore Collection</button>
+    </div>
+  </div>
+
+  <!-- Slide 1: SaaS / Tech -->
+  <div class="slide slide-saas" id="slide-1">
+    <div class="saas-inner">
+      <div class="s-badge saas-badge">
+        <span class="saas-badge-dot"></span>
+        Now in Beta
+      </div>
+      <h1 class="s-headline saas-headline">Ship faster.<br><span class="saas-accent">Scale</span> smarter.</h1>
+      <p class="s-body saas-body">The infrastructure platform that grows with you. Deploy in seconds, monitor everything, sleep at night.</p>
+      <div class="saas-ctas">
+        <button class="s-btn-primary saas-btn-primary">Get Started Free</button>
+        <button class="s-btn-ghost saas-btn-ghost">View Demo</button>
+      </div>
+      <div class="saas-pills">
+        <span class="s-pill saas-pill">⚡ 99.99% Uptime</span>
+        <span class="s-pill saas-pill">🔒 SOC 2 Compliant</span>
+        <span class="s-pill saas-pill">🌍 Global CDN</span>
+        <span class="s-pill saas-pill">⚙️ Auto Scaling</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 2: Creative Agency -->
+  <div class="slide slide-agency" id="slide-2">
+    <div class="agency-inner">
+      <p class="a-eyebrow agency-eyebrow">Creative Studio · Est. 2024</p>
+      <h1 class="a-headline agency-headline">We Make<br><span class="agency-accent">Things</span><br>Move.</h1>
+      <button class="a-cta agency-cta">View Our Work →</button>
+    </div>
+  </div>
+
+  <!-- Slide 3: Editorial Magazine -->
+  <div class="slide slide-editorial" id="slide-3">
+    <div class="editorial-grid">
+      <div class="editorial-left">
+        <p class="e-tag editorial-tag">Features · April 2026</p>
+        <h1 class="e-headline editorial-headline">The Quiet Revolution<br>Reshaping<br>Modern Design</h1>
+        <p class="e-body editorial-body">How a new generation of designers is rejecting excess and finding profound meaning in restraint, negative space, and the art of saying less.</p>
+        <div class="e-meta editorial-meta">
+          <span>By Sarah Chen</span>
+          <span class="editorial-meta-dot"></span>
+          <span>8 min read</span>
+        </div>
+      </div>
+      <div class="e-imgwrap editorial-right">
+        <div class="editorial-image"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 4: Wellness / Lifestyle -->
+  <div class="slide slide-wellness" id="slide-4">
+    <div class="wellness-inner">
+      <p class="w-eyebrow wellness-eyebrow">Mindful Living</p>
+      <h1 class="w-headline wellness-headline">Find Your<br>Balance</h1>
+      <div class="w-dot wellness-dot"></div>
+      <p class="w-body wellness-body">A daily practice for stillness, clarity, and the life you've been meaning to live.</p>
+      <div class="wellness-ctas">
+        <button class="w-btn-p wellness-btn-primary">Begin Today</button>
+        <button class="w-btn-g wellness-btn-ghost">Learn More</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Navigation Controls -->
+<div class="nav-controls">
+  <button class="nav-btn" id="prev-btn" title="Previous (←)">
+    <i data-lucide="arrow-left" width="15" height="15"></i>
+  </button>
+  <div class="nav-divider"></div>
+  <div class="nav-info">
+    <span class="nav-style-name" id="style-name">Luxury Fashion</span>
+    <span class="nav-counter"><span id="current-slide">1</span> / 5</span>
+  </div>
+  <div class="nav-divider"></div>
+  <button class="nav-btn" id="replay-btn" title="Replay (R)">
+    <i data-lucide="rotate-cw" width="14" height="14"></i>
+  </button>
+  <button class="nav-btn" id="next-btn" title="Next (→)">
+    <i data-lucide="arrow-right" width="15" height="15"></i>
+  </button>
+</div>
+
+<span class="version">v1</span>
+
+<script>
+gsap.registerPlugin(SplitText);
+lucide.createIcons();
+
+// ── Hamburger ──────────────────────────────────────────────
+const hamburgerBtn = document.getElementById('hamburger-btn');
+const menuOverlay  = document.getElementById('menu-overlay');
+
+hamburgerBtn.addEventListener('click', () => {
+  hamburgerBtn.classList.toggle('active');
+  menuOverlay.classList.toggle('active');
+});
+menuOverlay.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    hamburgerBtn.classList.remove('active');
+    menuOverlay.classList.remove('active');
+  });
+});
+menuOverlay.addEventListener('click', e => {
+  if (e.target === menuOverlay) {
+    hamburgerBtn.classList.remove('active');
+    menuOverlay.classList.remove('active');
+  }
+});
+
+// ── Slide Definitions ──────────────────────────────────────
+const SLIDES = [
+
+  // ── 0: Luxury Fashion ───────────────────────────────────
+  {
+    name: 'Luxury Fashion',
+    theme: 'dark',
+
+    prepare(el) {
+      if (el._st) { el._st.revert(); el._st = null; }
+      el._st = new SplitText(el.querySelector('.l-headline'), { type: 'lines' });
+      gsap.set(el.querySelector('.l-eyebrow'), { opacity: 0, y: 22 });
+      gsap.set(el._st.lines, { opacity: 0, y: 36 });
+      gsap.set(el.querySelector('.l-rule'), { scaleX: 0, transformOrigin: 'left center' });
+      gsap.set(el.querySelector('.l-body'), { opacity: 0, y: 18 });
+      gsap.set(el.querySelector('.l-cta'), { opacity: 0, y: 18 });
+    },
+
+    animate(el) {
+      const tl = gsap.timeline({
+        onComplete() { if (el._st) { el._st.revert(); el._st = null; } }
+      });
+      tl.to(el.querySelector('.l-eyebrow'), { opacity: 1, y: 0, duration: 1.0, ease: 'power3.out' }, 0)
+        .to(el._st.lines, { opacity: 1, y: 0, duration: 1.3, ease: 'power3.out', stagger: 0.22 }, 0.28)
+        .to(el.querySelector('.l-rule'), { scaleX: 1, duration: 0.85, ease: 'power2.inOut' }, 0.9)
+        .to(el.querySelector('.l-body'), { opacity: 1, y: 0, duration: 1.0, ease: 'power2.out' }, 1.4)
+        .to(el.querySelector('.l-cta'), { opacity: 1, y: 0, duration: 0.9, ease: 'power2.out' }, 1.9);
+      return tl;
+    }
+  },
+
+  // ── 1: SaaS / Tech ──────────────────────────────────────
+  {
+    name: 'SaaS / Tech',
+    theme: 'dark',
+
+    prepare(el) {
+      const els = [
+        el.querySelector('.s-badge'),
+        el.querySelector('.s-headline'),
+        el.querySelector('.s-body'),
+        el.querySelector('.s-btn-primary'),
+        el.querySelector('.s-btn-ghost'),
+        ...el.querySelectorAll('.s-pill'),
+      ];
+      gsap.set(els, { opacity: 0, y: 20 });
+    },
+
+    animate(el) {
+      const pills = el.querySelectorAll('.s-pill');
+      const tl = gsap.timeline();
+      tl.to(el.querySelector('.s-badge'),      { opacity: 1, y: 0, duration: 0.5,  ease: 'back.out(1.6)' }, 0)
+        .to(el.querySelector('.s-headline'),   { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out'     }, 0.12)
+        .to(el.querySelector('.s-body'),       { opacity: 1, y: 0, duration: 0.5,  ease: 'power2.out'     }, 0.3)
+        .to(el.querySelector('.s-btn-primary'),{ opacity: 1, y: 0, duration: 0.48, ease: 'back.out(1.4)'  }, 0.46)
+        .to(el.querySelector('.s-btn-ghost'),  { opacity: 1, y: 0, duration: 0.48, ease: 'back.out(1.4)'  }, 0.58)
+        .to(pills, { opacity: 1, y: 0, duration: 0.4, ease: 'back.out(1.5)', stagger: 0.08 }, 0.72);
+      return tl;
+    }
+  },
+
+  // ── 2: Creative Agency ──────────────────────────────────
+  {
+    name: 'Creative Agency',
+    theme: 'light',
+
+    prepare(el) {
+      if (el._st) { el._st.revert(); el._st = null; }
+      el._st = new SplitText(el.querySelector('.a-headline'), { type: 'chars,words' });
+      gsap.set(el.querySelector('.a-eyebrow'), { opacity: 0, x: -28 });
+      gsap.set(el._st.chars, { opacity: 0, y: 55, rotation: 4 });
+      gsap.set(el.querySelector('.a-cta'), { opacity: 0, x: -22 });
+    },
+
+    animate(el) {
+      const tl = gsap.timeline({
+        onComplete() { if (el._st) { el._st.revert(); el._st = null; } }
+      });
+      tl.to(el.querySelector('.a-eyebrow'), { opacity: 1, x: 0, duration: 0.55, ease: 'power2.out' }, 0)
+        .to(el._st.chars, {
+          opacity: 1, y: 0, rotation: 0,
+          duration: 0.6, ease: 'expo.out',
+          stagger: { each: 0.022, from: 'start' }
+        }, 0.18)
+        .to(el.querySelector('.a-cta'), { opacity: 1, x: 0, duration: 0.5, ease: 'power2.out' }, '-=0.25');
+      return tl;
+    }
+  },
+
+  // ── 3: Editorial Magazine ────────────────────────────────
+  {
+    name: 'Editorial',
+    theme: 'light',
+
+    prepare(el) {
+      if (el._st) { el._st.revert(); el._st = null; }
+      el._st = new SplitText(el.querySelector('.e-headline'), { type: 'words,lines' });
+      gsap.set(el.querySelector('.e-tag'), { opacity: 0, y: 12 });
+      gsap.set(el._st.words, { opacity: 0, y: 24 });
+      gsap.set(el.querySelector('.e-body'), { opacity: 0, y: 14 });
+      gsap.set(el.querySelector('.e-meta'), { opacity: 0 });
+      gsap.set(el.querySelector('.e-imgwrap'), { clipPath: 'inset(0 100% 0 0)' });
+    },
+
+    animate(el) {
+      const tl = gsap.timeline({
+        onComplete() { if (el._st) { el._st.revert(); el._st = null; } }
+      });
+      tl.to(el.querySelector('.e-imgwrap'), { clipPath: 'inset(0 0% 0 0)', duration: 1.0, ease: 'power2.inOut' }, 0)
+        .to(el.querySelector('.e-tag'), { opacity: 1, y: 0, duration: 0.55, ease: 'power2.out' }, 0.12)
+        .to(el._st.words, {
+          opacity: 1, y: 0,
+          duration: 0.6, ease: 'power3.out',
+          stagger: { each: 0.05 }
+        }, 0.38)
+        .to(el.querySelector('.e-body'), { opacity: 1, y: 0, duration: 0.55, ease: 'power2.out' }, 0.92)
+        .to(el.querySelector('.e-meta'), { opacity: 1, duration: 0.45, ease: 'power1.out' }, 1.18);
+      return tl;
+    }
+  },
+
+  // ── 4: Wellness / Lifestyle ──────────────────────────────
+  {
+    name: 'Wellness',
+    theme: 'light',
+
+    prepare(el) {
+      const targets = [
+        el.querySelector('.w-eyebrow'),
+        el.querySelector('.w-headline'),
+        el.querySelector('.w-dot'),
+        el.querySelector('.w-body'),
+        el.querySelector('.w-btn-p'),
+        el.querySelector('.w-btn-g'),
+      ];
+      gsap.set(targets, { opacity: 0, y: 22, filter: 'blur(9px)' });
+    },
+
+    animate(el) {
+      const tl = gsap.timeline();
+      tl.to(el.querySelector('.w-eyebrow'), { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.15, ease: 'power2.out' }, 0)
+        .to(el.querySelector('.w-headline'),{ opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.35, ease: 'power2.out' }, 0.22)
+        .to(el.querySelector('.w-dot'),     { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.9,  ease: 'power2.out' }, 0.6)
+        .to(el.querySelector('.w-body'),    { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.15, ease: 'power2.out' }, 0.8)
+        .to(el.querySelector('.w-btn-p'),   { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.0,  ease: 'power2.out' }, 1.15)
+        .to(el.querySelector('.w-btn-g'),   { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.0,  ease: 'power2.out' }, 1.32);
+      return tl;
+    }
+  },
+];
+
+// ── State ──────────────────────────────────────────────────
+let currentIndex   = 0;
+let isAnimating    = false;
+let activeTimeline = null;
+
+// ── DOM Refs ───────────────────────────────────────────────
+const logoEl       = document.getElementById('logo');
+const prevBtn      = document.getElementById('prev-btn');
+const nextBtn      = document.getElementById('next-btn');
+const replayBtn    = document.getElementById('replay-btn');
+const styleNameEl  = document.getElementById('style-name');
+const currentSlide = document.getElementById('current-slide');
+
+// ── Update Chrome ──────────────────────────────────────────
+function updateChrome(idx) {
+  const s = SLIDES[idx];
+  styleNameEl.textContent  = s.name;
+  currentSlide.textContent = idx + 1;
+  prevBtn.disabled = idx === 0;
+  nextBtn.disabled = idx === SLIDES.length - 1;
+  // Theme-aware logo + hamburger
+  const isLight = s.theme === 'light';
+  logoEl.classList.toggle('theme-light', isLight);
+  hamburgerBtn.classList.toggle('theme-dark', isLight);
+}
+
+// ── Run entrance for current slide ────────────────────────
+function playEntrance(idx) {
+  const s  = SLIDES[idx];
+  const el = document.getElementById(`slide-${idx}`);
+  if (activeTimeline) { activeTimeline.kill(); activeTimeline = null; }
+  s.prepare(el);
+  activeTimeline = s.animate(el);
+}
+
+// ── Navigate ───────────────────────────────────────────────
+function goTo(newIdx) {
+  if (isAnimating) return;
+  if (newIdx < 0 || newIdx >= SLIDES.length) return;
+
+  isAnimating = true;
+
+  const oldEl = document.getElementById(`slide-${currentIndex}`);
+  const newEl = document.getElementById(`slide-${newIdx}`);
+
+  // Pre-prepare new slide while old one is still visible
+  SLIDES[newIdx].prepare(newEl);
+
+  // Fade out old slide
+  gsap.to(oldEl, {
+    opacity: 0,
+    duration: 0.38,
+    ease: 'power1.in',
+    onComplete() {
+      oldEl.classList.remove('is-active');
+      gsap.set(oldEl, { visibility: 'hidden' });
+
+      // Show new slide (elements already at start states)
+      gsap.set(newEl, { visibility: 'visible', opacity: 1 });
+      newEl.classList.add('is-active');
+
+      currentIndex = newIdx;
+      updateChrome(currentIndex);
+
+      // Play entrance
+      if (activeTimeline) { activeTimeline.kill(); activeTimeline = null; }
+      activeTimeline = SLIDES[currentIndex].animate(newEl);
+
+      isAnimating = false;
+    }
+  });
+}
+
+// ── Controls ───────────────────────────────────────────────
+prevBtn.addEventListener('click',   () => goTo(currentIndex - 1));
+nextBtn.addEventListener('click',   () => goTo(currentIndex + 1));
+replayBtn.addEventListener('click', () => { if (!isAnimating) playEntrance(currentIndex); });
+
+document.addEventListener('keydown', e => {
+  if (menuOverlay.classList.contains('active')) return;
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goTo(currentIndex + 1);
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   goTo(currentIndex - 1);
+  if (e.key === 'r' || e.key === 'R') { if (!isAnimating) playEntrance(currentIndex); }
+});
+
+// ── Init ────────────────────────────────────────────────────
+updateChrome(0);
+playEntrance(0);
+</script>
+</body>
+</html>
