@@ -1164,6 +1164,286 @@
     }
     .glass-cta:hover { background: #1a1510; color: #f0ebe3; }
 
+    /* ═══════════════════════════════════════
+       SLIDE 15 — HAUTE COUTURE / IRIS REVEAL
+    ═══════════════════════════════════════ */
+    .slide-couture { background: #0a0806; }
+    .couture-overlay {
+      background: linear-gradient(180deg, rgba(10,8,6,0.42) 0%, rgba(10,8,6,0.65) 100%);
+    }
+    .couture-inner {
+      text-align: center;
+      padding: 80px 24px 100px;
+      max-width: 680px;
+      width: 100%;
+    }
+    .couture-eyebrow {
+      font-size: clamp(9px, 1.1vw, 11px);
+      font-weight: 500;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(200,170,120,0.7);
+      margin-bottom: 40px;
+    }
+    .couture-headline {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(48px, 8vw, 106px);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.05;
+      color: #f0ece6;
+      margin-bottom: 40px;
+    }
+    .ct-line-wrap { overflow: hidden; }
+    .ct-line { display: block; }
+    .couture-rule {
+      width: 48px; height: 1px;
+      background: rgba(200,170,120,0.5);
+      margin: 0 auto 36px;
+    }
+    .couture-cta {
+      font-family: inherit;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: #f0ece6;
+      background: transparent;
+      border: 1px solid rgba(240,236,230,0.22);
+      padding: 15px 40px;
+      cursor: pointer;
+      transition: border-color 0.4s, color 0.4s;
+    }
+    .couture-cta:hover { border-color: rgba(200,170,120,0.7); color: rgba(200,170,120,0.9); }
+
+    /* ═══════════════════════════════════════
+       SLIDE 16 — ALPINE ADVENTURE / SPLIT PANEL (2-PART)
+    ═══════════════════════════════════════ */
+    .slide-alpine { background: #05080f; }
+    .alpine-overlay {
+      background: linear-gradient(180deg, rgba(5,8,15,0.32) 0%, rgba(5,8,15,0.68) 100%);
+    }
+    .alpine-panel-l, .alpine-panel-r {
+      position: absolute; top: 0; height: 100%;
+      background: #05080f; z-index: 3; pointer-events: none;
+    }
+    .alpine-panel-l { left: 0; width: 50.5%; }
+    .alpine-panel-r { right: 0; width: 50.5%; }
+    .alpine-inner {
+      text-align: center;
+      padding: 80px 24px 100px;
+      max-width: 820px;
+      width: 100%;
+    }
+    .alpine-eyebrow {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 16px;
+    }
+    .alpine-headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(68px, 13vw, 180px);
+      line-height: 0.86;
+      color: #fff;
+      margin-bottom: 40px;
+    }
+    .alpine-rule {
+      width: 60px; height: 2px;
+      background: rgba(255,255,255,0.2);
+      margin: 0 auto 32px;
+      transform-origin: center;
+    }
+    .alpine-metric {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(26px, 3.5vw, 48px);
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.04em;
+      margin-bottom: 14px;
+    }
+    .alpine-sub {
+      font-size: clamp(11px, 1.2vw, 13px);
+      color: rgba(255,255,255,0.27);
+      letter-spacing: 0.08em;
+      margin-bottom: 44px;
+    }
+    .alpine-cta {
+      font-family: inherit;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #fff;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.18);
+      padding: 14px 38px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .alpine-cta:hover { background: rgba(255,255,255,0.16); }
+
+    /* ═══════════════════════════════════════
+       SLIDE 17 — FINE DINING / VENETIAN BLINDS
+    ═══════════════════════════════════════ */
+    .slide-dining { background: #0d0600; }
+    .dining-overlay {
+      background: linear-gradient(160deg, rgba(13,6,0,0.55) 0%, rgba(28,10,0,0.5) 100%);
+    }
+    .dining-blinds { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+    .db { position: absolute; left: 0; width: 100%; background: #0d0600; }
+    .db:nth-child(1) { top: 0%;       height: 16.667%; }
+    .db:nth-child(2) { top: 16.667%; height: 16.667%; }
+    .db:nth-child(3) { top: 33.334%; height: 16.667%; }
+    .db:nth-child(4) { top: 50%;     height: 16.667%; }
+    .db:nth-child(5) { top: 66.667%; height: 16.667%; }
+    .db:nth-child(6) { top: 83.334%; height: 16.667%; }
+    .dining-inner {
+      text-align: center;
+      padding: 80px 24px 100px;
+      max-width: 640px;
+      width: 100%;
+    }
+    .dining-eyebrow {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(210,155,60,0.65);
+      margin-bottom: 32px;
+    }
+    .dining-name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(46px, 7.5vw, 96px);
+      font-weight: 700;
+      line-height: 1.05;
+      color: #f5ede0;
+      margin-bottom: 24px;
+    }
+    .dining-tagline {
+      font-size: clamp(12px, 1.3vw, 14px);
+      color: rgba(245,237,224,0.35);
+      letter-spacing: 0.1em;
+      font-style: italic;
+      margin-bottom: 44px;
+    }
+    .dining-cta {
+      font-family: inherit;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(210,155,60,0.85);
+      background: transparent;
+      border: 1px solid rgba(210,155,60,0.3);
+      padding: 14px 38px;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+    }
+    .dining-cta:hover { background: rgba(210,155,60,0.12); color: rgb(210,155,60); }
+
+    /* ═══════════════════════════════════════
+       SLIDE 18 — LIVE MUSIC / DIAGONAL WIPE (2-PART)
+    ═══════════════════════════════════════ */
+    .slide-festival { background: #06000e; }
+    .festival-overlay {
+      background: linear-gradient(135deg, rgba(80,0,120,0.35) 0%, rgba(6,0,14,0.72) 65%);
+    }
+    .festival-inner {
+      text-align: center;
+      padding: 80px 24px 100px;
+      max-width: 720px;
+      width: 100%;
+    }
+    .festival-eyebrow {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: rgba(180,80,255,0.6);
+      margin-bottom: 8px;
+    }
+    .festival-year {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(90px, 17vw, 230px);
+      line-height: 0.82;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+    .festival-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(16px, 2.5vw, 34px);
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 32px;
+      letter-spacing: 0.04em;
+    }
+    .festival-meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.28);
+      text-transform: uppercase;
+      margin-bottom: 36px;
+    }
+    .festival-meta-dot { width: 3px; height: 3px; background: rgba(180,80,255,0.5); border-radius: 50%; flex-shrink: 0; }
+    .festival-cta {
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #fff;
+      background: rgba(180,80,255,0.18);
+      border: 1px solid rgba(180,80,255,0.4);
+      padding: 14px 40px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .festival-cta:hover { background: rgba(180,80,255,0.32); }
+
+    /* ═══════════════════════════════════════
+       SLIDE 19 — ABSTRACT BRAND / INSET PUNCH
+    ═══════════════════════════════════════ */
+    .slide-abstract { background: #08010e; }
+    .abstract-overlay {
+      background: radial-gradient(ellipse 90% 70% at 50% 50%, rgba(60,0,100,0.35) 0%, rgba(8,1,14,0.7) 70%);
+    }
+    .abstract-inner {
+      text-align: center;
+      padding: 80px 24px 100px;
+      max-width: 700px;
+      width: 100%;
+    }
+    .abstract-eyebrow {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: rgba(180,120,255,0.5);
+      margin-bottom: 32px;
+    }
+    .abstract-headline {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(44px, 7.5vw, 100px);
+      font-weight: 900;
+      font-style: italic;
+      line-height: 1.0;
+      color: #f0e8ff;
+      margin-bottom: 28px;
+    }
+    .abstract-sub {
+      font-size: clamp(12px, 1.3vw, 14px);
+      color: rgba(240,232,255,0.3);
+      letter-spacing: 0.1em;
+    }
+
     /* ── Misc ── */
     @media (max-width: 400px) {
       .logo-text { display: none; }
@@ -1457,6 +1737,116 @@
     </div>
   </div>
 
+  <!-- Slide 15: Haute Couture / Iris Reveal -->
+  <div class="slide slide-couture" id="slide-15">
+    <video class="slide-video" autoplay muted loop playsinline>
+      <source src="https://videos.pexels.com/video-files/9512048/9512048-hd_1920_1080_25fps.mp4" type="video/mp4">
+      <source src="https://videos.pexels.com/video-files/9512048/9512048-hd_1920_1080_30fps.mp4" type="video/mp4">
+      <source src="https://videos.pexels.com/video-files/9512048/9512048-hd_1920_1080_24fps.mp4" type="video/mp4">
+      <source src="https://videos.pexels.com/video-files/9512048/9512048-hd_1280_720_25fps.mp4" type="video/mp4">
+      <source src="https://videos.pexels.com/video-files/9512048/9512048-hd_1280_720_30fps.mp4" type="video/mp4">
+      <source src="https://videos.pexels.com/video-files/9512048/9512048-hd_1280_720_24fps.mp4" type="video/mp4">
+    </video>
+    <div class="vid-overlay couture-overlay"></div>
+    <div class="couture-inner vid-content">
+      <p class="ct-eyebrow couture-eyebrow">Autumn — Winter 2026</p>
+      <div class="couture-headline">
+        <div class="ct-line-wrap"><span class="ct-line">The Next</span></div>
+        <div class="ct-line-wrap"><span class="ct-line">Chapter</span></div>
+        <div class="ct-line-wrap"><span class="ct-line">of Fashion</span></div>
+      </div>
+      <div class="ct-rule couture-rule"></div>
+      <button class="ct-cta couture-cta">View Collection</button>
+    </div>
+  </div>
+
+  <!-- Slide 16: Alpine Adventure / Split Panel (2-Part) -->
+  <div class="slide slide-alpine" id="slide-16">
+    <video class="slide-video" autoplay muted loop playsinline>
+      <source src="https://videos.pexels.com/video-files/2711111/2711111-hd_1920_1080_25fps.mp4" type="video/mp4">
+      <source src="https://videos.pexels.com/video-files/2711111/2711111-hd_1920_1080_30fps.mp4" type="video/mp4">
+      <source src="https://videos.pexels.com/video-files/2711111/2711111-hd_1920_1080_24fps.mp4" type="video/mp4">
+      <source src="https://videos.pexels.com/video-files/2711111/2711111-hd_1280_720_25fps.mp4" type="video/mp4">
+      <source src="https://videos.pexels.com/video-files/2711111/2711111-hd_1280_720_30fps.mp4" type="video/mp4">
+      <source src="https://videos.pexels.com/video-files/2711111/2711111-hd_1280_720_24fps.mp4" type="video/mp4">
+    </video>
+    <div class="vid-overlay alpine-overlay"></div>
+    <div class="alpine-panel-l"></div>
+    <div class="alpine-panel-r"></div>
+    <div class="alpine-inner vid-content">
+      <p class="al-eyebrow alpine-eyebrow">Beyond the Summit</p>
+      <h1 class="al-headline alpine-headline">PEAK<br>CONDITION</h1>
+      <div class="al-rule alpine-rule"></div>
+      <p class="al-metric alpine-metric">4,808 m · Mont Blanc</p>
+      <p class="al-sub alpine-sub">For those who refuse the ordinary path</p>
+      <button class="al-cta alpine-cta">Plan the Expedition</button>
+    </div>
+  </div>
+
+  <!-- Slide 17: Fine Dining / Venetian Blinds -->
+  <div class="slide slide-dining" id="slide-17">
+    <video class="slide-video" autoplay muted loop playsinline>
+      <source src="https://videos.pexels.com/video-files/854565/854565-hd_1920_1080_25fps.mp4" type="video/mp4">
+      <source src="https://videos.pexels.com/video-files/854565/854565-hd_1920_1080_30fps.mp4" type="video/mp4">
+      <source src="https://videos.pexels.com/video-files/854565/854565-hd_1920_1080_24fps.mp4" type="video/mp4">
+      <source src="https://videos.pexels.com/video-files/854565/854565-hd_1280_720_25fps.mp4" type="video/mp4">
+      <source src="https://videos.pexels.com/video-files/854565/854565-hd_1280_720_30fps.mp4" type="video/mp4">
+    </video>
+    <div class="vid-overlay dining-overlay"></div>
+    <div class="dining-blinds">
+      <div class="db"></div><div class="db"></div><div class="db"></div>
+      <div class="db"></div><div class="db"></div><div class="db"></div>
+    </div>
+    <div class="dining-inner vid-content">
+      <p class="di-eyebrow dining-eyebrow">Fine Dining · Est. 1987</p>
+      <h1 class="di-name dining-name">Maison<br>Dor&eacute;e</h1>
+      <p class="di-tagline dining-tagline">&ldquo;Where every plate tells a story&rdquo;</p>
+      <button class="di-cta dining-cta">Reserve a Table</button>
+    </div>
+  </div>
+
+  <!-- Slide 18: Live Music / Diagonal Wipe (2-Part) -->
+  <div class="slide slide-festival" id="slide-18">
+    <video class="slide-video" autoplay muted loop playsinline>
+      <source src="https://videos.pexels.com/video-files/1721297/1721297-hd_1920_1080_25fps.mp4" type="video/mp4">
+      <source src="https://videos.pexels.com/video-files/1721297/1721297-hd_1920_1080_30fps.mp4" type="video/mp4">
+      <source src="https://videos.pexels.com/video-files/1721297/1721297-hd_1920_1080_24fps.mp4" type="video/mp4">
+      <source src="https://videos.pexels.com/video-files/1721297/1721297-hd_1280_720_25fps.mp4" type="video/mp4">
+      <source src="https://videos.pexels.com/video-files/1721297/1721297-hd_1280_720_30fps.mp4" type="video/mp4">
+    </video>
+    <div class="vid-overlay festival-overlay"></div>
+    <div class="festival-inner vid-content">
+      <p class="fe-eyebrow festival-eyebrow">Live · Worldwide Tour</p>
+      <h1 class="fe-year festival-year">2026</h1>
+      <h2 class="fe-title festival-title">Echoes Across the World</h2>
+      <div class="fe-meta festival-meta">
+        <span>32 Cities</span>
+        <span class="festival-meta-dot"></span>
+        <span>June &mdash; November</span>
+        <span class="festival-meta-dot"></span>
+        <span>All Ages</span>
+      </div>
+      <button class="fe-cta festival-cta">Get Tickets</button>
+    </div>
+  </div>
+
+  <!-- Slide 19: Abstract Brand / Inset Punch -->
+  <div class="slide slide-abstract" id="slide-19">
+    <video class="slide-video" autoplay muted loop playsinline>
+      <source src="https://videos.pexels.com/video-files/5926164/5926164-hd_1920_1080_25fps.mp4" type="video/mp4">
+      <source src="https://videos.pexels.com/video-files/5926164/5926164-hd_1920_1080_30fps.mp4" type="video/mp4">
+      <source src="https://videos.pexels.com/video-files/5926164/5926164-hd_1920_1080_24fps.mp4" type="video/mp4">
+      <source src="https://videos.pexels.com/video-files/5926164/5926164-hd_1280_720_25fps.mp4" type="video/mp4">
+      <source src="https://videos.pexels.com/video-files/5926164/5926164-hd_1280_720_30fps.mp4" type="video/mp4">
+    </video>
+    <div class="vid-overlay abstract-overlay"></div>
+    <div class="abstract-inner vid-content">
+      <p class="ab-eyebrow abstract-eyebrow">Creative Direction · Identity</p>
+      <h1 class="ab-headline abstract-headline">Beyond the<br>Ordinary</h1>
+      <p class="ab-sub abstract-sub">Where imagination meets execution</p>
+    </div>
+  </div>
+
 </div>
 
 <!-- Navigation Controls -->
@@ -1467,7 +1857,7 @@
   <div class="nav-divider"></div>
   <div class="nav-info">
     <span class="nav-style-name" id="style-name">Luxury Fashion</span>
-    <span class="nav-counter"><span id="current-slide">1</span> / 15</span>
+    <span class="nav-counter"><span id="current-slide">1</span> / 20</span>
   </div>
   <div class="nav-divider"></div>
   <button class="nav-btn" id="replay-btn" title="Replay (R)">
@@ -1478,7 +1868,7 @@
   </button>
 </div>
 
-<span class="version">v3</span>
+<span class="version">v4</span>
 
 <script>
 gsap.registerPlugin(SplitText);
@@ -1948,6 +2338,181 @@ const SLIDES = [
         }, 0.22)
         .to(el.querySelector('.gl-sub'), { opacity: 1, y: 0, duration: 0.55, ease: 'power2.out' }, 0.95)
         .to(el.querySelector('.gl-cta'), { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 1.2);
+      return tl;
+    }
+  },
+
+  // ── 15: Haute Couture / Iris Reveal ──────────────────────
+  {
+    name: 'Haute Couture',
+    theme: 'dark',
+
+    prepare(el) {
+      gsap.set(el.querySelector('.slide-video'), { clipPath: 'circle(0% at 50% 50%)' });
+      gsap.set(el.querySelector('.ct-eyebrow'), { opacity: 0, y: 14 });
+      gsap.set(el.querySelectorAll('.ct-line'), { y: '110%' });
+      gsap.set(el.querySelector('.ct-rule'), { scaleX: 0, transformOrigin: 'center' });
+      gsap.set(el.querySelector('.ct-cta'), { opacity: 0, y: 14 });
+    },
+
+    animate(el) {
+      const tl = gsap.timeline();
+      tl.to(el.querySelector('.slide-video'), { clipPath: 'circle(150% at 50% 50%)', duration: 1.1, ease: 'power2.inOut' }, 0)
+        .to(el.querySelector('.ct-eyebrow'), { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 0.55)
+        .to(el.querySelectorAll('.ct-line'), { y: '0%', duration: 0.82, ease: 'power3.out', stagger: 0.14 }, 0.65)
+        .to(el.querySelector('.ct-rule'), { scaleX: 1, duration: 0.7, ease: 'power2.inOut' }, 1.25)
+        .to(el.querySelector('.ct-cta'), { opacity: 1, y: 0, duration: 0.55, ease: 'power2.out' }, 1.6);
+      return tl;
+    }
+  },
+
+  // ── 16: Alpine Adventure / Split Panel (2-Part) ──────────
+  {
+    name: 'Alpine Adventure',
+    theme: 'dark',
+
+    prepare(el) {
+      gsap.set(el.querySelector('.alpine-panel-l'), { x: '0%' });
+      gsap.set(el.querySelector('.alpine-panel-r'), { x: '0%' });
+      gsap.set(el.querySelector('.al-eyebrow'), { opacity: 0 });
+      gsap.set(el.querySelector('.al-headline'), { y: -130, scale: 1.18, opacity: 0 });
+      gsap.set(el.querySelector('.al-rule'), { scaleX: 0, transformOrigin: 'center' });
+      gsap.set(el.querySelector('.al-metric'), { opacity: 0, y: 30 });
+      gsap.set(el.querySelector('.al-sub'), { opacity: 0, y: 20 });
+      gsap.set(el.querySelector('.al-cta'), { opacity: 0, y: 16 });
+    },
+
+    animate(el) {
+      const tl = gsap.timeline();
+      // Video reveal — panels split apart
+      tl.to(el.querySelector('.alpine-panel-l'), { x: '-101%', duration: 0.92, ease: 'power4.inOut' }, 0)
+        .to(el.querySelector('.alpine-panel-r'), { x: '101%',  duration: 0.92, ease: 'power4.inOut' }, 0.07);
+
+      // Part 1 — headline crashes from above
+      tl.to(el.querySelector('.al-eyebrow'), { opacity: 1, duration: 0.4 }, 0.5)
+        .to(el.querySelector('.al-headline'), { y: 0, scale: 1, opacity: 1, duration: 0.72, ease: 'power4.out' }, 0.55);
+
+      // ── beat: ~1.3 → 1.95 ──
+
+      // Part 2 — stats + CTA rise up
+      tl.to(el.querySelector('.al-rule'),   { scaleX: 1, duration: 0.55, ease: 'power2.inOut' }, 1.95)
+        .to(el.querySelector('.al-metric'), { opacity: 1, y: 0, duration: 0.55, ease: 'back.out(1.2)' }, 2.05)
+        .to(el.querySelector('.al-sub'),    { opacity: 1, y: 0, duration: 0.5,  ease: 'power2.out'    }, 2.24)
+        .to(el.querySelector('.al-cta'),    { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out'    }, 2.44);
+      return tl;
+    }
+  },
+
+  // ── 17: Fine Dining / Venetian Blinds ────────────────────
+  {
+    name: 'Fine Dining',
+    theme: 'dark',
+
+    prepare(el) {
+      const dbs = [...el.querySelectorAll('.db')];
+      dbs.forEach((db, i) => {
+        gsap.set(db, { scaleY: 1, transformOrigin: i % 2 === 0 ? 'top center' : 'bottom center' });
+      });
+      if (el._st) { el._st.revert(); el._st = null; }
+      gsap.set(el.querySelector('.di-name'), { perspective: 700 });
+      el._st = new SplitText(el.querySelector('.di-name'), { type: 'words' });
+      gsap.set(el.querySelector('.di-eyebrow'), { opacity: 0, y: 14 });
+      gsap.set(el._st.words, { opacity: 0, rotateX: -90, transformOrigin: '50% 100% -10px' });
+      gsap.set(el.querySelector('.di-tagline'), { opacity: 0, y: 12 });
+      gsap.set(el.querySelector('.di-cta'), { opacity: 0, y: 14 });
+    },
+
+    animate(el) {
+      const dbs = [...el.querySelectorAll('.db')];
+      const tl = gsap.timeline({
+        onComplete() { if (el._st) { el._st.revert(); el._st = null; } }
+      });
+      // Venetian blinds open — alternating top/bottom collapse with stagger
+      tl.to(dbs, { scaleY: 0, duration: 0.65, ease: 'power3.inOut', stagger: 0.07 }, 0);
+      // Text follows
+      tl.to(el.querySelector('.di-eyebrow'), { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 0.6)
+        .to(el._st.words, {
+          opacity: 1, rotateX: 0,
+          duration: 0.75, ease: 'power3.out',
+          stagger: { each: 0.12 }
+        }, 0.72)
+        .to(el.querySelector('.di-tagline'), { opacity: 1, y: 0, duration: 0.5,  ease: 'power2.out' }, 1.18)
+        .to(el.querySelector('.di-cta'),     { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, 1.44);
+      return tl;
+    }
+  },
+
+  // ── 18: Live Music / Diagonal Wipe (2-Part) ──────────────
+  {
+    name: 'Live Music',
+    theme: 'dark',
+
+    prepare(el) {
+      gsap.set(el.querySelector('.slide-video'), {
+        clipPath: 'polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)'
+      });
+      gsap.set(el.querySelector('.fe-eyebrow'), { opacity: 0 });
+      gsap.set(el.querySelector('.fe-year'),    { opacity: 0, x: -100 });
+      gsap.set(el.querySelector('.fe-title'),   { opacity: 0, y: 28 });
+      gsap.set(el.querySelector('.fe-meta'),    { opacity: 0, y: 18 });
+      gsap.set(el.querySelector('.fe-cta'),     { opacity: 0, y: 14 });
+    },
+
+    animate(el) {
+      const tl = gsap.timeline();
+      // Video reveal — diagonal polygon wipe left → right
+      tl.to(el.querySelector('.slide-video'), {
+        clipPath: 'polygon(0% 0%, 125% 0%, 100% 100%, 0% 100%)',
+        duration: 1.05, ease: 'expo.inOut'
+      }, 0);
+
+      // Part 1 — eyebrow + giant year slam in from left
+      tl.to(el.querySelector('.fe-eyebrow'), { opacity: 1, duration: 0.45 }, 0.45)
+        .to(el.querySelector('.fe-year'), { opacity: 1, x: 0, duration: 0.68, ease: 'power4.out' }, 0.5);
+
+      // ── beat: ~1.25 → 1.95 ──
+
+      // Part 2 — subtitle, meta, CTA appear
+      tl.to(el.querySelector('.fe-title'), { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 1.95)
+        .to(el.querySelector('.fe-meta'),  { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, 2.2)
+        .to(el.querySelector('.fe-cta'),   { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, 2.42);
+      return tl;
+    }
+  },
+
+  // ── 19: Abstract Brand / Inset Punch ─────────────────────
+  {
+    name: 'Abstract Brand',
+    theme: 'dark',
+
+    prepare(el) {
+      gsap.set(el.querySelector('.slide-video'), { clipPath: 'inset(38% 38% 38% 38%)' });
+      if (el._st) { el._st.revert(); el._st = null; }
+      el._st = new SplitText(el.querySelector('.ab-headline'), { type: 'chars' });
+      gsap.set(el.querySelector('.ab-eyebrow'), { opacity: 0, y: 14 });
+      gsap.set(el._st.chars, {
+        opacity: 0, scale: 0,
+        rotation: () => gsap.utils.random(-25, 25),
+        transformOrigin: '50% 50%'
+      });
+      gsap.set(el.querySelector('.ab-sub'), { opacity: 0, y: 14 });
+    },
+
+    animate(el) {
+      const tl = gsap.timeline({
+        onComplete() { if (el._st) { el._st.revert(); el._st = null; } }
+      });
+      // Video punch — inset opens from center
+      tl.to(el.querySelector('.slide-video'), {
+        clipPath: 'inset(0% 0% 0% 0%)', duration: 1.05, ease: 'power4.inOut'
+      }, 0);
+      tl.to(el.querySelector('.ab-eyebrow'), { opacity: 1, y: 0, duration: 0.55, ease: 'power2.out' }, 0.5)
+        .to(el._st.chars, {
+          opacity: 1, scale: 1, rotation: 0,
+          duration: 0.65, ease: 'back.out(2)',
+          stagger: { each: 0.04, from: 'center' }
+        }, 0.62)
+        .to(el.querySelector('.ab-sub'), { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 1.55);
       return tl;
     }
   },
