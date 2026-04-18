@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luna Creative — Starter Replica</title>
+<link rel="icon" type="image/x-icon" href="https://luna-creative.com/templates/untitled/images/designer/987e9869a7c55216c02f00f1f4957513_LCicon.ico">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; }
+  body {
+    font-family: "Open Sans", Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    line-height: 1.7;
+    color: #2b2b2b;
+    background: #f5f5f5;
+    overflow-x: hidden;
+  }
+  a { color: #fbc036; text-decoration: none; transition: color .2s ease-out; }
+  a:hover { color: #e9931c; }
+  h1, h2, h3, h4 {
+    font-family: Montserrat, Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  h2 { font-size: 36px; line-height: 1.2; margin-bottom: 18px; }
+  h4 { font-size: 22px; line-height: 1.35; margin-bottom: 14px; font-weight: 400; text-transform: none; letter-spacing: 0; }
+  p { margin-bottom: 18px; }
+  img { max-width: 100%; height: auto; display: block; }
+
+  /* Header */
+  header.site-header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: #000; color: #fff;
+    padding: 18px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .brand { display: flex; align-items: center; gap: 18px; }
+  .brand img { width: 140px; }
+  .brand .tagline {
+    font-family: Montserrat, Arial, Helvetica, sans-serif;
+    font-size: 14px; text-transform: uppercase; color: #fff;
+    letter-spacing: 1.5px; line-height: 1.2;
+  }
+  .nav-toggle {
+    background: none; border: 0; cursor: pointer;
+    width: 40px; height: 30px; position: relative;
+  }
+  .nav-toggle span {
+    position: absolute; left: 0; right: 0; height: 3px; background: #fff;
+    transition: transform .3s ease, opacity .3s ease;
+  }
+  .nav-toggle span:nth-child(1) { top: 4px; }
+  .nav-toggle span:nth-child(2) { top: 14px; }
+  .nav-toggle span:nth-child(3) { top: 24px; }
+  .nav-toggle.open span:nth-child(1) { transform: translateY(10px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: translateY(-10px) rotate(-45deg); }
+
+  .overlay-nav {
+    position: fixed; inset: 0; background: rgba(0,0,0,.96);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity .3s ease;
+    z-index: 999;
+  }
+  .overlay-nav.open { opacity: 1; pointer-events: auto; }
+  .overlay-nav ul { list-style: none; text-align: center; }
+  .overlay-nav li { margin: 12px 0; }
+  .overlay-nav a {
+    color: #fff; font-family: Montserrat, sans-serif;
+    text-transform: uppercase; font-size: 24px; letter-spacing: 2px;
+  }
+  .overlay-nav a:hover { color: #e9931c; }
+  .overlay-nav .small { font-size: 16px; color: #bbb; }
+
+  /* Hero */
+  .hero {
+    position: relative; width: 100%; height: 100vh; min-height: 600px;
+    background: #000; overflow: hidden;
+  }
+  .hero video {
+    position: absolute; top: 50%; left: 50%;
+    width: 100%; height: 100%;
+    min-width: 100%; min-height: 100%;
+    object-fit: cover;
+    transform: translate(-50%, -50%);
+  }
+  .hero .hero-copy {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    color: #fff; text-align: center; padding: 0 20px;
+    pointer-events: none;
+  }
+  .hero h2 { color: #fff; font-weight: 500; font-size: 40px; margin-bottom: 6px; }
+  .hero .sub { font-size: 20px; font-weight: 300; max-width: 700px; }
+  .hero .sub a { pointer-events: auto; }
+  .hero .scroll {
+    position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+    width: 24px; height: 40px;
+    background: url('https://luna-creative.com/images/scrolldown.gif') center/contain no-repeat;
+    mix-blend-mode: screen;
+  }
+
+  /* Sections */
+  section { padding: 110px 40px; width: 100%; }
+  .container { max-width: 1180px; margin: 0 auto; }
+  .two-col { display: grid; grid-template-columns: 5fr 7fr; gap: 60px; align-items: start; }
+  .two-col.flip { grid-template-columns: 7fr 5fr; }
+
+  /* Why Branding */
+  .section-why { background: #fff; }
+  .section-why h2 { color: #111; }
+  .orange-gif {
+    height: 120px;
+    background: url('https://luna-creative.com/images/section1-2-orange-matte.gif') left center/contain no-repeat;
+    margin: 24px 0;
+  }
+
+  /* What is Branding */
+  .section-what { background: #ebebeb; }
+  .section-what h2 { color: #111; }
+
+  /* Brand Strategy */
+  .section-strategy { background: #e9931c; color: #fff; }
+  .section-strategy h2 { color: #fff; }
+  .section-strategy p { color: #fff; }
+  .section-strategy .yes { font-weight: 700; font-size: 28px; }
+  .section-strategy img { margin: 24px auto; max-width: 420px; }
+
+  /* Strong Brand */
+  .section-strong { background: #fff; padding-bottom: 140px; }
+  .section-strong h2 { color: #111; }
+  .two-features {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin: 50px 0 40px;
+    align-items: start; position: relative;
+  }
+  .two-features::before {
+    content: ""; position: absolute; left: 50%; top: 0; bottom: 0;
+    width: 80px; transform: translateX(-50%);
+    background: url('https://luna-creative.com/templates/untitled/images/designer/24731fe1c8bfe3e0211a18e2f7dceef9_ampersand.png') center/contain no-repeat;
+    opacity: .85;
+  }
+  .two-features .feature { padding: 10px 60px; }
+  .two-features .feature:first-child { text-align: right; }
+
+  .cta-row { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 30px; }
+
+  /* Buttons */
+  .btn {
+    display: inline-block; padding: 12px 32px;
+    font-family: "Open Sans", sans-serif; font-weight: 700; font-size: 18px;
+    text-transform: none; border: 2px solid #fff; color: #fff;
+    background: transparent; transition: all .2s ease-out;
+    cursor: pointer;
+  }
+  .btn:hover { background: #fff; color: #111; }
+  .btn-orange { border-color: #e9931c; color: #e9931c; }
+  .btn-orange:hover { background: #e9931c; color: #fff; }
+  .btn-dark { border-color: #111; color: #111; }
+  .btn-dark:hover { background: #111; color: #fff; }
+  .btn-link {
+    border: 0; color: #fbc036; padding: 12px 0;
+  }
+  .btn-link:hover { background: none; color: #e9931c; }
+
+  /* Split portrait section */
+  .section-team { padding: 0; background: #000; }
+  .split-images { display: grid; grid-template-columns: 1fr 1fr; }
+  .split-images img { width: 100%; display: block; }
+
+  /* Contact */
+  .section-contact {
+    background: #f5f5f5; text-align: center;
+  }
+  .section-contact h2 { color: #111; }
+  .section-contact h4 { font-weight: 600; margin-bottom: 4px; }
+  .form {
+    max-width: 640px; margin: 40px auto 0; text-align: left;
+  }
+  .form input, .form textarea {
+    width: 100%; padding: 14px 16px; margin-bottom: 16px;
+    font-family: inherit; font-size: 16px;
+    border: 1px solid #ccc; background: #fff; color: #222;
+    border-radius: 0;
+  }
+  .form textarea { min-height: 160px; resize: vertical; }
+  .form button {
+    background: #e9931c; border: 0; color: #fff;
+    padding: 14px 40px; font-weight: 700; font-size: 18px;
+    text-transform: uppercase; cursor: pointer;
+    transition: background .2s ease-out;
+  }
+  .form button:hover { background: #c67911; }
+  .form .disclaimer {
+    font-size: 12px; color: #777; margin-top: 10px;
+  }
+
+  /* Footer */
+  footer.site-footer {
+    background: #6d6e70; color: #fff; padding: 40px;
+    text-align: center;
+  }
+  footer .f-logo { width: 150px; margin: 0 auto 20px; }
+  footer p { font-size: 13px; line-height: 1.6; margin-bottom: 10px; color: #eee; }
+  footer a { color: #fff; }
+  footer a:hover { color: #fbc036; }
+  .mobile-call {
+    display: none;
+    position: fixed; bottom: 16px; right: 16px; z-index: 1001;
+    width: 56px; height: 56px;
+  }
+
+  /* Responsive */
+  @media (max-width: 991px) {
+    header.site-header { padding: 14px 20px; }
+    .brand img { width: 110px; }
+    .brand .tagline { display: none; }
+    section { padding: 70px 20px; }
+    .two-col, .two-col.flip { grid-template-columns: 1fr; gap: 20px; }
+    .hero h2 { font-size: 28px; }
+    .hero .sub { font-size: 16px; }
+    .two-features { grid-template-columns: 1fr; }
+    .two-features::before { display: none; }
+    .two-features .feature { padding: 10px 0; text-align: left !important; }
+    .split-images { grid-template-columns: 1fr; }
+    footer.site-footer { background: #000; padding-bottom: 90px; }
+    .mobile-call { display: block; }
+  }
+  @media (max-width: 600px) {
+    h2 { font-size: 26px; }
+    .hero h2 { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a href="#" class="brand">
+    <img src="https://luna-creative.com/templates/untitled/images/designer/8479b297e818c0ed5403ba3993574a22_OfficeLogoWhite.png" alt="Luna Creative">
+    <span class="tagline">a full-service<br>creative agency</span>
+  </a>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<nav class="overlay-nav" id="overlayNav">
+  <ul>
+    <li><a href="#">Home</a></li>
+    <li><a href="https://luna-creative.com/what-we-do">What We Do</a></li>
+    <li><a href="https://luna-creative.com/case-studies">Case Studies</a></li>
+    <li><a href="https://luna-creative.com/team">Team</a></li>
+    <li><a href="https://luna-creative.com/luna-creative-graphic-designer-san-antonio">About</a></li>
+    <li><a href="https://luna-creative.com/contact">Contact</a></li>
+    <li><a class="small" href="https://luna-creative.com/visual-identity-logo-design">Logo Design</a></li>
+    <li><a class="small" href="https://luna-creative.com/web-design-development">Website Design</a></li>
+    <li><a class="small" href="https://luna-creative.com/restaurant-branding">For Restaurants</a></li>
+    <li><a class="small" href="https://luna-creative.com/lawfirm-lawyer-branding">For Lawyers</a></li>
+    <li><a class="small" href="https://luna-creative.com/government">For Government</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <video autoplay loop muted playsinline
+         poster="https://luna-creative.com/images/videos/LC-Vid-2021.jpg">
+    <source src="https://luna-creative.com/images/videos/LC-Vid-2021.mp4" type="video/mp4">
+  </video>
+  <div class="hero-copy">
+    <h2>We Are Luna Creative</h2>
+    <p class="sub">A full-service creative agency with a strong focus on <a href="#why">branding</a>.</p>
+  </div>
+  <a href="#why" class="scroll" aria-label="Scroll"></a>
+</section>
+
+<section class="section-why" id="why">
+  <div class="container two-col">
+    <div>
+      <h2>Why<br>Branding?</h2>
+    </div>
+    <div>
+      <h4>Because first impressions are driven <strong>primarily by the image</strong> your company projects.</h4>
+      <p>A strong brand is what lets familiar names charge a premium &mdash; even when the underlying product is comparable to the competition.</p>
+      <div class="orange-gif" aria-hidden="true"></div>
+      <p>A quality brand is every bit as important as a quality product. Most companies underinvest in theirs because they underestimate the impact.</p>
+      <a href="#what" class="btn btn-dark">So What Exactly Is Branding?</a>
+    </div>
+  </div>
+</section>
+
+<section class="section-what" id="what">
+  <div class="container two-col">
+    <div>
+      <h2>What Is<br>Branding?</h2>
+    </div>
+    <div>
+      <h4>In short, your brand is how your audience <strong>perceives you</strong>.</h4>
+      <p>When customers think about your brand, they&rsquo;re really thinking about the entire experience with you &mdash; from your logo, to your website, to the way you answer the phone.</p>
+      <p>Image is everything. If your presentation looks less than professional, that becomes your brand. Remember: your brand lives in the mind of your audience.</p>
+      <a href="#strategy" class="btn btn-orange">Can You Really Control What People Think?</a>
+    </div>
+  </div>
+</section>
+
+<section class="section-strategy" id="strategy">
+  <div class="container two-col flip">
+    <div>
+      <p><span class="yes">YES!</span> A well-executed presentation shapes how prospective customers see you. Great brands are planned, not accidental. We call this:</p>
+      <h2 style="margin-top: 30px;">Brand Strategy</h2>
+      <p><strong>This is where we come in.</strong> We partner with you to build a clear, strategic plan &mdash; one that communicates the right message to the right audience.</p>
+      <img src="https://luna-creative.com/templates/untitled/images/designer/d14e084c249aa156c6411ca3517e65df_consistency.png" alt="Brand consistency">
+      <p>The key is consistency. A familiar look and feel across every touchpoint builds recognition over time &mdash; and that&rsquo;s what turns a logo into a brand.</p>
+      <a href="#strong" class="btn">What Makes a Strong Brand?</a>
+    </div>
+    <div></div>
+  </div>
+</section>
+
+<section class="section-strong" id="strong">
+  <div class="container">
+    <h2>What Makes a Strong Brand?</h2>
+    <p>The recipe is simple: have a quality presentation, then get it in front of the right audience.</p>
+    <div class="two-features">
+      <div class="feature">
+        <h4><strong>A Quality Presentation</strong></h4>
+        <p>Your visual identity &mdash; logo, website, and every piece of collateral that defines you visually.</p>
+      </div>
+      <div class="feature">
+        <h4><strong>The Right Audience</strong></h4>
+        <p>Reaching the people who matter, through the channels and platforms they actually use.</p>
+      </div>
+    </div>
+    <div class="cta-row">
+      <a href="#contact" class="btn btn-dark">Let's Get Started</a>
+      <a href="https://luna-creative.com/what-we-do" class="btn btn-dark">Check Out Our Work</a>
+    </div>
+  </div>
+</section>
+
+<section class="section-team">
+  <div class="split-images">
+    <img src="https://luna-creative.com/templates/untitled/images/designer/42dfdb7abdc68deebc71a273e0315943_splitfacesspencer.jpg" alt="Luna Creative team member">
+    <img src="https://luna-creative.com/templates/untitled/images/designer/6cec33168e6be5506b9fe5813f790f26_splitfacesdavid.jpg" alt="Luna Creative team member">
+  </div>
+</section>
+
+<section class="section-contact" id="contact">
+  <div class="container">
+    <h4>Interested in a free branding consultation?</h4>
+    <h2>We Can Help.</h2>
+    <p>We&rsquo;d love to talk about your branding and advertising goals &mdash; no strings attached.</p>
+    <form class="form" method="post" action="#">
+      <input type="text" name="name" placeholder="Name *" required>
+      <input type="email" name="email" placeholder="Email *" required>
+      <input type="tel" name="phone" placeholder="Phone Number">
+      <textarea name="message" placeholder="Project Description *" maxlength="500" required></textarea>
+      <button type="submit">Send</button>
+      <p class="disclaimer">This site is protected by reCAPTCHA and the Google
+        <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a> and
+        <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Terms of Service</a> apply.</p>
+    </form>
+    <h4 style="margin-top: 60px;">Want to learn more about us? Check out
+      <a href="https://luna-creative.com/what-we-do">our work</a>.</h4>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <img class="f-logo" src="https://luna-creative.com/templates/untitled/images/designer/8479b297e818c0ed5403ba3993574a22_OfficeLogoWhite.png" alt="Luna Creative">
+  <p>Luna Creative LLC<br>
+    <a href="https://www.google.com/maps/place/Luna+Creative/@29.5893409,-98.5323238,17z" target="_blank" rel="noopener">
+      16403 Huebner Road, San Antonio, TX 78248
+    </a>
+  </p>
+  <p>&copy; Copyright Luna Creative LLC. Design by Luna Creative.<br>
+    Texas HUB Certified Business &mdash; Certificate #1832327300500<br>
+    GSA Multiple Award Schedule Contract #47QRAA24D007A</p>
+  <p>
+    <a href="https://luna-creative.com/privacy-policy">Privacy Policy</a> &middot;
+    <a href="https://luna-creative.com/terms-and-conditions">Terms &amp; Conditions</a> &middot;
+    <a href="https://luna-creative.com/disclaimer">Disclaimer</a> &middot;
+    <a href="https://luna-creative.com/faqs">FAQ's</a>
+  </p>
+</footer>
+
+<a class="mobile-call" href="tel:2104794085" aria-label="Call">
+  <img src="https://luna-creative.com/templates/untitled/images/designer/c5ccf31971058a58077a55ea8d602eb4_phonemobilebutton.png" alt="">
+</a>
+
+<script>
+  const toggle = document.getElementById('navToggle');
+  const overlay = document.getElementById('overlayNav');
+  toggle.addEventListener('click', () => {
+    toggle.classList.toggle('open');
+    overlay.classList.toggle('open');
+  });
+  overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    toggle.classList.remove('open');
+    overlay.classList.remove('open');
+  }));
+</script>
+
+</body>
+</html>
