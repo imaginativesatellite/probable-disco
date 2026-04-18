@@ -252,15 +252,14 @@
     position: absolute; top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     display: flex; align-items: center; gap: 28px;
-    z-index: 2; white-space: nowrap;
+    z-index: 2;
   }
   #ldr-logo { width: 150px; display: block; }
-  #ldr-tag-wrap { overflow: hidden; }
+  #ldr-tag-wrap { }
   #ldr-tag {
     font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
     font-size: 13px; color: #fff;
-    text-transform: uppercase; letter-spacing: 3px;
-    font-weight: 300; line-height: 1;
+    font-weight: 300; line-height: 1.5;
   }
 
   #ldr-split-t, #ldr-split-b {
@@ -272,7 +271,7 @@
 
   .ldr-si {
     position: absolute; left: 50%;
-    display: flex; align-items: center; gap: 28px; white-space: nowrap;
+    display: flex; align-items: center; gap: 28px;
   }
   #ldr-split-t .ldr-si { top: 100%; transform: translate(-50%, -50%); }
   #ldr-split-b .ldr-si { top: 0;    transform: translate(-50%, -50%); }
@@ -280,8 +279,7 @@
   .ldr-st {
     font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
     font-size: 13px; color: #fff;
-    text-transform: uppercase; letter-spacing: 3px;
-    font-weight: 300; line-height: 1;
+    font-weight: 300; line-height: 1.5;
   }
 </style>
 </head>
@@ -292,18 +290,18 @@
   <div id="ldr-bg-b"></div>
   <div id="ldr-group">
     <img id="ldr-logo" src="https://luna-creative.com/templates/untitled/images/designer/8479b297e818c0ed5403ba3993574a22_OfficeLogoWhite.png" alt="Luna Creative">
-    <div id="ldr-tag-wrap"><div id="ldr-tag">A Full-Service Creative Agency</div></div>
+    <div id="ldr-tag-wrap"><div id="ldr-tag">A Full-Service<br>Creative Agency</div></div>
   </div>
   <div id="ldr-split-t">
     <div class="ldr-si">
       <img src="https://luna-creative.com/templates/untitled/images/designer/8479b297e818c0ed5403ba3993574a22_OfficeLogoWhite.png" alt="">
-      <div class="ldr-st">A Full-Service Creative Agency</div>
+      <div class="ldr-st">A Full-Service<br>Creative Agency</div>
     </div>
   </div>
   <div id="ldr-split-b">
     <div class="ldr-si">
       <img src="https://luna-creative.com/templates/untitled/images/designer/8479b297e818c0ed5403ba3993574a22_OfficeLogoWhite.png" alt="">
-      <div class="ldr-st">A Full-Service Creative Agency</div>
+      <div class="ldr-st">A Full-Service<br>Creative Agency</div>
     </div>
   </div>
 </div>
@@ -489,10 +487,14 @@
     const logoW   = logo.offsetWidth;
     gsap.set(group, { x: (groupW - logoW) / 2 });
 
-    // SplitText — chars start below the overflow-hidden wrapper
-    const st    = new SplitText(tagEl, { type: 'chars' });
+    // SplitText — per-line overflow clip so each line acts as its own reveal mask
+    const st    = new SplitText(tagEl, { type: 'lines,chars' });
     const chars = st.chars;
-    gsap.set(chars, { y: 26, autoAlpha: 0 });
+    st.lines.forEach(function (line) {
+      line.style.overflow = 'hidden';
+      line.style.display  = 'block';
+    });
+    gsap.set(chars, { y: 20, autoAlpha: 0 });
 
     const STAGGER = 0.038;
     const CHAR_D  = 0.45;
