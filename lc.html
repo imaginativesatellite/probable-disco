@@ -261,7 +261,7 @@
   #ldr-tag {
     font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
     font-size: 14px; color: #fff;
-    font-weight: 700; line-height: 1.5; white-space: nowrap;
+    font-weight: 700; line-height: 19px; white-space: nowrap;
   }
 
   #ldr-split-t, #ldr-split-b {
@@ -281,7 +281,7 @@
   .ldr-st {
     font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
     font-size: 14px; color: #fff;
-    font-weight: 700; line-height: 1.5; white-space: nowrap;
+    font-weight: 700; line-height: 19px; white-space: nowrap;
   }
 </style>
 </head>
@@ -486,11 +486,6 @@
   gsap.set(tagEl, { autoAlpha: 0 });
 
   window.addEventListener('load', function () {
-    // Offset group so the logo appears centered before tagline reveals
-    const groupW  = group.offsetWidth;
-    const logoW   = logo.offsetWidth;
-    gsap.set(group, { x: (groupW - logoW) / 2 });
-
     // SplitText — per-line overflow clip so each line acts as its own reveal mask
     const st    = new SplitText(tagEl, { type: 'lines,chars' });
     const chars = st.chars;
@@ -498,8 +493,15 @@
       line.style.overflow = 'hidden';
       line.style.display  = 'block';
     });
+    // Restore tagline visibility before measuring so group.offsetWidth
+    // reflects the full nowrap tagline width, then hide individual chars
     gsap.set(tagEl, { autoAlpha: 1 });
     gsap.set(chars, { y: 8, autoAlpha: 0 });
+
+    // Measure after DOM is fully settled to get accurate full-width offset
+    const groupW  = group.offsetWidth;
+    const logoW   = logo.offsetWidth;
+    gsap.set(group, { x: (groupW - logoW) / 2 });
 
     const STAGGER = 0.02;
     const CHAR_D  = 0.28;
