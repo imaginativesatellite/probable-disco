@@ -335,7 +335,7 @@
 </nav>
 
 <section class="hero">
-  <video autoplay loop muted playsinline
+  <video id="hero-video" loop muted playsinline
          poster="https://luna-creative.com/images/videos/LC-Vid-2021.jpg">
     <source src="https://luna-creative.com/images/videos/LC-Vid-2021.mp4" type="video/mp4">
   </video>
@@ -535,6 +535,19 @@
       .add(function () {
         loader.style.display = 'none';
         document.body.style.overflow = '';
+
+        const vid = document.getElementById('hero-video');
+        vid.currentTime = 1;
+        vid.play();
+
+        // Scroll to #why once after the first full play-through
+        function onFirstEnd() {
+          if (vid.currentTime >= vid.duration - 0.3) {
+            vid.removeEventListener('timeupdate', onFirstEnd);
+            document.getElementById('why').scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+        vid.addEventListener('timeupdate', onFirstEnd);
       });
 
     GSDevTools.create({ animation: tl });
