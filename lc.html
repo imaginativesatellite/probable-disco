@@ -528,16 +528,13 @@
     tl.to(splitT, { x: '-100%', duration: 0.7, ease: 'power2.inOut' })
       .to(splitB, { x:  '100%', duration: 0.7, ease: 'power2.inOut' }, '<');
 
-    // Phase 5 — black panels split open to reveal the page
-    tl.to(bgT, { y: '-100%', duration: 0.85, ease: 'power2.inOut' }, '+=0.06')
-      .to(bgB, { y:  '100%', duration: 0.85, ease: 'power2.inOut' }, '<')
-      .add(function () {
-        loader.style.display = 'none';
-        document.body.style.overflow = '';
-
+    // Phase 5 — black panels split open to reveal the page; video starts with them
+    tl.to(bgT, {
+      y: '-100%', duration: 0.85, ease: 'power2.inOut',
+      onStart: function () {
         const vid = document.getElementById('hero-video');
         function startVideo() {
-          vid.currentTime = 2.5;
+          vid.currentTime = 1.25;
           vid.play();
         }
         if (vid.readyState >= 1) {
@@ -545,6 +542,12 @@
         } else {
           vid.addEventListener('loadedmetadata', startVideo, { once: true });
         }
+      }
+    }, '+=0.06')
+      .to(bgB, { y:  '100%', duration: 0.85, ease: 'power2.inOut' }, '<')
+      .add(function () {
+        loader.style.display = 'none';
+        document.body.style.overflow = '';
       });
 
     GSDevTools.create({ animation: tl });
