@@ -472,19 +472,23 @@
 (function () {
   gsap.registerPlugin(SplitText, GSDevTools);
 
-  const loader  = document.getElementById('loader');
-  const group   = document.getElementById('ldr-group');
-  const logo    = document.getElementById('ldr-logo');
-  const tagEl   = document.getElementById('ldr-tag');
-  const splitT  = document.getElementById('ldr-split-t');
-  const splitB  = document.getElementById('ldr-split-b');
-  const bgT     = document.getElementById('ldr-bg-t');
-  const bgB     = document.getElementById('ldr-bg-b');
+  const loader       = document.getElementById('loader');
+  const group        = document.getElementById('ldr-group');
+  const logo         = document.getElementById('ldr-logo');
+  const tagEl        = document.getElementById('ldr-tag');
+  const splitT       = document.getElementById('ldr-split-t');
+  const splitB       = document.getElementById('ldr-split-b');
+  const bgT          = document.getElementById('ldr-bg-t');
+  const bgB          = document.getElementById('ldr-bg-b');
+  const headerLogo   = document.querySelector('header.site-header .brand img');
+  const burgerBars   = document.querySelectorAll('.nav-toggle span');
   let tl;
 
   document.body.style.overflow = 'hidden';
   gsap.set(logo, { autoAlpha: 0 });
   gsap.set(tagEl, { autoAlpha: 0 });
+  gsap.set(headerLogo, { autoAlpha: 0, x: -24 });
+  gsap.set(burgerBars, { autoAlpha: 0, x: -16 });
 
   window.addEventListener('load', function () {
     // Explicitly start loading the video — preload="auto" is often ignored by browsers
@@ -561,6 +565,16 @@
       .add(function () {
         loader.style.display = 'none';
         document.body.style.overflow = '';
+
+        // Logo slides in from left
+        gsap.to(headerLogo, {
+          autoAlpha: 1, x: 0, duration: 0.55, ease: 'power2.out', delay: 0.15
+        });
+        // Hamburger bars stagger in from left, top to bottom
+        gsap.to(burgerBars, {
+          autoAlpha: 1, x: 0, duration: 0.35, ease: 'power2.out',
+          stagger: 0.08, delay: 0.3
+        });
       });
 
     GSDevTools.create({ animation: tl });
