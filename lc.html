@@ -14,9 +14,9 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { width: 100%; }
   body {
-    font-family: "Open Sans", Arial, Helvetica, sans-serif;
+    font-family: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 18px;
-    line-height: 1.7;
+    line-height: 1.4;
     color: #2b2b2b;
     background: #f5f5f5;
     overflow-x: hidden;
@@ -24,10 +24,10 @@
   a { color: #fbc036; text-decoration: none; transition: color .2s ease-out; }
   a:hover { color: #e9931c; }
   h1, h2, h3, h4 {
-    font-family: Montserrat, Arial, Helvetica, sans-serif;
+    font-family: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0;
   }
   h2 { font-size: 36px; line-height: 1.2; margin-bottom: 18px; }
   h4 { font-size: 22px; line-height: 1.35; margin-bottom: 14px; font-weight: 400; text-transform: none; letter-spacing: 0; }
@@ -44,9 +44,9 @@
   .brand { display: flex; align-items: center; gap: 18px; }
   .brand img { width: 140px; }
   .brand .tagline {
-    font-family: Montserrat, Arial, Helvetica, sans-serif;
+    font-family: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px; text-transform: uppercase; color: #fff;
-    letter-spacing: 1.5px; line-height: 1.2;
+    letter-spacing: 0; line-height: 1.2;
   }
   .nav-toggle {
     background: none; border: 0; cursor: pointer;
@@ -73,8 +73,8 @@
   .overlay-nav ul { list-style: none; text-align: center; }
   .overlay-nav li { margin: 12px 0; }
   .overlay-nav a {
-    color: #fff; font-family: Montserrat, sans-serif;
-    text-transform: uppercase; font-size: 24px; letter-spacing: 2px;
+    color: #fff; font-family: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-transform: uppercase; font-size: 24px; letter-spacing: 0;
   }
   .overlay-nav a:hover { color: #e9931c; }
   .overlay-nav .small { font-size: 16px; color: #bbb; }
@@ -116,12 +116,7 @@
 
   /* Why Branding */
   .section-why { background: #fff; }
-  .section-why h2 { color: #111; }
-  .orange-gif {
-    height: 120px;
-    background: url('https://luna-creative.com/images/section1-2-orange-matte.gif') left center/contain no-repeat;
-    margin: 24px 0;
-  }
+  .section-why h2 { color: #111; font-size: 65px; }
 
   /* What is Branding */
   .section-what { background: #ebebeb; }
@@ -155,7 +150,7 @@
   /* Buttons */
   .btn {
     display: inline-block; padding: 12px 32px;
-    font-family: "Open Sans", sans-serif; font-weight: 700; font-size: 18px;
+    font-family: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif; font-weight: 700; font-size: 18px;
     text-transform: none; border: 2px solid #fff; color: #fff;
     background: transparent; transition: all .2s ease-out;
     cursor: pointer;
@@ -234,8 +229,12 @@
     footer.site-footer { background: #000; padding-bottom: 90px; }
     .mobile-call { display: block; }
   }
+  @media (max-width: 991px) {
+    .section-why h2 { font-size: 42px; }
+  }
   @media (max-width: 600px) {
     h2 { font-size: 26px; }
+    .section-why h2 { font-size: 36px; }
     .hero h2 { font-size: 22px; }
   }
 
@@ -350,7 +349,6 @@
     <div>
       <h4>Because first impressions are driven <strong>primarily by the image</strong> your company projects.</h4>
       <p>A strong brand is what lets familiar names charge a premium &mdash; even when the underlying product is comparable to the competition.</p>
-      <div class="orange-gif" aria-hidden="true"></div>
       <p>A quality brand is every bit as important as a quality product. Most companies underinvest in theirs because they underestimate the impact.</p>
       <a href="#what" class="btn btn-dark">So What Exactly Is Branding?</a>
     </div>
