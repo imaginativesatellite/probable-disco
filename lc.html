@@ -494,6 +494,7 @@
 
   document.body.style.overflow = 'hidden';
   gsap.set(logo, { autoAlpha: 0 });
+  gsap.set(tagEl, { autoAlpha: 0 });
 
   window.addEventListener('load', function () {
     // Offset group so the logo appears centered before tagline reveals
@@ -508,10 +509,11 @@
       line.style.overflow = 'hidden';
       line.style.display  = 'block';
     });
-    gsap.set(chars, { y: 20, autoAlpha: 0 });
+    gsap.set(tagEl, { autoAlpha: 1 });
+    gsap.set(chars, { y: 8, autoAlpha: 0 });
 
-    const STAGGER = 0.038;
-    const CHAR_D  = 0.45;
+    const STAGGER = 0.02;
+    const CHAR_D  = 0.28;
     const totalD  = (chars.length - 1) * STAGGER + CHAR_D;
 
     tl = gsap.timeline({ delay: 0.3 });
