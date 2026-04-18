@@ -487,6 +487,9 @@
   gsap.set(tagEl, { autoAlpha: 0 });
 
   window.addEventListener('load', function () {
+    // Explicitly start loading the video — preload="auto" is often ignored by browsers
+    const vid = document.getElementById('hero-video');
+    vid.load();
     // SplitText — per-line overflow clip so each line acts as its own reveal mask
     const st    = new SplitText(tagEl, { type: 'lines,chars' });
     const chars = st.chars;
@@ -534,10 +537,9 @@
     tl.to(bgT, {
       y: '-100%', duration: 0.85, ease: 'power2.inOut',
       onStart: function () {
-        const vid = document.getElementById('hero-video');
         function startVideo() {
           vid.currentTime = 1.25;
-          vid.play();
+          vid.play().catch(function () {});
         }
         if (vid.readyState >= 1) {
           startVideo();
