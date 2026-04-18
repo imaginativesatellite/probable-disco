@@ -8,6 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Montserrat:wght@400;700&family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/GSDevTools.min.js"></script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { width: 100%; }
@@ -304,7 +305,6 @@
       <div class="ldr-st">A Full-Service<br>Creative Agency</div>
     </div>
   </div>
-  <button id="ldr-pause" style="position:fixed;bottom:16px;left:16px;z-index:10000;background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.4);padding:6px 14px;font-family:monospace;font-size:12px;cursor:pointer;letter-spacing:1px;">Pause</button>
 </div>
 
 <header class="site-header">
@@ -468,29 +468,17 @@
 
 <script>
 (function () {
-  gsap.registerPlugin(SplitText);
+  gsap.registerPlugin(SplitText, GSDevTools);
 
-  const loader    = document.getElementById('loader');
-  const group     = document.getElementById('ldr-group');
-  const logo      = document.getElementById('ldr-logo');
-  const tagEl     = document.getElementById('ldr-tag');
-  const splitT    = document.getElementById('ldr-split-t');
-  const splitB    = document.getElementById('ldr-split-b');
-  const bgT       = document.getElementById('ldr-bg-t');
-  const bgB       = document.getElementById('ldr-bg-b');
-  const pauseBtn  = document.getElementById('ldr-pause');
+  const loader  = document.getElementById('loader');
+  const group   = document.getElementById('ldr-group');
+  const logo    = document.getElementById('ldr-logo');
+  const tagEl   = document.getElementById('ldr-tag');
+  const splitT  = document.getElementById('ldr-split-t');
+  const splitB  = document.getElementById('ldr-split-b');
+  const bgT     = document.getElementById('ldr-bg-t');
+  const bgB     = document.getElementById('ldr-bg-b');
   let tl;
-
-  pauseBtn.addEventListener('click', function () {
-    if (!tl) return;
-    if (tl.paused()) {
-      tl.resume();
-      pauseBtn.textContent = 'Pause';
-    } else {
-      tl.pause();
-      pauseBtn.textContent = 'Play';
-    }
-  });
 
   document.body.style.overflow = 'hidden';
   gsap.set(logo, { autoAlpha: 0 });
@@ -526,7 +514,7 @@
       y: 0, autoAlpha: 1,
       duration: CHAR_D, stagger: STAGGER, ease: 'power3.out'
     }, '+=0.25')
-    .to(group, { x: 0, duration: totalD, ease: 'power2.inOut' }, '<');
+    .to(group, { x: 0, duration: totalD, ease: 'power3.out' }, '<');
 
     // Phase 3 — brief hold, swap to static split-half clones
     tl.add(function () {
@@ -545,6 +533,8 @@
         loader.style.display = 'none';
         document.body.style.overflow = '';
       });
+
+    GSDevTools.create({ animation: tl });
   });
 }());
 </script>
