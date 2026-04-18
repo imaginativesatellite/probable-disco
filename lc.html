@@ -336,7 +336,7 @@
 
 <section class="hero">
   <video id="hero-video" loop muted playsinline preload="auto">
-    <source id="hero-source" src="https://luna-creative.com/images/videos/LC-Vid-2021.mp4" type="video/mp4">
+    <source id="hero-source" src="https://videos.pexels.com/video-files/2711111/2711111-hd_1920_1080_25fps.mp4" type="video/mp4">
   </video>
   <a href="#why" class="scroll" aria-label="Scroll"></a>
 </section>
@@ -465,11 +465,6 @@
     overlay.classList.remove('open');
   }));
 
-  // Swap to local mobile video on narrow screens
-  if (window.matchMedia('(max-width: 991px)').matches) {
-    document.getElementById('hero-source').src = 'pikaso-untitled-project-2026-04-18.mp4';
-    document.getElementById('hero-video').load();
-  }
 </script>
 
 <script>
