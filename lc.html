@@ -252,7 +252,7 @@
 
   #ldr-group {
     position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateY(-50%);
     display: flex; align-items: center; gap: 8px;
     z-index: 2;
   }
@@ -501,7 +501,7 @@
     // Measure after DOM is fully settled to get accurate full-width offset
     const groupW  = 272;
     const logoW   = logo.offsetWidth;
-    gsap.set(group, { x: (groupW - logoW) / 2 });
+    gsap.set(group, { x: -(logoW / 2) });
 
     const STAGGER = 0.02;
     const CHAR_D  = 0.28;
@@ -517,7 +517,7 @@
       y: 0, autoAlpha: 1,
       duration: CHAR_D, stagger: STAGGER, ease: 'power3.out'
     }, '+=0.25')
-    .to(group, { x: 0, duration: totalD, ease: 'power3.out' }, '<');
+    .to(group, { x: -(groupW / 2), duration: totalD, ease: 'power3.out' }, '<');
 
     // Phase 3 — brief hold, swap to static split-half clones
     tl.add(function () {
