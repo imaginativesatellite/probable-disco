@@ -82,7 +82,7 @@
 
   /* Hero */
   .hero {
-    position: relative; width: 100%; height: 100vh; min-height: 600px;
+    position: relative; width: 100%; height: 100vh; height: 100dvh; min-height: 600px;
     background: #000; overflow: hidden;
   }
   .hero video {
@@ -122,6 +122,7 @@
     flex-direction: column;
     justify-content: space-between;
     min-height: 100vh;
+    min-height: 100dvh;
     padding: 80px 60px;
     position: relative;
     overflow: hidden;
@@ -136,7 +137,7 @@
   .why-bottom h4 { margin-bottom: 20px; }
   .why-bg-img {
     position: absolute; bottom: 0; left: -20%;
-    max-height: 85vh; max-width: 70%; width: auto; height: auto;
+    max-height: 85vh; max-width: 80%; width: auto; height: auto;
     z-index: 0; pointer-events: none;
   }
   .why-headline, .why-bottom { position: relative; z-index: 1; }
@@ -242,7 +243,7 @@
     .brand .tagline { display: none; }
     section { padding: 70px 20px; }
     .two-col, .two-col.flip { grid-template-columns: 1fr; gap: 20px; }
-    .hero { height: 100vh; min-height: unset; }
+    .hero { height: 100vh; height: 100dvh; min-height: unset; }
     .hero h2 { font-size: 28px; }
     .hero .sub { font-size: 16px; }
     .two-features { grid-template-columns: 1fr; }
