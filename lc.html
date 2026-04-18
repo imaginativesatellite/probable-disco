@@ -336,8 +336,8 @@
 </nav>
 
 <section class="hero">
-  <video id="hero-video" loop muted playsinline preload="auto" crossorigin="anonymous">
-    <source id="hero-source" src="https://videos.pexels.com/video-files/2711111/2711111-hd_1920_1080_25fps.mp4" type="video/mp4">
+  <video id="hero-video" autoplay loop muted playsinline>
+    <source src="https://videos.pexels.com/video-files/2711111/2711111-hd_1920_1080_25fps.mp4" type="video/mp4">
   </video>
   <a href="#why" class="scroll" aria-label="Scroll"></a>
 </section>
@@ -491,9 +491,6 @@
   gsap.set(burgerBars, { autoAlpha: 0, x: -16 });
 
   window.addEventListener('load', function () {
-    // Explicitly start loading the video — preload="auto" is often ignored by browsers
-    const vid = document.getElementById('hero-video');
-    vid.load();
     // SplitText — per-line overflow clip so each line acts as its own reveal mask
     const st    = new SplitText(tagEl, { type: 'lines,chars' });
     const chars = st.chars;
@@ -537,30 +534,8 @@
     tl.to(splitT, { x: -300, autoAlpha: 0, duration: 0.7, ease: 'power2.inOut' })
       .to(splitB, { x:  300, autoAlpha: 0, duration: 0.7, ease: 'power2.inOut' }, '<');
 
-    // Phase 5 — black panels split open to reveal the page; video starts with them
-    tl.to(bgT, {
-      y: '-100%', duration: 0.85, ease: 'power2.inOut',
-      onStart: function () {
-        function startVideo() {
-          vid.currentTime = 1.25;
-          vid.play().catch(function () {});
-        }
-        if (vid.readyState >= 3) {
-          startVideo();
-        } else if (vid.readyState >= 1) {
-          vid.addEventListener('canplay', startVideo, { once: true });
-        } else {
-          // metadata not yet loaded — wait for it, then wait for canplay
-          vid.addEventListener('loadedmetadata', function () {
-            vid.addEventListener('canplay', startVideo, { once: true });
-          }, { once: true });
-        }
-        // Hard fallback: play unconditionally after 3s regardless of state
-        setTimeout(function () {
-          if (vid.paused) { vid.currentTime = 1.25; vid.play().catch(function () {}); }
-        }, 3000);
-      }
-    }, '+=0.06')
+    // Phase 5 — black panels split open to reveal the page
+    tl.to(bgT, { y: '-100%', duration: 0.85, ease: 'power2.inOut' }, '+=0.06')
       .to(bgB, { y:  '100%', duration: 0.85, ease: 'power2.inOut' }, '<')
       .add(function () {
         loader.style.display = 'none';
@@ -570,10 +545,10 @@
         gsap.to(headerLogo, {
           autoAlpha: 1, x: 0, duration: 0.55, ease: 'power2.out', delay: 0.15
         });
-        // Hamburger bars stagger in from left, top to bottom
+        // Hamburger bars stagger in from left, top to bottom — starts while logo is still fading
         gsap.to(burgerBars, {
           autoAlpha: 1, x: 0, duration: 0.35, ease: 'power2.out',
-          stagger: 0.08, delay: 0.3
+          stagger: 0.08, delay: 0.2
         });
       });
 
