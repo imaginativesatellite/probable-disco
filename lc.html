@@ -537,17 +537,8 @@
         document.body.style.overflow = '';
 
         const vid = document.getElementById('hero-video');
-        vid.currentTime = 1.9;
+        vid.currentTime = 2.5;
         vid.play();
-
-        // Scroll to #why once after the first full play-through
-        function onFirstEnd() {
-          if (vid.currentTime >= vid.duration - 0.3) {
-            vid.removeEventListener('timeupdate', onFirstEnd);
-            document.getElementById('why').scrollIntoView({ behavior: 'smooth' });
-          }
-        }
-        vid.addEventListener('timeupdate', onFirstEnd);
       });
 
     GSDevTools.create({ animation: tl });
