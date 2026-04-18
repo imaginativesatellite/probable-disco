@@ -48,18 +48,18 @@
   }
   .nav-toggle {
     background: none; border: 0; cursor: pointer;
-    width: 40px; height: 30px; position: relative;
+    width: 24px; height: 18px; position: relative;
   }
   .nav-toggle span {
-    position: absolute; left: 0; right: 0; height: 3px; background: #fff;
+    position: absolute; left: 0; right: 0; height: 2px; background: #fff;
     transition: transform .3s ease, opacity .3s ease;
   }
-  .nav-toggle span:nth-child(1) { top: 4px; }
-  .nav-toggle span:nth-child(2) { top: 14px; }
-  .nav-toggle span:nth-child(3) { top: 24px; }
-  .nav-toggle.open span:nth-child(1) { transform: translateY(10px) rotate(45deg); }
+  .nav-toggle span:nth-child(1) { top: 2px; }
+  .nav-toggle span:nth-child(2) { top: 8px; }
+  .nav-toggle span:nth-child(3) { top: 14px; }
+  .nav-toggle.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
   .nav-toggle.open span:nth-child(2) { opacity: 0; }
-  .nav-toggle.open span:nth-child(3) { transform: translateY(-10px) rotate(-45deg); }
+  .nav-toggle.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
   .overlay-nav {
     position: fixed; inset: 0; background: rgba(0,0,0,.96);
@@ -210,7 +210,7 @@
   footer a { color: #fff; }
   footer a:hover { color: #fbc036; }
   .mobile-call {
-    display: none;
+    display: none !important;
     position: fixed; bottom: 16px; right: 16px; z-index: 1001;
     width: 56px; height: 56px;
   }
@@ -304,6 +304,7 @@
       <div class="ldr-st">A Full-Service<br>Creative Agency</div>
     </div>
   </div>
+  <button id="ldr-pause" style="position:fixed;bottom:16px;left:16px;z-index:10000;background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.4);padding:6px 14px;font-family:monospace;font-size:12px;cursor:pointer;letter-spacing:1px;">Pause</button>
 </div>
 
 <header class="site-header">
@@ -469,14 +470,27 @@
 (function () {
   gsap.registerPlugin(SplitText);
 
-  const loader  = document.getElementById('loader');
-  const group   = document.getElementById('ldr-group');
-  const logo    = document.getElementById('ldr-logo');
-  const tagEl   = document.getElementById('ldr-tag');
-  const splitT  = document.getElementById('ldr-split-t');
-  const splitB  = document.getElementById('ldr-split-b');
-  const bgT     = document.getElementById('ldr-bg-t');
-  const bgB     = document.getElementById('ldr-bg-b');
+  const loader    = document.getElementById('loader');
+  const group     = document.getElementById('ldr-group');
+  const logo      = document.getElementById('ldr-logo');
+  const tagEl     = document.getElementById('ldr-tag');
+  const splitT    = document.getElementById('ldr-split-t');
+  const splitB    = document.getElementById('ldr-split-b');
+  const bgT       = document.getElementById('ldr-bg-t');
+  const bgB       = document.getElementById('ldr-bg-b');
+  const pauseBtn  = document.getElementById('ldr-pause');
+  let tl;
+
+  pauseBtn.addEventListener('click', function () {
+    if (!tl) return;
+    if (tl.paused()) {
+      tl.resume();
+      pauseBtn.textContent = 'Pause';
+    } else {
+      tl.pause();
+      pauseBtn.textContent = 'Play';
+    }
+  });
 
   document.body.style.overflow = 'hidden';
   gsap.set(logo, { autoAlpha: 0 });
@@ -500,7 +514,7 @@
     const CHAR_D  = 0.45;
     const totalD  = (chars.length - 1) * STAGGER + CHAR_D;
 
-    const tl = gsap.timeline({ delay: 0.3 });
+    tl = gsap.timeline({ delay: 0.3 });
 
     // Phase 1 — logo fades in
     tl.to(logo, { autoAlpha: 1, duration: 0.9, ease: 'power2.out' });
