@@ -525,8 +525,8 @@
     }, '+=0.55');
 
     // Phase 4 — top half exits left, bottom half exits right (fade out mid-travel)
-    tl.to(splitT, { x: '-40%', autoAlpha: 0, duration: 0.7, ease: 'power2.inOut' })
-      .to(splitB, { x:  '40%', autoAlpha: 0, duration: 0.7, ease: 'power2.inOut' }, '<');
+    tl.to(splitT, { x: -300, autoAlpha: 0, duration: 0.7, ease: 'power2.inOut' })
+      .to(splitB, { x:  300, autoAlpha: 0, duration: 0.7, ease: 'power2.inOut' }, '<');
 
     // Phase 5 — black panels split open to reveal the page; video starts with them
     tl.to(bgT, {
