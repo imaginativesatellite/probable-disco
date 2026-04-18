@@ -608,6 +608,31 @@ gsap.registerPlugin(ScrollTrigger);
     }
   });
 
+  // h4 in why-bottom: lines fade in from left when element enters viewport
+  var whyH4 = document.querySelector('.why-bottom h4');
+  if (whyH4) {
+    var st4 = new SplitText(whyH4, { type: 'lines' });
+    st4.lines.forEach(function (line) {
+      var wrap = document.createElement('div');
+      wrap.style.cssText = 'overflow:hidden;display:block;';
+      line.parentNode.insertBefore(wrap, line);
+      wrap.appendChild(line);
+    });
+    gsap.set(st4.lines, { x: -50, autoAlpha: 0 });
+
+    ScrollTrigger.create({
+      trigger: '.why-bottom',
+      start: 'top bottom',
+      once: true,
+      onEnter: function () {
+        gsap.to(st4.lines, {
+          x: 0, autoAlpha: 1,
+          duration: 0.65, stagger: 0.12,
+          ease: 'power3.out', delay: 0.1
+        });
+      }
+    });
+  }
 }());
 </script>
 
