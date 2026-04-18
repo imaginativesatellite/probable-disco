@@ -132,6 +132,13 @@
     margin-left: auto;
   }
   .why-bottom h4 { margin-bottom: 20px; width: 18.75rem; }
+  .why-bg-img {
+    position: absolute; bottom: 0; left: 0;
+    height: 85%; width: auto;
+    object-fit: contain; object-position: bottom left;
+    z-index: 0; pointer-events: none;
+  }
+  .why-headline, .why-bottom { position: relative; z-index: 1; }
 
   /* What is Branding */
   .section-what { background: #ebebeb; }
@@ -357,6 +364,7 @@
 </section>
 
 <section class="section-why" id="why">
+  <img class="why-bg-img" src="65d637880835357cf3758650_david-homepage.png" alt="">
   <div class="why-headline">
     <h1>We Are a Full-Service Creative Agency with a Focus on Branding. <strong>Why Branding?</strong></h1>
   </div>
