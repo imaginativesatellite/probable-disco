@@ -116,8 +116,22 @@
   .two-col.flip { grid-template-columns: 7fr 5fr; }
 
   /* Why Branding */
-  .section-why { background: #fff; }
+  .section-why {
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+    padding: 80px 60px;
+  }
   .section-why h2 { color: #111; font-size: 65px; text-transform: none; }
+  .why-bottom {
+    text-align: right;
+    max-width: 560px;
+    margin-left: auto;
+  }
+  .why-bottom h4 { margin-bottom: 20px; }
+  .why-p { overflow: hidden; }
 
   /* What is Branding */
   .section-what { background: #ebebeb; }
@@ -231,12 +245,13 @@
     .mobile-call { display: block; }
   }
   @media (max-width: 991px) {
-    .section-why h2 { font-size: 42px; }
+    .section-why { padding: 60px 30px; }
   }
   @media (max-width: 600px) {
     h2 { font-size: 26px; }
-    .section-why h2 { font-size: 42px; }
     .hero h2 { font-size: 22px; }
+    .section-why { padding: 50px 20px; }
+    .section-why h2 { font-size: 65px; }
   }
 
   /* ── Loader ── */
@@ -343,16 +358,13 @@
 </section>
 
 <section class="section-why" id="why">
-  <div class="container two-col">
-    <div>
-      <h2>Why<br>Branding?</h2>
-    </div>
-    <div>
-      <h4>Because first impressions are driven <strong>primarily by the image</strong> your company projects.</h4>
-      <p>A strong brand is what lets familiar names charge a premium &mdash; even when the underlying product is comparable to the competition.</p>
-      <p>A quality brand is every bit as important as a quality product. Most companies underinvest in theirs because they underestimate the impact.</p>
-      <a href="#what" class="btn btn-dark">So What Exactly Is Branding?</a>
-    </div>
+  <div class="why-headline">
+    <h2>Why<br>Branding?</h2>
+  </div>
+  <div class="why-bottom">
+    <h4>Because first impressions are driven <strong>primarily by the image</strong> your company projects.</h4>
+    <p class="why-p">A quality brand is every bit as important as a quality product. Most companies underinvest in theirs because they underestimate the impact.</p>
+    <a href="#what" class="btn btn-dark">So What Exactly Is Branding?</a>
   </div>
 </section>
 
@@ -597,6 +609,34 @@ gsap.registerPlugin(ScrollTrigger);
       });
     }
   });
+
+  // Why-p: lines slide in from the right, staggered
+  var whyP = document.querySelector('.why-p');
+  if (whyP) {
+    var stP = new SplitText(whyP, { type: 'lines' });
+    stP.lines.forEach(function (line) {
+      var wrap = document.createElement('div');
+      wrap.style.cssText = 'overflow:hidden;display:block;';
+      line.parentNode.insertBefore(wrap, line);
+      wrap.appendChild(line);
+    });
+    gsap.set(stP.lines, { x: 60, autoAlpha: 0 });
+
+    ScrollTrigger.create({
+      trigger: whyP,
+      start: 'top 90%',
+      once: true,
+      onEnter: function () {
+        gsap.to(stP.lines, {
+          x: 0,
+          autoAlpha: 1,
+          duration: 0.65,
+          stagger: 0.12,
+          ease: 'power3.out'
+        });
+      }
+    });
+  }
 }());
 </script>
 
