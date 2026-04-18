@@ -272,11 +272,11 @@
   #ldr-split-b { bottom: 0; }
 
   .ldr-si {
-    position: absolute; left: 50%;
+    position: absolute;
     display: flex; align-items: center; gap: 8px;
   }
-  #ldr-split-t .ldr-si { top: 100%; transform: translate(-50%, -50%); }
-  #ldr-split-b .ldr-si { top: 0;    transform: translate(-50%, -50%); }
+  #ldr-split-t .ldr-si { top: 100%; left: calc(50% - 136px); transform: translateY(-50%); }
+  #ldr-split-b .ldr-si { top: 0;    left: calc(50% - 136px); transform: translateY(-50%); }
   .ldr-si img { width: 150px; display: block; }
   .ldr-st {
     font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
