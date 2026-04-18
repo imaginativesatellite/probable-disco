@@ -6,6 +6,7 @@
 <title>Luna Creative — Starter Replica</title>
 <link rel="icon" type="image/x-icon" href="https://luna-creative.com/templates/untitled/images/designer/987e9869a7c55216c02f00f1f4957513_LCicon.ico">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { width: 100%; }
@@ -32,8 +33,8 @@
 
   /* Header */
   header.site-header {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-    background: #000; color: #fff;
+    position: absolute; top: 0; left: 0; right: 0; z-index: 1000;
+    background: transparent; color: #fff;
     padding: 18px 40px;
     display: flex; align-items: center; justify-content: space-between;
   }
@@ -220,6 +221,7 @@
     .brand .tagline { display: none; }
     section { padding: 70px 20px; }
     .two-col, .two-col.flip { grid-template-columns: 1fr; gap: 20px; }
+    .hero { height: 100vh; min-height: unset; }
     .hero h2 { font-size: 28px; }
     .hero .sub { font-size: 16px; }
     .two-features { grid-template-columns: 1fr; }
@@ -268,10 +270,6 @@
          poster="https://luna-creative.com/images/videos/LC-Vid-2021.jpg">
     <source src="https://luna-creative.com/images/videos/LC-Vid-2021.mp4" type="video/mp4">
   </video>
-  <div class="hero-copy">
-    <h2>We Are Luna Creative</h2>
-    <p class="sub">A full-service creative agency with a strong focus on <a href="#why">branding</a>.</p>
-  </div>
   <a href="#why" class="scroll" aria-label="Scroll"></a>
 </section>
 
@@ -310,7 +308,6 @@
       <p><span class="yes">YES!</span> A well-executed presentation shapes how prospective customers see you. Great brands are planned, not accidental. We call this:</p>
       <h2 style="margin-top: 30px;">Brand Strategy</h2>
       <p><strong>This is where we come in.</strong> We partner with you to build a clear, strategic plan &mdash; one that communicates the right message to the right audience.</p>
-      <img src="https://luna-creative.com/templates/untitled/images/designer/d14e084c249aa156c6411ca3517e65df_consistency.png" alt="Brand consistency">
       <p>The key is consistency. A familiar look and feel across every touchpoint builds recognition over time &mdash; and that&rsquo;s what turns a logo into a brand.</p>
       <a href="#strong" class="btn">What Makes a Strong Brand?</a>
     </div>
