@@ -336,7 +336,7 @@
 </nav>
 
 <section class="hero">
-  <video id="hero-video" loop muted playsinline preload="auto">
+  <video id="hero-video" loop muted playsinline preload="auto" crossorigin="anonymous">
     <source id="hero-source" src="https://videos.pexels.com/video-files/2711111/2711111-hd_1920_1080_25fps.mp4" type="video/mp4">
   </video>
   <a href="#why" class="scroll" aria-label="Scroll"></a>
@@ -541,11 +541,20 @@
           vid.currentTime = 1.25;
           vid.play().catch(function () {});
         }
-        if (vid.readyState >= 1) {
+        if (vid.readyState >= 3) {
           startVideo();
+        } else if (vid.readyState >= 1) {
+          vid.addEventListener('canplay', startVideo, { once: true });
         } else {
-          vid.addEventListener('loadedmetadata', startVideo, { once: true });
+          // metadata not yet loaded — wait for it, then wait for canplay
+          vid.addEventListener('loadedmetadata', function () {
+            vid.addEventListener('canplay', startVideo, { once: true });
+          }, { once: true });
         }
+        // Hard fallback: play unconditionally after 3s regardless of state
+        setTimeout(function () {
+          if (vid.paused) { vid.currentTime = 1.25; vid.play().catch(function () {}); }
+        }, 3000);
       }
     }, '+=0.06')
       .to(bgB, { y:  '100%', duration: 0.85, ease: 'power2.inOut' }, '<')
