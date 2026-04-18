@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Luna Creative — Starter Replica</title>
 <link rel="icon" type="image/x-icon" href="https://luna-creative.com/templates/untitled/images/designer/987e9869a7c55216c02f00f1f4957513_LCicon.ico">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Montserrat:wght@400;700&family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Montserrat:wght@400;700&family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/SplitText.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/ScrollTrigger.min.js"></script>
@@ -43,7 +43,7 @@
     display: flex; align-items: center; justify-content: space-between;
   }
   .brand { display: flex; align-items: center; gap: 18px; }
-  .brand img { width: 140px; }
+  .brand img { width: 168px; }
   .brand .tagline {
     font-family: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px; text-transform: uppercase; color: #fff;
@@ -124,14 +124,14 @@
     min-height: 100vh;
     padding: 80px 60px;
   }
-  .section-why h2 { color: #111; font-size: 65px; text-transform: none; }
+  .section-why h2 { color: #111; font-size: 65px; text-transform: none; font-weight: 900; }
   .why-bottom {
     text-align: right;
     max-width: 560px;
     margin-left: auto;
   }
   .why-bottom h4 { margin-bottom: 20px; }
-  .why-p { overflow: hidden; }
+  .why-p { overflow: hidden; font-size: 22px; }
 
   /* What is Branding */
   .section-what { background: #ebebeb; }
@@ -230,7 +230,7 @@
   /* Responsive */
   @media (max-width: 991px) {
     header.site-header { padding: 14px 20px; }
-    .brand img { width: 110px; }
+    .brand img { width: 132px; }
     .brand .tagline { display: none; }
     section { padding: 70px 20px; }
     .two-col, .two-col.flip { grid-template-columns: 1fr; gap: 20px; }
@@ -363,8 +363,7 @@
   </div>
   <div class="why-bottom">
     <h4>Because first impressions are driven <strong>primarily by the image</strong> your company projects.</h4>
-    <p class="why-p">A quality brand is every bit as important as a quality product. Most companies underinvest in theirs because they underestimate the impact.</p>
-    <a href="#what" class="btn btn-dark">So What Exactly Is Branding?</a>
+    <p class="why-p">A quality brand is every bit as important as&nbsp;a quality product. Most companies underinvest in theirs because they underestimate the impact.</p>
   </div>
 </section>
 
@@ -507,7 +506,7 @@
   gsap.set(logo, { autoAlpha: 0 });
   gsap.set(tagEl, { autoAlpha: 0 });
   gsap.set(headerLogo, { autoAlpha: 0, x: -24 });
-  gsap.set(burgerBars, { scaleX: 0, transformOrigin: 'left center' });
+  gsap.set(burgerBars, { scaleX: 0, transformOrigin: 'right center' });
 
   window.addEventListener('load', function () {
     // SplitText — per-line overflow clip so each line acts as its own reveal mask
@@ -564,10 +563,11 @@
         gsap.to(headerLogo, {
           autoAlpha: 1, x: 0, duration: 0.55, ease: 'power2.out', delay: 0.15
         });
-        // Hamburger bars grow in length left→right, staggered top to bottom
+        // Hamburger bars grow in from right, staggered top to bottom; clear GSAP transform so CSS X-toggle works
         gsap.to(burgerBars, {
           scaleX: 1, duration: 0.35, ease: 'power2.out',
-          stagger: 0.08, delay: 0.2
+          stagger: 0.08, delay: 0.2,
+          clearProps: 'transform,transformOrigin'
         });
         ScrollTrigger.refresh();
       });
