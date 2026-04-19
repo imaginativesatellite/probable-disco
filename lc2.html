@@ -387,7 +387,7 @@
   .why-branding-line {
     font-family: 'Inter Tight', "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 65px;
-    font-weight: 900;
+    font-weight: 500;
     line-height: 1.15;
     text-transform: none;
     letter-spacing: 0;
@@ -768,8 +768,7 @@ window.addEventListener('load', function () {
   tl.to(st1H4.lines, { x: 80, autoAlpha: 0, stagger: STAG_H4, duration: DUR, ease: 'power2.inOut' }, '<');
 
   // PHASE 2.5 — orange "Why Branding?" snaps up to occupy section 2's first-line position
-  var blankLineH = parseFloat(getComputedStyle(s2H1).fontSize) * 1.15;
-  var whyUpY     = blankLineH - s1H1.getBoundingClientRect().height;
+  var whyUpY = -s1H1.getBoundingClientRect().height;
   tl.to(s1WhyLine, { y: whyUpY, duration: DUR * 0.3, ease: 'power4.out' });
 
   // PHASE 3 — ENTER section 2 text (black→white as lines arrive so text materialises on black bg)
@@ -797,10 +796,10 @@ window.addEventListener('load', function () {
     scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
   });
 
-  // "Why Branding?" — chars reveal per-character during the last 25% of hero scroll
+  // "Why Branding?" — chars reveal per-character over the last half of the hero scroll
   gsap.to(stWhyLine.chars, {
-    autoAlpha: 1, y: 0, stagger: 0.05, ease: 'power3.out',
-    scrollTrigger: { trigger: '.hero', start: '75% top', end: 'bottom top', scrub: true }
+    autoAlpha: 1, y: 0, stagger: 0.1, ease: 'power1.inOut',
+    scrollTrigger: { trigger: '.hero', start: '50% top', end: 'bottom top', scrub: true }
   });
 
   // Hand off: fade overlay out and reveal s1 h1 in white; reverse on scroll back
