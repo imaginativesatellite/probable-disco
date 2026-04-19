@@ -488,4 +488,196 @@
     <a href="https://luna-creative.com/privacy-policy">Privacy Policy</a> &middot;
     <a href="https://luna-creative.com/terms-and-conditions">Terms &amp; Conditions</a> &middot;
     <a href="https://luna-creative.com/disclaimer">Disclaimer</a> &middot;
-    
+      <a href="https://luna-creative.com/disclaimer">Disclaimer</a> &middot;
+    <a href="https://luna-creative.com/faqs">FAQ's</a>
+  </p>
+</footer>
+
+<a class="mobile-call" href="tel:2104794085" aria-label="Call">
+  <img src="https://luna-creative.com/templates/untitled/images/designer/c5ccf31971058a58077a55ea8d602eb4_phonemobilebutton.png" alt="">
+</a>
+
+<script>
+  const toggle = document.getElementById('navToggle');
+  const overlay = document.getElementById('overlayNav');
+  toggle.addEventListener('click', () => {
+    toggle.classList.toggle('open');
+    overlay.classList.toggle('open');
+  });
+  overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    toggle.classList.remove('open');
+    overlay.classList.remove('open');
+  }));
+
+</script>
+
+
+<script>
+(function () {
+  gsap.registerPlugin(SplitText, GSDevTools);
+
+  const loader       = document.getElementById('loader');
+  const group        = document.getElementById('ldr-group');
+  const logo         = document.getElementById('ldr-logo');
+  const tagEl        = document.getElementById('ldr-tag');
+  const splitT       = document.getElementById('ldr-split-t');
+  const splitB       = document.getElementById('ldr-split-b');
+  const bgT          = document.getElementById('ldr-bg-t');
+  const bgB          = document.getElementById('ldr-bg-b');
+  const headerLogo   = document.querySelector('header.site-header .brand img');
+  const burgerBars   = document.querySelectorAll('.nav-toggle span');
+  let tl;
+
+  document.body.style.overflow = 'hidden';
+  gsap.set(logo, { autoAlpha: 0 });
+  gsap.set(tagEl, { autoAlpha: 0 });
+  gsap.set(headerLogo, { autoAlpha: 0, x: -24 });
+  gsap.set(burgerBars, { scaleX: 0, transformOrigin: 'right center' });
+  // Suppress CSS transition so it doesn't fight the GSAP entrance animation
+  burgerBars.forEach(function(b) { b.style.transition = 'none'; });
+
+  window.addEventListener('load', function () {
+    // SplitText — per-line overflow clip so each line acts as its own reveal mask
+    const st    = new SplitText(tagEl, { type: 'lines,chars' });
+    const chars = st.chars;
+    st.lines.forEach(function (line) {
+      line.style.overflow = 'hidden';
+      line.style.display  = 'block';
+    });
+    // Restore tagline visibility before measuring so group.offsetWidth
+    // reflects the full nowrap tagline width, then hide individual chars
+    gsap.set(tagEl, { autoAlpha: 1 });
+    gsap.set(chars, { y: 8, autoAlpha: 0 });
+
+    // Measure after DOM is fully settled to get accurate full-width offset
+    const groupW  = 272;
+    const logoW   = logo.offsetWidth;
+    gsap.set(group, { x: -(logoW / 2) });
+
+    const STAGGER = 0.02;
+    const CHAR_D  = 0.28;
+    const totalD  = (chars.length - 1) * STAGGER + CHAR_D;
+
+    tl = gsap.timeline({ delay: 0.3 });
+
+    // Phase 1 — logo fades in
+    tl.to(logo, { autoAlpha: 1, duration: 0.9, ease: 'power2.out' });
+
+    // Phase 2 — chars reveal from bottom + group slides left (finish together)
+    tl.to(chars, {
+      y: 0, autoAlpha: 1,
+      duration: CHAR_D, stagger: STAGGER, ease: 'power3.out'
+    }, '+=0.25')
+    .to(group, { x: -(groupW / 2), duration: totalD, ease: 'power3.out' }, '<');
+
+    // Phase 3 — brief hold, swap to static split-half clones
+    tl.add(function () {
+      gsap.set([splitT, splitB], { visibility: 'visible' });
+      gsap.set(group, { autoAlpha: 0 });
+    }, '+=0.55');
+
+    // Phase 4 — top half exits left, bottom half exits right (fade out mid-travel)
+    tl.to(splitT, { x: -300, autoAlpha: 0, duration: 0.7, ease: 'power2.inOut' })
+      .to(splitB, { x:  300, autoAlpha: 0, duration: 0.7, ease: 'power2.inOut' }, '<');
+
+    // Phase 5 — black panels split open to reveal the page
+    tl.to(bgT, { y: '-100%', duration: 0.85, ease: 'power2.inOut' }, '+=0.06')
+      .to(bgB, { y:  '100%', duration: 0.85, ease: 'power2.inOut' }, '<')
+      .add(function () {
+        loader.style.display = 'none';
+        document.body.style.overflow = '';
+
+        // Logo slides in from left
+        gsap.to(headerLogo, {
+          autoAlpha: 1, x: 0, duration: 0.55, ease: 'power2.out', delay: 0.15
+        });
+        // Hamburger bars grow in from right, staggered top to bottom; clear GSAP transform so CSS X-toggle works
+        gsap.to(burgerBars, {
+          scaleX: 1, duration: 0.35, ease: 'power2.out',
+          stagger: 0.08, delay: 0.2,
+          clearProps: 'transform,transformOrigin'
+        });
+        // Restore CSS transition after all bars finish (delay + stagger offset + duration + buffer)
+        gsap.delayedCall(0.2 + 0.08 * 2 + 0.35 + 0.05, function() {
+          burgerBars.forEach(function(b) { b.style.transition = ''; });
+        });
+        ScrollTrigger.refresh();
+      });
+
+    GSDevTools.create({ animation: tl });
+  });
+}());
+</script>
+
+<script>
+gsap.registerPlugin(ScrollTrigger, SplitText);
+
+window.addEventListener('load', function () {
+  var wrapper = document.getElementById('why-transition');
+  var s1      = document.getElementById('why');
+  var s2      = document.getElementById('what-branding');
+  if (!wrapper || !s1 || !s2) return;
+
+  var s1H1  = s1.querySelector('h1');
+  var s1H4  = s1.querySelector('.why-bottom h4');
+  var s1Img = s1.querySelector('.why-bg-img');
+  var s2H1  = s2.querySelector('h1');
+  var s2H4  = s2.querySelector('.why-bottom h4');
+  var s2Img = s2.querySelector('.why-bg-img');
+
+  // Split both headings and paragraphs into lines
+  var st1H1 = new SplitText(s1H1, { type: 'lines' });
+  var st2H1 = new SplitText(s2H1, { type: 'lines' });
+  var st1H4 = new SplitText(s1H4, { type: 'lines' });
+  var st2H4 = new SplitText(s2H4, { type: 'lines' });
+
+  // Wrap h1 lines in overflow:hidden clips so lines mask cleanly as they slide up/down
+  [st1H1.lines, st2H1.lines].forEach(function (lines) {
+    lines.forEach(function (line) {
+      var wrap = document.createElement('div');
+      wrap.style.cssText = 'overflow:hidden;display:block;';
+      line.parentNode.insertBefore(wrap, line);
+      wrap.appendChild(line);
+    });
+  });
+
+  var VW = window.innerWidth;
+
+  // Initial hidden state for section 2 elements
+  gsap.set(st2H1.lines, { y: '105%' });
+  gsap.set(st2H4.lines, { x: -80, autoAlpha: 0 });
+  gsap.set(s2Img,       { x: VW });
+
+  var DUR     = 1;
+  var STAG_H1 = 0.12;
+  var STAG_H4 = 0.10;
+
+  var tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: wrapper,
+      start: 'top top',
+      end: function () { return '+=' + window.innerHeight * 1.5; },
+      pin: true,
+      scrub: 1,
+      anticipatePin: 1
+    }
+  });
+
+  // EXIT — section 1 text
+  tl.to(st1H1.lines, { y: '-105%', stagger: STAG_H1, duration: DUR, ease: 'power2.inOut' });
+  tl.to(st1H4.lines, { x: 80, autoAlpha: 0, stagger: STAG_H4, duration: DUR, ease: 'power2.inOut' }, '<');
+  tl.to(wrapper,     { backgroundColor: '#ebebeb', duration: DUR, ease: 'none' }, '<');
+
+  // ENTER — section 2 text (starts after exit finishes)
+  tl.to(st2H1.lines, { y: 0, stagger: STAG_H1, duration: DUR, ease: 'power3.out' });
+  tl.to(st2H4.lines, { x: 0, autoAlpha: 1, stagger: STAG_H4, duration: DUR, ease: 'power3.out' }, '<');
+
+  // Photos span the full exit + entrance duration
+  var photoDur = tl.duration();
+  tl.to(s1Img, { x: -VW, duration: photoDur, ease: 'power4.inOut' }, 0);
+  tl.to(s2Img, { x: 0,   duration: photoDur, ease: 'power4.inOut' }, 0);
+});
+</script>
+
+</body>
+</html>
