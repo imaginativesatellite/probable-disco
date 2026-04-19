@@ -644,7 +644,7 @@ window.addEventListener('load', function () {
 
   // Initial hidden state for section 2 elements
   gsap.set(st2H1.lines, { y: '105%' });
-  gsap.set(st2H4.lines, { x: 80, autoAlpha: 0 });
+  gsap.set(st2H4.lines, { x: -80, autoAlpha: 0 });
   gsap.set(s2Img,       { x: VW });
 
   var DUR     = 1;
@@ -665,13 +665,13 @@ window.addEventListener('load', function () {
   // EXIT — section 1
   tl.to(st1H1.lines, { y: '-105%', stagger: STAG_H1, duration: DUR, ease: 'power2.inOut' });
   tl.to(st1H4.lines, { x: 80, autoAlpha: 0, stagger: STAG_H4, duration: DUR, ease: 'power2.inOut' }, '<');
-  tl.to(s1Img,       { x: -VW, duration: DUR, ease: 'power2.inOut' }, '<');
+  tl.to(s1Img,       { x: -VW, duration: DUR, ease: 'power4.inOut' }, '<');
+  tl.to(s2Img,       { x: 0,   duration: DUR, ease: 'power4.inOut' }, '<');
   tl.to(wrapper,     { backgroundColor: '#ebebeb', duration: DUR, ease: 'none' }, '<');
 
   // ENTER — section 2 (starts after all exit animations finish)
   tl.to(st2H1.lines, { y: 0, stagger: STAG_H1, duration: DUR, ease: 'power3.out' });
   tl.to(st2H4.lines, { x: 0, autoAlpha: 1, stagger: STAG_H4, duration: DUR, ease: 'power3.out' }, '<');
-  tl.to(s2Img,       { x: 0, duration: DUR, ease: 'power3.out' }, '<');
 });
 </script>
 
