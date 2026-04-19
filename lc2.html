@@ -189,12 +189,15 @@
   /* Statement section */
   .section-statement {
     position: absolute; inset: 0; z-index: 1;
-    background:
-      url('1776625197183.png') bottom center / 100% auto no-repeat,
-      #000;
+    background: #000;
     display: flex; align-items: center; justify-content: center;
     text-align: center; padding: 0 60px;
   }
+  .statement-bg-img {
+    position: absolute; inset: 0; z-index: 0;
+    background: url('1776625197183.png') bottom center / 100% auto no-repeat;
+  }
+  .statement-text { position: relative; z-index: 1; }
   .statement-text {
     font-size: 65px; font-weight: 500; line-height: 1.15;
     text-transform: none; letter-spacing: 0;
@@ -527,6 +530,7 @@
 </section>
 
 <section class="section-statement">
+  <div class="statement-bg-img"></div>
   <h2 class="statement-text">This is where we come in.</h2>
 </section>
 
@@ -846,33 +850,31 @@ window.addEventListener('load', function () {
     var stSH4s = sStrongH4s.map(function(el) { return new SplitText(el, { type: 'lines' }); });
     var stSPs  = sStrongPs.map(function(el)  { return new SplitText(el, { type: 'lines' }); });
 
-    // Collect h4 and p lines separately
-    var sH4Lines = [];
-    stSH4s.forEach(function(st) { sH4Lines = sH4Lines.concat(st.lines); });
-    var sPLines = [];
-    stSPs.forEach(function(st)  { sPLines  = sPLines.concat(st.lines); });
-
-    // Wrap h2 AND h4 lines in overflow:hidden for masked reveal/exit
-    [stSH2.lines, sH4Lines].forEach(function(lines) {
-      lines.forEach(function(line) {
-        var w = document.createElement('div');
-        w.style.cssText = 'overflow:hidden;display:block;';
-        line.parentNode.insertBefore(w, line);
-        w.appendChild(line);
-      });
+    // Wrap only h2 lines in overflow:hidden for masked reveal/exit
+    stSH2.lines.forEach(function(line) {
+      var w = document.createElement('div');
+      w.style.cssText = 'overflow:hidden;display:block;';
+      line.parentNode.insertBefore(w, line);
+      w.appendChild(line);
     });
 
-    // Statement text split
-    var stmtEl = sStatement.querySelector('.statement-text');
-    var stStmt = new SplitText(stmtEl, { type: 'words' });
+    // Collect h4 + p lines together (both enter from left, both fade out)
+    var sOtherLines = [];
+    stSH4s.forEach(function(st) { sOtherLines = sOtherLines.concat(st.lines); });
+    stSPs.forEach(function(st)  { sOtherLines = sOtherLines.concat(st.lines); });
+
+    // Statement elements
+    var statementBgImg = sStatement.querySelector('.statement-bg-img');
+    var stmtEl         = sStatement.querySelector('.statement-text');
+    var stStmt         = new SplitText(stmtEl, { type: 'words' });
 
     // Initial states
-    gsap.set(stSH2.lines,  { y: '105%' });
-    gsap.set(sH4Lines,     { y: '105%' });
-    gsap.set(sPLines,      { x: -40, autoAlpha: 0 });
-    gsap.set(sStrongLinks, { autoAlpha: 0 });
-    gsap.set(sStatement,   { autoAlpha: 0 });
-    gsap.set(stStmt.words, { opacity: 0, y: 20 });
+    gsap.set(stSH2.lines,    { y: '105%' });
+    gsap.set(sOtherLines,    { x: -40, autoAlpha: 0 });
+    gsap.set(sStrongLinks,   { autoAlpha: 0 });
+    gsap.set(sStatement,     { autoAlpha: 0 });
+    gsap.set(statementBgImg, { y: '100%' });       // image starts below, slides up later
+    gsap.set(stStmt.words,   { opacity: 0, y: 20 });
 
     // ENTRANCE — fires once as section scrolls into view
     ScrollTrigger.create({
@@ -882,32 +884,33 @@ window.addEventListener('load', function () {
       onEnter: function() {
         var inTl = gsap.timeline();
         inTl.to(stSH2.lines,  { y: 0, stagger: 0.12, duration: 0.9, ease: 'power3.out' });
-        inTl.to(sH4Lines,     { y: 0, stagger: 0.08, duration: 0.7, ease: 'power2.out' }, '-=0.3');
-        inTl.to(sPLines,      { x: 0, autoAlpha: 1, stagger: 0.07, duration: 0.6, ease: 'power2.out' }, '-=0.3');
+        inTl.to(sOtherLines,  { x: 0, autoAlpha: 1, stagger: 0.08, duration: 0.7, ease: 'power2.out' }, '-=0.4');
         inTl.to(sStrongLinks, { autoAlpha: 1, duration: 0.5, ease: 'power2.out' }, '-=0.2');
       }
     });
 
-    // EXIT — pinned scrub
+    // EXIT — pinned scrub (3 phases)
     var exitTl = gsap.timeline({
       scrollTrigger: {
         trigger: strongWrapper,
         start: 'top top',
-        end: '+=' + window.innerHeight * 1.5,
+        end: '+=' + window.innerHeight * 2,
         pin: true, scrub: 1, anticipatePin: 1
       }
     });
 
-    // h2 + h4 exit masked upward; p lines fade up; links fade
+    // Phase 1 — h2 exits masked upward; everything else fades out
     exitTl.to(stSH2.lines,  { y: '-105%', stagger: 0.08, duration: 0.8, ease: 'power2.inOut' });
-    exitTl.to(sH4Lines,     { y: '-105%', stagger: 0.06, duration: 0.6, ease: 'power2.inOut' }, '<+=0.1');
-    exitTl.to(sPLines,      { y: -30, autoAlpha: 0, stagger: 0.05, duration: 0.5, ease: 'power2.inOut' }, '<');
-    exitTl.to(sStrongLinks, { autoAlpha: 0, y: -20, duration: 0.4, ease: 'power2.inOut' }, '<');
+    exitTl.to(sOtherLines,  { autoAlpha: 0, stagger: 0.05, duration: 0.5, ease: 'power1.inOut' }, '<+=0.1');
+    exitTl.to(sStrongLinks, { autoAlpha: 0, duration: 0.4, ease: 'power1.inOut' }, '<');
 
-    // section-strong fades out → section-statement fades in with text
-    exitTl.to(sStrong,      { autoAlpha: 0, duration: 0.6, ease: 'none' }, '<+=0.2');
-    exitTl.to(sStatement,   { autoAlpha: 1, duration: 0.6, ease: 'none' }, '<');
-    exitTl.to(stStmt.words, { opacity: 1, y: 0, stagger: 0.1, duration: 0.8, ease: 'power3.out' }, '<+=0.3');
+    // Phase 2 — section-strong fades out → solid black statement section reveals
+    exitTl.to(sStrong,    { autoAlpha: 0, duration: 0.6, ease: 'none' }, '<+=0.2');
+    exitTl.to(sStatement, { autoAlpha: 1, duration: 0.6, ease: 'none' }, '<');
+
+    // Phase 3 — image slides up, text animates in together
+    exitTl.to(statementBgImg, { y: 0, duration: 1, ease: 'power3.out' });
+    exitTl.to(stStmt.words,   { opacity: 1, y: 0, stagger: 0.1, duration: 0.8, ease: 'power3.out' }, '<+=0.2');
   }
 });
 </script>
