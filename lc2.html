@@ -158,7 +158,13 @@
   .section-what h2 { color: #111; }
 
   /* Strong Brand */
-  .section-strong { background: #fff; padding-bottom: 140px; }
+  #strong-transition { position: relative; height: 100vh; height: 100dvh; overflow: hidden; }
+  .section-strong {
+    background: #fff; position: relative; z-index: 2;
+    height: 100vh; height: 100dvh;
+    padding: 80px 60px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
   .section-strong h2 {
     font-size: 65px; font-weight: 600; line-height: 1.15;
     text-transform: none; letter-spacing: 0; color: #2b2b2b;
@@ -182,7 +188,7 @@
 
   /* Statement section */
   .section-statement {
-    height: 100vh; height: 100dvh;
+    position: absolute; inset: 0; z-index: 1;
     background:
       url('1776625197183.png') bottom center / 100% auto no-repeat,
       linear-gradient(to bottom, #fff 0%, #000 100%);
@@ -282,6 +288,7 @@
     .mobile-call { display: block; }
     .section-why { padding: 60px 30px; }
     .section-why h1 { font-size: 33px; }
+    .section-strong { padding: 60px 30px; }
     .section-strong h2 { font-size: 33px; }
   }
   @media (max-width: 600px) {
@@ -289,6 +296,7 @@
     .hero h2 { font-size: 22px; }
     .section-why { padding: 50px 20px; }
     .section-why h1 { font-size: 33px; }
+    .section-strong { padding: 50px 20px; }
     .section-strong h2 { font-size: 33px; }
   }
 
@@ -502,9 +510,11 @@
 
 </div>
 
+<div id="strong-transition">
+
 <section class="section-strong" id="strong">
   <div class="container">
-    <h2>What Makes a Strong Brand? The Answer Starts With How You Look, How You Communicate, and Who You're Actually Talking To.</h2>
+    <h2>The basic structure of any successful brand is simple</h2>
     <h4>A Quality Presentation</h4>
     <p>Your visual identity — logo, website, and every piece of collateral that defines you visually.</p>
     <h4>The Right Audience</h4>
@@ -519,6 +529,8 @@
 <section class="section-statement">
   <h2 class="statement-text">This is where we come in.</h2>
 </section>
+
+</div>
 
 <section class="section-team">
   <div class="split-images">
@@ -819,21 +831,77 @@ window.addEventListener('load', function () {
     },
   });
 
-  // "This is where we come in." — words stagger in on scroll
-  var stmtEl = document.querySelector('.statement-text');
-  if (stmtEl) {
+  // ── Section-strong entrance + exit transition into statement ──
+  var strongWrapper = document.getElementById('strong-transition');
+  var sStrong       = document.getElementById('strong');
+  var sStatement    = document.querySelector('.section-statement');
+
+  if (strongWrapper && sStrong && sStatement) {
+    var sStrongH2    = sStrong.querySelector('h2');
+    var sStrongH4s   = Array.from(sStrong.querySelectorAll('h4'));
+    var sStrongPs    = Array.from(sStrong.querySelectorAll('p'));
+    var sStrongLinks = sStrong.querySelector('.strong-links');
+
+    var stSH2  = new SplitText(sStrongH2, { type: 'lines' });
+    var stSH4s = sStrongH4s.map(function(el) { return new SplitText(el, { type: 'lines' }); });
+    var stSPs  = sStrongPs.map(function(el)  { return new SplitText(el, { type: 'lines' }); });
+
+    // Wrap h2 lines in overflow:hidden for masked reveal/exit
+    stSH2.lines.forEach(function(line) {
+      var w = document.createElement('div');
+      w.style.cssText = 'overflow:hidden;display:block;';
+      line.parentNode.insertBefore(w, line);
+      w.appendChild(line);
+    });
+
+    // Collect all h4/p lines
+    var sOtherLines = [];
+    stSH4s.forEach(function(st) { sOtherLines = sOtherLines.concat(st.lines); });
+    stSPs.forEach(function(st)  { sOtherLines = sOtherLines.concat(st.lines); });
+
+    // Statement text split
+    var stmtEl = sStatement.querySelector('.statement-text');
     var stStmt = new SplitText(stmtEl, { type: 'words' });
-    gsap.set(stStmt.words, { opacity: 0, y: 30 });
+
+    // Initial states
+    gsap.set(stSH2.lines,  { y: '105%' });
+    gsap.set(sOtherLines,  { x: -40, autoAlpha: 0 });
+    gsap.set(sStrongLinks, { autoAlpha: 0 });
+    gsap.set(sStatement,   { autoAlpha: 0 });
+    gsap.set(stStmt.words, { opacity: 0, y: 20 });
+
+    // ENTRANCE — fires once as section scrolls into view
     ScrollTrigger.create({
-      trigger: '.section-statement',
-      start: 'top 55%',
-      onEnter: function () {
-        gsap.to(stStmt.words, {
-          opacity: 1, y: 0,
-          stagger: 0.1, duration: 1.1, ease: 'power3.out'
-        });
+      trigger: sStrong,
+      start: 'top 65%',
+      once: true,
+      onEnter: function() {
+        var inTl = gsap.timeline();
+        inTl.to(stSH2.lines,  { y: 0, stagger: 0.12, duration: 0.9, ease: 'power3.out' });
+        inTl.to(sOtherLines,  { x: 0, autoAlpha: 1, stagger: 0.08, duration: 0.7, ease: 'power2.out' }, '-=0.4');
+        inTl.to(sStrongLinks, { autoAlpha: 1, duration: 0.5, ease: 'power2.out' }, '-=0.2');
       }
     });
+
+    // EXIT — pinned scrub
+    var exitTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: strongWrapper,
+        start: 'top top',
+        end: '+=' + window.innerHeight * 1.5,
+        pin: true, scrub: 1, anticipatePin: 1
+      }
+    });
+
+    // All text exits upward staggered by line
+    exitTl.to(stSH2.lines,  { y: '-105%', stagger: 0.08, duration: 0.8, ease: 'power2.inOut' });
+    exitTl.to(sOtherLines,  { y: -30, autoAlpha: 0, stagger: 0.06, duration: 0.6, ease: 'power2.inOut' }, '<+=0.1');
+    exitTl.to(sStrongLinks, { autoAlpha: 0, y: -20, duration: 0.4, ease: 'power2.inOut' }, '<');
+
+    // section-strong fades out → section-statement fades in with text
+    exitTl.to(sStrong,      { autoAlpha: 0, duration: 0.6, ease: 'none' }, '<+=0.2');
+    exitTl.to(sStatement,   { autoAlpha: 1, duration: 0.6, ease: 'none' }, '<');
+    exitTl.to(stStmt.words, { opacity: 1, y: 0, stagger: 0.1, duration: 0.8, ease: 'power3.out' }, '<+=0.3');
   }
 });
 </script>
