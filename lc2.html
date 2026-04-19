@@ -191,7 +191,7 @@
     position: absolute; inset: 0; z-index: 1;
     background:
       url('1776625197183.png') bottom center / 100% auto no-repeat,
-      linear-gradient(to bottom, #fff 0%, #000 100%);
+      #000;
     display: flex; align-items: center; justify-content: center;
     text-align: center; padding: 0 60px;
   }
@@ -846,18 +846,21 @@ window.addEventListener('load', function () {
     var stSH4s = sStrongH4s.map(function(el) { return new SplitText(el, { type: 'lines' }); });
     var stSPs  = sStrongPs.map(function(el)  { return new SplitText(el, { type: 'lines' }); });
 
-    // Wrap h2 lines in overflow:hidden for masked reveal/exit
-    stSH2.lines.forEach(function(line) {
-      var w = document.createElement('div');
-      w.style.cssText = 'overflow:hidden;display:block;';
-      line.parentNode.insertBefore(w, line);
-      w.appendChild(line);
-    });
+    // Collect h4 and p lines separately
+    var sH4Lines = [];
+    stSH4s.forEach(function(st) { sH4Lines = sH4Lines.concat(st.lines); });
+    var sPLines = [];
+    stSPs.forEach(function(st)  { sPLines  = sPLines.concat(st.lines); });
 
-    // Collect all h4/p lines
-    var sOtherLines = [];
-    stSH4s.forEach(function(st) { sOtherLines = sOtherLines.concat(st.lines); });
-    stSPs.forEach(function(st)  { sOtherLines = sOtherLines.concat(st.lines); });
+    // Wrap h2 AND h4 lines in overflow:hidden for masked reveal/exit
+    [stSH2.lines, sH4Lines].forEach(function(lines) {
+      lines.forEach(function(line) {
+        var w = document.createElement('div');
+        w.style.cssText = 'overflow:hidden;display:block;';
+        line.parentNode.insertBefore(w, line);
+        w.appendChild(line);
+      });
+    });
 
     // Statement text split
     var stmtEl = sStatement.querySelector('.statement-text');
@@ -865,7 +868,8 @@ window.addEventListener('load', function () {
 
     // Initial states
     gsap.set(stSH2.lines,  { y: '105%' });
-    gsap.set(sOtherLines,  { x: -40, autoAlpha: 0 });
+    gsap.set(sH4Lines,     { y: '105%' });
+    gsap.set(sPLines,      { x: -40, autoAlpha: 0 });
     gsap.set(sStrongLinks, { autoAlpha: 0 });
     gsap.set(sStatement,   { autoAlpha: 0 });
     gsap.set(stStmt.words, { opacity: 0, y: 20 });
@@ -878,7 +882,8 @@ window.addEventListener('load', function () {
       onEnter: function() {
         var inTl = gsap.timeline();
         inTl.to(stSH2.lines,  { y: 0, stagger: 0.12, duration: 0.9, ease: 'power3.out' });
-        inTl.to(sOtherLines,  { x: 0, autoAlpha: 1, stagger: 0.08, duration: 0.7, ease: 'power2.out' }, '-=0.4');
+        inTl.to(sH4Lines,     { y: 0, stagger: 0.08, duration: 0.7, ease: 'power2.out' }, '-=0.3');
+        inTl.to(sPLines,      { x: 0, autoAlpha: 1, stagger: 0.07, duration: 0.6, ease: 'power2.out' }, '-=0.3');
         inTl.to(sStrongLinks, { autoAlpha: 1, duration: 0.5, ease: 'power2.out' }, '-=0.2');
       }
     });
@@ -893,9 +898,10 @@ window.addEventListener('load', function () {
       }
     });
 
-    // All text exits upward staggered by line
+    // h2 + h4 exit masked upward; p lines fade up; links fade
     exitTl.to(stSH2.lines,  { y: '-105%', stagger: 0.08, duration: 0.8, ease: 'power2.inOut' });
-    exitTl.to(sOtherLines,  { y: -30, autoAlpha: 0, stagger: 0.06, duration: 0.6, ease: 'power2.inOut' }, '<+=0.1');
+    exitTl.to(sH4Lines,     { y: '-105%', stagger: 0.06, duration: 0.6, ease: 'power2.inOut' }, '<+=0.1');
+    exitTl.to(sPLines,      { y: -30, autoAlpha: 0, stagger: 0.05, duration: 0.5, ease: 'power2.inOut' }, '<');
     exitTl.to(sStrongLinks, { autoAlpha: 0, y: -20, duration: 0.4, ease: 'power2.inOut' }, '<');
 
     // section-strong fades out → section-statement fades in with text
