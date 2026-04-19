@@ -220,12 +220,12 @@
     padding: 44px 36px;
     display: flex; flex-direction: column; gap: 16px;
     min-height: 460px;
-    background: #111; border-top: 3px solid #e9931c;
+    background: #0a0a0a; border-top: 3px solid #fff;
   }
   .card-number {
     font-family: 'Inter Tight', sans-serif;
     font-size: 13px; font-weight: 600; letter-spacing: 3px;
-    text-transform: uppercase; color: #e9931c;
+    text-transform: uppercase; color: rgba(255,255,255,0.45);
   }
   .card-title {
     font-family: 'Inter Tight', sans-serif;
@@ -245,7 +245,7 @@
     text-decoration: underline; text-underline-offset: 3px;
     transition: color .2s ease-out;
   }
-  .card-link:hover { color: #e9931c; }
+  .card-link:hover { color: rgba(255,255,255,0.65); }
   @media (max-width: 600px) {
     .service-card { width: 280px; min-height: 380px; padding: 32px 24px; }
     .card-title { font-size: 32px; }
@@ -974,13 +974,30 @@ window.addEventListener('load', function () {
     });
 
     // EXIT — pinned scrub
-    var exitTl = gsap.timeline({
+    // Snap function: snaps to nearest card-center label, ignores pre-card scroll
+    var exitTl;
+    var cardSnapFn = function(value) {
+      if (!exitTl) return value;
+      var dur = exitTl.duration();
+      if (!dur) return value;
+      var snaps = ['snap-card-0', 'snap-card-1', 'snap-card-2'].map(function(l) {
+        var t = exitTl.getLabelTime(l);
+        return t >= 0 ? t / dur : null;
+      }).filter(function(p) { return p !== null; });
+      if (!snaps.length) return value;
+      if (value < snaps[0] - 0.08) return value;
+      return snaps.reduce(function(closest, p) {
+        return Math.abs(p - value) < Math.abs(closest - value) ? p : closest;
+      });
+    };
+
+    exitTl = gsap.timeline({
       scrollTrigger: {
         trigger: strongWrapper,
         start: 'top top',
         end: '+=' + window.innerHeight * 6,
         pin: true, scrub: 1, anticipatePin: 1,
-        snap: { snapTo: 'labels', ease: 'power1.inOut', duration: { min: 0.15, max: 0.4 } }
+        snap: { snapTo: cardSnapFn, ease: 'power1.inOut', duration: { min: 0.2, max: 0.5 } }
       }
     });
 
@@ -1014,15 +1031,13 @@ window.addEventListener('load', function () {
     exitTl.to(cardsTrack, { x: cardCenterX(0), duration: 1.2, ease: 'power3.out' }, 'charScatterStart+=0.1');
     exitTl.addLabel('snap-card-0');
 
-    // Phase 5-7 — center each card, scale up, hold, scale back; snap to each
+    // Phases 5-7 — center each card, hold; snap to each
     allCards.forEach(function(card, i) {
       if (i > 0) {
         exitTl.to(cardsTrack, { x: cardCenterX(i), duration: 0.8, ease: 'power2.inOut' });
         exitTl.addLabel('snap-card-' + i);
       }
-      exitTl.to(card, { scale: 1.06, duration: 0.4, ease: 'power2.out' }, '+=0.1');
-      exitTl.to(card, { scale: 1.06, duration: 0.4, ease: 'none' });
-      exitTl.to(card, { scale: 1,    duration: 0.3, ease: 'power2.inOut' });
+      exitTl.to(cardsTrack, { x: cardCenterX(i), duration: 0.5 }); // hold at center
     });
   }
 });
