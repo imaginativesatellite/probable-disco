@@ -106,6 +106,7 @@
   .hero h2 { color: #fff; font-weight: 500; font-size: 40px; margin-bottom: 6px; }
   .hero .sub { font-size: 20px; font-weight: 300; max-width: 700px; }
   .hero .sub a { pointer-events: auto; }
+  .hero .scroll { display: none; }
   .hero .scroll {
     position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
     width: 24px; height: 40px;
@@ -121,7 +122,7 @@
 
   /* Why Branding */
   .section-why {
-    background: #fff;
+    background: #000;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -131,8 +132,9 @@
     position: relative;
     overflow: hidden;
   }
-  .section-why h1 { color: #111; font-size: 65px; text-transform: none; font-weight: 600; line-height: 1.15; }
-  .section-why h1 strong { font-weight: 900; }
+  .section-why h1 { color: #fff; font-size: 65px; text-transform: none; font-weight: 600; line-height: 1.15; }
+  .section-why h1 strong { font-weight: 900; color: #fff; }
+  .section-why h4 { color: #fff; }
   .why-bottom {
     text-align: right;
     max-width: 50%;
@@ -147,7 +149,7 @@
   .why-headline, .why-bottom { position: relative; z-index: 1; }
 
   /* Alt (mirrored) variant */
-  .section-why--alt { background: #ebebeb; }
+  .section-why--alt { background: #000; }
   .section-why--alt .why-bg-img { left: auto; right: -20%; }
   .section-why--alt .why-bottom { text-align: left; margin-left: 0; margin-right: auto; }
 
@@ -277,7 +279,7 @@
     height: 100vh;
     height: 100dvh;
     overflow: hidden;
-    background: #fff;
+    background: #000;
   }
   .why-transition-wrapper .section-why {
     position: absolute;
@@ -332,6 +334,16 @@
     font-weight: 700; line-height: 19px; white-space: nowrap;
   }
 
+  /* ── Hero fade-to-black overlay ── */
+  #hero-fade {
+    position: absolute;
+    inset: 0;
+    background: #000;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0;
+  }
+
   /* ── Hero text overlay ── */
   #hero-text-overlay {
     position: fixed;
@@ -350,9 +362,23 @@
     letter-spacing: 0;
     max-width: 900px;
   }
+  .hero-tagline-blend {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    color: #fff;
+    font-family: 'Inter Tight', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 65px;
+    font-weight: 600;
+    line-height: 1.15;
+    text-transform: none;
+    letter-spacing: 0;
+    max-width: 900px;
+    mix-blend-mode: difference;
+    opacity: 0;
+  }
   @media (max-width: 991px) {
     #hero-text-overlay { left: 30px; right: 30px; }
-    .hero-tagline { font-size: 33px; }
+    .hero-tagline, .hero-tagline-blend { font-size: 33px; }
   }
   @media (max-width: 600px) {
     #hero-text-overlay { left: 20px; right: 20px; }
@@ -384,6 +410,7 @@
 
 <div id="hero-text-overlay">
   <h1 class="hero-tagline">We Are a Full-Service Creative Agency with a Focus on Branding.</h1>
+  <h1 class="hero-tagline-blend" aria-hidden="true">We Are a Full-Service Creative Agency with a Focus on Branding.</h1>
 </div>
 
 <header class="site-header">
@@ -416,6 +443,7 @@
   <video id="hero-video" autoplay loop muted playsinline>
     <source src="Untitled.mp4" type="video/mp4">
   </video>
+  <div id="hero-fade"></div>
   <a href="#why" class="scroll" aria-label="Scroll"></a>
 </section>
 
@@ -719,7 +747,7 @@ window.addEventListener('load', function () {
   // EXIT — section 1 text
   tl.to(st1H1.lines, { y: '-105%', stagger: STAG_H1, duration: DUR, ease: 'power2.inOut' });
   tl.to(st1H4.lines, { x: 80, autoAlpha: 0, stagger: STAG_H4, duration: DUR, ease: 'power2.inOut' }, '<');
-  tl.to(wrapper,     { backgroundColor: '#ebebeb', duration: DUR, ease: 'none' }, '<');
+  tl.to(wrapper,     { backgroundColor: '#000000', duration: DUR, ease: 'none' }, '<');
 
   // ENTER — section 2 text (starts after exit finishes)
   tl.to(st2H1.lines, { y: 0, stagger: STAG_H1, duration: DUR, ease: 'power3.out' });
@@ -730,27 +758,31 @@ window.addEventListener('load', function () {
   tl.to(s1Img, { x: -VW, duration: photoDur, ease: 'power4.inOut' }, 0);
   tl.to(s2Img, { x: 0,   duration: photoDur, ease: 'power4.inOut' }, 0);
 
-  // Hero overlay: scroll-driven position center→section-why h1 (no lag, exact scroll tracking)
-  var heroOverlay = document.getElementById('hero-text-overlay');
+  // Hero overlay refs
+  var heroOverlay  = document.getElementById('hero-text-overlay');
+  var heroTagline  = document.querySelector('.hero-tagline');
+  var heroBlend    = document.querySelector('.hero-tagline-blend');
   var targetTop    = window.innerWidth <= 600 ? 50 : (window.innerWidth <= 991 ? 60 : 80);
 
-  gsap.timeline({
-    scrollTrigger: {
-      trigger: '.hero',
-      start: 'top top',
-      end: 'bottom top',
-      scrub: true,
-    }
-  })
-  .to(heroOverlay, { top: targetTop, yPercent: 0, ease: 'none' }, 0);
-
-  // mix-blend-mode: difference switches on at the 50% scroll point, stays for the final 50%
-  ScrollTrigger.create({
-    trigger: '.hero',
-    start: '50% top',
-    onEnter:     function() { gsap.set(heroOverlay, { mixBlendMode: 'difference' }); },
-    onLeaveBack: function() { gsap.set(heroOverlay, { mixBlendMode: 'normal' }); },
+  // Position: exact scroll tracking across full hero
+  gsap.to(heroOverlay, {
+    top: targetTop, yPercent: 0, ease: 'none',
+    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
   });
+
+  // Video fade to black: darken hero as it scrolls away
+  gsap.to('#hero-fade', {
+    opacity: 1, ease: 'none',
+    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
+  });
+
+  // Blend mode transition: cross-fade from normal white → mix-blend-mode:difference
+  // Starts on first scroll pixel, completes at the 50% mark of the hero
+  gsap.timeline({
+    scrollTrigger: { trigger: '.hero', start: 'top top', end: '50% top', scrub: true }
+  })
+  .to(heroTagline, { opacity: 0, ease: 'none' }, 0)
+  .to(heroBlend,   { opacity: 1, ease: 'none' }, 0);
 
   // Hand off: fade overlay out when section-why takes over, restore on scroll back
   ScrollTrigger.create({
