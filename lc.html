@@ -142,6 +142,11 @@
   }
   .why-headline, .why-bottom { position: relative; z-index: 1; }
 
+  /* Alt (mirrored) variant */
+  .section-why--alt { background: #ebebeb; }
+  .section-why--alt .why-bg-img { left: auto; right: -20%; }
+  .section-why--alt .why-bottom { text-align: left; margin-left: 0; margin-right: auto; }
+
   /* What is Branding */
   .section-what { background: #ebebeb; }
   .section-what h2 { color: #111; }
@@ -372,6 +377,16 @@
   </div>
   <div class="why-bottom">
     <h4>Because first impressions are driven <strong>primarily by the image</strong> your company projects.</h4>
+  </div>
+</section>
+
+<section class="section-why section-why--alt" id="what-branding">
+  <img class="why-bg-img" src="678946df3dca4d1066317241_65d666f324c007b6ff4217f3_spencer-homepage.png" alt="">
+  <div class="why-headline">
+    <h1>So What Exactly Is <strong>Branding</strong>?</h1>
+  </div>
+  <div class="why-bottom">
+    <h4>Your brand is how your audience sees you — every touchpoint tells the story.</h4>
   </div>
 </section>
 
@@ -624,9 +639,8 @@ gsap.registerPlugin(ScrollTrigger);
     }
   });
 
-  // h4 in why-bottom: lines fade in from left when element enters viewport
-  var whyH4 = document.querySelector('.why-bottom h4');
-  if (whyH4) {
+  // h4 in each why-bottom: lines fade in from left when element enters viewport
+  document.querySelectorAll('.why-bottom h4').forEach(function (whyH4) {
     var st4 = new SplitText(whyH4, { type: 'lines' });
     st4.lines.forEach(function (line) {
       var wrap = document.createElement('div');
@@ -637,7 +651,7 @@ gsap.registerPlugin(ScrollTrigger);
     gsap.set(st4.lines, { x: -50, autoAlpha: 0 });
 
     ScrollTrigger.create({
-      trigger: '.why-bottom',
+      trigger: whyH4.closest('.why-bottom'),
       start: 'top bottom',
       once: true,
       onEnter: function () {
@@ -648,7 +662,7 @@ gsap.registerPlugin(ScrollTrigger);
         });
       }
     });
-  }
+  });
 }());
 </script>
 
