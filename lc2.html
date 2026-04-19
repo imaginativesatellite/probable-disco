@@ -717,15 +717,15 @@ window.addEventListener('load', function () {
   var s2H4         = s2.querySelector('.why-bottom h4');
   var s2Img        = s2.querySelector('.why-bg-img');
 
-  // Split headings into lines; "Why Branding?" into chars
+  // Split headings into lines; "Why Branding?" also into lines for reveal-up
   var st1H1        = new SplitText(s1H1,      { type: 'lines' });
   var st2H1        = new SplitText(s2H1,      { type: 'lines' });
   var st1H4        = new SplitText(s1H4,      { type: 'lines' });
   var st2H4        = new SplitText(s2H4,      { type: 'lines' });
-  var stWhyLine    = new SplitText(s1WhyLine, { type: 'chars,words' });
+  var stWhyLine    = new SplitText(s1WhyLine, { type: 'lines' });
 
-  // Wrap h1 lines in overflow:hidden clips so lines mask cleanly as they slide up/down
-  [st1H1.lines, st2H1.lines].forEach(function (lines) {
+  // Wrap h1 lines AND why-branding lines in overflow:hidden clips
+  [st1H1.lines, st2H1.lines, stWhyLine.lines].forEach(function (lines) {
     lines.forEach(function (line) {
       var wrap = document.createElement('div');
       wrap.style.cssText = 'overflow:hidden;display:block;';
@@ -742,7 +742,7 @@ window.addEventListener('load', function () {
   gsap.set(st2H1.lines,       { y: '105%', color: '#000' });        // s2 h1: black on black → invisible
   gsap.set(st2H4.lines,       { x: -80, autoAlpha: 0, color: '#000' });
   gsap.set(s2Img,              { x: VW });
-  gsap.set(stWhyLine.chars,    { x: 20, autoAlpha: 0 });            // "Why Branding?" starts right, moves left
+  gsap.set(stWhyLine.lines,    { y: '105%' });                      // "Why Branding?" lines below clip, reveal up
 
   var DUR     = 1;
   var STAG_H1 = 0.12;
@@ -775,10 +775,6 @@ window.addEventListener('load', function () {
   tl.to(s1Img, { x: -VW, duration: photoDur, ease: 'power4.inOut' }, 0);
   tl.to(s2Img, { x: 0,   duration: photoDur, ease: 'power4.inOut' }, 0);
 
-  // "Why Branding?" — chars slide in from right at the 25% scroll mark
-  var quarterTime = tl.duration() * 0.25;
-  tl.to(stWhyLine.chars, { x: 0, autoAlpha: 1, stagger: 0.04, duration: 0.55, ease: 'power2.out' }, quarterTime);
-
   // ── Hero overlay ──
   var heroOverlay = document.getElementById('hero-text-overlay');
   var targetTop   = window.innerWidth <= 600 ? 50 : (window.innerWidth <= 991 ? 60 : 80);
@@ -795,17 +791,24 @@ window.addEventListener('load', function () {
     scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
   });
 
+  // "Why Branding?" — lines reveal up during the last 25% of the hero scroll,
+  // completing exactly at the handoff moment while the overlay is still moving
+  gsap.to(stWhyLine.lines, {
+    y: '0%', stagger: 0.12, ease: 'none',
+    scrollTrigger: { trigger: '.hero', start: '75% top', end: 'bottom top', scrub: true }
+  });
+
   // Hand off: fade overlay out and reveal s1 h1 in white; reverse on scroll back
   ScrollTrigger.create({
     trigger: '#why-transition',
     start: 'top top',
     onEnter: function() {
-      gsap.to(heroOverlay,   { autoAlpha: 0, duration: 0.4 });
-      gsap.to(st1H1.lines,   { color: '#fff', duration: 0.4 });
+      gsap.to(heroOverlay,  { autoAlpha: 0, duration: 0.4 });
+      gsap.set(st1H1.lines, { color: '#fff' });
     },
     onLeaveBack: function() {
-      gsap.to(heroOverlay,   { autoAlpha: 1, duration: 0.4 });
-      gsap.to(st1H1.lines,   { color: '#000', duration: 0.4 });
+      gsap.to(heroOverlay,  { autoAlpha: 1, duration: 0.4 });
+      gsap.set(st1H1.lines, { color: '#000' });
     },
   });
 });
