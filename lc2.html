@@ -414,7 +414,7 @@
 
 <section class="hero">
   <video id="hero-video" autoplay loop muted playsinline>
-    <source src="pikaso-untitled-project-2026-04-18.mp4" type="video/mp4">
+    <source src="Untitled.mp4" type="video/mp4">
   </video>
   <a href="#why" class="scroll" aria-label="Scroll"></a>
 </section>
@@ -730,9 +730,8 @@ window.addEventListener('load', function () {
   tl.to(s1Img, { x: -VW, duration: photoDur, ease: 'power4.inOut' }, 0);
   tl.to(s2Img, { x: 0,   duration: photoDur, ease: 'power4.inOut' }, 0);
 
-  // Hero overlay: scroll-driven color white→#111 and position center→section-why h1
+  // Hero overlay: scroll-driven position center→section-why h1 (no lag, exact scroll tracking)
   var heroOverlay = document.getElementById('hero-text-overlay');
-  var heroTagline  = document.querySelector('.hero-tagline');
   var targetTop    = window.innerWidth <= 600 ? 50 : (window.innerWidth <= 991 ? 60 : 80);
 
   gsap.timeline({
@@ -740,11 +739,18 @@ window.addEventListener('load', function () {
       trigger: '.hero',
       start: 'top top',
       end: 'bottom top',
-      scrub: 1,
+      scrub: true,
     }
   })
-  .to(heroOverlay, { top: targetTop, yPercent: 0, ease: 'none' }, 0)
-  .to(heroTagline, { color: '#111', ease: 'none' }, 0);
+  .to(heroOverlay, { top: targetTop, yPercent: 0, ease: 'none' }, 0);
+
+  // mix-blend-mode: difference switches on at the 50% scroll point, stays for the final 50%
+  ScrollTrigger.create({
+    trigger: '.hero',
+    start: '50% top',
+    onEnter:     function() { gsap.set(heroOverlay, { mixBlendMode: 'difference' }); },
+    onLeaveBack: function() { gsap.set(heroOverlay, { mixBlendMode: 'normal' }); },
+  });
 
   // Hand off: fade overlay out when section-why takes over, restore on scroll back
   ScrollTrigger.create({
