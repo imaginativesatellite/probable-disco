@@ -383,6 +383,18 @@
   @media (max-width: 600px) {
     #hero-text-overlay { left: 20px; right: 20px; }
   }
+  /* "Why Branding?" animated tagline */
+  .why-branding-line {
+    font-family: 'Inter Tight', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 65px;
+    font-weight: 900;
+    line-height: 1.15;
+    text-transform: none;
+    letter-spacing: 0;
+    color: #e9931c;
+    margin: 0;
+  }
+  @media (max-width: 991px) { .why-branding-line { font-size: 33px; } }
 </style>
 </head>
 <body>
@@ -410,7 +422,6 @@
 
 <div id="hero-text-overlay">
   <h1 class="hero-tagline">We Are a Full-Service Creative Agency with a Focus on Branding.</h1>
-  <h1 class="hero-tagline-blend" aria-hidden="true">We Are a Full-Service Creative Agency with a Focus on Branding.</h1>
 </div>
 
 <header class="site-header">
@@ -452,7 +463,8 @@
 <section class="section-why" id="why">
   <img class="why-bg-img" src="65d637880835357cf3758650_david-homepage.png" alt="">
   <div class="why-headline">
-    <h1>We Are a Full-Service Creative Agency with a Focus on Branding. <strong>Why Branding?</strong></h1>
+    <h1>We Are a Full-Service Creative Agency with a Focus on Branding.</h1>
+    <div class="why-branding-line">Why Branding?</div>
   </div>
   <div class="why-bottom">
     <h4>Because first impressions are driven <strong>primarily by the image</strong> your company projects.</h4>
@@ -699,18 +711,20 @@ window.addEventListener('load', function () {
   var s2      = document.getElementById('what-branding');
   if (!wrapper || !s1 || !s2) return;
 
-  var s1H1  = s1.querySelector('h1');
-  var s1H4  = s1.querySelector('.why-bottom h4');
-  var s1Img = s1.querySelector('.why-bg-img');
-  var s2H1  = s2.querySelector('h1');
-  var s2H4  = s2.querySelector('.why-bottom h4');
-  var s2Img = s2.querySelector('.why-bg-img');
+  var s1H1         = s1.querySelector('h1');
+  var s1WhyLine    = s1.querySelector('.why-branding-line');
+  var s1H4         = s1.querySelector('.why-bottom h4');
+  var s1Img        = s1.querySelector('.why-bg-img');
+  var s2H1         = s2.querySelector('h1');
+  var s2H4         = s2.querySelector('.why-bottom h4');
+  var s2Img        = s2.querySelector('.why-bg-img');
 
-  // Split both headings and paragraphs into lines
-  var st1H1 = new SplitText(s1H1, { type: 'lines' });
-  var st2H1 = new SplitText(s2H1, { type: 'lines' });
-  var st1H4 = new SplitText(s1H4, { type: 'lines' });
-  var st2H4 = new SplitText(s2H4, { type: 'lines' });
+  // Split headings into lines; "Why Branding?" into chars
+  var st1H1        = new SplitText(s1H1,      { type: 'lines' });
+  var st2H1        = new SplitText(s2H1,      { type: 'lines' });
+  var st1H4        = new SplitText(s1H4,      { type: 'lines' });
+  var st2H4        = new SplitText(s2H4,      { type: 'lines' });
+  var stWhyLine    = new SplitText(s1WhyLine, { type: 'chars,words' });
 
   // Wrap h1 lines in overflow:hidden clips so lines mask cleanly as they slide up/down
   [st1H1.lines, st2H1.lines].forEach(function (lines) {
@@ -724,10 +738,12 @@ window.addEventListener('load', function () {
 
   var VW = window.innerWidth;
 
-  // Initial hidden state for section 2 elements
-  gsap.set(st2H1.lines, { y: '105%' });
-  gsap.set(st2H4.lines, { x: -80, autoAlpha: 0 });
-  gsap.set(s2Img,       { x: VW });
+  // Initial hidden states
+  gsap.set(st1H4.lines,      { x: -50, autoAlpha: 0 });            // "Because" enters first
+  gsap.set(st2H1.lines,      { y: '105%', color: '#000' });         // s2 h1: black on black → invisible
+  gsap.set(st2H4.lines,      { x: -80, autoAlpha: 0, color: '#000' });
+  gsap.set(s2Img,             { x: VW });
+  gsap.set(stWhyLine.chars,   { x: -20, autoAlpha: 0 });            // "Why Branding?" hidden
 
   var DUR     = 1;
   var STAG_H1 = 0.12;
@@ -737,32 +753,36 @@ window.addEventListener('load', function () {
     scrollTrigger: {
       trigger: wrapper,
       start: 'top top',
-      end: function () { return '+=' + window.innerHeight * 1.5; },
+      end: function () { return '+=' + window.innerHeight * 2; },   // extra room for 3 phases
       pin: true,
       scrub: 1,
       anticipatePin: 1
     }
   });
 
-  // EXIT — section 1 text
+  // PHASE 1 — "Because" h4 enters from left (top line first)
+  tl.to(st1H4.lines, { x: 0, autoAlpha: 1, stagger: STAG_H4, duration: DUR * 0.65, ease: 'power3.out' });
+
+  // PHASE 2 — EXIT section 1 text
   tl.to(st1H1.lines, { y: '-105%', stagger: STAG_H1, duration: DUR, ease: 'power2.inOut' });
   tl.to(st1H4.lines, { x: 80, autoAlpha: 0, stagger: STAG_H4, duration: DUR, ease: 'power2.inOut' }, '<');
-  tl.to(wrapper,     { backgroundColor: '#000000', duration: DUR, ease: 'none' }, '<');
 
-  // ENTER — section 2 text (starts after exit finishes)
-  tl.to(st2H1.lines, { y: 0, stagger: STAG_H1, duration: DUR, ease: 'power3.out' });
-  tl.to(st2H4.lines, { x: 0, autoAlpha: 1, stagger: STAG_H4, duration: DUR, ease: 'power3.out' }, '<');
+  // PHASE 3 — ENTER section 2 text (black→white as lines arrive so text materialises on black bg)
+  tl.to(st2H1.lines, { y: 0, color: '#fff', stagger: STAG_H1, duration: DUR, ease: 'power3.out' });
+  tl.to(st2H4.lines, { x: 0, autoAlpha: 1, color: '#fff', stagger: STAG_H4, duration: DUR, ease: 'power3.out' }, '<');
 
-  // Photos span the full exit + entrance duration
+  // Photos span the full three-phase duration
   var photoDur = tl.duration();
   tl.to(s1Img, { x: -VW, duration: photoDur, ease: 'power4.inOut' }, 0);
   tl.to(s2Img, { x: 0,   duration: photoDur, ease: 'power4.inOut' }, 0);
 
-  // Hero overlay refs
-  var heroOverlay  = document.getElementById('hero-text-overlay');
-  var heroTagline  = document.querySelector('.hero-tagline');
-  var heroBlend    = document.querySelector('.hero-tagline-blend');
-  var targetTop    = window.innerWidth <= 600 ? 50 : (window.innerWidth <= 991 ? 60 : 80);
+  // "Why Branding?" — chars fade in from left at the 50% scroll mark
+  var halfTime = tl.duration() / 2;
+  tl.to(stWhyLine.chars, { x: 0, autoAlpha: 1, stagger: 0.04, duration: 0.55, ease: 'power2.out' }, halfTime);
+
+  // ── Hero overlay ──
+  var heroOverlay = document.getElementById('hero-text-overlay');
+  var targetTop   = window.innerWidth <= 600 ? 50 : (window.innerWidth <= 991 ? 60 : 80);
 
   // Position: exact scroll tracking across full hero
   gsap.to(heroOverlay, {
@@ -775,14 +795,6 @@ window.addEventListener('load', function () {
     opacity: 1, ease: 'none',
     scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
   });
-
-  // Blend mode transition: cross-fade from normal white → mix-blend-mode:difference
-  // Starts on first scroll pixel, completes at the 50% mark of the hero
-  gsap.timeline({
-    scrollTrigger: { trigger: '.hero', start: 'top top', end: '50% top', scrub: true }
-  })
-  .to(heroTagline, { opacity: 0, ease: 'none' }, 0)
-  .to(heroBlend,   { opacity: 1, ease: 'none' }, 0);
 
   // Hand off: fade overlay out when section-why takes over, restore on scroll back
   ScrollTrigger.create({
