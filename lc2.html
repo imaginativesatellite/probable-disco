@@ -25,7 +25,7 @@
   a:hover { color: #e9931c; }
   h1, h2, h3, h4 {
     font-family: 'Inter Tight', "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: 700;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0;
   }
@@ -131,8 +131,9 @@
     position: relative;
     overflow: hidden;
   }
-  .section-why h1 { color: #fff; font-size: 65px; text-transform: none; font-weight: 600; line-height: 1.15; }
+  .section-why h1 { color: #fff; font-size: 65px; text-transform: none; font-weight: 500; line-height: 1.15; }
   .section-why h1 strong { font-weight: 900; color: #fff; }
+  #what-branding .why-headline h1 { padding-top: 1.15em; }
   .section-why h4 { color: #fff; }
   .why-bottom {
     text-align: right;
@@ -355,7 +356,7 @@
     color: #fff;
     font-family: 'Inter Tight', "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 65px;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 1.15;
     text-transform: none;
     letter-spacing: 0;
@@ -367,7 +368,7 @@
     color: #fff;
     font-family: 'Inter Tight', "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 65px;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 1.15;
     text-transform: none;
     letter-spacing: 0;
@@ -473,7 +474,7 @@
 <section class="section-why section-why--alt" id="what-branding">
   <img class="why-bg-img" src="678946df3dca4d1066317241_65d666f324c007b6ff4217f3_spencer-homepage.png" alt="">
   <div class="why-headline">
-    <h1>They Say <strong>Image is Everything</strong> & When It Comes to Your Business, They're Right.</h1>
+    <h1>Because in Business, Image is Everything</h1>
   </div>
   <div class="why-bottom">
     <h4>Your brand is how your audience sees you. Every touchpoint <strong>tells the story.</strong></h4>
@@ -717,15 +718,15 @@ window.addEventListener('load', function () {
   var s2H4         = s2.querySelector('.why-bottom h4');
   var s2Img        = s2.querySelector('.why-bg-img');
 
-  // Split headings into lines; "Why Branding?" also into lines for reveal-up
+  // Split headings into lines; "Why Branding?" split into chars for per-char stagger
   var st1H1        = new SplitText(s1H1,      { type: 'lines' });
   var st2H1        = new SplitText(s2H1,      { type: 'lines' });
   var st1H4        = new SplitText(s1H4,      { type: 'lines' });
   var st2H4        = new SplitText(s2H4,      { type: 'lines' });
-  var stWhyLine    = new SplitText(s1WhyLine, { type: 'lines' });
+  var stWhyLine    = new SplitText(s1WhyLine, { type: 'chars,words' });
 
-  // Wrap h1 lines AND why-branding lines in overflow:hidden clips
-  [st1H1.lines, st2H1.lines, stWhyLine.lines].forEach(function (lines) {
+  // Wrap h1 lines in overflow:hidden clips (chars don't need this)
+  [st1H1.lines, st2H1.lines].forEach(function (lines) {
     lines.forEach(function (line) {
       var wrap = document.createElement('div');
       wrap.style.cssText = 'overflow:hidden;display:block;';
@@ -742,7 +743,7 @@ window.addEventListener('load', function () {
   gsap.set(st2H1.lines,       { y: '105%', color: '#000' });        // s2 h1: black on black → invisible
   gsap.set(st2H4.lines,       { x: -80, autoAlpha: 0, color: '#000' });
   gsap.set(s2Img,              { x: VW });
-  gsap.set(stWhyLine.lines,    { y: '105%' });                      // "Why Branding?" lines below clip, reveal up
+  gsap.set(stWhyLine.chars,    { autoAlpha: 0, y: 12 });            // "Why Branding?" chars hidden, reveal per char
 
   var DUR     = 1;
   var STAG_H1 = 0.12;
@@ -765,6 +766,11 @@ window.addEventListener('load', function () {
   // PHASE 2 — EXIT section 1 text
   tl.to(st1H1.lines, { y: '-105%', stagger: STAG_H1, duration: DUR, ease: 'power2.inOut' });
   tl.to(st1H4.lines, { x: 80, autoAlpha: 0, stagger: STAG_H4, duration: DUR, ease: 'power2.inOut' }, '<');
+
+  // PHASE 2.5 — orange "Why Branding?" snaps up to occupy section 2's first-line position
+  var blankLineH = parseFloat(getComputedStyle(s2H1).fontSize) * 1.15;
+  var whyUpY     = blankLineH - s1H1.getBoundingClientRect().height;
+  tl.to(s1WhyLine, { y: whyUpY, duration: DUR * 0.3, ease: 'power4.out' });
 
   // PHASE 3 — ENTER section 2 text (black→white as lines arrive so text materialises on black bg)
   tl.to(st2H1.lines, { y: 0, color: '#fff', stagger: STAG_H1, duration: DUR, ease: 'power3.out' });
@@ -791,10 +797,9 @@ window.addEventListener('load', function () {
     scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
   });
 
-  // "Why Branding?" — lines reveal up during the last 25% of the hero scroll,
-  // completing exactly at the handoff moment while the overlay is still moving
-  gsap.to(stWhyLine.lines, {
-    y: '0%', stagger: 0.12, ease: 'none',
+  // "Why Branding?" — chars reveal per-character during the last 25% of hero scroll
+  gsap.to(stWhyLine.chars, {
+    autoAlpha: 1, y: 0, stagger: 0.05, ease: 'power3.out',
     scrollTrigger: { trigger: '.hero', start: '75% top', end: 'bottom top', scrub: true }
   });
 
