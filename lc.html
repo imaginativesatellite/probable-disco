@@ -271,6 +271,21 @@
     .section-why h1 { font-size: 33px; }
   }
 
+  /* ── Why Transition Wrapper ── */
+  .why-transition-wrapper {
+    position: relative;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    background: #fff;
+  }
+  .why-transition-wrapper .section-why {
+    position: absolute;
+    inset: 0;
+    min-height: unset;
+    background: transparent;
+  }
+
   /* ── Loader ── */
   #loader {
     position: fixed; inset: 0; z-index: 9999; overflow: hidden;
@@ -374,6 +389,8 @@
   <a href="#why" class="scroll" aria-label="Scroll"></a>
 </section>
 
+<div class="why-transition-wrapper" id="why-transition">
+
 <section class="section-why" id="why">
   <img class="why-bg-img" src="65d637880835357cf3758650_david-homepage.png" alt="">
   <div class="why-headline">
@@ -393,6 +410,8 @@
     <h4>Your brand is how your audience sees you. Every touchpoint <strong>tells the story.</strong></h4>
   </div>
 </section>
+
+</div>
 
 <section class="section-strategy" id="strategy">
   <div class="container two-col flip">
@@ -590,63 +609,70 @@
 </script>
 
 <script>
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
-(function () {
-  var whyH2 = document.querySelector('.section-why h1');
-  if (!whyH2) return;
+window.addEventListener('load', function () {
+  var wrapper = document.getElementById('why-transition');
+  var s1      = document.getElementById('why');
+  var s2      = document.getElementById('what-branding');
+  if (!wrapper || !s1 || !s2) return;
 
-  var st = new SplitText(whyH2, { type: 'lines' });
+  var s1H1  = s1.querySelector('h1');
+  var s1H4  = s1.querySelector('.why-bottom h4');
+  var s1Img = s1.querySelector('.why-bg-img');
+  var s2H1  = s2.querySelector('h1');
+  var s2H4  = s2.querySelector('.why-bottom h4');
+  var s2Img = s2.querySelector('.why-bg-img');
 
-  // Wrap each line in an overflow:hidden container so the reveal clips at the baseline
-  st.lines.forEach(function (line) {
-    var wrap = document.createElement('div');
-    wrap.style.cssText = 'overflow:hidden;display:block;';
-    line.parentNode.insertBefore(wrap, line);
-    wrap.appendChild(line);
-  });
+  // Split both headings and paragraphs into lines
+  var st1H1 = new SplitText(s1H1, { type: 'lines' });
+  var st2H1 = new SplitText(s2H1, { type: 'lines' });
+  var st1H4 = new SplitText(s1H4, { type: 'lines' });
+  var st2H4 = new SplitText(s2H4, { type: 'lines' });
 
-  gsap.set(st.lines, { y: '105%' });
-
-  ScrollTrigger.create({
-    trigger: whyH2,
-    start: 'top 85%',
-    once: true,
-    onEnter: function () {
-      gsap.to(st.lines, {
-        y: 0,
-        duration: 0.75,
-        stagger: 0.15,
-        ease: 'power3.out'
-      });
-    }
-  });
-
-  // h4 in each why-bottom: lines fade in from left when element enters viewport
-  document.querySelectorAll('.why-bottom h4').forEach(function (whyH4) {
-    var st4 = new SplitText(whyH4, { type: 'lines' });
-    st4.lines.forEach(function (line) {
+  // Wrap h1 lines in overflow:hidden clips so lines mask cleanly as they slide up/down
+  [st1H1.lines, st2H1.lines].forEach(function (lines) {
+    lines.forEach(function (line) {
       var wrap = document.createElement('div');
       wrap.style.cssText = 'overflow:hidden;display:block;';
       line.parentNode.insertBefore(wrap, line);
       wrap.appendChild(line);
     });
-    gsap.set(st4.lines, { x: -50, autoAlpha: 0 });
-
-    ScrollTrigger.create({
-      trigger: whyH4.closest('.why-bottom'),
-      start: 'top bottom',
-      once: true,
-      onEnter: function () {
-        gsap.to(st4.lines, {
-          x: 0, autoAlpha: 1,
-          duration: 0.65, stagger: 0.12,
-          ease: 'power3.out', delay: 0.1
-        });
-      }
-    });
   });
-}());
+
+  var VW = window.innerWidth;
+
+  // Initial hidden state for section 2 elements
+  gsap.set(st2H1.lines, { y: '105%' });
+  gsap.set(st2H4.lines, { x: 80, autoAlpha: 0 });
+  gsap.set(s2Img,       { x: VW });
+
+  var DUR     = 1;
+  var STAG_H1 = 0.12;
+  var STAG_H4 = 0.10;
+
+  var tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: wrapper,
+      start: 'top top',
+      end: function () { return '+=' + window.innerHeight * 1.5; },
+      pin: true,
+      scrub: 1,
+      anticipatePin: 1
+    }
+  });
+
+  // EXIT — section 1
+  tl.to(st1H1.lines, { y: '-105%', stagger: STAG_H1, duration: DUR, ease: 'power2.inOut' });
+  tl.to(st1H4.lines, { x: 80, autoAlpha: 0, stagger: STAG_H4, duration: DUR, ease: 'power2.inOut' }, '<');
+  tl.to(s1Img,       { x: -VW, duration: DUR, ease: 'power2.inOut' }, '<');
+  tl.to(wrapper,     { backgroundColor: '#ebebeb', duration: DUR, ease: 'none' }, '<');
+
+  // ENTER — section 2
+  tl.to(st2H1.lines, { y: 0, stagger: STAG_H1, duration: DUR, ease: 'power3.out' }, '<');
+  tl.to(st2H4.lines, { x: 0, autoAlpha: 1, stagger: STAG_H4, duration: DUR, ease: 'power3.out' }, '<');
+  tl.to(s2Img,       { x: 0, duration: DUR, ease: 'power3.out' }, '<');
+});
 </script>
 
 </body>
