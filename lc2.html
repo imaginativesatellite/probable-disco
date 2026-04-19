@@ -220,16 +220,13 @@
     padding: 44px 36px;
     display: flex; flex-direction: column; gap: 16px;
     min-height: 460px;
+    background: #111; border-top: 3px solid #e9931c;
   }
-  .card-1 { background: #111; border-left: 3px solid #e9931c; }
-  .card-2 { background: transparent; border: 1px solid rgba(255,255,255,0.25); }
-  .card-3 { background: #0a0a0a; border-top: 3px solid #fff; }
   .card-number {
     font-family: 'Inter Tight', sans-serif;
     font-size: 13px; font-weight: 600; letter-spacing: 3px;
     text-transform: uppercase; color: #e9931c;
   }
-  .card-2 .card-number, .card-3 .card-number { color: rgba(255,255,255,0.45); }
   .card-title {
     font-family: 'Inter Tight', sans-serif;
     font-size: 48px; font-weight: 500; line-height: 1.1;
@@ -239,11 +236,14 @@
     font-size: 18px; line-height: 1.5;
     color: rgba(255,255,255,0.65); margin: 0; flex: 1;
   }
+  .card-links {
+    display: flex; flex-direction: column; gap: 8px; margin-top: auto;
+  }
   .card-link {
     font-family: 'Inter Tight', sans-serif;
     font-size: 18px; color: #fff;
     text-decoration: underline; text-underline-offset: 3px;
-    transition: color .2s ease-out; margin-top: auto;
+    transition: color .2s ease-out;
   }
   .card-link:hover { color: #e9931c; }
   @media (max-width: 600px) {
@@ -585,19 +585,28 @@
       <span class="card-number">01</span>
       <h2 class="card-title">Logo Design</h2>
       <p class="card-body">Your logo is the face of your brand. We create marks that are timeless, versatile, and built to communicate who you are at a glance.</p>
-      <a href="#contact" class="card-link">Free Consultation</a>
+      <div class="card-links">
+        <a href="https://luna-creative.com/what-we-do" class="card-link">See our work</a>
+        <a href="#contact" class="card-link">Free Consultation</a>
+      </div>
     </div>
     <div class="service-card card-2">
       <span class="card-number">02</span>
       <h2 class="card-title">Website Design</h2>
       <p class="card-body">Your website is your most powerful sales tool. We build fast, focused experiences designed to convert the right visitors into loyal customers.</p>
-      <a href="#contact" class="card-link">Free Consultation</a>
+      <div class="card-links">
+        <a href="https://luna-creative.com/what-we-do" class="card-link">See our work</a>
+        <a href="#contact" class="card-link">Free Consultation</a>
+      </div>
     </div>
     <div class="service-card card-3">
       <span class="card-number">03</span>
       <h2 class="card-title">Photo &amp; Video</h2>
       <p class="card-body">Great visuals tell your story before a single word is read. We capture your brand in motion and stills that elevate every platform you're on.</p>
-      <a href="#contact" class="card-link">Free Consultation</a>
+      <div class="card-links">
+        <a href="https://luna-creative.com/what-we-do" class="card-link">See our work</a>
+        <a href="#contact" class="card-link">Free Consultation</a>
+      </div>
     </div>
   </div>
 </div>
@@ -918,7 +927,6 @@ window.addEventListener('load', function () {
     var stSH4s = sStrongH4s.map(function(el) { return new SplitText(el, { type: 'lines' }); });
     var stSPs  = sStrongPs.map(function(el)  { return new SplitText(el, { type: 'lines' }); });
 
-    // Wrap h2 lines in overflow:hidden for masked reveal/exit
     stSH2.lines.forEach(function(line) {
       var w = document.createElement('div');
       w.style.cssText = 'overflow:hidden;display:block;';
@@ -949,7 +957,7 @@ window.addEventListener('load', function () {
     gsap.set(sStrongLinks,   { autoAlpha: 0 });
     gsap.set(sStatement,     { autoAlpha: 0 });
     gsap.set(statementBgImg, { y: '100%' });
-    gsap.set(stStmt.chars,   { opacity: 0, y: 20 });
+    gsap.set(stStmt.words,   { opacity: 0, y: 20 });
     gsap.set(cardsTrack,     { yPercent: -50, x: window.innerWidth + 200 });
 
     // ENTRANCE — fires once as section scrolls into view
@@ -965,13 +973,14 @@ window.addEventListener('load', function () {
       }
     });
 
-    // EXIT — pinned scrub (7 phases)
+    // EXIT — pinned scrub
     var exitTl = gsap.timeline({
       scrollTrigger: {
         trigger: strongWrapper,
         start: 'top top',
         end: '+=' + window.innerHeight * 6,
-        pin: true, scrub: 1, anticipatePin: 1
+        pin: true, scrub: 1, anticipatePin: 1,
+        snap: { snapTo: 'labels', ease: 'power1.inOut', duration: { min: 0.15, max: 0.4 } }
       }
     });
 
@@ -980,32 +989,36 @@ window.addEventListener('load', function () {
     exitTl.to(sOtherLines,  { autoAlpha: 0, duration: 0.25, ease: 'power1.inOut' }, '<+=0.1');
     exitTl.to(sStrongLinks, { autoAlpha: 0, duration: 0.25, ease: 'power1.inOut' }, '<');
 
-    // Phase 2 — section-strong fades out → statement reveals (quick, no black gap)
+    // Phase 2 — quick bg swap
     exitTl.to(sStrong,    { autoAlpha: 0, duration: 0.25, ease: 'none' }, '<+=0.1');
     exitTl.to(sStatement, { autoAlpha: 1, duration: 0.25, ease: 'none' }, '<');
 
-    // Phase 3 — image slides up and text animates in (starts with statement reveal)
+    // Phase 3 — image slides up, statement text enters per word
     exitTl.to(statementBgImg, { y: 0, duration: 1, ease: 'power3.out' }, '<');
-    exitTl.to(stStmt.chars,   { opacity: 1, y: 0, stagger: { each: 0.04, from: 'start' }, duration: 0.6, ease: 'power3.out' }, '<+=0.15');
+    exitTl.to(stStmt.words, { opacity: 1, y: 0, stagger: { each: 0.1 }, duration: 0.5, ease: 'power3.out' }, '<+=0.15');
 
-    // Phase 4 — statement chars scatter left; image fades; cards slide in from right
-    exitTl.to(stStmt.chars, {
-      x: 'random(-250, -60)',
-      y: 'random(-35, 35)',
-      rotation: 'random(-50, 50)',
-      filter: 'blur(10px)',
-      opacity: 0,
-      stagger: { each: 0.03, from: 'random' },
-      duration: 0.8,
-      ease: 'power2.in'
-    }, '+=0.4');
-    exitTl.to(statementBgImg, { autoAlpha: 0, duration: 0.4, ease: 'power1.inOut' }, '<');
-    exitTl.to(cardsTrack,     { x: cardCenterX(0), duration: 1, ease: 'power3.out' }, '<+=0.2');
+    // Phase 4 — all chars scatter left simultaneously (random speed, direction, rotation)
+    // cards slide in while chars scatter; majority of scatter done before card 0 centers
+    exitTl.addLabel('charScatterStart', '+=0.4');
+    stStmt.chars.forEach(function(char) {
+      exitTl.to(char, {
+        x: gsap.utils.random(-350, -60),
+        y: gsap.utils.random(-70, 70),
+        rotation: gsap.utils.random(-90, 90),
+        filter: 'blur(12px)',
+        opacity: 0,
+        duration: gsap.utils.random(0.3, 0.6),
+        ease: 'power2.in'
+      }, 'charScatterStart');
+    });
+    exitTl.to(cardsTrack, { x: cardCenterX(0), duration: 1.2, ease: 'power3.out' }, 'charScatterStart+=0.1');
+    exitTl.addLabel('snap-card-0');
 
-    // Phase 5-7 — center each card, scale up, hold, scale back
+    // Phase 5-7 — center each card, scale up, hold, scale back; snap to each
     allCards.forEach(function(card, i) {
       if (i > 0) {
         exitTl.to(cardsTrack, { x: cardCenterX(i), duration: 0.8, ease: 'power2.inOut' });
+        exitTl.addLabel('snap-card-' + i);
       }
       exitTl.to(card, { scale: 1.06, duration: 0.4, ease: 'power2.out' }, '+=0.1');
       exitTl.to(card, { scale: 1.06, duration: 0.4, ease: 'none' });
