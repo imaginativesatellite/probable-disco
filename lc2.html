@@ -197,14 +197,59 @@
     position: absolute; inset: 0; z-index: 0;
     background: url('1776625197183.png') bottom center / 100% auto no-repeat;
   }
-  .statement-text { position: relative; z-index: 1; }
   .statement-text {
+    position: relative; z-index: 1;
     font-size: 65px; font-weight: 500; line-height: 1.15;
     text-transform: none; letter-spacing: 0;
-    color: #fff; mix-blend-mode: difference;
-    max-width: 900px;
+    color: #fff; max-width: 900px;
   }
   @media (max-width: 991px) { .statement-text { font-size: 33px; } }
+
+  /* Service cards */
+  #cards-overlay {
+    position: absolute; inset: 0; z-index: 3;
+    overflow: hidden;
+  }
+  #cards-track {
+    display: flex; gap: 40px;
+    position: absolute; top: 50%; left: 0;
+    align-items: stretch;
+  }
+  .service-card {
+    width: 360px; flex-shrink: 0;
+    padding: 44px 36px;
+    display: flex; flex-direction: column; gap: 16px;
+    min-height: 460px;
+  }
+  .card-1 { background: #111; border-left: 3px solid #e9931c; }
+  .card-2 { background: transparent; border: 1px solid rgba(255,255,255,0.25); }
+  .card-3 { background: #0a0a0a; border-top: 3px solid #fff; }
+  .card-number {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 13px; font-weight: 600; letter-spacing: 3px;
+    text-transform: uppercase; color: #e9931c;
+  }
+  .card-2 .card-number, .card-3 .card-number { color: rgba(255,255,255,0.45); }
+  .card-title {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 48px; font-weight: 500; line-height: 1.1;
+    color: #fff; text-transform: none; letter-spacing: 0; margin: 0;
+  }
+  .card-body {
+    font-size: 18px; line-height: 1.5;
+    color: rgba(255,255,255,0.65); margin: 0; flex: 1;
+  }
+  .card-link {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 18px; color: #fff;
+    text-decoration: underline; text-underline-offset: 3px;
+    transition: color .2s ease-out; margin-top: auto;
+  }
+  .card-link:hover { color: #e9931c; }
+  @media (max-width: 600px) {
+    .service-card { width: 280px; min-height: 380px; padding: 32px 24px; }
+    .card-title { font-size: 32px; }
+  }
 
   .cta-row { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 30px; }
 
@@ -534,6 +579,29 @@
   <h2 class="statement-text">This is where we come in.</h2>
 </section>
 
+<div id="cards-overlay">
+  <div id="cards-track">
+    <div class="service-card card-1">
+      <span class="card-number">01</span>
+      <h2 class="card-title">Logo Design</h2>
+      <p class="card-body">Your logo is the face of your brand. We create marks that are timeless, versatile, and built to communicate who you are at a glance.</p>
+      <a href="#contact" class="card-link">Free Consultation</a>
+    </div>
+    <div class="service-card card-2">
+      <span class="card-number">02</span>
+      <h2 class="card-title">Website Design</h2>
+      <p class="card-body">Your website is your most powerful sales tool. We build fast, focused experiences designed to convert the right visitors into loyal customers.</p>
+      <a href="#contact" class="card-link">Free Consultation</a>
+    </div>
+    <div class="service-card card-3">
+      <span class="card-number">03</span>
+      <h2 class="card-title">Photo &amp; Video</h2>
+      <p class="card-body">Great visuals tell your story before a single word is read. We capture your brand in motion and stills that elevate every platform you're on.</p>
+      <a href="#contact" class="card-link">Free Consultation</a>
+    </div>
+  </div>
+</div>
+
 </div>
 
 <section class="section-team">
@@ -850,7 +918,7 @@ window.addEventListener('load', function () {
     var stSH4s = sStrongH4s.map(function(el) { return new SplitText(el, { type: 'lines' }); });
     var stSPs  = sStrongPs.map(function(el)  { return new SplitText(el, { type: 'lines' }); });
 
-    // Wrap only h2 lines in overflow:hidden for masked reveal/exit
+    // Wrap h2 lines in overflow:hidden for masked reveal/exit
     stSH2.lines.forEach(function(line) {
       var w = document.createElement('div');
       w.style.cssText = 'overflow:hidden;display:block;';
@@ -858,23 +926,31 @@ window.addEventListener('load', function () {
       w.appendChild(line);
     });
 
-    // Collect h4 + p lines together (both enter from left, both fade out)
     var sOtherLines = [];
     stSH4s.forEach(function(st) { sOtherLines = sOtherLines.concat(st.lines); });
     stSPs.forEach(function(st)  { sOtherLines = sOtherLines.concat(st.lines); });
 
-    // Statement elements
     var statementBgImg = sStatement.querySelector('.statement-bg-img');
     var stmtEl         = sStatement.querySelector('.statement-text');
-    var stStmt         = new SplitText(stmtEl, { type: 'words' });
+    var stStmt         = new SplitText(stmtEl, { type: 'chars,words' });
+
+    var cardsTrack = document.getElementById('cards-track');
+    var allCards   = Array.from(document.querySelectorAll('.service-card'));
+    var cardW      = allCards.length ? allCards[0].offsetWidth : 360;
+    var cardGap    = 40;
+
+    function cardCenterX(i) {
+      return (window.innerWidth / 2) - (cardW / 2) - i * (cardW + cardGap);
+    }
 
     // Initial states
     gsap.set(stSH2.lines,    { y: '105%' });
     gsap.set(sOtherLines,    { x: -40, autoAlpha: 0 });
     gsap.set(sStrongLinks,   { autoAlpha: 0 });
     gsap.set(sStatement,     { autoAlpha: 0 });
-    gsap.set(statementBgImg, { y: '100%' });       // image starts below, slides up later
-    gsap.set(stStmt.words,   { opacity: 0, y: 20 });
+    gsap.set(statementBgImg, { y: '100%' });
+    gsap.set(stStmt.chars,   { opacity: 0, y: 20 });
+    gsap.set(cardsTrack,     { yPercent: -50, x: window.innerWidth + 200 });
 
     // ENTRANCE — fires once as section scrolls into view
     ScrollTrigger.create({
@@ -889,28 +965,52 @@ window.addEventListener('load', function () {
       }
     });
 
-    // EXIT — pinned scrub (3 phases)
+    // EXIT — pinned scrub (7 phases)
     var exitTl = gsap.timeline({
       scrollTrigger: {
         trigger: strongWrapper,
         start: 'top top',
-        end: '+=' + window.innerHeight * 2,
+        end: '+=' + window.innerHeight * 6,
         pin: true, scrub: 1, anticipatePin: 1
       }
     });
 
-    // Phase 1 — h2 exits masked upward; everything else fades out
+    // Phase 1 — h2 exits masked upward; h4/p/links fade out simultaneously and quickly
     exitTl.to(stSH2.lines,  { y: '-105%', stagger: 0.08, duration: 0.8, ease: 'power2.inOut' });
-    exitTl.to(sOtherLines,  { autoAlpha: 0, stagger: 0.05, duration: 0.5, ease: 'power1.inOut' }, '<+=0.1');
-    exitTl.to(sStrongLinks, { autoAlpha: 0, duration: 0.4, ease: 'power1.inOut' }, '<');
+    exitTl.to(sOtherLines,  { autoAlpha: 0, duration: 0.25, ease: 'power1.inOut' }, '<+=0.1');
+    exitTl.to(sStrongLinks, { autoAlpha: 0, duration: 0.25, ease: 'power1.inOut' }, '<');
 
-    // Phase 2 — section-strong fades out → solid black statement section reveals
-    exitTl.to(sStrong,    { autoAlpha: 0, duration: 0.6, ease: 'none' }, '<+=0.2');
-    exitTl.to(sStatement, { autoAlpha: 1, duration: 0.6, ease: 'none' }, '<');
+    // Phase 2 — section-strong fades out → statement reveals (quick, no black gap)
+    exitTl.to(sStrong,    { autoAlpha: 0, duration: 0.25, ease: 'none' }, '<+=0.1');
+    exitTl.to(sStatement, { autoAlpha: 1, duration: 0.25, ease: 'none' }, '<');
 
-    // Phase 3 — image slides up, text animates in together
-    exitTl.to(statementBgImg, { y: 0, duration: 1, ease: 'power3.out' });
-    exitTl.to(stStmt.words,   { opacity: 1, y: 0, stagger: 0.1, duration: 0.8, ease: 'power3.out' }, '<+=0.2');
+    // Phase 3 — image slides up and text animates in (starts with statement reveal)
+    exitTl.to(statementBgImg, { y: 0, duration: 1, ease: 'power3.out' }, '<');
+    exitTl.to(stStmt.chars,   { opacity: 1, y: 0, stagger: { each: 0.04, from: 'start' }, duration: 0.6, ease: 'power3.out' }, '<+=0.15');
+
+    // Phase 4 — statement chars scatter left; image fades; cards slide in from right
+    exitTl.to(stStmt.chars, {
+      x: 'random(-250, -60)',
+      y: 'random(-35, 35)',
+      rotation: 'random(-50, 50)',
+      filter: 'blur(10px)',
+      opacity: 0,
+      stagger: { each: 0.03, from: 'random' },
+      duration: 0.8,
+      ease: 'power2.in'
+    }, '+=0.4');
+    exitTl.to(statementBgImg, { autoAlpha: 0, duration: 0.4, ease: 'power1.inOut' }, '<');
+    exitTl.to(cardsTrack,     { x: cardCenterX(0), duration: 1, ease: 'power3.out' }, '<+=0.2');
+
+    // Phase 5-7 — center each card, scale up, hold, scale back
+    allCards.forEach(function(card, i) {
+      if (i > 0) {
+        exitTl.to(cardsTrack, { x: cardCenterX(i), duration: 0.8, ease: 'power2.inOut' });
+      }
+      exitTl.to(card, { scale: 1.06, duration: 0.4, ease: 'power2.out' }, '+=0.1');
+      exitTl.to(card, { scale: 1.06, duration: 0.4, ease: 'none' });
+      exitTl.to(card, { scale: 1,    duration: 0.3, ease: 'power2.inOut' });
+    });
   }
 });
 </script>
