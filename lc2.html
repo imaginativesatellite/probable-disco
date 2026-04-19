@@ -1,1 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luna Creative — Starter Replica</title>
+<link rel="icon" type="image/x-icon" href="https://luna-creative.com/templates/untitled/images/designer/987e9869a7c55216c02f00f1f4957513_LCicon.ico">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;600;700;900&family=Montserrat:wght@400;700&family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/GSDevTools.min.js"></script>
+<script>history.scrollRestoration = 'manual'; window.scrollTo(0, 0);</script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; }
+  body {
+    font-family: 'Inter Tight', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    line-height: 1.4;
+    color: #2b2b2b;
+    background: #f5f5f5;
+    overflow-x: hidden;
+  }
+  a { color: #fbc036; text-decoration: none; transition: color .2s ease-out; }
+  a:hover { color: #e9931c; }
+  h1, h2, h3, h4 {
+    font-family: 'Inter Tight', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0;
+  }
+  h2 { font-size: 36px; line-height: 1.2; margin-bottom: 18px; }
+  h4 { font-size: 22px; line-height: 1.35; margin-bottom: 14px; font-weight: 400; text-transform: none; letter-spacing: 0; }
+  p { margin-bottom: 18px; }
+  img { max-width: 100%; height: auto; display: block; }
 
+  /* Header */
+  header.site-header {
+    position: absolute; top: 0; left: 0; right: 0; z-index: 1000;
+    background: transparent; color: #fff;
+    padding: 18px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .brand { display: flex; align-items: center; gap: 18px; }
+  .brand img { width: 168px; }
+  .brand .tagline {
+    font-family: 'Inter Tight', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px; text-transform: uppercase; color: #fff;
+    letter-spacing: 0; line-height: 1.2;
+  }
+  .nav-toggle {
+    background: none; border: 0; cursor: pointer;
+    width: 24px; height: 18px; position: relative;
+  }
+  .nav-toggle span {
+    position: absolute; left: 0; right: 0; height: 2px; background: #fff;
+    transition: transform .3s ease, opacity .3s ease;
+  }
+  .nav-toggle span:nth-child(1) { top: 2px; }
+  .nav-toggle span:nth-child(2) { top: 8px; }
+  .nav-toggle span:nth-child(3) { top: 14px; }
+  .nav-toggle.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+  .overlay-nav {
+    position: fixed; inset: 0; background: rgba(0,0,0,.96);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity .3s ease;
+    z-index: 999;
+  }
+  .overlay-nav.open { opacity: 1; pointer-events: auto; }
+  .overlay-nav ul { list-style: none; text-align: center; }
+  .overlay-nav li { margin: 12px 0; }
+  .overlay-nav a {
+    color: #fff; font-family: 'Inter Tight', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-transform: uppercase; font-size: 24px; letter-spacing: 0;
+  }
+  .overlay-nav a:hover { color: #e9931c; }
+  .overlay-nav .small { font-size: 16px; color: #bbb; }
+
+  /* Hero */
+  .hero {
+    position: relative; width: 100%; height: 100vh; height: 100dvh; min-height: 600px;
+    background: #000; overflow: hidden;
+  }
+  .hero::after {
+    content: ''; position: absolute; inset: 0;
+    background: rgba(0,0,0,0.45); z-index: 1;
+  }
+  .hero video {
+    position: absolute; top: 50%; left: 50%;
+    width: 100%; height: 100%;
+    min-width: 100%; min-height: 100%;
+    object-fit: cover;
+    transform: translate(-50%, -50%);
+  }
+  .hero .hero-copy {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    color: #fff; text-align: center; padding: 0 20px;
+    pointer-events: none;
+  }
+  .hero h2 { color: #fff; font-weight: 500; font-size: 40px; margin-bottom: 6px; }
+  .hero .sub { font-size: 20px; font-weight: 300; max-width: 700px; }
+  .hero .sub a { pointer-events: auto; }
+  .hero .scroll {
+    position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+    width: 24px; height: 40px;
+    background: url('https://luna-creative.com/images/scrolldown.gif') center/contain no-repeat;
+    mix-blend-mode: screen;
+  }
+
+  /* Sections */
+  section { padding: 110px 40px; width: 100%; }
+  .container { max-width: 1180px; margin: 0 auto; }
+  .two-col { display: grid; grid-template-columns: 5fr 7fr; gap: 60px; align-items: start; }
+  .two-col.flip { grid-template-columns: 7fr 5fr; }
+
+  /* Why Branding */
+  .section-why {
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 80px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .section-why h1 { color: #111; font-size: 65px; text-transform: none; font-weight: 600; line-height: 1.15; }
+  .section-why h1 strong { font-weight: 900; }
+  .why-bottom {
+    text-align: right;
+    max-width: 50%;
+    margin-left: auto;
+  }
+  .why-bottom h4 { margin-bottom: 20px; }
+  .why-bg-img {
+    position: absolute; bottom: 0; left: -20%;
+    max-height: 85vh; max-width: 80%; width: auto; height: auto;
+    z-index: 0; pointer-events: none;
+  }
+  .why-headline, .why-bottom { position: relative; z-index: 1; }
+
+  /* Alt (mirrored) variant */
+  .section-why--alt { background: #ebebeb; }
+  .section-why--alt .why-bg-img { left: auto; right: -20%; }
+  .section-why--alt .why-bottom { text-align: left; margin-left: 0; margin-right: auto; }
+
+  /* What is Branding */
+  .section-what { background: #ebebeb; }
+  .section-what h2 { color: #111; }
+
+  /* Brand Strategy */
+  .section-strategy { background: #e9931c; color: #fff; }
+  .section-strategy h2 { color: #fff; }
+  .section-strategy p { color: #fff; }
+  .section-strategy .yes { font-weight: 700; font-size: 28px; }
+  .section-strategy img { margin: 24px auto; max-width: 420px; }
+
+  /* Strong Brand */
+  .section-strong { background: #fff; padding-bottom: 140px; }
+  .section-strong h2 { color: #111; }
+  .two-features {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin: 50px 0 40px;
+    align-items: start; position: relative;
+  }
+  .two-features::before {
+    content: ""; position: absolute; left: 50%; top: 0; bottom: 0;
+    width: 80px; transform: translateX(-50%);
+    background: url('https://luna-creative.com/templates/untitled/images/designer/24731fe1c8bfe3e0211a18e2f7dceef9_ampersand.png') center/contain no-repeat;
+    opacity: .85;
+  }
+  .two-features .feature { padding: 10px 60px; }
+  .two-features .feature:first-child { text-align: right; }
+
+  .cta-row { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 30px; }
+
+  /* Buttons */
+  .btn {
+    display: inline-block; padding: 12px 32px;
+    font-family: 'Inter Tight', "Helvetica Neue", Helvetica, Arial, sans-serif; font-weight: 700; font-size: 18px;
+    text-transform: none; border: 2px solid #fff; color: #fff;
+    background: transparent; transition: all .2s ease-out;
+    cursor: pointer;
+  }
+  .btn:hover { background: #fff; color: #111; }
+  .btn-orange { border-color: #e9931c; color: #e9931c; }
+  .btn-orange:hover { background: #e9931c; color: #fff; }
+  .btn-dark { border-color: #111; color: #111; }
+  .btn-dark:hover { background: #111; color: #fff; }
+  .btn-link {
+    border: 0; color: #fbc036; padding: 12px 0;
+  }
+  .btn-link:hover { background: none; color: #e9931c; }
+
+  /* Split portrait section */
+  .section-team { padding: 0; background: #000; }
+  .split-images { display: grid; grid-template-columns: 1fr 1fr; }
+  .split-images img { width: 100%; display: block; }
+
+  /* Contact */
+  .section-contact {
+    background: #f5f5f5; text-align: center;
+  }
+  .section-contact h2 { color: #111; }
+  .section-contact h4 { font-weight: 600; margin-bottom: 4px; }
+  .form {
+    max-width: 640px; margin: 40px auto 0; text-align: left;
+  }
+  .form input, .form textarea {
+    width: 100%; padding: 14px 16px; margin-bottom: 16px;
+    font-family: inherit; font-size: 16px;
+    border: 1px solid #ccc; background: #fff; color: #222;
+    border-radius: 0;
+  }
+  .form textarea { min-height: 160px; resize: vertical; }
+  .form button {
+    background: #e9931c; border: 0; color: #fff;
+    padding: 14px 40px; font-weight: 700; font-size: 18px;
+    text-transform: uppercase; cursor: pointer;
+    transition: background .2s ease-out;
+  }
+  .form button:hover { background: #c67911; }
+  .form .disclaimer {
+    font-size: 12px; color: #777; margin-top: 10px;
+  }
+
+  /* Footer */
+  footer.site-footer {
+    background: #6d6e70; color: #fff; padding: 40px;
+    text-align: center;
+  }
+  footer .f-logo { width: 150px; margin: 0 auto 20px; }
+  footer p { font-size: 13px; line-height: 1.6; margin-bottom: 10px; color: #eee; }
+  footer a { color: #fff; }
+  footer a:hover { color: #fbc036; }
+  .mobile-call {
+    display: none !important;
+    position: fixed; bottom: 16px; right: 16px; z-index: 1001;
+    width: 56px; height: 56px;
+  }
+
+  /* Responsive */
+  @media (max-width: 991px) {
+    header.site-header { padding: 14px 20px; }
+    .brand img { width: 132px; }
+    .brand .tagline { display: none; }
+    section { padding: 70px 20px; }
+    .two-col, .two-col.flip { grid-template-columns: 1fr; gap: 20px; }
+    .hero { height: 100vh; height: 100dvh; min-height: unset; }
+    .hero h2 { font-size: 28px; }
+    .hero .sub { font-size: 16px; }
+    .two-features { grid-template-columns: 1fr; }
+    .two-features::before { display: none; }
+    .two-features .feature { padding: 10px 0; text-align: left !important; }
+    .split-images { grid-template-columns: 1fr; }
+    footer.site-footer { background: #000; padding-bottom: 90px; }
+    .mobile-call { display: block; }
+    .section-why { padding: 60px 30px; }
+    .section-why h1 { font-size: 33px; }
+  }
+  @media (max-width: 600px) {
+    h2 { font-size: 26px; }
+    .hero h2 { font-size: 22px; }
+    .section-why { padding: 50px 20px; }
+    .section-why h1 { font-size: 33px; }
+  }
+
+  /* ── Why Transition Wrapper ── */
+  .why-transition-wrapper {
+    position: relative;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    background: #fff;
+  }
+  .why-transition-wrapper .section-why {
+    position: absolute;
+    inset: 0;
+    min-height: unset;
+    background: transparent;
+  }
+
+  /* ── Loader ── */
+  #loader {
+    position: fixed; inset: 0; z-index: 9999; overflow: hidden;
+  }
+  .gs-dev-tools { z-index: 10000 !important; }
+  #ldr-bg-t, #ldr-bg-b {
+    position: absolute; left: 0; right: 0; height: 50%;
+    background: #000; z-index: 1;
+  }
+  #ldr-bg-t { top: 0; }
+  #ldr-bg-b { bottom: 0; }
+
+  #ldr-group {
+    position: absolute; top: 50%; left: 50%;
+    transform: translateY(-50%);
+    display: flex; align-items: center; gap: 8px;
+    z-index: 2;
+  }
+  #ldr-logo { width: 150px; display: block; }
+  #ldr-tag-wrap { }
+  #ldr-tag {
+    font-family: 'Inter Tight', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 14px; color: #fff;
+    font-weight: 700; line-height: 19px; white-space: nowrap;
+  }
+
+  #ldr-split-t, #ldr-split-b {
+    position: absolute; left: 0; right: 0; height: 50%;
+    overflow: hidden; z-index: 3; visibility: hidden;
+  }
+  #ldr-split-t { top: 0; }
+  #ldr-split-b { bottom: 0; }
+
+  .ldr-si {
+    position: absolute;
+    display: flex; align-items: center; gap: 8px;
+  }
+  #ldr-split-t .ldr-si { top: 100%; left: calc(50% - 136px); transform: translateY(-50%); }
+  #ldr-split-b .ldr-si { top: 0;    left: calc(50% - 136px); transform: translateY(-50%); }
+  .ldr-si img { width: 150px; display: block; }
+  .ldr-st {
+    font-family: 'Inter Tight', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 14px; color: #fff;
+    font-weight: 700; line-height: 19px; white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+
+<div id="loader">
+  <div id="ldr-bg-t"></div>
+  <div id="ldr-bg-b"></div>
+  <div id="ldr-group">
+    <img id="ldr-logo" src="https://luna-creative.com/templates/untitled/images/designer/8479b297e818c0ed5403ba3993574a22_OfficeLogoWhite.png" alt="Luna Creative">
+    <div id="ldr-tag-wrap"><div id="ldr-tag">A Full-Service<br>Creative Agency</div></div>
+  </div>
+  <div id="ldr-split-t">
+    <div class="ldr-si">
+      <img src="https://luna-creative.com/templates/untitled/images/designer/8479b297e818c0ed5403ba3993574a22_OfficeLogoWhite.png" alt="">
+      <div class="ldr-st">A Full-Service<br>Creative Agency</div>
+    </div>
+  </div>
+  <div id="ldr-split-b">
+    <div class="ldr-si">
+      <img src="https://luna-creative.com/templates/untitled/images/designer/8479b297e818c0ed5403ba3993574a22_OfficeLogoWhite.png" alt="">
+      <div class="ldr-st">A Full-Service<br>Creative Agency</div>
+    </div>
+  </div>
+</div>
+
+<header class="site-header">
+  <a href="#" class="brand">
+    <img src="https://luna-creative.com/templates/untitled/images/designer/8479b297e818c0ed5403ba3993574a22_OfficeLogoWhite.png" alt="Luna Creative">
+    <span class="tagline">a full-service<br>creative agency</span>
+  </a>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<nav class="overlay-nav" id="overlayNav">
+  <ul>
+    <li><a href="#">Home</a></li>
+    <li><a href="https://luna-creative.com/what-we-do">What We Do</a></li>
+    <li><a href="https://luna-creative.com/case-studies">Case Studies</a></li>
+    <li><a href="https://luna-creative.com/team">Team</a></li>
+    <li><a href="https://luna-creative.com/luna-creative-graphic-designer-san-antonio">About</a></li>
+    <li><a href="https://luna-creative.com/contact">Contact</a></li>
+    <li><a class="small" href="https://luna-creative.com/visual-identity-logo-design">Logo Design</a></li>
+    <li><a class="small" href="https://luna-creative.com/web-design-development">Website Design</a></li>
+    <li><a class="small" href="https://luna-creative.com/restaurant-branding">For Restaurants</a></li>
+    <li><a class="small" href="https://luna-creative.com/lawfirm-lawyer-branding">For Lawyers</a></li>
+    <li><a class="small" href="https://luna-creative.com/government">For Government</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <video id="hero-video" autoplay loop muted playsinline>
+    <source src="15074381_3840_2160_24fps.mp4" type="video/mp4">
+  </video>
+  <a href="#why" class="scroll" aria-label="Scroll"></a>
+</section>
+
+<div class="why-transition-wrapper" id="why-transition">
+
+<section class="section-why" id="why">
+  <img class="why-bg-img" src="65d637880835357cf3758650_david-homepage.png" alt="">
+  <div class="why-headline">
+    <h1>We Are a Full-Service Creative Agency with a Focus on Branding. <strong>Why Branding?</strong></h1>
+  </div>
+  <div class="why-bottom">
+    <h4>Because first impressions are driven <strong>primarily by the image</strong> your company projects.</h4>
+  </div>
+</section>
+
+<section class="section-why section-why--alt" id="what-branding">
+  <img class="why-bg-img" src="678946df3dca4d1066317241_65d666f324c007b6ff4217f3_spencer-homepage.png" alt="">
+  <div class="why-headline">
+    <h1>They Say <strong>Image is Everything</strong> & When It Comes to Your Business, They're Right.</h1>
+  </div>
+  <div class="why-bottom">
+    <h4>Your brand is how your audience sees you. Every touchpoint <strong>tells the story.</strong></h4>
+  </div>
+</section>
+
+</div>
+
+<section class="section-strategy" id="strategy">
+  <div class="container two-col flip">
+    <div>
+      <p><span class="yes">YES!</span> A well-executed presentation shapes how prospective customers see you. Great brands are planned, not accidental. We call this:</p>
+      <h2 style="margin-top: 30px;">Brand Strategy</h2>
+      <p><strong>This is where we come in.</strong> We partner with you to build a clear, strategic plan &mdash; one that communicates the right message to the right audience.</p>
+      <p>The key is consistency. A familiar look and feel across every touchpoint builds recognition over time &mdash; and that&rsquo;s what turns a logo into a brand.</p>
+      <a href="#strong" class="btn">What Makes a Strong Brand?</a>
+    </div>
+    <div></div>
+  </div>
+</section>
+
+<section class="section-strong" id="strong">
+  <div class="container">
+    <h2>What Makes a Strong Brand?</h2>
+    <p>The recipe is simple: have a quality presentation, then get it in front of the right audience.</p>
+    <div class="two-features">
+      <div class="feature">
+        <h4><strong>A Quality Presentation</strong></h4>
+        <p>Your visual identity &mdash; logo, website, and every piece of collateral that defines you visually.</p>
+      </div>
+      <div class="feature">
+        <h4><strong>The Right Audience</strong></h4>
+        <p>Reaching the people who matter, through the channels and platforms they actually use.</p>
+      </div>
+    </div>
+    <div class="cta-row">
+      <a href="#contact" class="btn btn-dark">Let's Get Started</a>
+      <a href="https://luna-creative.com/what-we-do" class="btn btn-dark">Check Out Our Work</a>
+    </div>
+  </div>
+</section>
+
+<section class="section-team">
+  <div class="split-images">
+    <img src="https://luna-creative.com/templates/untitled/images/designer/42dfdb7abdc68deebc71a273e0315943_splitfacesspencer.jpg" alt="Luna Creative team member">
+    <img src="https://luna-creative.com/templates/untitled/images/designer/6cec33168e6be5506b9fe5813f790f26_splitfacesdavid.jpg" alt="Luna Creative team member">
+  </div>
+</section>
+
+<section class="section-contact" id="contact">
+  <div class="container">
+    <h4>Interested in a free branding consultation?</h4>
+    <h2>We Can Help.</h2>
+    <p>We&rsquo;d love to talk about your branding and advertising goals &mdash; no strings attached.</p>
+    <form class="form" method="post" action="#">
+      <input type="text" name="name" placeholder="Name *" required>
+      <input type="email" name="email" placeholder="Email *" required>
+      <input type="tel" name="phone" placeholder="Phone Number">
+      <textarea name="message" placeholder="Project Description *" maxlength="500" required></textarea>
+      <button type="submit">Send</button>
+      <p class="disclaimer">This site is protected by reCAPTCHA and the Google
+        <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a> and
+        <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Terms of Service</a> apply.</p>
+    </form>
+    <h4 style="margin-top: 60px;">Want to learn more about us? Check out
+      <a href="https://luna-creative.com/what-we-do">our work</a>.</h4>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <img class="f-logo" src="https://luna-creative.com/templates/untitled/images/designer/8479b297e818c0ed5403ba3993574a22_OfficeLogoWhite.png" alt="Luna Creative">
+  <p>Luna Creative LLC<br>
+    <a href="https://www.google.com/maps/place/Luna+Creative/@29.5893409,-98.5323238,17z" target="_blank" rel="noopener">
+      16403 Huebner Road, San Antonio, TX 78248
+    </a>
+  </p>
+  <p>&copy; Copyright Luna Creative LLC. Design by Luna Creative.<br>
+    Texas HUB Certified Business &mdash; Certificate #1832327300500<br>
+    GSA Multiple Award Schedule Contract #47QRAA24D007A</p>
+  <p>
+    <a href="https://luna-creative.com/privacy-policy">Privacy Policy</a> &middot;
+    <a href="https://luna-creative.com/terms-and-conditions">Terms &amp; Conditions</a> &middot;
+    <a href="https://luna-creative.com/disclaimer">Disclaimer</a> &middot;
+    
