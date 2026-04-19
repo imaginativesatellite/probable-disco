@@ -331,6 +331,32 @@
     font-size: 14px; color: #fff;
     font-weight: 700; line-height: 19px; white-space: nowrap;
   }
+
+  /* ── Hero text overlay ── */
+  #hero-text-overlay {
+    position: fixed;
+    left: 60px;
+    right: 60px;
+    z-index: 5;
+    pointer-events: none;
+  }
+  .hero-tagline {
+    color: #fff;
+    font-family: 'Inter Tight', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 65px;
+    font-weight: 600;
+    line-height: 1.15;
+    text-transform: none;
+    letter-spacing: 0;
+    max-width: 900px;
+  }
+  @media (max-width: 991px) {
+    #hero-text-overlay { left: 30px; right: 30px; }
+    .hero-tagline { font-size: 33px; }
+  }
+  @media (max-width: 600px) {
+    #hero-text-overlay { left: 20px; right: 20px; }
+  }
 </style>
 </head>
 <body>
@@ -354,6 +380,10 @@
       <div class="ldr-st">A Full-Service<br>Creative Agency</div>
     </div>
   </div>
+</div>
+
+<div id="hero-text-overlay">
+  <h1 class="hero-tagline">We Are a Full-Service Creative Agency with a Focus on Branding.</h1>
 </div>
 
 <header class="site-header">
@@ -384,7 +414,7 @@
 
 <section class="hero">
   <video id="hero-video" autoplay loop muted playsinline>
-    <source src="15074381_3840_2160_24fps.mp4" type="video/mp4">
+    <source src="pikaso-untitled-project-2026-04-18.mp4" type="video/mp4">
   </video>
   <a href="#why" class="scroll" aria-label="Scroll"></a>
 </section>
@@ -536,6 +566,9 @@
   // Suppress CSS transition so it doesn't fight the GSAP entrance animation
   burgerBars.forEach(function(b) { b.style.transition = 'none'; });
 
+  const heroOverlay = document.getElementById('hero-text-overlay');
+  gsap.set(heroOverlay, { autoAlpha: 0, top: '50%', yPercent: -50 });
+
   window.addEventListener('load', function () {
     // SplitText — per-line overflow clip so each line acts as its own reveal mask
     const st    = new SplitText(tagEl, { type: 'lines,chars' });
@@ -548,6 +581,17 @@
     // reflects the full nowrap tagline width, then hide individual chars
     gsap.set(tagEl, { autoAlpha: 1 });
     gsap.set(chars, { y: 8, autoAlpha: 0 });
+
+    // Hero tagline — split by lines for post-loader reveal
+    const stHero = new SplitText('.hero-tagline', { type: 'lines' });
+    stHero.lines.forEach(function(line) {
+      const wrap = document.createElement('div');
+      wrap.style.cssText = 'overflow:hidden;display:block;';
+      line.parentNode.insertBefore(wrap, line);
+      wrap.appendChild(line);
+    });
+    gsap.set(heroOverlay, { autoAlpha: 1 });
+    gsap.set(stHero.lines, { y: '101%' });
 
     // Measure after DOM is fully settled to get accurate full-width offset
     const groupW  = 272;
@@ -602,6 +646,15 @@
           burgerBars.forEach(function(b) { b.style.transition = ''; });
         });
         ScrollTrigger.refresh();
+
+        // Hero tagline entrance — lines reveal up
+        gsap.to(stHero.lines, {
+          y: '0%',
+          duration: 0.9,
+          stagger: 0.12,
+          ease: 'power3.out',
+          delay: 0.4
+        });
       });
 
     GSDevTools.create({ animation: tl });
@@ -676,6 +729,30 @@ window.addEventListener('load', function () {
   var photoDur = tl.duration();
   tl.to(s1Img, { x: -VW, duration: photoDur, ease: 'power4.inOut' }, 0);
   tl.to(s2Img, { x: 0,   duration: photoDur, ease: 'power4.inOut' }, 0);
+
+  // Hero overlay: scroll-driven color white→#111 and position center→section-why h1
+  var heroOverlay = document.getElementById('hero-text-overlay');
+  var heroTagline  = document.querySelector('.hero-tagline');
+  var targetTop    = window.innerWidth <= 600 ? 50 : (window.innerWidth <= 991 ? 60 : 80);
+
+  gsap.timeline({
+    scrollTrigger: {
+      trigger: '.hero',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: 1,
+    }
+  })
+  .to(heroOverlay, { top: targetTop, yPercent: 0, ease: 'none' }, 0)
+  .to(heroTagline, { color: '#111', ease: 'none' }, 0);
+
+  // Hand off: fade overlay out when section-why takes over, restore on scroll back
+  ScrollTrigger.create({
+    trigger: '#why-transition',
+    start: 'top top',
+    onEnter:     function() { gsap.to(heroOverlay, { autoAlpha: 0, duration: 0.4 }); },
+    onLeaveBack: function() { gsap.to(heroOverlay, { autoAlpha: 1, duration: 0.4 }); },
+  });
 });
 </script>
 
