@@ -668,8 +668,8 @@ window.addEventListener('load', function () {
   tl.to(s1Img,       { x: -VW, duration: DUR, ease: 'power2.inOut' }, '<');
   tl.to(wrapper,     { backgroundColor: '#ebebeb', duration: DUR, ease: 'none' }, '<');
 
-  // ENTER — section 2
-  tl.to(st2H1.lines, { y: 0, stagger: STAG_H1, duration: DUR, ease: 'power3.out' }, '<');
+  // ENTER — section 2 (starts after all exit animations finish)
+  tl.to(st2H1.lines, { y: 0, stagger: STAG_H1, duration: DUR, ease: 'power3.out' });
   tl.to(st2H4.lines, { x: 0, autoAlpha: 1, stagger: STAG_H4, duration: DUR, ease: 'power3.out' }, '<');
   tl.to(s2Img,       { x: 0, duration: DUR, ease: 'power3.out' }, '<');
 });
