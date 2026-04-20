@@ -1182,16 +1182,20 @@ window.addEventListener('load', function () {
       }, 'charScatterStart');
     });
     exitTl.to(cardsTrack, { x: cardCenterX(0), duration: 1.2, ease: 'power3.out' }, 'charScatterStart+=0.1');
-    // Image pans left→right starting simultaneously with the card track slide-in
+    // Keep render2 movement synced with horizontal card movement
     if (statementParallaxBg) {
-      exitTl.to(statementParallaxBg, { backgroundPosition: '100% 50%', duration: 6.2, ease: 'none' }, 'charScatterStart+=0.1');
+      exitTl.to(statementParallaxBg, { backgroundPosition: '10% 50%', duration: 1.2, ease: 'power3.out' }, 'charScatterStart+=0.1');
     }
     exitTl.addLabel('snap-card-0');
 
     // Phase 8 — center each card, hold; snap to each
     allCards.forEach(function(card, i) {
       if (i > 0) {
+        var bgProgress = 10 + (i / (allCards.length - 1)) * 90;
         exitTl.to(cardsTrack, { x: cardCenterX(i), duration: 0.8, ease: 'power2.inOut' });
+        if (statementParallaxBg) {
+          exitTl.to(statementParallaxBg, { backgroundPosition: bgProgress + '% 50%', duration: 0.8, ease: 'power2.inOut' }, '<');
+        }
         exitTl.addLabel('snap-card-' + i);
       }
       exitTl.to(cardsTrack, { x: cardCenterX(i), duration: 0.2 }); // hold at center
