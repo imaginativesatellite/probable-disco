@@ -168,15 +168,23 @@
     display: flex; flex-direction: column; justify-content: center;
   }
   .section-strong h2 {
-    font-size: 65px; font-weight: 500; line-height: 1.15;
-    text-transform: none; letter-spacing: 0; color: #2b2b2b;
-  }
-  .section-strong h4 {
     font-size: 22px; font-weight: 700; line-height: 1.35;
     text-transform: none; letter-spacing: 0; color: #2b2b2b;
-    margin-top: 32px; margin-bottom: 6px;
+    margin-bottom: 6px;
   }
-  .section-strong p { margin-bottom: 0; }
+  .section-strong h4 {
+    font-size: 65px; font-weight: 500; line-height: 1.15;
+    text-transform: none; letter-spacing: 0; color: #2b2b2b;
+    margin-top: 32px; max-width: 50%;
+  }
+  .section-strong p { margin-bottom: 0; max-width: 50%; }
+  .section-strong .container { position: relative; }
+  .strong-bg-img {
+    position: absolute; bottom: 0; right: -20%;
+    max-height: 85vh; max-width: 80%; width: auto; height: auto;
+    z-index: 0; pointer-events: none;
+    filter: grayscale(1);
+  }
   .strong-amp {
     position: absolute; left: 0; top: 0;
     font-family: 'Inter Tight', sans-serif;
@@ -556,8 +564,7 @@
   </div>
 </section>
 
- <section class="section-why section-why--alt" id="what-branding">
-  <img class="why-bg-img" src="678946df3dca4d1066317241_65d666f324c007b6ff4217f3_spencer-homepage.png" alt="">
+ <section class="section-why" id="what-branding">
   <div class="why-headline">
     <h1>Because in Business, Image is Everything</h1>
   </div>
@@ -571,6 +578,7 @@
 <div id="strong-transition">
 
 <section class="section-strong" id="strong">
+  <img class="strong-bg-img" src="678946df3dca4d1066317241_65d666f324c007b6ff4217f3_spencer-homepage.png" alt="">
   <div class="container">
     <h2>The Basic Structure of Any Successful Brand is Simple</h2>
     <h4>A Quality Presentation</h4>
@@ -871,8 +879,7 @@ window.addEventListener('load', function () {
   gsap.set(st1H1.lines,       { color: '#000' });                    // s1 h1: black until hero overlay hands off
   gsap.set(st1H4.lines,       { y: 20, autoAlpha: 0 });             // "Because" fades upward
   gsap.set(st2H1.lines,       { y: '105%', color: '#000' });        // s2 h1: black on black → invisible
-  gsap.set(st2H4.lines,       { x: -80, autoAlpha: 0, color: '#000' });
-  gsap.set(s2Img,              { x: VW });
+  gsap.set(st2H4.lines,       { y: 20, autoAlpha: 0, color: '#000' });
   gsap.set(stWhyLine.chars,    { autoAlpha: 0, y: 12 });            // "Why Branding?" chars hidden, reveal per char
 
   var DUR     = 1;
@@ -903,12 +910,7 @@ window.addEventListener('load', function () {
 
   // PHASE 3 — ENTER section 2 text (black→white as lines arrive so text materialises on black bg)
   tl.to(st2H1.lines, { y: 0, color: '#fff', stagger: STAG_H1, duration: DUR, ease: 'power3.out' });
-  tl.to(st2H4.lines, { x: 0, autoAlpha: 1, color: '#fff', stagger: STAG_H4, duration: DUR, ease: 'power3.out' }, '<+=0.5');
-
-  // Photos span the full three-phase duration
-  var photoDur = tl.duration();
-  tl.to(s1Img, { x: -VW, duration: photoDur, ease: 'power4.inOut' }, 0);
-  tl.to(s2Img, { x: 0,   duration: photoDur, ease: 'power4.inOut' }, 0);
+  tl.to(st2H4.lines, { y: 0, autoAlpha: 1, color: '#fff', stagger: STAG_H4, duration: DUR, ease: 'power3.out' }, '<+=0.5');
 
   // ── Hero overlay ──
   var heroOverlay = document.getElementById('hero-text-overlay');
@@ -950,6 +952,7 @@ window.addEventListener('load', function () {
   var strongWrapper = document.getElementById('strong-transition');
   var sStrong       = document.getElementById('strong');
   var sStatement    = document.querySelector('.section-statement');
+  var strongImg     = sStrong ? sStrong.querySelector('.strong-bg-img') : null;
 
   if (strongWrapper && sStrong && sStatement) {
     var sStrongH2  = sStrong.querySelector('h2');
@@ -999,7 +1002,7 @@ window.addEventListener('load', function () {
     }
 
     // Initial states
-    gsap.set(stSH2.lines,    { y: '105%' });
+    gsap.set(stSH2.lines,    { autoAlpha: 0 });
     gsap.set(sOtherLines,    { x: -40, autoAlpha: 0 });
     gsap.set(sStatement,     { autoAlpha: 0 });
     gsap.set(statementBgImg, { y: '100%' });
@@ -1013,7 +1016,7 @@ window.addEventListener('load', function () {
       once: true,
       onEnter: function() {
         var inTl = gsap.timeline();
-        inTl.to(stSH2.lines,  { y: 0, stagger: 0.12, duration: 0.9, ease: 'power3.out' });
+        inTl.to(stSH2.lines,  { autoAlpha: 1, stagger: 0.12, duration: 0.9, ease: 'power3.out' });
         inTl.to(sOtherLines,  { x: 0, autoAlpha: 1, stagger: 0.08, duration: 0.7, ease: 'power2.out' }, '-=0.4');
       }
     });
@@ -1046,9 +1049,10 @@ window.addEventListener('load', function () {
       }
     });
 
-    // Phase 1 — h2 exits masked upward; paragraphs fade; h4s stay visible
-    exitTl.to(stSH2.lines, { y: '-105%', stagger: 0.08, duration: 0.8, ease: 'power2.inOut' });
-    exitTl.to(pLines,      { autoAlpha: 0, duration: 0.25, ease: 'power1.inOut' }, '<+=0.1');
+    // Phase 1 — h2, paragraphs, and image fade out together; h4s stay visible
+    var fadeGroup = strongImg ? pLines.concat([strongImg]) : pLines.slice();
+    exitTl.to(fadeGroup,    { autoAlpha: 0, duration: 0.25, ease: 'power1.inOut' });
+    exitTl.to(stSH2.lines, { autoAlpha: 0, duration: 0.25, ease: 'power1.inOut' }, '<');
 
     // Phase 2 — h4-2 rises toward h4-1
     exitTl.to(sStrongH4s[1], { y: h4MoveUpY, duration: 0.7, ease: 'power2.inOut' }, '+=0.2');
