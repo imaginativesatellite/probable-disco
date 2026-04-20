@@ -165,22 +165,23 @@
     background: #fff; position: relative; z-index: 2;
     height: 100vh; height: 100dvh;
     padding: 80px 60px;
-    display: flex; flex-direction: column; justify-content: center;
+    display: flex; flex-direction: column; justify-content: flex-start;
   }
   .section-strong h4 {
-    font-size: 52px; font-weight: 500; line-height: 1.15;
-    text-transform: none; letter-spacing: 0; color: #2b2b2b;
+    font-size: 18px; font-weight: 400; line-height: 1.35;
+    text-transform: none; letter-spacing: 0; color: rgba(43,43,43,0.65);
+    margin-bottom: 20px;
   }
   .section-strong h1 {
-    font-size: 22px; font-weight: 700; line-height: 1.35;
+    font-size: 65px; font-weight: 500; line-height: 1.15;
     text-transform: none; letter-spacing: 0; color: #2b2b2b;
-    margin-top: 32px; margin-bottom: 6px;
+    margin-top: 0; margin-bottom: 6px;
   }
   .section-strong p { margin-bottom: 0; }
   .strong-amp {
     position: absolute; left: 0; top: 0;
     font-family: 'Inter Tight', sans-serif;
-    font-size: 22px; font-weight: 700; line-height: 1.35;
+    font-size: 65px; font-weight: 500; line-height: 1.15;
     color: #2b2b2b; pointer-events: none;
   }
   .strong-links {
@@ -250,12 +251,12 @@
   }
   .card-link {
     font-family: 'Inter Tight', sans-serif;
-    font-size: 12px; color: #fff;
+    font-size: 12px; color: #aaa;
     text-decoration: underline; text-underline-offset: 3px;
     text-transform: uppercase; letter-spacing: 2px;
     transition: color .2s ease-out;
   }
-  .card-link:hover { color: rgba(255,255,255,0.65); }
+  .card-link:hover { color: #fff; }
   @media (max-width: 600px) {
     .service-card { width: 280px; min-height: 380px; padding: 32px 24px; }
     .card-title { font-size: 32px; }
@@ -347,7 +348,8 @@
     .section-why { padding: 60px 30px; }
     .section-why h1 { font-size: 33px; }
     .section-strong { padding: 60px 30px; }
-    .section-strong h4 { font-size: 28px; }
+    .section-strong h1 { font-size: 33px; }
+    .section-strong h4 { font-size: 16px; }
   }
   @media (max-width: 600px) {
     h2 { font-size: 26px; }
@@ -355,7 +357,8 @@
     .section-why { padding: 50px 20px; }
     .section-why h1 { font-size: 33px; }
     .section-strong { padding: 50px 20px; }
-    .section-strong h4 { font-size: 28px; }
+    .section-strong h1 { font-size: 28px; }
+    .section-strong h4 { font-size: 14px; }
   }
 
   /* ── Why Transition Wrapper ── */
@@ -612,6 +615,33 @@
       <p class="card-body">Great visuals tell your story before a single word is read. We capture your brand in motion and stills that elevate every platform you're on.</p>
       <div class="card-links">
         <a href="https://luna-creative.com/what-we-do" class="card-link">See our work</a>
+        <a href="#contact" class="card-link">Free Consultation</a>
+      </div>
+    </div>
+    <div class="service-card card-4">
+      <span class="card-number">04</span>
+      <h2 class="card-title">For Restaurants</h2>
+      <p class="card-body">Your restaurant's identity shapes the dining experience before guests walk in. We build brands that fill tables and create lasting loyalty.</p>
+      <div class="card-links">
+        <a href="https://luna-creative.com/restaurant-branding" class="card-link">See our work</a>
+        <a href="#contact" class="card-link">Free Consultation</a>
+      </div>
+    </div>
+    <div class="service-card card-5">
+      <span class="card-number">05</span>
+      <h2 class="card-title">For Government</h2>
+      <p class="card-body">Public trust is built through consistent, credible communication. We help agencies present with clarity and authority at every level.</p>
+      <div class="card-links">
+        <a href="https://luna-creative.com/government" class="card-link">See our work</a>
+        <a href="#contact" class="card-link">Free Consultation</a>
+      </div>
+    </div>
+    <div class="service-card card-6">
+      <span class="card-number">06</span>
+      <h2 class="card-title">For Lawyers</h2>
+      <p class="card-body">Your firm's reputation is your most valuable asset. We craft brands that command trust and communicate expertise from the very first impression.</p>
+      <div class="card-links">
+        <a href="https://luna-creative.com/lawfirm-lawyer-branding" class="card-link">See our work</a>
         <a href="#contact" class="card-link">Free Consultation</a>
       </div>
     </div>
@@ -934,17 +964,20 @@ window.addEventListener('load', function () {
     var stSH4s = sStrongH4s.map(function(el) { return new SplitText(el, { type: 'lines' }); });
     var stSPs  = sStrongPs.map(function(el)  { return new SplitText(el, { type: 'lines' }); });
 
-    stSH2.lines.forEach(function(line) {
-      var w = document.createElement('div');
-      w.style.cssText = 'overflow:hidden;display:block;';
-      line.parentNode.insertBefore(w, line);
-      w.appendChild(line);
+    [stSH2.lines, stSH4s[0].lines, stSPs[0] ? stSPs[0].lines : []].forEach(function(lineSet) {
+      lineSet.forEach(function(line) {
+        var w = document.createElement('div');
+        w.style.cssText = 'overflow:hidden;display:block;';
+        line.parentNode.insertBefore(w, line);
+        w.appendChild(line);
+      });
     });
 
     var h4Lines = [];
     stSH4s.forEach(function(st) { h4Lines = h4Lines.concat(st.lines); });
-    var pLines = [];
-    stSPs.forEach(function(st)  { pLines  = pLines.concat(st.lines); });
+    var pLines0 = stSPs[0] ? stSPs[0].lines : [];
+    var pLines1 = stSPs[1] ? stSPs[1].lines : [];
+    var pLines  = pLines0.concat(pLines1);
     var sOtherLines = h4Lines.concat(pLines);
 
     // Calculate & geometry before any gsap.set alters transforms
@@ -998,7 +1031,7 @@ window.addEventListener('load', function () {
       if (!exitTl) return value;
       var dur = exitTl.duration();
       if (!dur) return value;
-      var snaps = ['snap-card-0', 'snap-card-1', 'snap-card-2'].map(function(l) {
+      var snaps = ['snap-card-0', 'snap-card-1', 'snap-card-2', 'snap-card-3', 'snap-card-4', 'snap-card-5'].map(function(l) {
         var t = exitTl.getLabelTime(l);
         return t >= 0 ? t / dur : null;
       }).filter(function(p) { return p !== null; });
@@ -1013,26 +1046,29 @@ window.addEventListener('load', function () {
       scrollTrigger: {
         trigger: strongWrapper,
         start: 'top top',
-        end: '+=' + window.innerHeight * 8,
+        end: '+=' + window.innerHeight * 12,
         pin: true, scrub: 1, anticipatePin: 1,
         snap: { snapTo: cardSnapFn, ease: 'power1.inOut', duration: { min: 0.2, max: 0.5 } }
       }
     });
 
-    // Phase 1 — h2 exits masked upward; paragraphs fade; h4s stay visible
+    // Phase 1 — title + second paragraph fade out together; h1-2 rises simultaneously
     exitTl.addLabel('h1ExitStart');
-    exitTl.to(stSH2.lines, { y: '-105%', stagger: 0.08, duration: 0.8, ease: 'power2.inOut' });
-    exitTl.to(pLines,      { autoAlpha: 0, duration: 0.25, ease: 'power1.inOut' }, '<+=0.1');
+    exitTl.to(stSH2.lines, { autoAlpha: 0, stagger: 0.05, duration: 0.5, ease: 'power2.inOut' });
+    exitTl.to(pLines1,     { autoAlpha: 0, duration: 0.5, ease: 'power2.inOut' }, '<');
 
-    // Phase 2 — h4-2 rises toward h4-1 (starts as soon as h1 begins exiting)
+    // Phase 2 — h1-2 rises toward h1-1 (starts as soon as phase 1 begins)
     exitTl.to(sStrongH4s[1], { y: h4MoveUpY, duration: 0.5, ease: 'power2.inOut' }, 'h1ExitStart');
 
     // Phase 3 — & slides in from left; h4-2 shifts right to make room
     exitTl.to(ampEl,          { x: ampFinalX, opacity: 1, duration: 0.38, ease: 'power2.out' }, '+=0.1');
     exitTl.to(sStrongH4s[1],  { x: ampW,      duration: 0.38, ease: 'power2.out' }, '<');
 
-    // Phase 4 — h4s and & fade out
-    exitTl.to([sStrongH4s[0], sStrongH4s[1], ampEl], { opacity: 0, duration: 0.4, ease: 'power1.inOut' }, '+=0.3');
+    // Phase 4 — h1-2 and & fade out
+    exitTl.to([sStrongH4s[1], ampEl], { opacity: 0, duration: 0.4, ease: 'power1.inOut' }, '+=0.3');
+
+    // Phase 4b — "A Quality Presentation" + first paragraph exit upward per line
+    exitTl.to(stSH4s[0].lines.concat(pLines0), { y: '-105%', stagger: 0.05, duration: 0.45, ease: 'power2.inOut' }, '+=0.2');
 
     // Phase 5 — section-strong fades, statement reveals
     exitTl.to(sStrong,    { autoAlpha: 0, duration: 0.25, ease: 'none' }, '<+=0.2');
