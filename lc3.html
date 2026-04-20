@@ -368,6 +368,25 @@
     position: fixed; bottom: 16px; right: 16px; z-index: 1001;
     width: 56px; height: 56px;
   }
+  /* Persistent section/animation reference tag */
+  .animation-ref-tag {
+    position: fixed;
+    left: 14px;
+    bottom: 14px;
+    z-index: 10001;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.9);
+    background: rgba(0,0,0,0.62);
+    border: 1px solid rgba(255,255,255,0.28);
+    border-radius: 999px;
+    padding: 8px 12px;
+    pointer-events: none;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+  }
 
   /* Responsive */
   @media (max-width: 991px) {
@@ -755,6 +774,8 @@
   </p>
 </footer>
 
+<div class="animation-ref-tag" id="animation-ref-tag" aria-live="polite">S00-BOOT · A00-IDLE</div>
+
 <a class="mobile-call" href="tel:2104794085" aria-label="Call">
   <img src="https://luna-creative.com/templates/untitled/images/designer/c5ccf31971058a58077a55ea8d602eb4_phonemobilebutton.png" alt="">
 </a>
@@ -896,7 +917,31 @@
 <script>
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
+// Reference naming scheme
+// Sections: S##-NAME (screen group / chapter)
+// Animations: A##-NAME (motion phase in that chapter)
+var animationRefEl = document.getElementById('animation-ref-tag');
+var animationRefState = { section: 'S00-BOOT', animation: 'A00-IDLE' };
+function setAnimationReference(sectionCode, animationCode) {
+  if (!animationRefEl) return;
+  if (animationRefState.section === sectionCode && animationRefState.animation === animationCode) return;
+  animationRefState.section = sectionCode;
+  animationRefState.animation = animationCode;
+  animationRefEl.textContent = sectionCode + ' · ' + animationCode;
+}
+function bindSectionTag(trigger, sectionCode, animationCode) {
+  ScrollTrigger.create({
+    trigger: trigger,
+    start: 'top center',
+    end: 'bottom center',
+    onEnter: function() { setAnimationReference(sectionCode, animationCode); },
+    onEnterBack: function() { setAnimationReference(sectionCode, animationCode); }
+  });
+}
+
 window.addEventListener('load', function () {
+  setAnimationReference('S01-HERO', 'A01-HERO_TRACK');
+
   var wrapper = document.getElementById('why-transition');
   var s1      = document.getElementById('why');
   var s2      = document.getElementById('what-branding');
@@ -950,42 +995,61 @@ window.addEventListener('load', function () {
       anticipatePin: 1
     }
   });
+  tl.addLabel('a04-why-enter', 0);
 
-  // PHASE 1 — "Because" h4 fades upward, top line first
+  // A04-WHY_COPY_SWAP / PHASE 1 — "Because" h4 fades upward, top line first
   tl.to(st1H4.lines, { y: 0, autoAlpha: 1, stagger: STAG_H4, duration: DUR * 0.65, ease: 'power3.out' });
+  tl.addLabel('a04-why-exit');
 
-  // PHASE 2 — EXIT section 1 text
+  // A04-WHY_COPY_SWAP / PHASE 2 — EXIT section 1 text
   tl.to(st1H1.lines, { y: '-105%', stagger: STAG_H1, duration: DUR, ease: 'power2.inOut' });
   tl.to(st1H4.lines, { x: 80, autoAlpha: 0, stagger: STAG_H4, duration: DUR, ease: 'power2.inOut' }, '<');
 
-  // PHASE 2.5 — orange "Why Branding?" snaps up to occupy section 2's first-line position
+  // A04-WHY_COPY_SWAP / PHASE 2.5 — orange "Why Branding?" snaps up to occupy section 2's first-line position
   var whyUpY = -s1H1.getBoundingClientRect().height;
   tl.to(s1WhyLine, { y: whyUpY, duration: DUR * 0.8, ease: 'power2.inOut' });
+  tl.addLabel('a04-what-enter');
 
-  // PHASE 3 — ENTER section 2 text (black→white as lines arrive so text materialises on black bg)
+  // A04-WHY_COPY_SWAP / PHASE 3 — ENTER section 2 text (black→white as lines arrive so text materialises on black bg)
   tl.to(st2H1.lines, { y: 0, color: '#fff', stagger: STAG_H1, duration: DUR, ease: 'power3.out' });
   tl.to(st2H4.lines, { y: 0, autoAlpha: 1, color: '#fff', stagger: STAG_H4, duration: DUR, ease: 'power3.out' }, '<+=0.5');
+  tl.eventCallback('onUpdate', function() {
+    var t = tl.time();
+    if (t < tl.labels['a04-what-enter']) {
+      setAnimationReference('S02-WHY-01', 'A04-WHY_COPY_SWAP');
+    } else {
+      setAnimationReference('S03-WHY-02', 'A04-WHY_COPY_SWAP');
+    }
+  });
 
   // ── Hero overlay ──
   var heroOverlay = document.getElementById('hero-text-overlay');
   var targetTop   = window.innerWidth <= 600 ? 50 : (window.innerWidth <= 991 ? 60 : 80);
 
-  // Position: exact scroll tracking across full hero
+  // A01-HERO_TRACK — Position: exact scroll tracking across full hero
   gsap.to(heroOverlay, {
     top: targetTop, yPercent: 0, ease: 'none',
-    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
+    scrollTrigger: {
+      trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true,
+      onEnter: function() { setAnimationReference('S01-HERO', 'A01-HERO_TRACK'); },
+      onEnterBack: function() { setAnimationReference('S01-HERO', 'A01-HERO_TRACK'); }
+    }
   });
 
-  // Video fade to black: darken hero as it scrolls away
+  // A02-HERO_FADE — Video fade to black as hero scrolls away
   gsap.to('#hero-fade', {
     opacity: 1, ease: 'none',
     scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
   });
 
-  // "Why Branding?" — chars reveal per-character over the last half of the hero scroll
+  // A03-WHY_CHAR_REVEAL — "Why Branding?" chars reveal over last half of hero scroll
   gsap.to(stWhyLine.chars, {
     autoAlpha: 1, y: 0, stagger: 0.1, ease: 'power1.inOut',
-    scrollTrigger: { trigger: '.hero', start: '50% top', end: 'bottom top', scrub: true }
+    scrollTrigger: {
+      trigger: '.hero', start: '50% top', end: 'bottom top', scrub: true,
+      onEnter: function() { setAnimationReference('S01-HERO', 'A03-WHY_CHAR_REVEAL'); },
+      onEnterBack: function() { setAnimationReference('S01-HERO', 'A03-WHY_CHAR_REVEAL'); }
+    }
   });
 
   // Hand off: fade overlay out and reveal s1 h1 in white; reverse on scroll back
@@ -1081,7 +1145,7 @@ window.addEventListener('load', function () {
     if (sectionTeam)       gsap.set(sectionTeam,       { autoAlpha: 0 });
     if (statementParallaxBg) gsap.set(statementParallaxBg, { autoAlpha: 0, y: '100%', backgroundPosition: '0% 50%' });
 
-    // ENTRANCE — unified top-to-bottom stagger across all section lines
+    // A05-STRONG_ENTRANCE — unified top-to-bottom stagger across all section lines
     var allEntranceEls = stSH2.lines.concat(
       stSH4s[0].lines, [sStrongPs[0]],
       stSH4s[1].lines, [sStrongPs[1]]
@@ -1091,6 +1155,7 @@ window.addEventListener('load', function () {
       start: 'top 65%',
       once: true,
       onEnter: function() {
+        setAnimationReference('S04-STRONG', 'A05-STRONG_ENTRANCE');
         gsap.to(allEntranceEls, { y: 0, stagger: 0.08, duration: 0.7, ease: 'power3.out' });
       }
     });
@@ -1142,34 +1207,36 @@ window.addEventListener('load', function () {
       }
     });
 
-    // Phase 1 — h2, paragraphs, and image fade out together; h4s stay visible
+    // A06-STRONG_EXIT / Phase 1 — h2, paragraphs, and image fade out together; h4s stay visible
     var fadeGroup = strongImg ? sStrongPs.concat([strongImg]) : sStrongPs.slice();
     exitTl.to(fadeGroup,    { autoAlpha: 0, duration: 0.25, ease: 'power1.inOut' });
     exitTl.to(stSH2.lines, { autoAlpha: 0, duration: 0.25, ease: 'power1.inOut' }, '<');
+    exitTl.addLabel('a06-strong-exit');
 
-    // Phase 2 — h4-2 rises toward h4-1
+    // A06-STRONG_EXIT / Phase 2 — h4-2 rises toward h4-1
     exitTl.to(sStrongH4s[1], { y: h4MoveUpY, duration: 0.175, ease: 'power3.out' }, '+=0.05');
 
-    // Phase 3 — & slides in from left; h4-2 shifts right to make room
+    // A06-STRONG_EXIT / Phase 3 — & slides in from left; h4-2 shifts right to make room
     exitTl.to(ampEl,          { x: ampFinalX, opacity: 1, duration: 0.15, ease: 'power3.out' }, '+=0.025');
     exitTl.to(sStrongH4s[1],  { x: ampW,      duration: 0.15, ease: 'power3.out' }, '<');
 
-    // Phase 4 — h4 lines slide up masked out; & fades
+    // A06-STRONG_EXIT / Phase 4 — h4 lines slide up masked out; & fades
     exitTl.to(h4Lines, { y: '-105%', stagger: 0.1, duration: 0.5, ease: 'power2.inOut' }, '+=0.3');
     exitTl.to(ampEl,   { opacity: 0, duration: 0.4, ease: 'power1.inOut' }, '<');
+    exitTl.addLabel('a07-statement-reveal');
 
-    // Phase 5 — section-strong fades, statement reveals
+    // A07-STATEMENT_REVEAL / Phase 5 — section-strong fades, statement reveals
     exitTl.to(sStrong,    { autoAlpha: 0, duration: 0.25, ease: 'none' }, '<+=0.2');
     exitTl.to(sStatement, { autoAlpha: 1, duration: 0.25, ease: 'none' }, '<');
 
-    // Phase 6 — both images slide up simultaneously, statement text enters per word
+    // A07-STATEMENT_REVEAL / Phase 6 — both images slide up simultaneously, statement text enters per word
     exitTl.to(statementBgImg, { y: 0, duration: 1.35, ease: 'power3.out' }, '<');
     if (statementParallaxBg) {
       exitTl.to(statementParallaxBg, { y: 0, autoAlpha: 1, duration: 1, ease: 'power3.out' }, '<');
     }
     exitTl.to(stStmt.words, { opacity: 1, y: 0, stagger: { each: 0.1 }, duration: 0.5, ease: 'power3.out' }, '<+=0.15');
 
-    // Phase 7 — chars scatter simultaneously; cards slide in
+    // A08-CARD_CAROUSEL / Phase 7 — chars scatter simultaneously; cards slide in
     exitTl.addLabel('charScatterStart', '+=0.4');
     stStmt.chars.forEach(function(char) {
       exitTl.to(char, {
@@ -1188,8 +1255,9 @@ window.addEventListener('load', function () {
       exitTl.to(statementParallaxBg, { backgroundPosition: '10% 50%', duration: 1.2, ease: 'power3.out' }, 'charScatterStart+=0.1');
     }
     exitTl.addLabel('snap-card-0');
+    exitTl.addLabel('a08-card-carousel', 'snap-card-0');
 
-    // Phase 8 — center each card, hold; snap to each
+    // A08-CARD_CAROUSEL / Phase 8 — center each card, hold; snap to each
     allCards.forEach(function(card, i) {
       if (i > 0) {
         var bgProgress = 10 + (i / (allCards.length - 1)) * 90;
@@ -1202,7 +1270,7 @@ window.addEventListener('load', function () {
       exitTl.to(cardsTrack, { x: cardCenterX(i), duration: 0.2 }); // hold at center
     });
 
-    // Phase 9 — all cards exit simultaneously: text hides bottom-to-top per card,
+    // A09-CARD_EXIT / Phase 9 — all cards exit simultaneously: text hides bottom-to-top per card,
     // then card backgrounds squish up (content already hidden behind clips)
     var cardsOverlay = document.getElementById('cards-overlay');
     exitTl.addLabel('cardExit', '+=0.3');
@@ -1217,7 +1285,7 @@ window.addEventListener('load', function () {
       clipPath: 'inset(0 0 100% 0)',
       duration: 0.4, ease: 'power3.inOut'
     }, 'cardExit+=0.4');
-    // Fade out cards/statement; fade in section-team simultaneously
+    // A10-TEAM_REVEAL — Fade out cards/statement while section-team fades in
     exitTl.to([cardsOverlay, sStatement], {
       autoAlpha: 0, duration: 0.35, ease: 'none'
     }, 'cardExit+=0.7');
@@ -1265,11 +1333,11 @@ window.addEventListener('load', function () {
         gsap.set(borderPathRight, { strokeDasharray: rightLen, strokeDashoffset: rightLen });
       }
 
-      // Scrubbed: words reveal on scroll, then tagline rises
+      // A11-CONTACT_TAGLINE — Scrubbed: words reveal on scroll, then tagline rises
       exitTl.to(stContactWords.words, { y: 0, stagger: 0.1, duration: 0.6, ease: 'power3.out' }, 'cardExit+=1.1');
       exitTl.to(contactTagline, { y: -28, duration: 0.5, ease: 'power2.out' }, 'cardExit+=2.3');
 
-      // Button and border animate once tagline is positioned
+      // A12-CONTACT_CTA — Button and border animate once tagline is positioned
       var contactIntroFired = false;
       exitTl.call(function() {
         if (contactIntroFired) return;
@@ -1284,7 +1352,26 @@ window.addEventListener('load', function () {
         }
       }, [], 'cardExit+=2.8');
     }
+
+    exitTl.eventCallback('onUpdate', function() {
+      var t = exitTl.time();
+      if (t < exitTl.labels['a07-statement-reveal']) {
+        setAnimationReference('S04-STRONG', 'A06-STRONG_EXIT');
+      } else if (t < exitTl.labels['a08-card-carousel']) {
+        setAnimationReference('S05-STATEMENT', 'A07-STATEMENT_REVEAL');
+      } else if (t < exitTl.labels['cardExit']) {
+        setAnimationReference('S06-CARDS', 'A08-CARD_CAROUSEL');
+      } else if (contactIntro && t < exitTl.labels['cardExit'] + 2.8) {
+        setAnimationReference('S07-TEAM', 'A11-CONTACT_TAGLINE');
+      } else if (contactIntro) {
+        setAnimationReference('S07-TEAM', 'A12-CONTACT_CTA');
+      } else {
+        setAnimationReference('S07-TEAM', 'A10-TEAM_REVEAL');
+      }
+    });
   }
+
+  bindSectionTag('#contact', 'S08-CONTACT', 'A13-CONTACT_STATIC');
 });
 </script>
 
