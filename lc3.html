@@ -321,7 +321,7 @@
     position: relative; display: inline-block;
     padding: 18px;
     font-family: 'Inter Tight', sans-serif;
-    font-size: 48px; font-weight: 700;
+    font-size: 18px; font-weight: 400;
     letter-spacing: 6px;
     color: #fff; text-decoration: none;
     line-height: 1;
@@ -392,7 +392,6 @@
     .section-strong h4 { font-size: 33px; }
     .strong-amp { font-size: 33px; }
     .contact-tagline { font-size: 33px; }
-    .contact-cta-btn { font-size: 33px; }
   }
   @media (max-width: 600px) {
     h2 { font-size: 26px; }
@@ -404,7 +403,6 @@
     .section-strong h4 { font-size: 33px; }
     .strong-amp { font-size: 33px; }
     .contact-tagline { font-size: 33px; }
-    .contact-cta-btn { font-size: 26px; }
   }
 
   /* ── Why Transition Wrapper ── */
@@ -1036,6 +1034,13 @@ window.addEventListener('load', function () {
       w.appendChild(line);
     });
 
+    sStrongPs.forEach(function(p) {
+      var w = document.createElement('div');
+      w.style.cssText = 'overflow:hidden;display:block;';
+      p.parentNode.insertBefore(w, p);
+      w.appendChild(p);
+    });
+
     // Calculate & geometry before any gsap.set alters transforms
     var sRect     = sStrong.getBoundingClientRect();
     var h4_1_rect = sStrongH4s[0].getBoundingClientRect();
@@ -1064,27 +1069,28 @@ window.addEventListener('load', function () {
     var statementParallaxBg = sStatement.querySelector('.statement-parallax-bg');
 
     // Initial states
-    gsap.set(stSH2.lines,       { autoAlpha: 0 });
+    gsap.set(stSH2.lines,       { y: '105%' });
     gsap.set(h4Lines,           { y: '105%' });
-    gsap.set(sStrongPs,         { x: -40, autoAlpha: 0 });
+    gsap.set(sStrongPs,         { y: '105%' });
     gsap.set(sStatement,        { autoAlpha: 0 });
     gsap.set(statementBgImg,    { y: '100%' });
     gsap.set(stStmt.words,      { opacity: 0, y: 20 });
     gsap.set(cardsTrack,        { yPercent: -50, x: window.innerWidth + 200 });
     gsap.set(allCards,          { clipPath: 'inset(0 0 0% 0)' });
     if (sectionTeam)       gsap.set(sectionTeam,       { autoAlpha: 0 });
-    if (statementParallaxBg) gsap.set(statementParallaxBg, { autoAlpha: 0 });
+    if (statementParallaxBg) gsap.set(statementParallaxBg, { autoAlpha: 0, backgroundPosition: '0% 50%' });
 
-    // ENTRANCE — fires once as section scrolls into view
+    // ENTRANCE — unified top-to-bottom stagger across all section lines
+    var allEntranceEls = stSH2.lines.concat(
+      stSH4s[0].lines, [sStrongPs[0]],
+      stSH4s[1].lines, [sStrongPs[1]]
+    );
     ScrollTrigger.create({
       trigger: sStrong,
       start: 'top 65%',
       once: true,
       onEnter: function() {
-        var inTl = gsap.timeline();
-        inTl.to(stSH2.lines,  { autoAlpha: 1, stagger: 0.12, duration: 0.9, ease: 'power3.out' });
-        inTl.to(h4Lines,      { y: 0, stagger: 0.1, duration: 0.8, ease: 'power3.out' }, '-=0.4');
-        inTl.to(sStrongPs,    { x: 0, autoAlpha: 1, stagger: 0.08, duration: 0.7, ease: 'power2.out' }, '-=0.4');
+        gsap.to(allEntranceEls, { y: 0, stagger: 0.08, duration: 0.7, ease: 'power3.out' });
       }
     });
 
@@ -1173,21 +1179,19 @@ window.addEventListener('load', function () {
       }, 'charScatterStart');
     });
     exitTl.to(cardsTrack, { x: cardCenterX(0), duration: 1.2, ease: 'power3.out' }, 'charScatterStart+=0.1');
-    // Parallax bg fades in and begins moving at 25% of card track speed
-    var parallaxStartX = window.innerWidth + 200;
+    // Parallax bg fades in; image pans left→right across the full card scroll
     if (statementParallaxBg) {
       exitTl.to(statementParallaxBg, { autoAlpha: 1, duration: 0.6, ease: 'power2.out' }, 'charScatterStart');
-      exitTl.to(statementParallaxBg, { x: 0.25 * (cardCenterX(0) - parallaxStartX), duration: 1.2, ease: 'power3.out' }, 'charScatterStart+=0.1');
     }
     exitTl.addLabel('snap-card-0');
+    if (statementParallaxBg) {
+      exitTl.to(statementParallaxBg, { backgroundPosition: '100% 50%', duration: 5.0, ease: 'none' }, 'snap-card-0');
+    }
 
     // Phase 8 — center each card, hold; snap to each
     allCards.forEach(function(card, i) {
       if (i > 0) {
         exitTl.to(cardsTrack, { x: cardCenterX(i), duration: 0.8, ease: 'power2.inOut' });
-        if (statementParallaxBg) {
-          exitTl.to(statementParallaxBg, { x: 0.25 * (cardCenterX(i) - parallaxStartX), duration: 0.8, ease: 'power2.inOut' }, '<');
-        }
         exitTl.addLabel('snap-card-' + i);
       }
       exitTl.to(cardsTrack, { x: cardCenterX(i), duration: 0.2 }); // hold at center
@@ -1223,7 +1227,7 @@ window.addEventListener('load', function () {
       exitTl.to(sectionTeam, { autoAlpha: 1, duration: 0.4, ease: 'none' }, 'cardExit+=0.7');
     }
 
-    // Contact intro — fires once when exit timeline reaches this point
+    // Contact intro — tagline reveals by word on scrub, button/border fire once
     var contactIntro = strongWrapper.querySelector('.contact-intro');
     if (contactIntro) {
       var contactTagline  = contactIntro.querySelector('.contact-tagline');
@@ -1232,8 +1236,16 @@ window.addEventListener('load', function () {
       var borderPathLeft  = contactIntro.querySelector('.border-path-left');
       var borderPathRight = contactIntro.querySelector('.border-path-right');
 
-      var stContactChars = new SplitText(contactTagline, { type: 'chars' });
-      var stContactCta   = new SplitText(contactCtaText,  { type: 'lines' });
+      // Word-by-word upward clip reveal for tagline
+      var stContactWords = new SplitText(contactTagline, { type: 'words' });
+      stContactWords.words.forEach(function(word) {
+        var w = document.createElement('div');
+        w.style.cssText = 'overflow:hidden;display:inline-block;vertical-align:bottom;';
+        word.parentNode.insertBefore(w, word);
+        w.appendChild(word);
+      });
+
+      var stContactCta = new SplitText(contactCtaText, { type: 'lines' });
       stContactCta.lines.forEach(function(line) {
         var w = document.createElement('div');
         w.style.cssText = 'overflow:hidden;display:block;';
@@ -1241,7 +1253,7 @@ window.addEventListener('load', function () {
         w.appendChild(line);
       });
 
-      gsap.set(stContactChars.chars, { autoAlpha: 0 });
+      gsap.set(stContactWords.words, { y: '110%' });
       gsap.set(stContactCta.lines,   { y: '105%' });
       gsap.set(contactCtaWrap,        { autoAlpha: 0 });
 
@@ -1252,21 +1264,24 @@ window.addEventListener('load', function () {
         gsap.set(borderPathRight, { strokeDasharray: rightLen, strokeDashoffset: rightLen });
       }
 
+      // Scrubbed: words reveal on scroll, then tagline rises
+      exitTl.to(stContactWords.words, { y: 0, stagger: 0.1, duration: 0.6, ease: 'power3.out' }, 'cardExit+=1.1');
+      exitTl.to(contactTagline, { y: -28, duration: 0.5, ease: 'power2.out' }, 'cardExit+=2.3');
+
+      // Button and border animate once tagline is positioned
       var contactIntroFired = false;
       exitTl.call(function() {
         if (contactIntroFired) return;
         contactIntroFired = true;
         var ctTl = gsap.timeline();
-        ctTl.to(stContactChars.chars, { autoAlpha: 1, stagger: 0.04, duration: 0.001, ease: 'none' });
-        ctTl.set(contactCtaWrap, { autoAlpha: 1 }, '+=0.3');
-        ctTl.to(stContactCta.lines, { y: 0, stagger: 0.1, duration: 0.7, ease: 'power3.out' }, '<');
-        ctTl.to(contactTagline,     { y: -28, duration: 0.6, ease: 'power2.out' }, '<');
+        ctTl.set(contactCtaWrap, { autoAlpha: 1 });
+        ctTl.to(stContactCta.lines, { y: 0, stagger: 0.1, duration: 0.7, ease: 'power3.out' });
         if (borderPathLeft && borderPathRight) {
           ctTl.to([borderPathLeft, borderPathRight], {
             strokeDashoffset: 0, duration: 0.9, ease: 'power2.inOut'
           }, '+=0.2');
         }
-      }, [], 'cardExit+=1.1');
+      }, [], 'cardExit+=2.8');
     }
   }
 });
