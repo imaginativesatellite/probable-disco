@@ -165,23 +165,22 @@
     background: #fff; position: relative; z-index: 2;
     height: 100vh; height: 100dvh;
     padding: 80px 60px;
-    display: flex; flex-direction: column; justify-content: flex-start;
+    display: flex; flex-direction: column; justify-content: center;
   }
-  .section-strong h4 {
-    font-size: 18px; font-weight: 400; line-height: 1.35;
-    text-transform: none; letter-spacing: 0; color: rgba(43,43,43,0.65);
-    margin-bottom: 20px;
-  }
-  .section-strong h1 {
+  .section-strong h2 {
     font-size: 65px; font-weight: 500; line-height: 1.15;
     text-transform: none; letter-spacing: 0; color: #2b2b2b;
-    margin-top: 0; margin-bottom: 6px;
+  }
+  .section-strong h4 {
+    font-size: 22px; font-weight: 700; line-height: 1.35;
+    text-transform: none; letter-spacing: 0; color: #2b2b2b;
+    margin-top: 32px; margin-bottom: 6px;
   }
   .section-strong p { margin-bottom: 0; }
   .strong-amp {
     position: absolute; left: 0; top: 0;
     font-family: 'Inter Tight', sans-serif;
-    font-size: 65px; font-weight: 500; line-height: 1.15;
+    font-size: 22px; font-weight: 700; line-height: 1.35;
     color: #2b2b2b; pointer-events: none;
   }
   .strong-links {
@@ -348,8 +347,7 @@
     .section-why { padding: 60px 30px; }
     .section-why h1 { font-size: 33px; }
     .section-strong { padding: 60px 30px; }
-    .section-strong h1 { font-size: 33px; }
-    .section-strong h4 { font-size: 16px; }
+    .section-strong h2 { font-size: 33px; }
   }
   @media (max-width: 600px) {
     h2 { font-size: 26px; }
@@ -357,8 +355,7 @@
     .section-why { padding: 50px 20px; }
     .section-why h1 { font-size: 33px; }
     .section-strong { padding: 50px 20px; }
-    .section-strong h1 { font-size: 28px; }
-    .section-strong h4 { font-size: 14px; }
+    .section-strong h2 { font-size: 33px; }
   }
 
   /* ── Why Transition Wrapper ── */
@@ -575,10 +572,10 @@
 
 <section class="section-strong" id="strong">
   <div class="container">
-    <h4>The Basic Structure of Any Successful Brand is Simple</h4>
-    <h1>A Quality Presentation</h1>
+    <h2>The Basic Structure of Any Successful Brand is Simple</h2>
+    <h4>A Quality Presentation</h4>
     <p>Your visual identity — logo, website, and every piece of collateral that defines you visually.</p>
-    <h1>The Right Audience</h1>
+    <h4>The Right Audience</h4>
     <p>Reaching the people who matter, through the channels and platforms they actually use.</p>
   </div>
   <span class="strong-amp" aria-hidden="true">&amp;</span>
@@ -955,8 +952,8 @@ window.addEventListener('load', function () {
   var sStatement    = document.querySelector('.section-statement');
 
   if (strongWrapper && sStrong && sStatement) {
-    var sStrongH2  = sStrong.querySelector('h4');
-    var sStrongH4s = Array.from(sStrong.querySelectorAll('h1'));
+    var sStrongH2  = sStrong.querySelector('h2');
+    var sStrongH4s = Array.from(sStrong.querySelectorAll('h4'));
     var sStrongPs  = Array.from(sStrong.querySelectorAll('p'));
     var ampEl      = sStrong.querySelector('.strong-amp');
 
@@ -964,20 +961,17 @@ window.addEventListener('load', function () {
     var stSH4s = sStrongH4s.map(function(el) { return new SplitText(el, { type: 'lines' }); });
     var stSPs  = sStrongPs.map(function(el)  { return new SplitText(el, { type: 'lines' }); });
 
-    [stSH2.lines, stSH4s[0].lines, stSPs[0] ? stSPs[0].lines : []].forEach(function(lineSet) {
-      lineSet.forEach(function(line) {
-        var w = document.createElement('div');
-        w.style.cssText = 'overflow:hidden;display:block;';
-        line.parentNode.insertBefore(w, line);
-        w.appendChild(line);
-      });
+    stSH2.lines.forEach(function(line) {
+      var w = document.createElement('div');
+      w.style.cssText = 'overflow:hidden;display:block;';
+      line.parentNode.insertBefore(w, line);
+      w.appendChild(line);
     });
 
     var h4Lines = [];
     stSH4s.forEach(function(st) { h4Lines = h4Lines.concat(st.lines); });
-    var pLines0 = stSPs[0] ? stSPs[0].lines : [];
-    var pLines1 = stSPs[1] ? stSPs[1].lines : [];
-    var pLines  = pLines0.concat(pLines1);
+    var pLines = [];
+    stSPs.forEach(function(st)  { pLines  = pLines.concat(st.lines); });
     var sOtherLines = h4Lines.concat(pLines);
 
     // Calculate & geometry before any gsap.set alters transforms
@@ -1052,23 +1046,19 @@ window.addEventListener('load', function () {
       }
     });
 
-    // Phase 1 — title + second paragraph fade out together; h1-2 rises simultaneously
-    exitTl.addLabel('h1ExitStart');
-    exitTl.to(stSH2.lines, { autoAlpha: 0, stagger: 0.05, duration: 0.5, ease: 'power2.inOut' });
-    exitTl.to(pLines1,     { autoAlpha: 0, duration: 0.5, ease: 'power2.inOut' }, '<');
+    // Phase 1 — h2 exits masked upward; paragraphs fade; h4s stay visible
+    exitTl.to(stSH2.lines, { y: '-105%', stagger: 0.08, duration: 0.8, ease: 'power2.inOut' });
+    exitTl.to(pLines,      { autoAlpha: 0, duration: 0.25, ease: 'power1.inOut' }, '<+=0.1');
 
-    // Phase 2 — h1-2 rises toward h1-1 (starts as soon as phase 1 begins)
-    exitTl.to(sStrongH4s[1], { y: h4MoveUpY, duration: 0.5, ease: 'power2.inOut' }, 'h1ExitStart');
+    // Phase 2 — h4-2 rises toward h4-1
+    exitTl.to(sStrongH4s[1], { y: h4MoveUpY, duration: 0.7, ease: 'power2.inOut' }, '+=0.2');
 
     // Phase 3 — & slides in from left; h4-2 shifts right to make room
-    exitTl.to(ampEl,          { x: ampFinalX, opacity: 1, duration: 0.38, ease: 'power2.out' }, '+=0.1');
-    exitTl.to(sStrongH4s[1],  { x: ampW,      duration: 0.38, ease: 'power2.out' }, '<');
+    exitTl.to(ampEl,          { x: ampFinalX, opacity: 1, duration: 0.5, ease: 'power2.out' }, '+=0.1');
+    exitTl.to(sStrongH4s[1],  { x: ampW,      duration: 0.5, ease: 'power2.out' }, '<');
 
-    // Phase 4 — h1-2 and & fade out
-    exitTl.to([sStrongH4s[1], ampEl], { opacity: 0, duration: 0.4, ease: 'power1.inOut' }, '+=0.3');
-
-    // Phase 4b — "A Quality Presentation" + first paragraph exit upward per line
-    exitTl.to(stSH4s[0].lines.concat(pLines0), { y: '-105%', stagger: 0.05, duration: 0.45, ease: 'power2.inOut' }, '+=0.2');
+    // Phase 4 — h4s and & fade out
+    exitTl.to([sStrongH4s[0], sStrongH4s[1], ampEl], { opacity: 0, duration: 0.4, ease: 'power1.inOut' }, '+=0.3');
 
     // Phase 5 — section-strong fades, statement reveals
     exitTl.to(sStrong,    { autoAlpha: 0, duration: 0.25, ease: 'none' }, '<+=0.2');
