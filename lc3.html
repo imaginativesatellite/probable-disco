@@ -356,6 +356,8 @@
     .section-why h1 { font-size: 33px; }
     .section-strong { padding: 60px 30px; }
     .section-strong h2 { font-size: 33px; }
+    .section-strong h4 { font-size: 33px; }
+    .strong-amp { font-size: 33px; }
   }
   @media (max-width: 600px) {
     h2 { font-size: 26px; }
@@ -364,6 +366,8 @@
     .section-why h1 { font-size: 33px; }
     .section-strong { padding: 50px 20px; }
     .section-strong h2 { font-size: 33px; }
+    .section-strong h4 { font-size: 33px; }
+    .strong-amp { font-size: 33px; }
   }
 
   /* ── Why Transition Wrapper ── */
@@ -975,7 +979,13 @@ window.addEventListener('load', function () {
     stSH4s.forEach(function(st) { h4Lines = h4Lines.concat(st.lines); });
     var pLines = [];
     stSPs.forEach(function(st)  { pLines  = pLines.concat(st.lines); });
-    var sOtherLines = h4Lines.concat(pLines);
+
+    h4Lines.forEach(function(line) {
+      var w = document.createElement('div');
+      w.style.cssText = 'overflow:hidden;display:block;';
+      line.parentNode.insertBefore(w, line);
+      w.appendChild(line);
+    });
 
     // Calculate & geometry before any gsap.set alters transforms
     var sRect     = sStrong.getBoundingClientRect();
@@ -1003,7 +1013,8 @@ window.addEventListener('load', function () {
 
     // Initial states
     gsap.set(stSH2.lines,    { autoAlpha: 0 });
-    gsap.set(sOtherLines,    { x: -40, autoAlpha: 0 });
+    gsap.set(h4Lines,        { y: '105%' });
+    gsap.set(pLines,         { x: -40, autoAlpha: 0 });
     gsap.set(sStatement,     { autoAlpha: 0 });
     gsap.set(statementBgImg, { y: '100%' });
     gsap.set(stStmt.words,   { opacity: 0, y: 20 });
@@ -1017,7 +1028,8 @@ window.addEventListener('load', function () {
       onEnter: function() {
         var inTl = gsap.timeline();
         inTl.to(stSH2.lines,  { autoAlpha: 1, stagger: 0.12, duration: 0.9, ease: 'power3.out' });
-        inTl.to(sOtherLines,  { x: 0, autoAlpha: 1, stagger: 0.08, duration: 0.7, ease: 'power2.out' }, '-=0.4');
+        inTl.to(h4Lines,      { y: 0, stagger: 0.1, duration: 0.8, ease: 'power3.out' }, '-=0.4');
+        inTl.to(pLines,       { x: 0, autoAlpha: 1, stagger: 0.08, duration: 0.7, ease: 'power2.out' }, '-=0.4');
       }
     });
 
