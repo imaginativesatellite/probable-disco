@@ -5,14 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Luna Creative — Starter Replica</title>
 <link rel="icon" type="image/x-icon" href="https://luna-creative.com/templates/untitled/images/designer/987e9869a7c55216c02f00f1f4957513_LCicon.ico">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;600;700;900&family=Montserrat:wght@400;700&family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/GSDevTools.min.js"></script>
+<script>history.scrollRestoration = 'manual'; window.scrollTo(0, 0);</script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { width: 100%; }
   body {
-    font-family: "Open Sans", Arial, Helvetica, sans-serif;
+    font-family: 'Inter Tight', "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 18px;
-    line-height: 1.7;
+    line-height: 1.4;
     color: #2b2b2b;
     background: #f5f5f5;
     overflow-x: hidden;
@@ -20,10 +25,10 @@
   a { color: #fbc036; text-decoration: none; transition: color .2s ease-out; }
   a:hover { color: #e9931c; }
   h1, h2, h3, h4 {
-    font-family: Montserrat, Arial, Helvetica, sans-serif;
+    font-family: 'Inter Tight', "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0;
   }
   h2 { font-size: 36px; line-height: 1.2; margin-bottom: 18px; }
   h4 { font-size: 22px; line-height: 1.35; margin-bottom: 14px; font-weight: 400; text-transform: none; letter-spacing: 0; }
@@ -32,32 +37,32 @@
 
   /* Header */
   header.site-header {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-    background: #000; color: #fff;
+    position: absolute; top: 0; left: 0; right: 0; z-index: 1000;
+    background: transparent; color: #fff;
     padding: 18px 40px;
     display: flex; align-items: center; justify-content: space-between;
   }
   .brand { display: flex; align-items: center; gap: 18px; }
-  .brand img { width: 140px; }
+  .brand img { width: 168px; }
   .brand .tagline {
-    font-family: Montserrat, Arial, Helvetica, sans-serif;
+    font-family: 'Inter Tight', "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px; text-transform: uppercase; color: #fff;
-    letter-spacing: 1.5px; line-height: 1.2;
+    letter-spacing: 0; line-height: 1.2;
   }
   .nav-toggle {
     background: none; border: 0; cursor: pointer;
-    width: 40px; height: 30px; position: relative;
+    width: 24px; height: 18px; position: relative;
   }
   .nav-toggle span {
-    position: absolute; left: 0; right: 0; height: 3px; background: #fff;
+    position: absolute; left: 0; right: 0; height: 2px; background: #fff;
     transition: transform .3s ease, opacity .3s ease;
   }
-  .nav-toggle span:nth-child(1) { top: 4px; }
-  .nav-toggle span:nth-child(2) { top: 14px; }
-  .nav-toggle span:nth-child(3) { top: 24px; }
-  .nav-toggle.open span:nth-child(1) { transform: translateY(10px) rotate(45deg); }
+  .nav-toggle span:nth-child(1) { top: 2px; }
+  .nav-toggle span:nth-child(2) { top: 8px; }
+  .nav-toggle span:nth-child(3) { top: 14px; }
+  .nav-toggle.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
   .nav-toggle.open span:nth-child(2) { opacity: 0; }
-  .nav-toggle.open span:nth-child(3) { transform: translateY(-10px) rotate(-45deg); }
+  .nav-toggle.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
   .overlay-nav {
     position: fixed; inset: 0; background: rgba(0,0,0,.96);
@@ -69,16 +74,20 @@
   .overlay-nav ul { list-style: none; text-align: center; }
   .overlay-nav li { margin: 12px 0; }
   .overlay-nav a {
-    color: #fff; font-family: Montserrat, sans-serif;
-    text-transform: uppercase; font-size: 24px; letter-spacing: 2px;
+    color: #fff; font-family: 'Inter Tight', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-transform: uppercase; font-size: 24px; letter-spacing: 0;
   }
   .overlay-nav a:hover { color: #e9931c; }
   .overlay-nav .small { font-size: 16px; color: #bbb; }
 
   /* Hero */
   .hero {
-    position: relative; width: 100%; height: 100vh; min-height: 600px;
+    position: relative; width: 100%; height: 100vh; height: 100dvh; min-height: 600px;
     background: #000; overflow: hidden;
+  }
+  .hero::after {
+    content: ''; position: absolute; inset: 0;
+    background: rgba(0,0,0,0.45); z-index: 1;
   }
   .hero video {
     position: absolute; top: 50%; left: 50%;
@@ -111,13 +120,36 @@
   .two-col.flip { grid-template-columns: 7fr 5fr; }
 
   /* Why Branding */
-  .section-why { background: #fff; }
-  .section-why h2 { color: #111; }
-  .orange-gif {
-    height: 120px;
-    background: url('https://luna-creative.com/images/section1-2-orange-matte.gif') left center/contain no-repeat;
-    margin: 24px 0;
+  .section-why {
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 80px 60px;
+    position: relative;
+    overflow: hidden;
   }
+  .section-why h1 { color: #111; font-size: 65px; text-transform: none; font-weight: 600; line-height: 1.15; }
+  .section-why h1 strong { font-weight: 900; }
+  .why-bottom {
+    text-align: right;
+    max-width: 50%;
+    margin-left: auto;
+  }
+  .why-bottom h4 { margin-bottom: 20px; }
+  .why-bg-img {
+    position: absolute; bottom: 0; left: -20%;
+    max-height: 85vh; max-width: 80%; width: auto; height: auto;
+    z-index: 0; pointer-events: none;
+  }
+  .why-headline, .why-bottom { position: relative; z-index: 1; }
+
+  /* Alt (mirrored) variant */
+  .section-why--alt { background: #ebebeb; }
+  .section-why--alt .why-bg-img { left: auto; right: -20%; }
+  .section-why--alt .why-bottom { text-align: left; margin-left: 0; margin-right: auto; }
 
   /* What is Branding */
   .section-what { background: #ebebeb; }
@@ -151,7 +183,7 @@
   /* Buttons */
   .btn {
     display: inline-block; padding: 12px 32px;
-    font-family: "Open Sans", sans-serif; font-weight: 700; font-size: 18px;
+    font-family: 'Inter Tight', "Helvetica Neue", Helvetica, Arial, sans-serif; font-weight: 700; font-size: 18px;
     text-transform: none; border: 2px solid #fff; color: #fff;
     background: transparent; transition: all .2s ease-out;
     cursor: pointer;
@@ -208,7 +240,7 @@
   footer a { color: #fff; }
   footer a:hover { color: #fbc036; }
   .mobile-call {
-    display: none;
+    display: none !important;
     position: fixed; bottom: 16px; right: 16px; z-index: 1001;
     width: 56px; height: 56px;
   }
@@ -216,10 +248,11 @@
   /* Responsive */
   @media (max-width: 991px) {
     header.site-header { padding: 14px 20px; }
-    .brand img { width: 110px; }
+    .brand img { width: 132px; }
     .brand .tagline { display: none; }
     section { padding: 70px 20px; }
     .two-col, .two-col.flip { grid-template-columns: 1fr; gap: 20px; }
+    .hero { height: 100vh; height: 100dvh; min-height: unset; }
     .hero h2 { font-size: 28px; }
     .hero .sub { font-size: 16px; }
     .two-features { grid-template-columns: 1fr; }
@@ -228,14 +261,100 @@
     .split-images { grid-template-columns: 1fr; }
     footer.site-footer { background: #000; padding-bottom: 90px; }
     .mobile-call { display: block; }
+    .section-why { padding: 60px 30px; }
+    .section-why h1 { font-size: 33px; }
   }
   @media (max-width: 600px) {
     h2 { font-size: 26px; }
     .hero h2 { font-size: 22px; }
+    .section-why { padding: 50px 20px; }
+    .section-why h1 { font-size: 33px; }
+  }
+
+  /* ── Why Transition Wrapper ── */
+  .why-transition-wrapper {
+    position: relative;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    background: #fff;
+  }
+  .why-transition-wrapper .section-why {
+    position: absolute;
+    inset: 0;
+    min-height: unset;
+    background: transparent;
+  }
+
+  /* ── Loader ── */
+  #loader {
+    position: fixed; inset: 0; z-index: 9999; overflow: hidden;
+  }
+  .gs-dev-tools { z-index: 10000 !important; }
+  #ldr-bg-t, #ldr-bg-b {
+    position: absolute; left: 0; right: 0; height: 50%;
+    background: #000; z-index: 1;
+  }
+  #ldr-bg-t { top: 0; }
+  #ldr-bg-b { bottom: 0; }
+
+  #ldr-group {
+    position: absolute; top: 50%; left: 50%;
+    transform: translateY(-50%);
+    display: flex; align-items: center; gap: 8px;
+    z-index: 2;
+  }
+  #ldr-logo { width: 150px; display: block; }
+  #ldr-tag-wrap { }
+  #ldr-tag {
+    font-family: 'Inter Tight', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 14px; color: #fff;
+    font-weight: 700; line-height: 19px; white-space: nowrap;
+  }
+
+  #ldr-split-t, #ldr-split-b {
+    position: absolute; left: 0; right: 0; height: 50%;
+    overflow: hidden; z-index: 3; visibility: hidden;
+  }
+  #ldr-split-t { top: 0; }
+  #ldr-split-b { bottom: 0; }
+
+  .ldr-si {
+    position: absolute;
+    display: flex; align-items: center; gap: 8px;
+  }
+  #ldr-split-t .ldr-si { top: 100%; left: calc(50% - 136px); transform: translateY(-50%); }
+  #ldr-split-b .ldr-si { top: 0;    left: calc(50% - 136px); transform: translateY(-50%); }
+  .ldr-si img { width: 150px; display: block; }
+  .ldr-st {
+    font-family: 'Inter Tight', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 14px; color: #fff;
+    font-weight: 700; line-height: 19px; white-space: nowrap;
   }
 </style>
 </head>
 <body>
+
+<div id="loader">
+  <div id="ldr-bg-t"></div>
+  <div id="ldr-bg-b"></div>
+  <div id="ldr-group">
+    <img id="ldr-logo" src="https://luna-creative.com/templates/untitled/images/designer/8479b297e818c0ed5403ba3993574a22_OfficeLogoWhite.png" alt="Luna Creative">
+    <div id="ldr-tag-wrap"><div id="ldr-tag">A Full-Service<br>Creative Agency</div></div>
+  </div>
+  <div id="ldr-split-t">
+    <div class="ldr-si">
+      <img src="https://luna-creative.com/templates/untitled/images/designer/8479b297e818c0ed5403ba3993574a22_OfficeLogoWhite.png" alt="">
+      <div class="ldr-st">A Full-Service<br>Creative Agency</div>
+    </div>
+  </div>
+  <div id="ldr-split-b">
+    <div class="ldr-si">
+      <img src="https://luna-creative.com/templates/untitled/images/designer/8479b297e818c0ed5403ba3993574a22_OfficeLogoWhite.png" alt="">
+      <div class="ldr-st">A Full-Service<br>Creative Agency</div>
+    </div>
+  </div>
+</div>
 
 <header class="site-header">
   <a href="#" class="brand">
@@ -264,45 +383,35 @@
 </nav>
 
 <section class="hero">
-  <video autoplay loop muted playsinline
-         poster="https://luna-creative.com/images/videos/LC-Vid-2021.jpg">
-    <source src="https://luna-creative.com/images/videos/LC-Vid-2021.mp4" type="video/mp4">
+  <video id="hero-video" autoplay loop muted playsinline>
+    <source src="15074381_3840_2160_24fps.mp4" type="video/mp4">
   </video>
-  <div class="hero-copy">
-    <h2>We Are Luna Creative</h2>
-    <p class="sub">A full-service creative agency with a strong focus on <a href="#why">branding</a>.</p>
-  </div>
   <a href="#why" class="scroll" aria-label="Scroll"></a>
 </section>
 
+<div class="why-transition-wrapper" id="why-transition">
+
 <section class="section-why" id="why">
-  <div class="container two-col">
-    <div>
-      <h2>Why<br>Branding?</h2>
-    </div>
-    <div>
-      <h4>Because first impressions are driven <strong>primarily by the image</strong> your company projects.</h4>
-      <p>A strong brand is what lets familiar names charge a premium &mdash; even when the underlying product is comparable to the competition.</p>
-      <div class="orange-gif" aria-hidden="true"></div>
-      <p>A quality brand is every bit as important as a quality product. Most companies underinvest in theirs because they underestimate the impact.</p>
-      <a href="#what" class="btn btn-dark">So What Exactly Is Branding?</a>
-    </div>
+  <img class="why-bg-img" src="65d637880835357cf3758650_david-homepage.png" alt="">
+  <div class="why-headline">
+    <h1>We Are a Full-Service Creative Agency with a Focus on Branding. <strong>Why Branding?</strong></h1>
+  </div>
+  <div class="why-bottom">
+    <h4>Because first impressions are driven <strong>primarily by the image</strong> your company projects.</h4>
   </div>
 </section>
 
-<section class="section-what" id="what">
-  <div class="container two-col">
-    <div>
-      <h2>What Is<br>Branding?</h2>
-    </div>
-    <div>
-      <h4>In short, your brand is how your audience <strong>perceives you</strong>.</h4>
-      <p>When customers think about your brand, they&rsquo;re really thinking about the entire experience with you &mdash; from your logo, to your website, to the way you answer the phone.</p>
-      <p>Image is everything. If your presentation looks less than professional, that becomes your brand. Remember: your brand lives in the mind of your audience.</p>
-      <a href="#strategy" class="btn btn-orange">Can You Really Control What People Think?</a>
-    </div>
+<section class="section-why section-why--alt" id="what-branding">
+  <img class="why-bg-img" src="678946df3dca4d1066317241_65d666f324c007b6ff4217f3_spencer-homepage.png" alt="">
+  <div class="why-headline">
+    <h1>They Say <strong>Image is Everything</strong> & When It Comes to Your Business, They're Right.</h1>
+  </div>
+  <div class="why-bottom">
+    <h4>Your brand is how your audience sees you. Every touchpoint <strong>tells the story.</strong></h4>
   </div>
 </section>
+
+</div>
 
 <section class="section-strategy" id="strategy">
   <div class="container two-col flip">
@@ -310,7 +419,6 @@
       <p><span class="yes">YES!</span> A well-executed presentation shapes how prospective customers see you. Great brands are planned, not accidental. We call this:</p>
       <h2 style="margin-top: 30px;">Brand Strategy</h2>
       <p><strong>This is where we come in.</strong> We partner with you to build a clear, strategic plan &mdash; one that communicates the right message to the right audience.</p>
-      <img src="https://luna-creative.com/templates/untitled/images/designer/d14e084c249aa156c6411ca3517e65df_consistency.png" alt="Brand consistency">
       <p>The key is consistency. A familiar look and feel across every touchpoint builds recognition over time &mdash; and that&rsquo;s what turns a logo into a brand.</p>
       <a href="#strong" class="btn">What Makes a Strong Brand?</a>
     </div>
@@ -399,6 +507,175 @@
     toggle.classList.remove('open');
     overlay.classList.remove('open');
   }));
+
+</script>
+
+
+<script>
+(function () {
+  gsap.registerPlugin(SplitText, GSDevTools);
+
+  const loader       = document.getElementById('loader');
+  const group        = document.getElementById('ldr-group');
+  const logo         = document.getElementById('ldr-logo');
+  const tagEl        = document.getElementById('ldr-tag');
+  const splitT       = document.getElementById('ldr-split-t');
+  const splitB       = document.getElementById('ldr-split-b');
+  const bgT          = document.getElementById('ldr-bg-t');
+  const bgB          = document.getElementById('ldr-bg-b');
+  const headerLogo   = document.querySelector('header.site-header .brand img');
+  const burgerBars   = document.querySelectorAll('.nav-toggle span');
+  let tl;
+
+  document.body.style.overflow = 'hidden';
+  gsap.set(logo, { autoAlpha: 0 });
+  gsap.set(tagEl, { autoAlpha: 0 });
+  gsap.set(headerLogo, { autoAlpha: 0, x: -24 });
+  gsap.set(burgerBars, { scaleX: 0, transformOrigin: 'right center' });
+  // Suppress CSS transition so it doesn't fight the GSAP entrance animation
+  burgerBars.forEach(function(b) { b.style.transition = 'none'; });
+
+  window.addEventListener('load', function () {
+    // SplitText — per-line overflow clip so each line acts as its own reveal mask
+    const st    = new SplitText(tagEl, { type: 'lines,chars' });
+    const chars = st.chars;
+    st.lines.forEach(function (line) {
+      line.style.overflow = 'hidden';
+      line.style.display  = 'block';
+    });
+    // Restore tagline visibility before measuring so group.offsetWidth
+    // reflects the full nowrap tagline width, then hide individual chars
+    gsap.set(tagEl, { autoAlpha: 1 });
+    gsap.set(chars, { y: 8, autoAlpha: 0 });
+
+    // Measure after DOM is fully settled to get accurate full-width offset
+    const groupW  = 272;
+    const logoW   = logo.offsetWidth;
+    gsap.set(group, { x: -(logoW / 2) });
+
+    const STAGGER = 0.02;
+    const CHAR_D  = 0.28;
+    const totalD  = (chars.length - 1) * STAGGER + CHAR_D;
+
+    tl = gsap.timeline({ delay: 0.3 });
+
+    // Phase 1 — logo fades in
+    tl.to(logo, { autoAlpha: 1, duration: 0.9, ease: 'power2.out' });
+
+    // Phase 2 — chars reveal from bottom + group slides left (finish together)
+    tl.to(chars, {
+      y: 0, autoAlpha: 1,
+      duration: CHAR_D, stagger: STAGGER, ease: 'power3.out'
+    }, '+=0.25')
+    .to(group, { x: -(groupW / 2), duration: totalD, ease: 'power3.out' }, '<');
+
+    // Phase 3 — brief hold, swap to static split-half clones
+    tl.add(function () {
+      gsap.set([splitT, splitB], { visibility: 'visible' });
+      gsap.set(group, { autoAlpha: 0 });
+    }, '+=0.55');
+
+    // Phase 4 — top half exits left, bottom half exits right (fade out mid-travel)
+    tl.to(splitT, { x: -300, autoAlpha: 0, duration: 0.7, ease: 'power2.inOut' })
+      .to(splitB, { x:  300, autoAlpha: 0, duration: 0.7, ease: 'power2.inOut' }, '<');
+
+    // Phase 5 — black panels split open to reveal the page
+    tl.to(bgT, { y: '-100%', duration: 0.85, ease: 'power2.inOut' }, '+=0.06')
+      .to(bgB, { y:  '100%', duration: 0.85, ease: 'power2.inOut' }, '<')
+      .add(function () {
+        loader.style.display = 'none';
+        document.body.style.overflow = '';
+
+        // Logo slides in from left
+        gsap.to(headerLogo, {
+          autoAlpha: 1, x: 0, duration: 0.55, ease: 'power2.out', delay: 0.15
+        });
+        // Hamburger bars grow in from right, staggered top to bottom; clear GSAP transform so CSS X-toggle works
+        gsap.to(burgerBars, {
+          scaleX: 1, duration: 0.35, ease: 'power2.out',
+          stagger: 0.08, delay: 0.2,
+          clearProps: 'transform,transformOrigin'
+        });
+        // Restore CSS transition after all bars finish (delay + stagger offset + duration + buffer)
+        gsap.delayedCall(0.2 + 0.08 * 2 + 0.35 + 0.05, function() {
+          burgerBars.forEach(function(b) { b.style.transition = ''; });
+        });
+        ScrollTrigger.refresh();
+      });
+
+    GSDevTools.create({ animation: tl });
+  });
+}());
+</script>
+
+<script>
+gsap.registerPlugin(ScrollTrigger, SplitText);
+
+window.addEventListener('load', function () {
+  var wrapper = document.getElementById('why-transition');
+  var s1      = document.getElementById('why');
+  var s2      = document.getElementById('what-branding');
+  if (!wrapper || !s1 || !s2) return;
+
+  var s1H1  = s1.querySelector('h1');
+  var s1H4  = s1.querySelector('.why-bottom h4');
+  var s1Img = s1.querySelector('.why-bg-img');
+  var s2H1  = s2.querySelector('h1');
+  var s2H4  = s2.querySelector('.why-bottom h4');
+  var s2Img = s2.querySelector('.why-bg-img');
+
+  // Split both headings and paragraphs into lines
+  var st1H1 = new SplitText(s1H1, { type: 'lines' });
+  var st2H1 = new SplitText(s2H1, { type: 'lines' });
+  var st1H4 = new SplitText(s1H4, { type: 'lines' });
+  var st2H4 = new SplitText(s2H4, { type: 'lines' });
+
+  // Wrap h1 lines in overflow:hidden clips so lines mask cleanly as they slide up/down
+  [st1H1.lines, st2H1.lines].forEach(function (lines) {
+    lines.forEach(function (line) {
+      var wrap = document.createElement('div');
+      wrap.style.cssText = 'overflow:hidden;display:block;';
+      line.parentNode.insertBefore(wrap, line);
+      wrap.appendChild(line);
+    });
+  });
+
+  var VW = window.innerWidth;
+
+  // Initial hidden state for section 2 elements
+  gsap.set(st2H1.lines, { y: '105%' });
+  gsap.set(st2H4.lines, { x: -80, autoAlpha: 0 });
+  gsap.set(s2Img,       { x: VW });
+
+  var DUR     = 1;
+  var STAG_H1 = 0.12;
+  var STAG_H4 = 0.10;
+
+  var tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: wrapper,
+      start: 'top top',
+      end: function () { return '+=' + window.innerHeight * 1.5; },
+      pin: true,
+      scrub: 1,
+      anticipatePin: 1
+    }
+  });
+
+  // EXIT — section 1 text
+  tl.to(st1H1.lines, { y: '-105%', stagger: STAG_H1, duration: DUR, ease: 'power2.inOut' });
+  tl.to(st1H4.lines, { x: 80, autoAlpha: 0, stagger: STAG_H4, duration: DUR, ease: 'power2.inOut' }, '<');
+  tl.to(wrapper,     { backgroundColor: '#ebebeb', duration: DUR, ease: 'none' }, '<');
+
+  // ENTER — section 2 text (starts after exit finishes)
+  tl.to(st2H1.lines, { y: 0, stagger: STAG_H1, duration: DUR, ease: 'power3.out' });
+  tl.to(st2H4.lines, { x: 0, autoAlpha: 1, stagger: STAG_H4, duration: DUR, ease: 'power3.out' }, '<');
+
+  // Photos span the full exit + entrance duration
+  var photoDur = tl.duration();
+  tl.to(s1Img, { x: -VW, duration: photoDur, ease: 'power4.inOut' }, 0);
+  tl.to(s2Img, { x: 0,   duration: photoDur, ease: 'power4.inOut' }, 0);
+});
 </script>
 
 </body>
