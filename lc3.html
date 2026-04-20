@@ -258,7 +258,7 @@
   }
   .card-link {
     font-family: 'Inter Tight', sans-serif;
-    font-size: 12px; color: #aaa;
+    font-size: 12px; color: #e9931c;
     text-decoration: underline; text-underline-offset: 3px;
     text-transform: uppercase; letter-spacing: 2px;
     transition: color .2s ease-out;
@@ -290,13 +290,41 @@
   .btn-link:hover { background: none; color: #e9931c; }
 
   /* Split portrait section */
-  .section-team { padding: 0; background: #000; }
-  .split-images { display: grid; grid-template-columns: 1fr 1fr; }
-  .split-images img { width: 100%; display: block; filter: grayscale(1); }
+  .section-team { padding: 0; background: #000; height: 100vh; height: 100dvh; overflow: hidden; }
+  .split-images { display: flex; width: 100%; height: 100%; align-items: flex-start; }
+  .split-images img { width: 50%; max-width: 50%; height: auto; display: block; filter: grayscale(1); }
 
   /* Contact */
   .section-contact {
     background: #f5f5f5; text-align: center;
+  }
+  .contact-intro {
+    height: 100vh; height: 100dvh;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .contact-inner {
+    display: flex; flex-direction: column;
+    align-items: center; text-align: center;
+    gap: 36px;
+  }
+  .contact-tagline {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 20px; font-weight: 400;
+    color: #2b2b2b; max-width: 560px; line-height: 1.5;
+  }
+  .contact-cta-btn {
+    position: relative; display: inline-block;
+    padding: 22px 56px;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 48px; font-weight: 700;
+    letter-spacing: 6px;
+    color: #2b2b2b; text-decoration: none;
+    line-height: 1;
+  }
+  .contact-cta-border {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    overflow: visible; pointer-events: none;
   }
   .section-contact h2 { color: #111; }
   .section-contact h4 { font-weight: 600; margin-bottom: 4px; }
@@ -590,7 +618,7 @@
     <h4>The Right Audience</h4>
     <p>Platforms and channels that matter.</p>
   </div>
-  <span class="strong-amp" aria-hidden="true">&amp;</span>
+  <span class="strong-amp" aria-hidden="true">And</span>
 </section>
 
 <section class="section-statement">
@@ -667,7 +695,21 @@
 </section>
 
 <section class="section-contact" id="contact">
-  <div class="container">
+  <div class="contact-intro">
+    <div class="contact-inner">
+      <div class="contact-tagline">Interested in a Free Branding Consultation?</div>
+      <div class="contact-cta-wrap">
+        <a href="#contact-form" class="contact-cta-btn">
+          <span class="contact-cta-text">LET'S TALK</span>
+          <svg class="contact-cta-border" viewBox="0 0 300 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path class="border-path-left"  d="M150,1 L1,1 L1,79 L150,79" fill="none" stroke="#2b2b2b" stroke-width="2" vector-effect="non-scaling-stroke"/>
+            <path class="border-path-right" d="M150,1 L299,1 L299,79 L150,79" fill="none" stroke="#2b2b2b" stroke-width="2" vector-effect="non-scaling-stroke"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="container" id="contact-form">
     <h4>Interested in a free branding consultation?</h4>
     <h2>We Can Help.</h2>
     <p>We&rsquo;d love to talk about your branding and advertising goals &mdash; no strings attached.</p>
@@ -993,7 +1035,7 @@ window.addEventListener('load', function () {
     var ampFinalX = h4_2_rect.left - sRect.left;
     var ampFinalY = (h4_2_rect.top  - sRect.top) + h4MoveUpY;
     gsap.set(ampEl, { x: ampFinalX - 50, y: ampFinalY, opacity: 0 });
-    var ampW = (ampEl ? ampEl.offsetWidth : 20) + 8;
+    var ampW = (ampEl ? ampEl.offsetWidth : 20) + 28;
 
     var statementBgImg = sStatement.querySelector('.statement-bg-img');
     var stmtEl         = sStatement.querySelector('.statement-text');
