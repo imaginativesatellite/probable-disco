@@ -1085,16 +1085,32 @@ window.addEventListener('load', function () {
       }).filter(function(p) { return p !== null; });
       if (!snaps.length) return value;
       if (value < snaps[0] - 0.08) return value;
+      if (value > snaps[snaps.length - 1] + 0.05) return value;
       return snaps.reduce(function(closest, p) {
         return Math.abs(p - value) < Math.abs(closest - value) ? p : closest;
       });
     };
 
+    // Split card text into lines for exit animation
+    var allCardLines = [];
+    allCards.forEach(function(card) {
+      Array.from(card.querySelectorAll('.card-title, .card-number, .card-body')).forEach(function(el) {
+        var st = new SplitText(el, { type: 'lines' });
+        st.lines.forEach(function(line) {
+          var w = document.createElement('div');
+          w.style.cssText = 'overflow:hidden;display:block;';
+          line.parentNode.insertBefore(w, line);
+          w.appendChild(line);
+        });
+        allCardLines = allCardLines.concat(st.lines);
+      });
+    });
+
     exitTl = gsap.timeline({
       scrollTrigger: {
         trigger: strongWrapper,
         start: 'top top',
-        end: '+=' + window.innerHeight * 12,
+        end: '+=' + window.innerHeight * 15,
         pin: true, scrub: 1, anticipatePin: 1,
         snap: { snapTo: cardSnapFn, ease: 'power1.inOut', duration: { min: 0.2, max: 0.5 } }
       }
@@ -1147,6 +1163,76 @@ window.addEventListener('load', function () {
         exitTl.addLabel('snap-card-' + i);
       }
       exitTl.to(cardsTrack, { x: cardCenterX(i), duration: 0.2 }); // hold at center
+    });
+
+    // Phase 9 — card text hides up, cards shrink/move up, bg blurs, overlay fades out
+    var cardsOverlay = document.getElementById('cards-overlay');
+    exitTl.addLabel('cardExit', '+=0.3');
+    exitTl.to(allCardLines, {
+      y: '-120%', stagger: { each: 0.012, from: 'start' },
+      duration: 0.45, ease: 'power2.inOut'
+    }, 'cardExit');
+    exitTl.to(allCards, {
+      scaleY: 0, y: -80, transformOrigin: 'top center',
+      stagger: 0.04, duration: 0.5, ease: 'power3.inOut'
+    }, 'cardExit+=0.15');
+    exitTl.to(statementBgImg, {
+      y: '-25%', filter: 'blur(24px)',
+      duration: 0.7, ease: 'power2.inOut'
+    }, 'cardExit');
+    exitTl.to([cardsOverlay, sStatement], {
+      autoAlpha: 0, duration: 0.35, ease: 'none'
+    }, 'cardExit+=0.55');
+  }
+
+  // ── Contact intro animation ──
+  var contactIntro = document.querySelector('.contact-intro');
+  if (contactIntro) {
+    var contactTagline  = contactIntro.querySelector('.contact-tagline');
+    var contactCtaWrap  = contactIntro.querySelector('.contact-cta-wrap');
+    var contactCtaText  = contactIntro.querySelector('.contact-cta-text');
+    var borderPathLeft  = contactIntro.querySelector('.border-path-left');
+    var borderPathRight = contactIntro.querySelector('.border-path-right');
+
+    var stContactChars = new SplitText(contactTagline, { type: 'chars' });
+    var stContactCta   = new SplitText(contactCtaText,  { type: 'lines' });
+    stContactCta.lines.forEach(function(line) {
+      var w = document.createElement('div');
+      w.style.cssText = 'overflow:hidden;display:block;';
+      line.parentNode.insertBefore(w, line);
+      w.appendChild(line);
+    });
+
+    gsap.set(stContactChars.chars, { autoAlpha: 0 });
+    gsap.set(stContactCta.lines,   { y: '105%' });
+    gsap.set(contactCtaWrap,        { autoAlpha: 0 });
+
+    if (borderPathLeft && borderPathRight) {
+      var leftLen  = borderPathLeft.getTotalLength();
+      var rightLen = borderPathRight.getTotalLength();
+      gsap.set(borderPathLeft,  { strokeDasharray: leftLen,  strokeDashoffset: leftLen  });
+      gsap.set(borderPathRight, { strokeDasharray: rightLen, strokeDashoffset: rightLen });
+    }
+
+    ScrollTrigger.create({
+      trigger: contactIntro,
+      start: 'top 70%',
+      once: true,
+      onEnter: function() {
+        var ctTl = gsap.timeline();
+        // Typewriter: chars appear one at a time
+        ctTl.to(stContactChars.chars, { autoAlpha: 1, stagger: 0.04, duration: 0.001, ease: 'none' });
+        // LET'S TALK reveals up; tagline scoots up simultaneously
+        ctTl.set(contactCtaWrap, { autoAlpha: 1 }, '+=0.3');
+        ctTl.to(stContactCta.lines, { y: 0, stagger: 0.1, duration: 0.7, ease: 'power3.out' }, '<');
+        ctTl.to(contactTagline,     { y: -28, duration: 0.6, ease: 'power2.out' }, '<');
+        // Border draws from top-center → left & right simultaneously → bottom-center
+        if (borderPathLeft && borderPathRight) {
+          ctTl.to([borderPathLeft, borderPathRight], {
+            strokeDashoffset: 0, duration: 0.9, ease: 'power2.inOut'
+          }, '+=0.2');
+        }
+      }
     });
   }
 });
