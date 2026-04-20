@@ -160,7 +160,7 @@
   .section-what h2 { color: #111; }
 
   /* Strong Brand */
-  #strong-transition { position: relative; height: 100vh; height: 100dvh; overflow: hidden; }
+  #strong-transition { position: relative; height: 100vh; height: 100dvh; overflow: hidden; background: #000; }
   .section-strong {
     background: #fff; position: relative; z-index: 2;
     height: 100vh; height: 100dvh;
@@ -290,7 +290,7 @@
   .btn-link:hover { background: none; color: #e9931c; }
 
   /* Split portrait section */
-  .section-team { padding: 0; background: #000; height: 100vh; height: 100dvh; overflow: hidden; }
+  .section-team { padding: 0; background: #000; height: 100vh; height: 100dvh; overflow: hidden; position: relative; }
   .split-images { display: flex; width: 100%; height: 100%; align-items: flex-start; }
   .split-images img { width: 50%; max-width: 50%; height: auto; display: block; filter: grayscale(1); }
 
@@ -299,8 +299,9 @@
     background: #f5f5f5; text-align: center;
   }
   .contact-intro {
-    height: 100vh; height: 100dvh;
+    position: absolute; inset: 0;
     display: flex; align-items: center; justify-content: center;
+    z-index: 2;
   }
   .contact-inner {
     display: flex; flex-direction: column;
@@ -310,7 +311,7 @@
   .contact-tagline {
     font-family: 'Inter Tight', sans-serif;
     font-size: 20px; font-weight: 400;
-    color: #2b2b2b; max-width: 560px; line-height: 1.5;
+    color: #fff; max-width: 560px; line-height: 1.5;
   }
   .contact-cta-btn {
     position: relative; display: inline-block;
@@ -318,7 +319,7 @@
     font-family: 'Inter Tight', sans-serif;
     font-size: 48px; font-weight: 700;
     letter-spacing: 6px;
-    color: #2b2b2b; text-decoration: none;
+    color: #fff; text-decoration: none;
     line-height: 1;
   }
   .contact-cta-border {
@@ -386,6 +387,8 @@
     .section-strong h2 { font-size: 18px; }
     .section-strong h4 { font-size: 33px; }
     .strong-amp { font-size: 33px; }
+    .contact-tagline { font-size: 33px; }
+    .contact-cta-btn { font-size: 33px; }
   }
   @media (max-width: 600px) {
     h2 { font-size: 26px; }
@@ -396,6 +399,8 @@
     .section-strong h2 { font-size: 18px; }
     .section-strong h4 { font-size: 33px; }
     .strong-amp { font-size: 33px; }
+    .contact-tagline { font-size: 33px; }
+    .contact-cta-btn { font-size: 33px; }
   }
 
   /* ── Why Transition Wrapper ── */
@@ -692,9 +697,6 @@
     <img src="https://luna-creative.com/templates/untitled/images/designer/42dfdb7abdc68deebc71a273e0315943_splitfacesspencer.jpg" alt="Luna Creative team member">
     <img src="https://luna-creative.com/templates/untitled/images/designer/6cec33168e6be5506b9fe5813f790f26_splitfacesdavid.jpg" alt="Luna Creative team member">
   </div>
-</section>
-
-<section class="section-contact" id="contact">
   <div class="contact-intro">
     <div class="contact-inner">
       <div class="contact-tagline">Interested in a Free Branding Consultation?</div>
@@ -702,13 +704,16 @@
         <a href="#contact-form" class="contact-cta-btn">
           <span class="contact-cta-text">LET'S TALK</span>
           <svg class="contact-cta-border" viewBox="0 0 300 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path class="border-path-left"  d="M150,1 L1,1 L1,79 L150,79" fill="none" stroke="#2b2b2b" stroke-width="2" vector-effect="non-scaling-stroke"/>
-            <path class="border-path-right" d="M150,1 L299,1 L299,79 L150,79" fill="none" stroke="#2b2b2b" stroke-width="2" vector-effect="non-scaling-stroke"/>
+            <path class="border-path-left"  d="M150,1 L1,1 L1,79 L150,79" fill="none" stroke="#fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+            <path class="border-path-right" d="M150,1 L299,1 L299,79 L150,79" fill="none" stroke="#fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
           </svg>
         </a>
       </div>
     </div>
   </div>
+</section>
+
+<section class="section-contact" id="contact">
   <div class="container" id="contact-form">
     <h4>Interested in a free branding consultation?</h4>
     <h2>We Can Help.</h2>
@@ -1092,9 +1097,11 @@ window.addEventListener('load', function () {
     };
 
     // Split card text into lines for exit animation
-    var allCardLines = [];
+    // Per-card line arrays for bottom-to-top simultaneous exit
+    var allCardLinesByCard = [];
     allCards.forEach(function(card) {
-      Array.from(card.querySelectorAll('.card-title, .card-number, .card-body')).forEach(function(el) {
+      var cardLines = [];
+      Array.from(card.querySelectorAll('.card-number, .card-title, .card-body, .card-link')).forEach(function(el) {
         var st = new SplitText(el, { type: 'lines' });
         st.lines.forEach(function(line) {
           var w = document.createElement('div');
@@ -1102,8 +1109,9 @@ window.addEventListener('load', function () {
           line.parentNode.insertBefore(w, line);
           w.appendChild(line);
         });
-        allCardLines = allCardLines.concat(st.lines);
+        cardLines = cardLines.concat(st.lines);
       });
+      allCardLinesByCard.push(cardLines);
     });
 
     exitTl = gsap.timeline({
@@ -1165,24 +1173,28 @@ window.addEventListener('load', function () {
       exitTl.to(cardsTrack, { x: cardCenterX(i), duration: 0.2 }); // hold at center
     });
 
-    // Phase 9 — card text hides up, cards shrink/move up, bg blurs, overlay fades out
+    // Phase 9 — all cards exit simultaneously: text hides bottom-to-top per card,
+    // then card backgrounds squish up (content already hidden behind clips)
     var cardsOverlay = document.getElementById('cards-overlay');
     exitTl.addLabel('cardExit', '+=0.3');
-    exitTl.to(allCardLines, {
-      y: '-120%', stagger: { each: 0.012, from: 'start' },
-      duration: 0.45, ease: 'power2.inOut'
-    }, 'cardExit');
+    allCardLinesByCard.forEach(function(cardLines) {
+      exitTl.to(cardLines, {
+        y: '-120%', stagger: { each: 0.045, from: 'end' },
+        duration: 0.35, ease: 'power2.inOut'
+      }, 'cardExit');
+    });
+    // Cards squish from bottom after text is gone (only background visible)
     exitTl.to(allCards, {
-      scaleY: 0, y: -80, transformOrigin: 'top center',
-      stagger: 0.04, duration: 0.5, ease: 'power3.inOut'
-    }, 'cardExit+=0.15');
+      scaleY: 0, transformOrigin: 'bottom center',
+      duration: 0.4, ease: 'power3.inOut'
+    }, 'cardExit+=0.4');
     exitTl.to(statementBgImg, {
       y: '-25%', filter: 'blur(24px)',
       duration: 0.7, ease: 'power2.inOut'
     }, 'cardExit');
     exitTl.to([cardsOverlay, sStatement], {
       autoAlpha: 0, duration: 0.35, ease: 'none'
-    }, 'cardExit+=0.55');
+    }, 'cardExit+=0.7');
   }
 
   // ── Contact intro animation ──
