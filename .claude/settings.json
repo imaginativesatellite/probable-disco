@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "git add -A && { git diff --cached --quiet && echo \"nothing to commit\" || { git commit -m \"Auto-commit $(date '+%Y-%m-%d %H:%M')\" && git push -u origin claude/gsap-animation-reference-HoPqu; }; }",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}
