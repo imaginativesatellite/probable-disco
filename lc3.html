@@ -584,11 +584,11 @@
 <section class="section-strong" id="strong">
   <img class="strong-bg-img" src="678946df3dca4d1066317241_65d666f324c007b6ff4217f3_spencer-homepage.png" alt="">
   <div class="container">
-    <h2>The Basic Structure of Any Successful Brand is Simple</h2>
+    <h2>The Basic Structure of Any Successful Brand is Simple:</h2>
     <h4>A Quality Presentation</h4>
-    <p>Your visual identity, logo, website, and visual collateral.</p>
+    <p>Logo, website, and visual collateral.</p>
     <h4>The Right Audience</h4>
-    <p>Reaching the right people through the right channels.</p>
+    <p>Platforms and channels that matter.</p>
   </div>
   <span class="strong-amp" aria-hidden="true">&amp;</span>
 </section>
@@ -966,7 +966,6 @@ window.addEventListener('load', function () {
 
     var stSH2  = new SplitText(sStrongH2, { type: 'lines' });
     var stSH4s = sStrongH4s.map(function(el) { return new SplitText(el, { type: 'lines' }); });
-    var stSPs  = sStrongPs.map(function(el)  { return new SplitText(el, { type: 'lines' }); });
 
     stSH2.lines.forEach(function(line) {
       var w = document.createElement('div');
@@ -977,8 +976,6 @@ window.addEventListener('load', function () {
 
     var h4Lines = [];
     stSH4s.forEach(function(st) { h4Lines = h4Lines.concat(st.lines); });
-    var pLines = [];
-    stSPs.forEach(function(st)  { pLines  = pLines.concat(st.lines); });
 
     h4Lines.forEach(function(line) {
       var w = document.createElement('div');
@@ -1014,7 +1011,7 @@ window.addEventListener('load', function () {
     // Initial states
     gsap.set(stSH2.lines,    { autoAlpha: 0 });
     gsap.set(h4Lines,        { y: '105%' });
-    gsap.set(pLines,         { x: -40, autoAlpha: 0 });
+    gsap.set(sStrongPs,      { x: -40, autoAlpha: 0 });
     gsap.set(sStatement,     { autoAlpha: 0 });
     gsap.set(statementBgImg, { y: '100%' });
     gsap.set(stStmt.words,   { opacity: 0, y: 20 });
@@ -1029,7 +1026,7 @@ window.addEventListener('load', function () {
         var inTl = gsap.timeline();
         inTl.to(stSH2.lines,  { autoAlpha: 1, stagger: 0.12, duration: 0.9, ease: 'power3.out' });
         inTl.to(h4Lines,      { y: 0, stagger: 0.1, duration: 0.8, ease: 'power3.out' }, '-=0.4');
-        inTl.to(pLines,       { x: 0, autoAlpha: 1, stagger: 0.08, duration: 0.7, ease: 'power2.out' }, '-=0.4');
+        inTl.to(sStrongPs,    { x: 0, autoAlpha: 1, stagger: 0.08, duration: 0.7, ease: 'power2.out' }, '-=0.4');
       }
     });
 
@@ -1062,7 +1059,7 @@ window.addEventListener('load', function () {
     });
 
     // Phase 1 — h2, paragraphs, and image fade out together; h4s stay visible
-    var fadeGroup = strongImg ? pLines.concat([strongImg]) : pLines.slice();
+    var fadeGroup = strongImg ? sStrongPs.concat([strongImg]) : sStrongPs.slice();
     exitTl.to(fadeGroup,    { autoAlpha: 0, duration: 0.25, ease: 'power1.inOut' });
     exitTl.to(stSH2.lines, { autoAlpha: 0, duration: 0.25, ease: 'power1.inOut' }, '<');
 
