@@ -135,6 +135,7 @@
   .section-why h1 strong { font-weight: 900; color: #fff; }
   #what-branding .why-headline h1 { padding-top: 1.15em; }
   .section-why h4 { color: rgba(255,255,255,0.65); font-size: 18px; }
+  #why .why-bottom h4 { color: #fff; }
   .why-bottom {
     text-align: right;
     max-width: 50%;
@@ -145,6 +146,7 @@
     position: absolute; bottom: 0; left: -20%;
     max-height: 85vh; max-width: 80%; width: auto; height: auto;
     z-index: 0; pointer-events: none;
+    filter: grayscale(1);
   }
   .why-headline, .why-bottom { position: relative; z-index: 1; }
 
@@ -840,7 +842,7 @@ window.addEventListener('load', function () {
 
   // Initial hidden states
   gsap.set(st1H1.lines,       { color: '#000' });                    // s1 h1: black until hero overlay hands off
-  gsap.set(st1H4.lines,       { x: 50, autoAlpha: 0 });             // "Because" enters from right
+  gsap.set(st1H4.lines,       { y: 20, autoAlpha: 0 });             // "Because" fades upward
   gsap.set(st2H1.lines,       { y: '105%', color: '#000' });        // s2 h1: black on black → invisible
   gsap.set(st2H4.lines,       { x: -80, autoAlpha: 0, color: '#000' });
   gsap.set(s2Img,              { x: VW });
@@ -861,8 +863,8 @@ window.addEventListener('load', function () {
     }
   });
 
-  // PHASE 1 — "Because" h4 enters from right, top line first
-  tl.to(st1H4.lines, { x: 0, autoAlpha: 1, stagger: STAG_H4, duration: DUR * 0.65, ease: 'power3.out' });
+  // PHASE 1 — "Because" h4 fades upward, top line first
+  tl.to(st1H4.lines, { y: 0, autoAlpha: 1, stagger: STAG_H4, duration: DUR * 0.65, ease: 'power3.out' });
 
   // PHASE 2 — EXIT section 1 text
   tl.to(st1H1.lines, { y: '-105%', stagger: STAG_H1, duration: DUR, ease: 'power2.inOut' });
