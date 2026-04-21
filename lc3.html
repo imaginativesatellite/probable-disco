@@ -179,7 +179,8 @@
     margin-top: 32px; margin-bottom: 2px; max-width: 60%;
   }
   .section-strong p { margin-top: 0; margin-bottom: 0; max-width: 60%; }
-  .section-strong .container { position: relative; }
+  /* Left-align S04 text with S02 (.section-why left padding) — kill .container auto-centering */
+  .section-strong .container { position: relative; max-width: none; margin: 0; }
   .strong-bg-img {
     position: absolute; bottom: 0; right: -20%;
     max-height: 85vh; max-width: 80%; width: auto; height: auto;
@@ -1080,6 +1081,7 @@ window.addEventListener('load', function () {
 
     var stSH2  = new SplitText(sStrongH2, { type: 'lines' });
     var stSH4s = sStrongH4s.map(function(el) { return new SplitText(el, { type: 'lines' }); });
+    var stSPs  = sStrongPs.map(function(el)  { return new SplitText(el, { type: 'lines' }); });
 
     stSH2.lines.forEach(function(line) {
       var w = document.createElement('div');
@@ -1098,11 +1100,14 @@ window.addEventListener('load', function () {
       w.appendChild(line);
     });
 
-    sStrongPs.forEach(function(p) {
+    var pLines = [];
+    stSPs.forEach(function(st) { pLines = pLines.concat(st.lines); });
+
+    pLines.forEach(function(line) {
       var w = document.createElement('div');
       w.style.cssText = 'overflow:hidden;display:block;';
-      p.parentNode.insertBefore(w, p);
-      w.appendChild(p);
+      line.parentNode.insertBefore(w, line);
+      w.appendChild(line);
     });
 
     // Calculate & geometry before any gsap.set alters transforms
@@ -1135,7 +1140,7 @@ window.addEventListener('load', function () {
     // Initial states
     gsap.set(stSH2.lines,       { y: '105%' });
     gsap.set(h4Lines,           { y: '105%' });
-    gsap.set(sStrongPs,         { y: '105%' });
+    gsap.set(pLines,            { y: '105%' });
     gsap.set(sStatement,        { autoAlpha: 0 });
     // Keep the foreground image movement subtle at reveal start
     gsap.set(statementBgImg,    { y: '30%' });
@@ -1147,8 +1152,8 @@ window.addEventListener('load', function () {
 
     // A05-STRONG_ENTRANCE — unified top-to-bottom stagger, scrubbed so it reverses on scroll-back
     var allEntranceEls = stSH2.lines.concat(
-      stSH4s[0].lines, [sStrongPs[0]],
-      stSH4s[1].lines, [sStrongPs[1]]
+      stSH4s[0].lines, stSPs[0].lines,
+      stSH4s[1].lines, stSPs[1].lines
     );
     gsap.to(allEntranceEls, {
       y: 0, stagger: 0.08, ease: 'power3.out',
