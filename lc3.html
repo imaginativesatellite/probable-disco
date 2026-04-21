@@ -1137,13 +1137,13 @@ window.addEventListener('load', function () {
     gsap.set(h4Lines,           { y: '105%' });
     gsap.set(sStrongPs,         { y: '105%' });
     gsap.set(sStatement,        { autoAlpha: 0 });
-    // Keep the foreground image movement subtle so it can ease in more slowly
+    // Keep the foreground image movement subtle at reveal start
     gsap.set(statementBgImg,    { y: '30%' });
     gsap.set(stStmt.words,      { opacity: 0, y: 20 });
     gsap.set(cardsTrack,        { yPercent: -50, x: window.innerWidth + 200 });
     gsap.set(allCards,          { clipPath: 'inset(0 0 0% 0)' });
     if (sectionTeam)       gsap.set(sectionTeam,       { autoAlpha: 0 });
-    if (statementParallaxBg) gsap.set(statementParallaxBg, { autoAlpha: 0, y: '100%', backgroundPosition: '0% 50%' });
+    if (statementParallaxBg) gsap.set(statementParallaxBg, { autoAlpha: 0, y: '45%', backgroundPosition: '0% 50%' });
 
     // A05-STRONG_ENTRANCE — unified top-to-bottom stagger across all section lines
     var allEntranceEls = stSH2.lines.concat(
