@@ -1127,7 +1127,10 @@ window.addEventListener('load', function () {
     ampOuter.style.height  = (ampLineH + 2) + 'px';
     ampEl.parentNode.insertBefore(ampOuter, ampEl);
     ampOuter.appendChild(ampEl);
+    // Span defaults to display:inline; position:absolute had blockified it in CSS,
+    // but relative does not — restore atomic-inline so transforms and %-translations apply.
     ampEl.style.position = 'relative';
+    ampEl.style.display  = 'inline-block';
     // y is now 0 — vertical offset lives in ampOuter.style.top
     gsap.set(ampEl, { x: ampFinalX - 50, y: 0, opacity: 0 });
     var ampW = (ampEl ? ampEl.offsetWidth : 20) + 10;
