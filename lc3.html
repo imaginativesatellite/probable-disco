@@ -1235,7 +1235,7 @@ window.addEventListener('load', function () {
     exitTl.addLabel('a06-strong-exit');
 
     // A06-STRONG_EXIT / Phase 2 — h4-2 rises toward h4-1
-    exitTl.to(sStrongH4s[1], { y: h4MoveUpY, duration: 0.175, ease: 'power3.out' }, '<+=0.1');
+    exitTl.to(sStrongH4s[1], { y: h4MoveUpY, duration: 0.175, ease: 'power3.out' }, '<+=0.05');
 
     // A06-STRONG_EXIT / Phase 3 — & slides in from left; h4-2 shifts right to make room
     exitTl.to(ampEl,          { x: ampFinalX, opacity: 1, duration: 0.15, ease: 'power3.out' }, '+=0.025');
