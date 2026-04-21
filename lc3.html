@@ -1148,7 +1148,7 @@ window.addEventListener('load', function () {
     gsap.set(cardsTrack,        { yPercent: -50, x: window.innerWidth + 200 });
     gsap.set(allCards,          { clipPath: 'inset(0 0 0% 0)' });
     if (sectionTeam)       gsap.set(sectionTeam,       { autoAlpha: 0 });
-    if (statementParallaxBg) gsap.set(statementParallaxBg, { autoAlpha: 0, y: '45%', backgroundPosition: '0% 50%' });
+    if (statementParallaxBg) gsap.set(statementParallaxBg, { autoAlpha: 0, y: '10%', backgroundPosition: '0% 50%' });
 
     // A05-STRONG_ENTRANCE — every line (h2 + h4s + p's) reveals upward,
     // driven directly by scroll so it plays on the way down and reverses on the way up.
@@ -1240,15 +1240,15 @@ window.addEventListener('load', function () {
     exitTl.to(sStrong,    { autoAlpha: 0, duration: 0.25, ease: 'none' }, '<+=0.2');
     exitTl.to(sStatement, { autoAlpha: 1, duration: 0.25, ease: 'none' }, '<');
 
-    // A07-STATEMENT_REVEAL / Phase 6 — foreground image rises, far background rises more slowly, statement text enters per word
+    // A07-STATEMENT_REVEAL / Phase 6 — foreground and far background rise together, statement text enters per word
     exitTl.to(statementBgImg, { y: 0, duration: 1.35, ease: 'power3.out' }, '<');
     if (statementParallaxBg) {
-      exitTl.to(statementParallaxBg, { y: 0, autoAlpha: 1, duration: 2.2, ease: 'power2.out' }, '<');
+      exitTl.to(statementParallaxBg, { y: 0, autoAlpha: 1, duration: 1.35, ease: 'power2.out' }, '<');
     }
     exitTl.to(stStmt.words, { opacity: 1, y: 0, stagger: { each: 0.1 }, duration: 0.5, ease: 'power3.out' }, '<+=0.15');
 
     // A08-CARD_CAROUSEL / Phase 7 — chars scatter simultaneously; cards slide in
-    exitTl.addLabel('charScatterStart', '+=0.4');
+    exitTl.addLabel('charScatterStart', '+=0');
     stStmt.chars.forEach(function(char) {
       exitTl.to(char, {
         x: gsap.utils.random(-350, -60),
