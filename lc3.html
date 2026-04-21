@@ -953,7 +953,7 @@ window.addEventListener('load', function () {
   var s1Img        = s1.querySelector('.why-bg-img');
   var s2H1         = s2.querySelector('h1');
   var s2H4         = s2.querySelector('.why-bottom h4');
-  var s2Img        = s2.querySelector('.why-bg-img');
+  // S03 has no image of its own; s1Img stays visible through S02 and S03.
 
   // Split headings into lines; "Why Branding?" split into chars for per-char stagger
   var st1H1        = new SplitText(s1H1,      { type: 'lines' });
@@ -980,6 +980,7 @@ window.addEventListener('load', function () {
   gsap.set(st2H1.lines,       { y: '105%', color: '#000' });        // s2 h1: black on black → invisible
   gsap.set(st2H4.lines,       { y: 20, autoAlpha: 0, color: '#000' });
   gsap.set(stWhyLine.chars,    { autoAlpha: 0, y: 12 });            // "Why Branding?" chars hidden, reveal per char
+  if (s1Img) gsap.set(s1Img, { autoAlpha: 1 });                     // S03: image stays fully visible the entire time
 
   var DUR     = 1;
   var STAG_H1 = 0.12;
