@@ -1150,22 +1150,26 @@ window.addEventListener('load', function () {
     if (sectionTeam)       gsap.set(sectionTeam,       { autoAlpha: 0 });
     if (statementParallaxBg) gsap.set(statementParallaxBg, { autoAlpha: 0, y: '45%', backgroundPosition: '0% 50%' });
 
-    // A05-STRONG_ENTRANCE — unified top-to-bottom stagger, scrubbed so it reverses on scroll-back
+    // A05-STRONG_ENTRANCE — every line (h2 + h4s + p's) reveals upward,
+    // driven directly by scroll so it plays on the way down and reverses on the way up.
     var allEntranceEls = stSH2.lines.concat(
       stSH4s[0].lines, stSPs[0].lines,
       stSH4s[1].lines, stSPs[1].lines
     );
-    gsap.to(allEntranceEls, {
-      y: 0, stagger: 0.08, ease: 'power3.out',
-      scrollTrigger: {
-        trigger: sStrong,
-        start: 'top bottom',
-        end: 'top 30%',
-        scrub: 1,
-        onEnter:     function() { setAnimationReference('S04-STRONG', 'A05-STRONG_ENTRANCE'); },
-        onEnterBack: function() { setAnimationReference('S04-STRONG', 'A05-STRONG_ENTRANCE'); }
+    gsap.fromTo(allEntranceEls,
+      { y: '105%' },
+      {
+        y: 0, duration: 1, stagger: 0.15, ease: 'power3.out',
+        scrollTrigger: {
+          trigger: sStrong,
+          start: 'top 95%',
+          end: 'top 25%',
+          scrub: true,
+          onEnter:     function() { setAnimationReference('S04-STRONG', 'A05-STRONG_ENTRANCE'); },
+          onEnterBack: function() { setAnimationReference('S04-STRONG', 'A05-STRONG_ENTRANCE'); }
+        }
       }
-    });
+    );
 
     // EXIT — pinned scrub
     // Snap function: snaps to nearest card-center label, ignores pre-card scroll
