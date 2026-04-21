@@ -1155,9 +1155,9 @@ window.addEventListener('load', function () {
     var statementParallaxBg = sStatement.querySelector('.statement-parallax-bg');
 
     // Initial states
-    gsap.set(stSH2.lines,       { y: '105%' });
-    gsap.set(h4Lines,           { y: '105%' });
-    gsap.set(pLines,            { y: '105%' });
+    gsap.set(stSH2.lines,       { y: 30, autoAlpha: 0 });
+    gsap.set(h4Lines,           { y: 30, autoAlpha: 0 });
+    gsap.set(pLines,            { y: 30, autoAlpha: 0 });
     gsap.set(sStatement,        { autoAlpha: 0 });
     // Keep the foreground image movement subtle at reveal start
     gsap.set(statementBgImg,    { y: '30%' });
@@ -1175,14 +1175,14 @@ window.addEventListener('load', function () {
     );
     var a05DebugEl = document.getElementById('a05-debug');
     gsap.fromTo(allEntranceEls,
-      { y: '105%' },
+      { y: 30, autoAlpha: 0 },
       {
-        y: 0, duration: 1, stagger: 0.15, ease: 'power3.out',
+        y: 0, autoAlpha: 1, duration: 1, stagger: 0.15, ease: 'power3.out',
         scrollTrigger: {
           trigger: sStrong,
           start: 'top 95%',
           end: 'top 25%',
-          scrub: true,
+          scrub: 1,
           onEnter:     function() {
             setAnimationReference('S04-STRONG', 'A05-STRONG_ENTRANCE');
             if (a05DebugEl) { a05DebugEl.textContent = 'A05'; a05DebugEl.style.display = 'block'; }
