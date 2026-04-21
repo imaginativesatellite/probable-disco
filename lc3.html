@@ -548,6 +548,21 @@
     margin: 0;
   }
   @media (max-width: 991px) { .why-branding-line { font-size: 33px; } }
+  /* A05 Debug */
+  #a05-debug {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10000;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 120px;
+    font-weight: 900;
+    color: #00ff00;
+    text-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00;
+    pointer-events: none;
+    letter-spacing: 4px;
+  }
 </style>
 </head>
 <body>
@@ -777,6 +792,8 @@
 </footer>
 
 <div class="animation-ref-tag" id="animation-ref-tag" aria-live="polite">S00-BOOT · A00-IDLE</div>
+
+<div id="a05-debug" style="display: none;"></div>
 
 <a class="mobile-call" href="tel:2104794085" aria-label="Call">
   <img src="https://luna-creative.com/templates/untitled/images/designer/c5ccf31971058a58077a55ea8d602eb4_phonemobilebutton.png" alt="">
@@ -1156,6 +1173,7 @@ window.addEventListener('load', function () {
       stSH4s[0].lines, stSPs[0].lines,
       stSH4s[1].lines, stSPs[1].lines
     );
+    var a05DebugEl = document.getElementById('a05-debug');
     gsap.fromTo(allEntranceEls,
       { y: '105%' },
       {
@@ -1165,8 +1183,16 @@ window.addEventListener('load', function () {
           start: 'top 95%',
           end: 'top 25%',
           scrub: true,
-          onEnter:     function() { setAnimationReference('S04-STRONG', 'A05-STRONG_ENTRANCE'); },
-          onEnterBack: function() { setAnimationReference('S04-STRONG', 'A05-STRONG_ENTRANCE'); }
+          onEnter:     function() {
+            setAnimationReference('S04-STRONG', 'A05-STRONG_ENTRANCE');
+            if (a05DebugEl) { a05DebugEl.textContent = 'A05'; a05DebugEl.style.display = 'block'; }
+          },
+          onEnterBack: function() {
+            setAnimationReference('S04-STRONG', 'A05-STRONG_ENTRANCE');
+            if (a05DebugEl) { a05DebugEl.textContent = 'A05'; a05DebugEl.style.display = 'block'; }
+          },
+          onLeave:     function() { if (a05DebugEl) a05DebugEl.style.display = 'none'; },
+          onLeaveBack: function() { if (a05DebugEl) a05DebugEl.style.display = 'none'; }
         }
       }
     );
