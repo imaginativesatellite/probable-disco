@@ -1116,10 +1116,20 @@ window.addEventListener('load', function () {
     var h4_1_rect = sStrongH4s[0].getBoundingClientRect();
     var h4_2_rect = sStrongH4s[1].getBoundingClientRect();
     var h4GapPx   = h4_2_rect.top - h4_1_rect.bottom;
-    var h4MoveUpY = -(h4GapPx - 8);
+    var h4MoveUpY = -h4GapPx;
     var ampFinalX = h4_2_rect.left - sRect.left;
     var ampFinalY = (h4_2_rect.top  - sRect.top) + h4MoveUpY;
-    gsap.set(ampEl, { x: ampFinalX - 50, y: ampFinalY, opacity: 0 });
+    // Wrap amp in a per-line overflow:hidden clip so it can exit upward like h4 lines
+    var ampLineH  = ampEl.offsetHeight;
+    var ampOuter  = document.createElement('div');
+    ampOuter.style.cssText = 'position:absolute;overflow:hidden;pointer-events:none;left:0;width:100%;';
+    ampOuter.style.top     = ampFinalY + 'px';
+    ampOuter.style.height  = (ampLineH + 2) + 'px';
+    ampEl.parentNode.insertBefore(ampOuter, ampEl);
+    ampOuter.appendChild(ampEl);
+    ampEl.style.position = 'relative';
+    // y is now 0 — vertical offset lives in ampOuter.style.top
+    gsap.set(ampEl, { x: ampFinalX - 50, y: 0, opacity: 0 });
     var ampW = (ampEl ? ampEl.offsetWidth : 20) + 10;
 
     var statementBgImg = sStatement.querySelector('.statement-bg-img');
@@ -1219,22 +1229,20 @@ window.addEventListener('load', function () {
       }
     });
 
-    // A06-STRONG_EXIT / Phase 1 — h2 and paragraphs fade out; image + h4s stay visible
-    var fadeGroup = sStrongPs.slice();
-    exitTl.to(fadeGroup,    { autoAlpha: 0, duration: 0.25, ease: 'power1.inOut' });
-    exitTl.to(stSH2.lines, { autoAlpha: 0, duration: 0.25, ease: 'power1.inOut' }, '<');
+    // A06-STRONG_EXIT / Phase 1 — h2 and paragraph lines exit upward staggered; h4s + image stay
+    var phase1Lines = stSH2.lines.concat(pLines);
+    exitTl.to(phase1Lines, { y: '-105%', stagger: 0.05, duration: 0.25, ease: 'power2.inOut' });
     exitTl.addLabel('a06-strong-exit');
 
     // A06-STRONG_EXIT / Phase 2 — h4-2 rises toward h4-1
-    exitTl.to(sStrongH4s[1], { y: h4MoveUpY, duration: 0.175, ease: 'power3.out' }, '+=0.05');
+    exitTl.to(sStrongH4s[1], { y: h4MoveUpY, duration: 0.175, ease: 'power3.out' }, '<+=0.1');
 
     // A06-STRONG_EXIT / Phase 3 — & slides in from left; h4-2 shifts right to make room
     exitTl.to(ampEl,          { x: ampFinalX, opacity: 1, duration: 0.15, ease: 'power3.out' }, '+=0.025');
     exitTl.to(sStrongH4s[1],  { x: ampW,      duration: 0.15, ease: 'power3.out' }, '<');
 
-    // A06-STRONG_EXIT / Phase 4 — h4 lines slide up masked out; & fades
-    exitTl.to(h4Lines, { y: '-105%', stagger: 0.1, duration: 0.5, ease: 'power2.inOut' }, '+=0.3');
-    exitTl.to(ampEl,   { opacity: 0, duration: 0.4, ease: 'power1.inOut' }, '<');
+    // A06-STRONG_EXIT / Phase 4 — all remaining text (h4 lines + &) exits upward simultaneously
+    exitTl.to(h4Lines.concat([ampEl]), { y: '-105%', duration: 0.5, ease: 'power2.inOut' }, '+=0.3');
     exitTl.addLabel('a07-statement-reveal');
 
     // A07-STATEMENT_REVEAL / Phase 5 — section-strong fades, statement reveals
