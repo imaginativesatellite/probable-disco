@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luna Creative — Starter Replica</title>
+<link rel="icon" type="image/x-icon" href="https://luna-creative.com/templates/untitled/images/designer/987e9869a7c55216c02f00f1f4957513_LCicon.ico">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;600;700;900&family=Montserrat:wght@400;700&family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/ScrollTrigger.min.js"></script>
+<script>history.scrollRestoration = 'manual'; window.scrollTo(0, 0);</script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; }
+  body {
+    font-family: 'Inter Tight', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    line-height: 1.4;
+    color: #2b2b2b;
+    background: #f5f5f5;
+    overflow-x: hidden;
+  }
+  a { color: #fbc036; text-decoration: none; transition: color .2s ease-out; }
+  a:hover { color: #e9931c; }
+  h1, h2, h3, h4 {
+    font-family: 'Inter Tight', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0;
+  }
+  h1, h2, h3, h4, h5, h6, p { text-wrap: balance; }
+  h2 { font-size: 36px; line-height: 1.2; margin-bottom: 18px; }
+  h4 { font-size: 22px; line-height: 1.35; margin-bottom: 14px; font-weight: 400; text-transform: none; letter-spacing: 0; }
+  p { margin-bottom: 18px; }
+  img { max-width: 100%; height: auto; display: block; }
+
+  /* Header */
+  header.site-header {
+    position: absolute; top: 0; left: 0; right: 0; z-index: 1000;
+    background: transparent; color: #fff;
+    padding: 18px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .brand { display: flex; align-items: center; gap: 18px; }
+  .brand img { width: 168px; }
+  .brand .tagline {
+    font-family: 'Inter Tight', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px; text-transform: uppercase; color: #fff;
+    letter-spacing: 0; line-height: 1.2;
+  }
+  .nav-toggle {
+    background: none; border: 0; cursor: pointer;
+    width: 24px; height: 18px; position: relative;
+  }
+  .nav-toggle span {
+    position: absolute; left: 0; right: 0; height: 2px; background: #fff;
+    transition: transform .3s ease, opacity .3s ease;
+  }
+  .nav-toggle span:nth-child(1) { top: 2px; }
+  .nav-toggle span:nth-child(2) { top: 8px; }
+  .nav-toggle span:nth-child(3) { top: 14px; }
+  .nav-toggle.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+  .overlay-nav {
+    position: fixed; inset: 0; background: rgba(0,0,0,.96);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity .3s ease;
+    z-index: 999;
+  }
+  .overlay-nav.open { opacity: 1; pointer-events: auto; }
+  .overlay-nav ul { list-style: none; text-align: center; }
+  .overlay-nav li { margin: 12px 0; }
+  .overlay-nav a {
+    color: #fff; font-family: 'Inter Tight', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-transform: uppercase; font-size: 24px; letter-spacing: 0;
+  }
+  .overlay-nav a:hover { color: #e9931c; }
+  .overlay-nav .small { font-size: 16px; color: #bbb; }
+
+  /* Hero */
+  .hero {
+    position: relative; width: 100%; height: 100vh; height: 100dvh; min-height: 600px;
+    background: #000; overflow: hidden;
+  }
+  .hero::after {
+    content: ''; position: absolute; inset: 0;
+    background: rgba(0,0,0,0); z-index: 1;
+  }
+  .hero video {
+    position: absolute; top: 50%; left: 50%;
+    width: 100%; height: 100%;
+    min-width: 100%; min-height: 100%;
+    object-fit: cover;
+    transform: translate(-50%, -50%);
+  }
+  .hero .hero-copy {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    color: #fff; text-align: center; padding: 0 20px;
+    pointer-events: none;
+  }
+  .hero h2 { color: #fff; font-weight: 500; font-size: 40px; margin-bottom: 6px; }
+  .hero .sub { font-size: 20px; font-weight: 300; max-width: 700px; }
+  .hero .sub a { pointer-events: auto; }
+  .hero .scroll { display: none; }
+  .hero .scroll {
+    position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+    width: 24px; height: 40px;
+    background: url('https://luna-creative.com/images/scrolldown.gif') center/contain no-repeat;
+    mix-blend-mode: screen;
+  }
+
+  /* Sections */
+  section { padding: 110px 40px; width: 100%; }
+  .container { max-width: 1180px; margin: 0 auto; }
+  .two-col { display: grid; grid-template-columns: 5fr 7fr; gap: 60px; align-items: start; }
+  .two-col.flip { grid-template-columns: 7fr 5fr; }
+
+  /* Why Branding */
+  .section-why {
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 80px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .section-why h1 { color: #fff; font-size: 65px; text-transform: none; font-weight: 500; line-height: 1.15; }
+  .section-why h1 strong { font-weight: 900; color: #fff; }
+  #what-branding .why-headline h1 { padding-top: 1.15em; }
+  .section-why h4 { color: rgba(255,255,255,0.65); font-size: 18px; }
+  #why .why-bottom h4 { color: #fff; }
+  .why-bottom {
+    text-align: right;
+    max-width: 50%;
+    margin-left: auto;
+  }
+  .why-bottom h4 { margin-bottom: 20px; }
+  .why-bg-img {
+    position: absolute; bottom: 0; left: -20%;
+    max-height: 85vh; max-width: 80%; width: auto; height: auto;
+    z-index: 0; pointer-events: none;
+    filter: grayscale(1);
+  }
+  .why-headline, .why-bottom { position: relative; z-index: 1; }
+
+  /* Alt (mirrored) variant */
+  .section-why--alt { background: #000; }
+  .section-why--alt .why-bg-img { left: auto; right: -20%; }
+  .section-why--alt .why-bottom { text-align: left; margin-left: 0; margin-right: auto; }
+
+  /* What is Branding */
+  .section-what { background: #ebebeb; }
+  .section-what h2 { color: #111; }
+
+  /* Strong Brand */
+  #strong-transition { position: relative; height: 100vh; height: 100dvh; overflow: hidden; background: #000; }
+  .section-strong {
+    background: #fff; position: relative; z-index: 2;
+    height: 100vh; height: 100dvh;
+    padding: 80px 60px;
+    display: flex; flex-direction: column; justify-content: flex-start;
+  }
+  .section-strong h2 {
+    font-size: 18px; font-weight: 700; line-height: 1.4;
+    text-transform: none; letter-spacing: 0; color: #2b2b2b;
+    margin-bottom: 6px;
+  }
+  .section-strong h4 {
+    font-size: 65px; font-weight: 500; line-height: 1.15;
+    text-transform: none; letter-spacing: 0; color: #2b2b2b;
+    margin-top: 32px; margin-bottom: 2px; max-width: 60%;
+  }
+  .section-strong p { margin-top: 0; margin-bottom: 0; max-width: 60%; }
+  /* Left-align S04 text with S02 (.section-why left padding) — kill .container auto-centering */
+  .section-strong .container { position: relative; max-width: none; margin: 0; }
+  .strong-bg-img {
+    position: absolute; bottom: 0; right: -20%;
+    max-height: 85vh; max-width: 80%; width: auto; height: auto;
+    z-index: 0; pointer-events: none;
+    filter: grayscale(1);
+  }
+  .strong-amp {
+    position: absolute; left: 0; top: 0;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 65px; font-weight: 500; line-height: 1.15;
+    color: #2b2b2b; pointer-events: none;
+  }
+  .strong-links {
+    display: flex; flex-direction: column; align-items: flex-start;
+    gap: 8px; margin-top: 36px;
+  }
+  .strong-links a {
+    font-family: 'Inter Tight', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 12px; color: #2b2b2b; text-decoration: underline;
+    text-underline-offset: 3px; text-transform: uppercase; letter-spacing: 2px;
+    transition: color .2s ease-out;
+  }
+  .strong-links a:hover { color: #e9931c; }
+
+  /* Statement section */
+  .section-statement {
+    position: absolute; inset: 0; z-index: 1;
+    background: #000;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; padding: 0 60px;
+  }
+  .statement-parallax-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background: url('render2.jpg') center / cover no-repeat;
+  }
+  .statement-bg-img {
+    position: absolute; inset: 0; z-index: 1;
+    background: url('Untitled.png') bottom center / 100% auto no-repeat;
+  }
+  .statement-text {
+    position: relative; z-index: 2;
+    font-size: 65px; font-weight: 500; line-height: 1.15;
+    text-transform: none; letter-spacing: 0;
+    color: #fff; max-width: 900px;
+  }
+  @media (max-width: 991px) { .statement-text { font-size: 33px; } }
+
+  /* Service cards */
+  #cards-overlay {
+    position: absolute; inset: 0; z-index: 3;
+    overflow: hidden;
+  }
+  #cards-track {
+    display: flex; gap: 40px;
+    position: absolute; top: 50%; left: 0;
+    align-items: stretch;
+  }
+  .service-card {
+    width: 360px; flex-shrink: 0;
+    padding: 44px 36px;
+    display: flex; flex-direction: column; gap: 16px;
+    min-height: 460px;
+    background: #111; border-top: 3px solid #fff;
+  }
+  .card-number {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 13px; font-weight: 600; letter-spacing: 3px;
+    text-transform: uppercase; color: rgba(255,255,255,0.45);
+  }
+  .card-title {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 48px; font-weight: 500; line-height: 1.1;
+    color: #fff; text-transform: none; letter-spacing: 0; margin: 0;
+  }
+  .card-body {
+    font-size: 18px; line-height: 1.5;
+    color: rgba(255,255,255,0.65); margin: 0; flex: 1;
+  }
+  .card-links {
+    display: flex; flex-direction: column; gap: 8px; margin-top: auto;
+  }
+  .card-link {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 12px; color: #e9931c;
+    text-decoration: underline; text-underline-offset: 3px;
+    text-transform: uppercase; letter-spacing: 2px;
+    transition: color .2s ease-out;
+  }
+  .card-link:hover { color: #fff; }
+  @media (max-width: 600px) {
+    .service-card { width: 280px; min-height: 380px; padding: 32px 24px; }
+    .card-title { font-size: 32px; }
+  }
+
+  .cta-row { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 30px; }
+
+  /* Buttons */
+  .btn {
+    display: inline-block; padding: 12px 32px;
+    font-family: 'Inter Tight', "Helvetica Neue", Helvetica, Arial, sans-serif; font-weight: 700; font-size: 18px;
+    text-transform: none; border: 2px solid #fff; color: #fff;
+    background: transparent; transition: all .2s ease-out;
+    cursor: pointer;
+  }
+  .btn:hover { background: #fff; color: #111; }
+  .btn-orange { border-color: #e9931c; color: #e9931c; }
+  .btn-orange:hover { background: #e9931c; color: #fff; }
+  .btn-dark { border-color: #111; color: #111; }
+  .btn-dark:hover { background: #111; color: #fff; }
+  .btn-link {
+    border: 0; color: #fbc036; padding: 12px 0;
+  }
+  .btn-link:hover { background: none; color: #e9931c; }
+
+  /* Split portrait section */
+  .section-team { padding: 0; background: #000; position: absolute; inset: 0; z-index: 4; overflow: hidden; }
+  .split-images { display: flex; width: 100%; height: 100%; align-items: flex-start; }
+  .split-images img { width: 50%; max-width: 50%; height: auto; display: block; filter: grayscale(1); }
+
+  /* Contact */
+  .section-contact {
+    background: #f5f5f5; text-align: center;
+  }
+  .contact-intro {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 2;
+  }
+  .contact-inner {
+    display: flex; flex-direction: column;
+    align-items: center; text-align: center;
+    gap: 36px;
+  }
+  .contact-tagline {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 20px; font-weight: 400;
+    color: #fff; max-width: 560px; line-height: 1.5;
+  }
+  .contact-cta-btn {
+    position: relative; display: inline-block;
+    padding: 18px;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 18px; font-weight: 400;
+    letter-spacing: 6px;
+    color: #fff; text-decoration: none;
+    line-height: 1;
+  }
+  .contact-cta-border {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    overflow: visible; pointer-events: none;
+  }
+  .section-contact h2 { color: #111; }
+  .section-contact h4 { font-weight: 600; margin-bottom: 4px; }
+  .form {
+    max-width: 640px; margin: 40px auto 0; text-align: left;
+  }
+  .form input, .form textarea {
+    width: 100%; padding: 14px 16px; margin-bottom: 16px;
+    font-family: inherit; font-size: 16px;
+    border: 1px solid #ccc; background: #fff; color: #222;
+    border-radius: 0;
+  }
+  .form textarea { min-height: 160px; resize: vertical; }
+  .form button {
+    background: #e9931c; border: 0; color: #fff;
+    padding: 14px 40px; font-weight: 700; font-size: 18px;
+    text-transform: uppercase; cursor: pointer;
+    transition: background .2s ease-out;
+  }
+  .form button:hover { background: #c67911; }
+  .form .disclaimer {
+    font-size: 12px; color: #777; margin-top: 10px;
+  }
+
+  /* Footer */
+  footer.site-footer {
+    background: #6d6e70; color: #fff; padding: 40px;
+    text-align: center;
+  }
+  footer .f-logo { width: 150px; margin: 0 auto 20px; }
+  footer p { font-size: 13px; line-height: 1.6; margin-bottom: 10px; color: #eee; }
+  footer a { color: #fff; }
+  footer a:hover { color: #fbc036; }
+  .mobile-call {
+    display: none !important;
+    position: fixed; bottom: 16px; right: 16px; z-index: 1001;
+    width: 56px; height: 56px;
+  }
+  /* Persistent section/animation reference tag */
+  .animation-ref-tag {
+    position: fixed;
+    left: 14px;
+    bottom: 14px;
+    z-index: 10001;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.9);
+    background: rgba(0,0,0,0.62);
+    border: 1px solid rgba(255,255,255,0.28);
+    border-radius: 999px;
+    padding: 8px 12px;
+    pointer-events: none;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+  }
+  .animation-ref-tag.is-dismissed { display: none; }
+  .animation-ref-close {
+    pointer-events: auto;
+    appearance: none;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    color: rgba(255,255,255,0.7);
+    font: inherit;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+    width: 14px;
+    height: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .animation-ref-close:hover { color: #fff; }
+
+  /* Responsive */
+  @media (max-width: 991px) {
+    header.site-header { padding: 14px 20px; }
+    .brand img { width: 132px; }
+    .brand .tagline { display: none; }
+    section { padding: 70px 20px; }
+    .two-col, .two-col.flip { grid-template-columns: 1fr; gap: 20px; }
+    .hero { height: 100vh; height: 100dvh; min-height: unset; }
+    .hero h2 { font-size: 28px; }
+    .hero .sub { font-size: 16px; }
+    .two-features { grid-template-columns: 1fr; }
+    .two-features::before { display: none; }
+    .two-features .feature { padding: 10px 0; text-align: left !important; }
+    .split-images { grid-template-columns: 1fr; }
+    footer.site-footer { background: #000; padding-bottom: 90px; }
+    .mobile-call { display: block; }
+    .section-why { padding: 60px 30px; }
+    .section-why h1 { font-size: 33px; }
+    .section-strong { padding: 60px 30px; }
+    .section-strong h2 { font-size: 18px; }
+    .section-strong h4 { font-size: 33px; }
+    .strong-amp { font-size: 33px; }
+    .contact-tagline { font-size: 33px; }
+  }
+  @media (max-width: 600px) {
+    h2 { font-size: 26px; }
+    .hero h2 { font-size: 22px; }
+    .section-why { padding: 50px 20px; }
+    .section-why h1 { font-size: 33px; }
+    .section-strong { padding: 50px 20px; }
+    .section-strong h2 { font-size: 18px; }
+    .section-strong h4 { font-size: 33px; }
+    .strong-amp { font-size: 33px; }
+    .contact-tagline { font-size: 33px; }
+  }
+
+  /* ── Why Transition Wrapper ── */
+  .why-transition-wrapper {
+    position: relative;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    background: linear-gradient(to bottom, #000 25%, #2e2e2e 100%);
+  }
+  .why-transition-wrapper .section-why {
+    position: absolute;
+    inset: 0;
+    min-height: unset;
+    background: transparent;
+  }
+
+  /* ── Loader ── */
+  #loader {
+    position: fixed; inset: 0; z-index: 9999; overflow: hidden;
+  }
+  .gs-dev-tools { z-index: 10000 !important; }
+  #ldr-bg-t, #ldr-bg-b {
+    position: absolute; left: 0; right: 0; height: 50%;
+    background: #000; z-index: 1;
+  }
+  #ldr-bg-t { top: 0; }
+  #ldr-bg-b { bottom: 0; }
+
+  #ldr-group {
+    position: absolute; top: 50%; left: 50%;
+    transform: translateY(-50%);
+    display: flex; align-items: center; gap: 8px;
+    z-index: 2;
+  }
+  #ldr-logo { width: 150px; display: block; }
+  #ldr-tag-wrap { }
+  #ldr-tag {
+    font-family: 'Inter Tight', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 14px; color: #fff;
+    font-weight: 700; line-height: 19px; white-space: nowrap;
+  }
+
+  #ldr-split-t, #ldr-split-b {
+    position: absolute; left: 0; right: 0; height: 50%;
+    overflow: hidden; z-index: 3; visibility: hidden;
+  }
+  #ldr-split-t { top: 0; }
+  #ldr-split-b { bottom: 0; }
+
+  .ldr-si {
+    position: absolute;
+    display: flex; align-items: center; gap: 8px;
+  }
+  #ldr-split-t .ldr-si { top: 100%; left: calc(50% - 136px); transform: translateY(-50%); }
+  #ldr-split-b .ldr-si { top: 0;    left: calc(50% - 136px); transform: translateY(-50%); }
+  .ldr-si img { width: 150px; display: block; }
+  .ldr-st {
+    font-family: 'Inter Tight', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 14px; color: #fff;
+    font-weight: 700; line-height: 19px; white-space: nowrap;
+  }
+
+  /* ── Hero fade-to-black overlay ── */
+  #hero-fade {
+    position: absolute;
+    inset: 0;
+    background: #000;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0;
+  }
+
+  /* ── Hero text overlay ── */
+  #hero-text-overlay {
+    position: fixed;
+    left: 60px;
+    right: 60px;
+    z-index: 5;
+    pointer-events: none;
+  }
+  .hero-tagline {
+    color: #fff;
+    font-family: 'Inter Tight', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 65px;
+    font-weight: 500;
+    line-height: 1.15;
+    text-transform: none;
+    letter-spacing: 0;
+    max-width: 900px;
+  }
+  .hero-tagline-blend {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    color: #fff;
+    font-family: 'Inter Tight', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 65px;
+    font-weight: 500;
+    line-height: 1.15;
+    text-transform: none;
+    letter-spacing: 0;
+    max-width: 900px;
+    mix-blend-mode: difference;
+    opacity: 0;
+  }
+  @media (max-width: 991px) {
+    #hero-text-overlay { left: 30px; right: 30px; }
+    .hero-tagline, .hero-tagline-blend { font-size: 33px; }
+  }
+  @media (max-width: 600px) {
+    #hero-text-overlay { left: 20px; right: 20px; }
+  }
+  /* "Why Branding?" animated tagline */
+  .why-branding-line {
+    font-family: 'Inter Tight', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 65px;
+    font-weight: 500;
+    line-height: 1.15;
+    text-transform: none;
+    letter-spacing: 0;
+    color: #e9931c;
+    margin: 0;
+  }
+  @media (max-width: 991px) { .why-branding-line { font-size: 33px; } }
+</style>
+</head>
+<body>
+
+<div id="loader">
+  <div id="ldr-bg-t"></div>
+  <div id="ldr-bg-b"></div>
+  <div id="ldr-group">
+    <img id="ldr-logo" src="https://luna-creative.com/templates/untitled/images/designer/8479b297e818c0ed5403ba3993574a22_OfficeLogoWhite.png" alt="Luna Creative">
+    <div id="ldr-tag-wrap"><div id="ldr-tag">A Full-Service<br>Creative Agency</div></div>
+  </div>
+  <div id="ldr-split-t">
+    <div class="ldr-si">
+      <img src="https://luna-creative.com/templates/untitled/images/designer/8479b297e818c0ed5403ba3993574a22_OfficeLogoWhite.png" alt="">
+      <div class="ldr-st">A Full-Service<br>Creative Agency</div>
+    </div>
+  </div>
+  <div id="ldr-split-b">
+    <div class="ldr-si">
+      <img src="https://luna-creative.com/templates/untitled/images/designer/8479b297e818c0ed5403ba3993574a22_OfficeLogoWhite.png" alt="">
+      <div class="ldr-st">A Full-Service<br>Creative Agency</div>
+    </div>
+  </div>
+</div>
+
+<div id="hero-text-overlay">
+  <h1 class="hero-tagline">We Are a Full-Service Creative Agency with a Focus on Branding.</h1>
+</div>
+
+<header class="site-header">
+  <a href="#" class="brand">
+    <img src="https://luna-creative.com/templates/untitled/images/designer/8479b297e818c0ed5403ba3993574a22_OfficeLogoWhite.png" alt="Luna Creative">
+    <span class="tagline">a full-service<br>creative agency</span>
+  </a>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<nav class="overlay-nav" id="overlayNav">
+  <ul>
+    <li><a href="#">Home</a></li>
+    <li><a href="https://luna-creative.com/what-we-do">What We Do</a></li>
+    <li><a href="https://luna-creative.com/case-studies">Case Studies</a></li>
+    <li><a href="https://luna-creative.com/team">Team</a></li>
+    <li><a href="https://luna-creative.com/luna-creative-graphic-designer-san-antonio">About</a></li>
+    <li><a href="https://luna-creative.com/contact">Contact</a></li>
+    <li><a class="small" href="https://luna-creative.com/visual-identity-logo-design">Logo Design</a></li>
+    <li><a class="small" href="https://luna-creative.com/web-design-development">Website Design</a></li>
+    <li><a class="small" href="https://luna-creative.com/restaurant-branding">For Restaurants</a></li>
+    <li><a class="small" href="https://luna-creative.com/lawfirm-lawyer-branding">For Lawyers</a></li>
+    <li><a class="small" href="https://luna-creative.com/government">For Government</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <video id="hero-video" autoplay loop muted playsinline>
+    <source src="Untitled (1).mp4" type="video/mp4">
+  </video>
+  <div id="hero-fade"></div>
+  <a href="#why" class="scroll" aria-label="Scroll"></a>
+</section>
+
+<div class="why-transition-wrapper" id="why-transition">
+
+<section class="section-why" id="why">
+  <img class="why-bg-img" src="65d637880835357cf3758650_david-homepage.png" alt="">
+  <div class="why-headline">
+    <h1>We Are a Full-Service Creative Agency with a Focus on Branding.</h1>
+    <div class="why-branding-line">Why Branding?</div>
+  </div>
+  <div class="why-bottom">
+    <h4>Because first impressions are driven <strong>primarily by the image</strong> your company projects.</h4>
+  </div>
+</section>
+
+ <section class="section-why" id="what-branding">
+  <div class="why-headline">
+    <h1>Because in Business, Image is Everything</h1>
+  </div>
+  <div class="why-bottom">
+    <h4>Your brand is how your audience sees you. Every touchpoint <strong>tells the story.</strong></h4>
+  </div>
+</section>
+
+</div>
+
+<div id="strong-transition">
+
+<section class="section-strong" id="strong">
+  <img class="strong-bg-img" src="678946df3dca4d1066317241_65d666f324c007b6ff4217f3_spencer-homepage.png" alt="">
+  <div class="container">
+    <h2>The Basic Structure of Any Successful Brand is Simple:</h2>
+    <h4>A Quality Presentation</h4>
+    <p>Logo, website, and visual collateral.</p>
+    <h4>The Right Audience</h4>
+    <p>Platforms and channels that matter.</p>
+  </div>
+  <span class="strong-amp" aria-hidden="true">And</span>
+</section>
+
+<section class="section-statement">
+  <div class="statement-parallax-bg"></div>
+  <div class="statement-bg-img"></div>
+  <h2 class="statement-text">This is where we come in.</h2>
+</section>
+
+<div id="cards-overlay">
+  <div id="cards-track">
+    <div class="service-card card-1">
+      <span class="card-number">01</span>
+      <h2 class="card-title">Logo Design</h2>
+      <p class="card-body">Your logo is the face of your brand. We create marks that are timeless, versatile, and built to communicate who you are at a glance.</p>
+      <div class="card-links">
+        <a href="https://luna-creative.com/what-we-do" class="card-link">OUR WORK</a>
+        <a href="#contact" class="card-link">CONSULTATION</a>
+      </div>
+    </div>
+    <div class="service-card card-2">
+      <span class="card-number">02</span>
+      <h2 class="card-title">Website Design</h2>
+      <p class="card-body">Your website is your most powerful sales tool. We build fast, focused experiences designed to convert the right visitors into loyal customers.</p>
+      <div class="card-links">
+        <a href="https://luna-creative.com/what-we-do" class="card-link">OUR WORK</a>
+        <a href="#contact" class="card-link">CONSULTATION</a>
+      </div>
+    </div>
+    <div class="service-card card-3">
+      <span class="card-number">03</span>
+      <h2 class="card-title">Photo &amp; Video</h2>
+      <p class="card-body">Great visuals tell your story before a single word is read. We capture your brand in motion and stills that elevate every platform you're on.</p>
+      <div class="card-links">
+        <a href="https://luna-creative.com/what-we-do" class="card-link">OUR WORK</a>
+        <a href="#contact" class="card-link">CONSULTATION</a>
+      </div>
+    </div>
+    <div class="service-card card-4">
+      <span class="card-number">04</span>
+      <h2 class="card-title">For Restaurants</h2>
+      <p class="card-body">Your restaurant's identity shapes the dining experience before guests walk in. We build brands that fill tables and create lasting loyalty.</p>
+      <div class="card-links">
+        <a href="https://luna-creative.com/restaurant-branding" class="card-link">OUR WORK</a>
+        <a href="#contact" class="card-link">CONSULTATION</a>
+      </div>
+    </div>
+    <div class="service-card card-5">
+      <span class="card-number">05</span>
+      <h2 class="card-title">For Government</h2>
+      <p class="card-body">Public trust is built through consistent, credible communication. We help agencies present with clarity and authority at every level.</p>
+      <div class="card-links">
+        <a href="https://luna-creative.com/government" class="card-link">OUR WORK</a>
+        <a href="#contact" class="card-link">CONSULTATION</a>
+      </div>
+    </div>
+    <div class="service-card card-6">
+      <span class="card-number">06</span>
+      <h2 class="card-title">For Lawyers</h2>
+      <p class="card-body">Your firm's reputation is your most valuable asset. We craft brands that command trust and communicate expertise from the very first impression.</p>
+      <div class="card-links">
+        <a href="https://luna-creative.com/lawfirm-lawyer-branding" class="card-link">OUR WORK</a>
+        <a href="#contact" class="card-link">CONSULTATION</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="section-team">
+  <div class="split-images">
+    <img src="https://luna-creative.com/templates/untitled/images/designer/42dfdb7abdc68deebc71a273e0315943_splitfacesspencer.jpg" alt="Luna Creative team member">
+    <img src="https://luna-creative.com/templates/untitled/images/designer/6cec33168e6be5506b9fe5813f790f26_splitfacesdavid.jpg" alt="Luna Creative team member">
+  </div>
+  <div class="contact-intro">
+    <div class="contact-inner">
+      <div class="contact-tagline">Interested in a Free<br>Branding Consultation?</div>
+      <div class="contact-cta-wrap">
+        <a href="#contact-form" class="contact-cta-btn">
+          <span class="contact-cta-text">LET'S TALK</span>
+          <svg class="contact-cta-border" viewBox="0 0 300 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path class="border-path-left"  d="M150,1 L1,1 L1,79 L150,79" fill="none" stroke="#fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+            <path class="border-path-right" d="M150,1 L299,1 L299,79 L150,79" fill="none" stroke="#fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<section class="section-contact" id="contact">
+  <div class="container" id="contact-form">
+    <h4>Interested in a free branding consultation?</h4>
+    <h2>We Can Help.</h2>
+    <p>We&rsquo;d love to talk about your branding and advertising goals &mdash; no strings attached.</p>
+    <form class="form" method="post" action="#">
+      <input type="text" name="name" placeholder="Name *" required>
+      <input type="email" name="email" placeholder="Email *" required>
+      <input type="tel" name="phone" placeholder="Phone Number">
+      <textarea name="message" placeholder="Project Description *" maxlength="500" required></textarea>
+      <button type="submit">Send</button>
+      <p class="disclaimer">This site is protected by reCAPTCHA and the Google
+        <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a> and
+        <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Terms of Service</a> apply.</p>
+    </form>
+    <h4 style="margin-top: 60px;">Want to learn more about us? Check out
+      <a href="https://luna-creative.com/what-we-do">our work</a>.</h4>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <img class="f-logo" src="https://luna-creative.com/templates/untitled/images/designer/8479b297e818c0ed5403ba3993574a22_OfficeLogoWhite.png" alt="Luna Creative">
+  <p>Luna Creative LLC<br>
+    <a href="https://www.google.com/maps/place/Luna+Creative/@29.5893409,-98.5323238,17z" target="_blank" rel="noopener">
+      16403 Huebner Road, San Antonio, TX 78248
+    </a>
+  </p>
+  <p>&copy; Copyright Luna Creative LLC. Design by Luna Creative.<br>
+    Texas HUB Certified Business &mdash; Certificate #1832327300500<br>
+    GSA Multiple Award Schedule Contract #47QRAA24D007A</p>
+  <p>
+    <a href="https://luna-creative.com/privacy-policy">Privacy Policy</a> &middot;
+    <a href="https://luna-creative.com/terms-and-conditions">Terms &amp; Conditions</a> &middot;
+    <a href="https://luna-creative.com/disclaimer">Disclaimer</a> &middot;
+      <a href="https://luna-creative.com/disclaimer">Disclaimer</a> &middot;
+    <a href="https://luna-creative.com/faqs">FAQ's</a>
+  </p>
+</footer>
+
+<div class="animation-ref-tag" id="animation-ref-tag">
+  <span class="animation-ref-label" id="animation-ref-label" aria-live="polite">S00-BOOT · A00-IDLE</span>
+  <button type="button" class="animation-ref-close" id="animation-ref-close" aria-label="Dismiss reference tag">×</button>
+</div>
+
+
+<a class="mobile-call" href="tel:2104794085" aria-label="Call">
+  <img src="https://luna-creative.com/templates/untitled/images/designer/c5ccf31971058a58077a55ea8d602eb4_phonemobilebutton.png" alt="">
+</a>
+
+<script>
+  const toggle = document.getElementById('navToggle');
+  const overlay = document.getElementById('overlayNav');
+  toggle.addEventListener('click', () => {
+    toggle.classList.toggle('open');
+    overlay.classList.toggle('open');
+  });
+  overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    toggle.classList.remove('open');
+    overlay.classList.remove('open');
+  }));
+
+</script>
+
+
+<script>
+(function () {
+  gsap.registerPlugin(SplitText);
+
+  const loader       = document.getElementById('loader');
+  const group        = document.getElementById('ldr-group');
+  const logo         = document.getElementById('ldr-logo');
+  const tagEl        = document.getElementById('ldr-tag');
+  const splitT       = document.getElementById('ldr-split-t');
+  const splitB       = document.getElementById('ldr-split-b');
+  const bgT          = document.getElementById('ldr-bg-t');
+  const bgB          = document.getElementById('ldr-bg-b');
+  const headerLogo   = document.querySelector('header.site-header .brand img');
+  const burgerBars   = document.querySelectorAll('.nav-toggle span');
+  let tl;
+
+  document.body.style.overflow = 'hidden';
+  gsap.set(logo, { autoAlpha: 0 });
+  gsap.set(tagEl, { autoAlpha: 0 });
+  gsap.set(headerLogo, { autoAlpha: 0, x: -24 });
+  gsap.set(burgerBars, { scaleX: 0, transformOrigin: 'right center' });
+  // Suppress CSS transition so it doesn't fight the GSAP entrance animation
+  burgerBars.forEach(function(b) { b.style.transition = 'none'; });
+
+  const heroOverlay = document.getElementById('hero-text-overlay');
+  gsap.set(heroOverlay, { autoAlpha: 0, top: '50%', yPercent: -50 });
+
+  window.addEventListener('load', function () {
+    // SplitText — per-line overflow clip so each line acts as its own reveal mask
+    const st    = new SplitText(tagEl, { type: 'lines,chars' });
+    const chars = st.chars;
+    st.lines.forEach(function (line) {
+      line.style.overflow = 'hidden';
+      line.style.display  = 'block';
+    });
+    // Restore tagline visibility before measuring so group.offsetWidth
+    // reflects the full nowrap tagline width, then hide individual chars
+    gsap.set(tagEl, { autoAlpha: 1 });
+    gsap.set(chars, { y: 8, autoAlpha: 0 });
+
+    // Hero tagline — split by lines for post-loader reveal
+    const stHero = new SplitText('.hero-tagline', { type: 'lines' });
+    stHero.lines.forEach(function(line) {
+      const wrap = document.createElement('div');
+      wrap.style.cssText = 'overflow:hidden;display:block;';
+      line.parentNode.insertBefore(wrap, line);
+      wrap.appendChild(line);
+    });
+    gsap.set(heroOverlay, { autoAlpha: 1 });
+    gsap.set(stHero.lines, { y: '101%' });
+
+    // Measure after DOM is fully settled to get accurate full-width offset
+    const groupW  = 272;
+    const logoW   = logo.offsetWidth;
+    gsap.set(group, { x: -(logoW / 2) });
+
+    const STAGGER = 0.02;
+    const CHAR_D  = 0.28;
+    const totalD  = (chars.length - 1) * STAGGER + CHAR_D;
+
+    tl = gsap.timeline({ delay: 0.3 });
+
+    // Phase 1 — logo fades in
+    tl.to(logo, { autoAlpha: 1, duration: 0.9, ease: 'power2.out' });
+
+    // Phase 2 — chars reveal from bottom + group slides left (finish together)
+    tl.to(chars, {
+      y: 0, autoAlpha: 1,
+      duration: CHAR_D, stagger: STAGGER, ease: 'power3.out'
+    }, '+=0.25')
+    .to(group, { x: -(groupW / 2), duration: totalD, ease: 'power3.out' }, '<');
+
+    // Phase 3 — brief hold, swap to static split-half clones
+    tl.add(function () {
+      gsap.set([splitT, splitB], { visibility: 'visible' });
+      gsap.set(group, { autoAlpha: 0 });
+    }, '+=0.55');
+
+    // Phase 4 — top half exits left, bottom half exits right (fade out mid-travel)
+    tl.to(splitT, { x: -300, autoAlpha: 0, duration: 0.7, ease: 'power2.inOut' })
+      .to(splitB, { x:  300, autoAlpha: 0, duration: 0.7, ease: 'power2.inOut' }, '<');
+
+    // Phase 5 — black panels split open to reveal the page
+    tl.to(bgT, { y: '-100%', duration: 0.85, ease: 'power2.inOut' }, '+=0.06')
+      .to(bgB, { y:  '100%', duration: 0.85, ease: 'power2.inOut' }, '<')
+      .add(function () {
+        loader.style.display = 'none';
+        document.body.style.overflow = '';
+
+        // Logo slides in from left
+        gsap.to(headerLogo, {
+          autoAlpha: 1, x: 0, duration: 0.55, ease: 'power2.out', delay: 0.15
+        });
+        // Hamburger bars grow in from right, staggered top to bottom; clear GSAP transform so CSS X-toggle works
+        gsap.to(burgerBars, {
+          scaleX: 1, duration: 0.35, ease: 'power2.out',
+          stagger: 0.08, delay: 0.2,
+          clearProps: 'transform,transformOrigin'
+        });
+        // Restore CSS transition after all bars finish (delay + stagger offset + duration + buffer)
+        gsap.delayedCall(0.2 + 0.08 * 2 + 0.35 + 0.05, function() {
+          burgerBars.forEach(function(b) { b.style.transition = ''; });
+        });
+        ScrollTrigger.refresh();
+
+        // Hero tagline entrance — lines reveal up
+        gsap.to(stHero.lines, {
+          y: '0%',
+          duration: 0.9,
+          stagger: 0.12,
+          ease: 'power3.out',
+          delay: 0.4
+        });
+      });
+
+  });
+}());
+</script>
+
+<script>
+gsap.registerPlugin(ScrollTrigger, SplitText);
+
+// Reference naming scheme
+// Sections: S##-NAME (screen group / chapter)
+// Animations: A##-NAME (motion phase in that chapter)
+var animationRefEl = document.getElementById('animation-ref-tag');
+var animationRefLabelEl = document.getElementById('animation-ref-label');
+var animationRefCloseEl = document.getElementById('animation-ref-close');
+if (animationRefCloseEl && animationRefEl) {
+  animationRefCloseEl.addEventListener('click', function() {
+    animationRefEl.classList.add('is-dismissed');
+  });
+}
+var animationRefState = { section: 'S00-BOOT', animation: 'A00-IDLE' };
+function setAnimationReference(sectionCode, animationCode) {
+  if (!animationRefLabelEl) return;
+  if (animationRefState.section === sectionCode && animationRefState.animation === animationCode) return;
+  animationRefState.section = sectionCode;
+  animationRefState.animation = animationCode;
+  animationRefLabelEl.textContent = sectionCode + ' · ' + animationCode;
+}
+function bindSectionTag(trigger, sectionCode, animationCode) {
+  ScrollTrigger.create({
+    trigger: trigger,
+    start: 'top center',
+    end: 'bottom center',
+    onEnter: function() { setAnimationReference(sectionCode, animationCode); },
+    onEnterBack: function() { setAnimationReference(sectionCode, animationCode); }
+  });
+}
+
+window.addEventListener('load', function () {
+  setAnimationReference('S01-HERO', 'A01-HERO_TRACK');
+
+  var wrapper = document.getElementById('why-transition');
+  var s1      = document.getElementById('why');
+  var s2      = document.getElementById('what-branding');
+  if (!wrapper || !s1 || !s2) return;
+
+  var s1H1         = s1.querySelector('h1');
+  var s1WhyLine    = s1.querySelector('.why-branding-line');
+  var s1H4         = s1.querySelector('.why-bottom h4');
+  var s1Img        = s1.querySelector('.why-bg-img');
+  var s2H1         = s2.querySelector('h1');
+  var s2H4         = s2.querySelector('.why-bottom h4');
+
+  // Split headings into lines; "Why Branding?" split into chars for per-char stagger
+  var st1H1        = new SplitText(s1H1,      { type: 'lines' });
+  var st2H1        = new SplitText(s2H1,      { type: 'lines' });
+  var st1H4        = new SplitText(s1H4,      { type: 'lines' });
+  var st2H4        = new SplitText(s2H4,      { type: 'lines' });
+  var stWhyLine    = new SplitText(s1WhyLine, { type: 'chars,words' });
+
+  // Wrap h1 lines in overflow:hidden clips (chars don't need this)
+  [st1H1.lines, st2H1.lines].forEach(function (lines) {
+    lines.forEach(function (line) {
+      var wrap = document.createElement('div');
+      wrap.style.cssText = 'overflow:hidden;display:block;';
+      line.parentNode.insertBefore(wrap, line);
+      wrap.appendChild(line);
+    });
+  });
+
+  var VW = window.innerWidth;
+
+  // Initial hidden states
+  gsap.set(st1H1.lines,       { color: '#000' });                    // s1 h1: black until hero overlay hands off
+  gsap.set(st1H4.lines,       { y: 20, autoAlpha: 0 });             // "Because" fades upward
+  gsap.set(st2H1.lines,       { y: '105%', color: '#000' });        // s2 h1: black on black → invisible
+  gsap.set(st2H4.lines,       { y: 20, autoAlpha: 0, color: '#000' });
+  gsap.set(stWhyLine.chars,    { autoAlpha: 0, y: 12 });            // "Why Branding?" chars hidden, reveal per char
+
+  var DUR     = 1;
+  var STAG_H1 = 0.12;
+  var STAG_H4 = 0.10;
+
+  var tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: wrapper,
+      start: 'top top',
+      end: function () { return '+=' + window.innerHeight * 2; },   // extra room for 3 phases
+      pin: true,
+      scrub: 1,
+      anticipatePin: 1
+    }
+  });
+  tl.addLabel('a04-why-enter', 0);
+
+  // A04-WHY_COPY_SWAP / PHASE 1 — "Because" h4 fades upward, top line first
+  tl.to(st1H4.lines, { y: 0, autoAlpha: 1, stagger: STAG_H4, duration: DUR * 0.65, ease: 'power3.out' });
+  tl.addLabel('a04-why-exit');
+
+  // A04-WHY_COPY_SWAP / PHASE 2 — EXIT section 1 text
+  tl.to(st1H1.lines, { y: '-105%', stagger: STAG_H1, duration: DUR, ease: 'power2.inOut' });
+  tl.to(st1H4.lines, { x: 80, autoAlpha: 0, stagger: STAG_H4, duration: DUR, ease: 'power2.inOut' }, '<');
+
+  // A04-WHY_COPY_SWAP / PHASE 2.5 — orange "Why Branding?" snaps up to occupy section 2's first-line position
+  var whyUpY = -s1H1.getBoundingClientRect().height;
+  tl.to(s1WhyLine, { y: whyUpY, duration: DUR * 0.8, ease: 'power2.inOut' });
+  tl.addLabel('a04-what-enter');
+
+  // A04-WHY_COPY_SWAP / PHASE 3 — ENTER section 2 text (black→white as lines arrive so text materialises on black bg)
+  tl.to(st2H1.lines, { y: 0, color: '#fff', stagger: STAG_H1, duration: DUR, ease: 'power3.out' });
+  tl.to(st2H4.lines, { y: 0, autoAlpha: 1, color: '#fff', stagger: STAG_H4, duration: DUR, ease: 'power3.out' }, '<+=0.5');
+  tl.eventCallback('onUpdate', function() {
+    var t = tl.time();
+    if (t < tl.labels['a04-what-enter']) {
+      setAnimationReference('S02-WHY-01', 'A04-WHY_COPY_SWAP');
+    } else {
+      setAnimationReference('S03-WHY-02', 'A04-WHY_COPY_SWAP');
+    }
+  });
+
+  // ── Hero overlay ──
+  var heroOverlay = document.getElementById('hero-text-overlay');
+  var targetTop   = window.innerWidth <= 600 ? 50 : (window.innerWidth <= 991 ? 60 : 80);
+
+  // A01-HERO_TRACK — Position: exact scroll tracking across full hero
+  gsap.to(heroOverlay, {
+    top: targetTop, yPercent: 0, ease: 'none',
+    scrollTrigger: {
+      trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true,
+      onEnter: function() { setAnimationReference('S01-HERO', 'A01-HERO_TRACK'); },
+      onEnterBack: function() { setAnimationReference('S01-HERO', 'A01-HERO_TRACK'); }
+    }
+  });
+
+  // A02-HERO_FADE — Video fade to black as hero scrolls away
+  gsap.to('#hero-fade', {
+    opacity: 1, ease: 'none',
+    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
+  });
+
+  // A03-WHY_CHAR_REVEAL — "Why Branding?" chars reveal over last half of hero scroll
+  gsap.to(stWhyLine.chars, {
+    autoAlpha: 1, y: 0, stagger: 0.1, ease: 'power1.inOut',
+    scrollTrigger: {
+      trigger: '.hero', start: '50% top', end: 'bottom top', scrub: true,
+      onEnter: function() { setAnimationReference('S01-HERO', 'A03-WHY_CHAR_REVEAL'); },
+      onEnterBack: function() { setAnimationReference('S01-HERO', 'A03-WHY_CHAR_REVEAL'); }
+    }
+  });
+
+  // Hand off: fade overlay out and reveal s1 h1 in white; reverse on scroll back
+  ScrollTrigger.create({
+    trigger: '#why-transition',
+    start: 'top top',
+    onEnter: function() {
+      gsap.to(heroOverlay,  { autoAlpha: 0, duration: 0.4 });
+      gsap.set(st1H1.lines, { color: '#fff' });
+    },
+    onLeaveBack: function() {
+      gsap.to(heroOverlay,  { autoAlpha: 1, duration: 0.4 });
+      gsap.set(st1H1.lines, { color: '#000' });
+    },
+  });
+
+  // ── Section-strong entrance + exit transition into statement ──
+  var strongWrapper = document.getElementById('strong-transition');
+  var sStrong       = document.getElementById('strong');
+  var sStatement    = document.querySelector('.section-statement');
+  var strongImg     = sStrong ? sStrong.querySelector('.strong-bg-img') : null;
+
+  if (strongWrapper && sStrong && sStatement) {
+    var sStrongH2  = sStrong.querySelector('h2');
+    var sStrongH4s = Array.from(sStrong.querySelectorAll('h4'));
+    var sStrongPs  = Array.from(sStrong.querySelectorAll('p'));
+    var ampEl      = sStrong.querySelector('.strong-amp');
+
+    var stSH2  = new SplitText(sStrongH2, { type: 'lines' });
+    var stSH4s = sStrongH4s.map(function(el) { return new SplitText(el, { type: 'lines' }); });
+    var stSPs  = sStrongPs.map(function(el)  { return new SplitText(el, { type: 'lines' }); });
+
+    stSH2.lines.forEach(function(line) {
+      var w = document.createElement('div');
+      w.style.cssText = 'overflow:hidden;display:block;';
+      line.parentNode.insertBefore(w, line);
+      w.appendChild(line);
+    });
+
+    var h4Lines = [];
+    stSH4s.forEach(function(st) { h4Lines = h4Lines.concat(st.lines); });
+
+    h4Lines.forEach(function(line) {
+      var w = document.createElement('div');
+      w.style.cssText = 'overflow:hidden;display:block;';
+      line.parentNode.insertBefore(w, line);
+      w.appendChild(line);
+    });
+
+    var pLines = [];
+    stSPs.forEach(function(st) { pLines = pLines.concat(st.lines); });
+
+    pLines.forEach(function(line) {
+      var w = document.createElement('div');
+      w.style.cssText = 'overflow:hidden;display:block;';
+      line.parentNode.insertBefore(w, line);
+      w.appendChild(line);
+    });
+
+    // Calculate & geometry before any gsap.set alters transforms
+    var sRect     = sStrong.getBoundingClientRect();
+    var h4_1_rect = sStrongH4s[0].getBoundingClientRect();
+    var h4_2_rect = sStrongH4s[1].getBoundingClientRect();
+    var h4GapPx   = h4_2_rect.top - h4_1_rect.bottom;
+    var h4MoveUpY = -h4GapPx;
+    var ampFinalX = h4_2_rect.left - sRect.left;
+    var ampFinalY = (h4_2_rect.top  - sRect.top) + h4MoveUpY;
+    // Wrap amp in a per-line overflow:hidden clip so it can exit upward like h4 lines
+    var ampLineH  = ampEl.offsetHeight;
+    var ampOuter  = document.createElement('div');
+    ampOuter.style.cssText = 'position:absolute;overflow:hidden;pointer-events:none;left:0;width:100%;';
+    ampOuter.style.top     = ampFinalY + 'px';
+    ampOuter.style.height  = (ampLineH + 2) + 'px';
+    ampEl.parentNode.insertBefore(ampOuter, ampEl);
+    ampOuter.appendChild(ampEl);
+    // Span defaults to display:inline; position:absolute had blockified it in CSS,
+    // but relative does not — restore atomic-inline so transforms and %-translations apply.
+    ampEl.style.position = 'relative';
+    ampEl.style.display  = 'inline-block';
+    // y is now 0 — vertical offset lives in ampOuter.style.top
+    gsap.set(ampEl, { x: ampFinalX - 50, y: 0, opacity: 0 });
+    var ampW = (ampEl ? ampEl.offsetWidth : 20) + 10;
+
+    var statementBgImg = sStatement.querySelector('.statement-bg-img');
+    var stmtEl         = sStatement.querySelector('.statement-text');
+    var stStmt         = new SplitText(stmtEl, { type: 'chars,words' });
+
+    var cardsTrack = document.getElementById('cards-track');
+    var allCards   = Array.from(document.querySelectorAll('.service-card'));
+    var cardW      = allCards.length ? allCards[0].offsetWidth : 360;
+    var cardGap    = 40;
+
+    function cardCenterX(i) {
+      return (window.innerWidth / 2) - (cardW / 2) - i * (cardW + cardGap);
+    }
+
+    var sectionTeam       = strongWrapper.querySelector('.section-team');
+    var statementParallaxBg = sStatement.querySelector('.statement-parallax-bg');
+
+    // Initial states
+    gsap.set(stSH2.lines,       { y: 30 });
+    gsap.set(h4Lines,           { y: 30 });
+    gsap.set(pLines,            { y: 30 });
+    gsap.set(sStatement,        { autoAlpha: 0 });
+    // Keep the foreground image movement subtle at reveal start
+    gsap.set(statementBgImg,    { y: '30%' });
+    gsap.set(stStmt.words,      { opacity: 0, y: 20 });
+    gsap.set(cardsTrack,        { yPercent: -50, x: window.innerWidth + 200 });
+    gsap.set(allCards,          { clipPath: 'inset(0 0 0% 0)' });
+    if (sectionTeam)       gsap.set(sectionTeam,       { autoAlpha: 0 });
+    if (statementParallaxBg) gsap.set(statementParallaxBg, { autoAlpha: 0, y: '10%', backgroundPosition: '0% 50%' });
+
+    // A05-STRONG_ENTRANCE — every line (h2 + h4s + p's) reveals upward,
+    // driven directly by scroll so it plays on the way down and reverses on the way up.
+    var allEntranceEls = stSH2.lines.concat(
+      stSH4s[0].lines, stSPs[0].lines,
+      stSH4s[1].lines, stSPs[1].lines
+    );
+    gsap.fromTo(allEntranceEls,
+      { y: 30 },
+      {
+        y: 0, duration: 1, stagger: 0.15, ease: 'power3.out',
+        scrollTrigger: {
+          trigger: sStrong,
+          start: 'top 75%',
+          end: 'bottom 100%',
+          scrub: 1,
+          onEnter:     function() { setAnimationReference('S04-STRONG', 'A05-STRONG_ENTRANCE'); },
+          onEnterBack: function() { setAnimationReference('S04-STRONG', 'A05-STRONG_ENTRANCE'); }
+        }
+      }
+    );
+
+    // EXIT — pinned scrub
+    // Snap function: snaps to nearest card-center label, ignores pre-card scroll
+    var exitTl;
+    var cardSnapFn = function(value) {
+      if (!exitTl) return value;
+      var dur = exitTl.duration();
+      if (!dur) return value;
+      var snaps = ['snap-card-0', 'snap-card-1', 'snap-card-2', 'snap-card-3', 'snap-card-4', 'snap-card-5'].map(function(l) {
+        var t = exitTl.getLabelTime(l);
+        return t >= 0 ? t / dur : null;
+      }).filter(function(p) { return p !== null; });
+      if (!snaps.length) return value;
+      if (value < snaps[0] - 0.08) return value;
+      if (value > snaps[snaps.length - 1] + 0.05) return value;
+      return snaps.reduce(function(closest, p) {
+        return Math.abs(p - value) < Math.abs(closest - value) ? p : closest;
+      });
+    };
+
+    // Split card text into lines for exit animation
+    // Per-card line arrays for bottom-to-top simultaneous exit
+    var allCardLinesByCard = [];
+    allCards.forEach(function(card) {
+      var cardLines = [];
+      Array.from(card.querySelectorAll('.card-number, .card-title, .card-body, .card-link')).forEach(function(el) {
+        var st = new SplitText(el, { type: 'lines' });
+        st.lines.forEach(function(line) {
+          var w = document.createElement('div');
+          w.style.cssText = 'overflow:hidden;display:block;';
+          line.parentNode.insertBefore(w, line);
+          w.appendChild(line);
+        });
+        cardLines = cardLines.concat(st.lines);
+      });
+      allCardLinesByCard.push(cardLines);
+    });
+
+    exitTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: strongWrapper,
+        start: 'top top',
+        end: '+=' + window.innerHeight * 15,
+        pin: true, scrub: 1, anticipatePin: 1,
+        snap: { snapTo: cardSnapFn, ease: 'power1.inOut', duration: { min: 0.2, max: 0.5 } }
+      }
+    });
+
+    // A06-STRONG_EXIT / Phase 1 — h2 and paragraph lines exit upward staggered; h4s + image stay
+    var phase1Lines = stSH2.lines.concat(pLines);
+    exitTl.to(phase1Lines, { y: '-105%', stagger: 0.05, duration: 0.25, ease: 'power2.inOut' });
+    exitTl.addLabel('a06-strong-exit');
+
+    // A06-STRONG_EXIT / Phase 2 — h4-2 rises toward h4-1 (starts just after Phase 1 finishes)
+    exitTl.to(sStrongH4s[1], { y: h4MoveUpY, duration: 0.175, ease: 'power3.out' }, '+=0.1');
+
+    // A06-STRONG_EXIT / Phase 3 — & slides in from left; h4-2 shifts right to make room
+    exitTl.to(ampEl,          { x: ampFinalX, opacity: 1, duration: 0.15, ease: 'power3.out' }, '+=0.025');
+    exitTl.to(sStrongH4s[1],  { x: ampW,      duration: 0.15, ease: 'power3.out' }, '<');
+
+    // A06-STRONG_EXIT / Phase 4 — all remaining text (h4 lines + &) exits upward simultaneously
+    exitTl.to(h4Lines.concat([ampEl]), { y: '-105%', duration: 0.5, ease: 'power2.inOut' }, '+=0.3');
+    exitTl.addLabel('a07-statement-reveal');
+
+    // A07-STATEMENT_REVEAL / Phase 5 — section-strong fades, statement reveals
+    exitTl.to(sStrong,    { autoAlpha: 0, duration: 0.25, ease: 'none' }, '<+=0.2');
+    exitTl.to(sStatement, { autoAlpha: 1, duration: 0.25, ease: 'none' }, '<');
+
+    // A07-STATEMENT_REVEAL / Phase 6 — foreground and far background rise together, statement text enters per word
+    exitTl.to(statementBgImg, { y: 0, duration: 1.15, ease: 'power3.out' }, '<');
+    if (statementParallaxBg) {
+      exitTl.to(statementParallaxBg, { y: 0, autoAlpha: 1, duration: 1.15, ease: 'power2.out' }, '<');
+    }
+    exitTl.to(stStmt.words, { opacity: 1, y: 0, stagger: { each: 0.1 }, duration: 0.25, ease: 'power3.out' }, '<+=0.15');
+
+    // A08-CARD_CAROUSEL / Phase 7 — chars scatter simultaneously; cards slide in
+    exitTl.addLabel('charScatterStart', '>');
+    stStmt.chars.forEach(function(char) {
+      exitTl.to(char, {
+        x: gsap.utils.random(-350, -60),
+        y: gsap.utils.random(-70, 70),
+        rotation: gsap.utils.random(-90, 90),
+        filter: 'blur(12px)',
+        opacity: 0,
+        duration: gsap.utils.random(0.3, 0.6),
+        ease: 'power2.in'
+      }, 'charScatterStart');
+    });
+    exitTl.to(cardsTrack, { x: cardCenterX(0), duration: 1.2, ease: 'power3.out' }, 'charScatterStart+=0.1');
+    // Keep render2 movement synced with horizontal card movement
+    if (statementParallaxBg) {
+      exitTl.to(statementParallaxBg, { backgroundPosition: '10% 50%', duration: 1.2, ease: 'power3.out' }, 'charScatterStart+=0.1');
+    }
+    exitTl.addLabel('snap-card-0');
+    exitTl.addLabel('a08-card-carousel', 'snap-card-0');
+
+    // A08-CARD_CAROUSEL / Phase 8 — center each card, hold; snap to each
+    allCards.forEach(function(card, i) {
+      if (i > 0) {
+        var bgProgress = 10 + (i / (allCards.length - 1)) * 90;
+        exitTl.to(cardsTrack, { x: cardCenterX(i), duration: 0.8, ease: 'power2.inOut' });
+        if (statementParallaxBg) {
+          exitTl.to(statementParallaxBg, { backgroundPosition: bgProgress + '% 50%', duration: 0.8, ease: 'power2.inOut' }, '<');
+        }
+        exitTl.addLabel('snap-card-' + i);
+      }
+    });
+
+    // A09-CARD_EXIT / Phase 9 — all cards exit simultaneously: text hides bottom-to-top per card,
+    // then card backgrounds squish up (content already hidden behind clips)
+    var cardsOverlay = document.getElementById('cards-overlay');
+    exitTl.addLabel('cardExit', '+=0.3');
+    allCardLinesByCard.forEach(function(cardLines) {
+      exitTl.to(cardLines, {
+        y: '-120%', stagger: { each: 0.045, from: 'end' },
+        duration: 0.35, ease: 'power2.inOut'
+      }, 'cardExit');
+    });
+    // Cards squish from bottom after text is gone — clipPath preserves border-top thickness
+    exitTl.to(allCards, {
+      clipPath: 'inset(0 0 100% 0)',
+      duration: 0.4, ease: 'power3.inOut'
+    }, 'cardExit+=0.4');
+    // A10-TEAM_REVEAL — Fade out cards/statement while section-team fades in
+    exitTl.to([cardsOverlay, sStatement], {
+      autoAlpha: 0, duration: 0.35, ease: 'none'
+    }, 'cardExit+=0.7');
+    if (statementParallaxBg) {
+      exitTl.to(statementParallaxBg, { autoAlpha: 0, duration: 0.35, ease: 'none' }, 'cardExit+=0.7');
+    }
+    if (sectionTeam) {
+      exitTl.to(sectionTeam, { autoAlpha: 1, duration: 0.4, ease: 'none' }, 'cardExit+=0.7');
+    }
+
+    // Contact intro — tagline reveals by word on scrub, button/border fire once
+    var contactIntro = strongWrapper.querySelector('.contact-intro');
+    if (contactIntro) {
+      var contactTagline  = contactIntro.querySelector('.contact-tagline');
+      var contactCtaWrap  = contactIntro.querySelector('.contact-cta-wrap');
+      var contactCtaText  = contactIntro.querySelector('.contact-cta-text');
+      var borderPathLeft  = contactIntro.querySelector('.border-path-left');
+      var borderPathRight = contactIntro.querySelector('.border-path-right');
+
+      // Word-by-word upward clip reveal for tagline
+      var stContactWords = new SplitText(contactTagline, { type: 'words' });
+      stContactWords.words.forEach(function(word) {
+        var w = document.createElement('div');
+        w.style.cssText = 'overflow:hidden;display:inline-block;vertical-align:bottom;';
+        word.parentNode.insertBefore(w, word);
+        w.appendChild(word);
+      });
+
+      var stContactCta = new SplitText(contactCtaText, { type: 'lines' });
+      stContactCta.lines.forEach(function(line) {
+        var w = document.createElement('div');
+        w.style.cssText = 'overflow:hidden;display:block;';
+        line.parentNode.insertBefore(w, line);
+        w.appendChild(line);
+      });
+
+      gsap.set(stContactWords.words, { y: '110%' });
+      gsap.set(stContactCta.lines,   { y: '105%' });
+      gsap.set(contactCtaWrap,        { autoAlpha: 0 });
+
+      if (borderPathLeft && borderPathRight) {
+        var leftLen  = borderPathLeft.getTotalLength();
+        var rightLen = borderPathRight.getTotalLength();
+        gsap.set(borderPathLeft,  { strokeDasharray: leftLen,  strokeDashoffset: leftLen  });
+        gsap.set(borderPathRight, { strokeDasharray: rightLen, strokeDashoffset: rightLen });
+      }
+
+      // A11-CONTACT_TAGLINE — Scrubbed: words reveal on scroll, then tagline rises
+      exitTl.to(stContactWords.words, { y: 0, stagger: 0.1, duration: 0.6, ease: 'power3.out' }, 'cardExit+=1.1');
+      exitTl.to(contactTagline, { y: -28, duration: 0.5, ease: 'power2.out' }, 'cardExit+=2.3');
+
+      // A12-CONTACT_CTA — Button and border animate once tagline is positioned
+      var contactIntroFired = false;
+      exitTl.call(function() {
+        if (contactIntroFired) return;
+        contactIntroFired = true;
+        var ctTl = gsap.timeline();
+        ctTl.set(contactCtaWrap, { autoAlpha: 1 });
+        ctTl.to(stContactCta.lines, { y: 0, stagger: 0.1, duration: 0.7, ease: 'power3.out' });
+        if (borderPathLeft && borderPathRight) {
+          ctTl.to([borderPathLeft, borderPathRight], {
+            strokeDashoffset: 0, duration: 0.9, ease: 'power2.inOut'
+          }, '+=0.2');
+        }
+      }, [], 'cardExit+=2.8');
+    }
+
+    exitTl.eventCallback('onUpdate', function() {
+      var t = exitTl.time();
+      if (t < exitTl.labels['a07-statement-reveal']) {
+        setAnimationReference('S04-STRONG', 'A06-STRONG_EXIT');
+      } else if (t < exitTl.labels['a08-card-carousel']) {
+        setAnimationReference('S05-STATEMENT', 'A07-STATEMENT_REVEAL');
+      } else if (t < exitTl.labels['cardExit']) {
+        setAnimationReference('S06-CARDS', 'A08-CARD_CAROUSEL');
+      } else if (contactIntro && t < exitTl.labels['cardExit'] + 2.8) {
+        setAnimationReference('S07-TEAM', 'A11-CONTACT_TAGLINE');
+      } else if (contactIntro) {
+        setAnimationReference('S07-TEAM', 'A12-CONTACT_CTA');
+      } else {
+        setAnimationReference('S07-TEAM', 'A10-TEAM_REVEAL');
+      }
+    });
+  }
+
+  bindSectionTag('#contact', 'S08-CONTACT', 'A13-CONTACT_STATIC');
+});
+</script>
+
+</body>
+</html>
