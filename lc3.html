@@ -372,11 +372,13 @@
   }
   /* Persistent section/animation reference tag */
   .animation-ref-tag {
-    display: none; /* temporarily hidden */
     position: fixed;
     left: 14px;
     bottom: 14px;
     z-index: 10001;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     font-size: 11px;
     letter-spacing: 0.08em;
@@ -390,6 +392,26 @@
     backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(3px);
   }
+  .animation-ref-tag.is-dismissed { display: none; }
+  .animation-ref-close {
+    pointer-events: auto;
+    appearance: none;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    color: rgba(255,255,255,0.7);
+    font: inherit;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+    width: 14px;
+    height: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .animation-ref-close:hover { color: #fff; }
 
   /* Responsive */
   @media (max-width: 991px) {
@@ -777,7 +799,10 @@
   </p>
 </footer>
 
-<div class="animation-ref-tag" id="animation-ref-tag" aria-live="polite">S00-BOOT · A00-IDLE</div>
+<div class="animation-ref-tag" id="animation-ref-tag">
+  <span class="animation-ref-label" id="animation-ref-label" aria-live="polite">S00-BOOT · A00-IDLE</span>
+  <button type="button" class="animation-ref-close" id="animation-ref-close" aria-label="Dismiss reference tag">×</button>
+</div>
 
 
 <a class="mobile-call" href="tel:2104794085" aria-label="Call">
@@ -925,13 +950,20 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 // Sections: S##-NAME (screen group / chapter)
 // Animations: A##-NAME (motion phase in that chapter)
 var animationRefEl = document.getElementById('animation-ref-tag');
+var animationRefLabelEl = document.getElementById('animation-ref-label');
+var animationRefCloseEl = document.getElementById('animation-ref-close');
+if (animationRefCloseEl && animationRefEl) {
+  animationRefCloseEl.addEventListener('click', function() {
+    animationRefEl.classList.add('is-dismissed');
+  });
+}
 var animationRefState = { section: 'S00-BOOT', animation: 'A00-IDLE' };
 function setAnimationReference(sectionCode, animationCode) {
-  if (!animationRefEl) return;
+  if (!animationRefLabelEl) return;
   if (animationRefState.section === sectionCode && animationRefState.animation === animationCode) return;
   animationRefState.section = sectionCode;
   animationRefState.animation = animationCode;
-  animationRefEl.textContent = sectionCode + ' · ' + animationCode;
+  animationRefLabelEl.textContent = sectionCode + ' · ' + animationCode;
 }
 function bindSectionTag(trigger, sectionCode, animationCode) {
   ScrollTrigger.create({
